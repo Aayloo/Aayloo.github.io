@@ -95,7 +95,8 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
   text-transform:uppercase;color:var(--amber);margin:0 0 10px}
 .hero h1{font-size:clamp(32px,4.6vw,48px);font-weight:800;color:var(--ink);line-height:1.1;
   letter-spacing:-.03em;margin:0 0 8px}
-.hero .role{font-size:16.5px;font-weight:700;color:var(--ink2);margin:0 0 14px}
+.hero .role{font-size:clamp(17px,2vw,21px);font-weight:800;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em}
+.hero .role span{color:var(--mute);font-weight:600;margin:0 6px}
 .hero .intro{font-size:16px;line-height:1.8;color:var(--ink2);max-width:62ch;margin:0}
 .hero .intro b{color:var(--ink);font-weight:700}
 .heroacts{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
@@ -134,8 +135,14 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .ri-block .ri-note{margin:0 0 14px;font-size:12.8px;color:var(--mute)}
 .ri-figure{margin:6px 0 0}
 .ri-figure svg{display:block;width:100%;height:auto;overflow:visible}
-.ri-figure .rnode{transition:transform .25s cubic-bezier(.2,.7,.2,1)}
-.ri-figure .rnode:hover{transform:translateY(-3px)}
+.ri-figure .rnode{opacity:0;transform:translateY(10px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1);
+  transition-delay:calc(var(--i,0) * 110ms)}
+.ri-figure.ready .rnode{opacity:1;transform:none}
+.ri-figure.ready .rnode:hover{transform:translateY(-3px);transition-delay:0ms}
+.ri-figure .hub{opacity:0;transform:scale(.9);transform-box:fill-box;transform-origin:center;
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+.ri-figure.ready .hub{opacity:1;transform:none}
 .ri-figure .rlink{stroke-dasharray:5 6;animation:dashmove 1.6s linear infinite}
 @keyframes dashmove{to{stroke-dashoffset:-22}}
 @media (prefers-reduced-motion:reduce){.ri-figure .rlink{animation:none}}
@@ -182,6 +189,33 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .card .go svg{width:13px;height:13px;transition:transform .2s}
 .card .go:hover svg{transform:translate(2px,-2px)}
 @media (max-width:820px){.cards{grid-template-columns:1fr}}
+
+/* project roadmap with animated rail */
+.roadmap{display:grid;grid-template-columns:186px minmax(0,1fr);gap:30px;align-items:start;margin-top:6px}
+.rail{position:sticky;top:96px;align-self:start}
+.rail-wrap{position:relative;padding-left:2px}
+.rail-line{position:absolute;left:13px;top:12px;bottom:12px;width:2px;background:var(--line2);border-radius:2px}
+.rail-fill{position:absolute;left:0;top:0;width:100%;height:0;border-radius:2px;
+  background:linear-gradient(180deg,var(--teal),var(--blue) 55%,var(--violet));
+  transition:height .35s cubic-bezier(.2,.7,.2,1)}
+.rail-nodes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:19px;position:relative}
+.rail-nodes li{display:flex;align-items:center;gap:11px;font-size:12.5px;color:var(--mute);
+  transition:color .3s;line-height:1.3}
+.rail-nodes li i{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--line2);
+  flex:0 0 auto;position:relative;z-index:1;transition:border-color .3s,background .3s,transform .3s}
+.rail-nodes li.on{color:var(--ink);font-weight:700}
+.rail-nodes li.on i{border-color:var(--teal);background:var(--teal);transform:scale(1.1)}
+.roadlist{display:grid;gap:14px;min-width:0}
+.glabel{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-size:13px;font-weight:700;color:var(--ink2)}
+.glabel:first-child{margin-top:0}
+.glabel .badge{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:6px}
+.glabel .badge.qs{background:var(--teal2);color:var(--teal)}
+.glabel .badge.ml{background:var(--violet2);color:var(--violet)}
+.roadlist .card{width:100%}
+@media (max-width:900px){
+  .roadmap{grid-template-columns:1fr;gap:0}
+  .rail{display:none}
+}
 
 /* skills */
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
@@ -317,11 +351,10 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
             </div>
           </div>
           <div class="herotext">
-            <p class="hello">Data Scientist / AI Engineer · Hong Kong</p>
+            <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
             <h1>Aylon</h1>
-            <p class="role"><span class="zh">数据科学与 AI 工程 · 量化研究方向</span><span class="en">Data science &amp; AI engineering, with a quantitative research focus</span></p>
-            <p class="intro"><span class="zh">数据科学与 AI 工程背景，现于香港工作；业余时间研究系统化投资——把市场与文本数据变成<strong>经得起成本与风险检验的信号</strong>。</span>
-            <span class="en">Data science and AI engineering, based in Hong Kong. Outside work: systematic investment research — turning market and text data into <strong>signals that hold up against costs and risk</strong>.</span></p>
+            <p class="role">Data Scientist<span>·</span>AI Engineer<span>·</span>Quant</p>
+            <p class="intro"><span class="zh">横截面信号 · 组合风险 · 另类数据</span><span class="en">Cross-sectional signals · Portfolio risk · Alternative data</span></p>
             <div class="heroacts">
               <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View projects</span></a>
               <a class="hbtn ghost" href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
@@ -413,11 +446,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                   </g>
 
                   <!-- hub -->
-                  <circle cx="500" cy="300" r="84" fill="url(#cg)"/>
-                  <g class="zh"><text x="500" y="292" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">量化研究</text>
-                  <text x="500" y="318" text-anchor="middle" font-size="12" fill="#B7CBDD">Quant Research</text></g>
-                  <g class="en"><text x="500" y="294" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Quant</text>
-                  <text x="500" y="318" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Research</text></g>
+                  <g class="hub">
+                    <circle cx="500" cy="300" r="84" fill="url(#cg)"/>
+                    <g class="zh"><text x="500" y="292" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">量化研究</text>
+                    <text x="500" y="318" text-anchor="middle" font-size="12" fill="#B7CBDD">Quant Research</text></g>
+                    <g class="en"><text x="500" y="294" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Quant</text>
+                    <text x="500" y="318" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Research</text></g>
+                  </g>
                 </g>
               </svg>
             </div>
@@ -436,11 +471,23 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
       <section id="work">
         <div class="sh"><span class="no">02</span><h2><span class="zh">项目</span><span class="en">Projects</span></h2>
           <span class="hint"><span class="zh">公开仓库 · 可复现</span><span class="en">public repos · reproducible</span></span></div>
-        <div class="track qs">
-          <div class="thead"><span class="badge">QS</span>
-            <h3><span class="zh">投研项目集</span><span class="en">Quant research portfolio</span></h3>
-            <span class="cnt">2 projects</span></div>
-          <div class="cards">
+        <div class="roadmap" id="roadmap">
+          <div class="rail" aria-hidden="true">
+            <div class="rail-wrap">
+              <div class="rail-line"><span class="rail-fill" id="railfill"></span></div>
+              <ol class="rail-nodes">
+                <li><i></i><span>Alpha Signal</span></li>
+                <li><i></i><span>Portfolio Risk</span></li>
+                <li><i></i><span>Statistics &amp; TS</span></li>
+                <li><i></i><span>Machine Learning</span></li>
+                <li><i></i><span>Deep Learning</span></li>
+                <li><i></i><span>LLM &amp; Alt Data</span></li>
+                <li><i></i><span>Framework maps</span></li>
+              </ol>
+            </div>
+          </div>
+          <div class="roadlist">
+            <p class="glabel"><span class="badge qs">QS</span><span class="zh">投研项目集</span><span class="en">Quant research portfolio</span></p>
             <article class="card rv">
               <span class="idx">04 · ALPHA</span>
               <h4>Alpha Signal</h4>
@@ -457,13 +504,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
               <div class="tech"><span>Optimisation</span><span>VaR / CVaR</span><span>Attribution</span></div>
               <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
             </article>
-          </div>
-        </div>
-        <div class="track ml">
-          <div class="thead"><span class="badge">ML · DL · LLM</span>
-            <h3><span class="zh">量化学习知识库</span><span class="en">Quant learning knowledge base</span></h3>
-            <span class="cnt">4 modules + maps</span></div>
-          <div class="cards">
+            <p class="glabel"><span class="badge ml">ML · DL · LLM</span><span class="zh">量化学习知识库</span><span class="en">Quant learning knowledge base</span></p>
             <article class="card rv">
               <span class="idx">MODULE 01</span>
               <h4><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; time series</span></h4>
@@ -714,6 +755,60 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
   }
 
   /* toc scrollspy */
+  /* project roadmap rail (scroll-driven) */
+  /* research-interests figure: reveal nodes in sequence */
+  (function(){
+    var fig=document.querySelector(".ri-figure");
+    if(!fig) return;
+    Array.prototype.forEach.call(fig.querySelectorAll(".rnode"), function(n,i){
+      n.style.setProperty("--i", i);
+    });
+    if("IntersectionObserver" in window){
+      var rio=new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if(en.isIntersecting){ fig.classList.add("ready"); rio.unobserve(fig); }
+        });
+      },{threshold:.25});
+      rio.observe(fig);
+    }else{
+      fig.classList.add("ready");
+    }
+  })();
+
+  (function(){
+    var rm=document.getElementById("roadmap");
+    if(!rm) return;
+    var cards=Array.prototype.slice.call(rm.querySelectorAll(".roadlist .card"));
+    var nodes=Array.prototype.slice.call(rm.querySelectorAll(".rail-nodes li"));
+    var fill=document.getElementById("railfill");
+    var line=rm.querySelector(".rail-line");
+    if(!cards.length||!nodes.length||!fill||!line) return;
+    var raf=false;
+    function update(){
+      raf=false;
+      if(window.matchMedia && window.matchMedia("(max-width:900px)").matches) return;
+      var vh=window.innerHeight;
+      var mid=vh*0.62;
+      var active=-1;
+      for(var i=0;i<cards.length;i++){
+        if(cards[i].getBoundingClientRect().top < mid) active=i;
+      }
+      if(active<0 && cards[0].getBoundingClientRect().top < vh) active=0;
+      nodes.forEach(function(n,i){ n.classList.toggle("on", i<=active); });
+      if(active<0){ fill.style.height="0px"; return; }
+      var lr=line.getBoundingClientRect();
+      var nr=nodes[Math.min(active,nodes.length-1)].getBoundingClientRect();
+      var h=(nr.top+nr.height/2)-lr.top;
+      if(h<0) h=0;
+      if(h>lr.height) h=lr.height;
+      fill.style.height=h+"px";
+    }
+    function onScroll(){ if(raf) return; raf=true; requestAnimationFrame(update); }
+    window.addEventListener("scroll", onScroll, {passive:true});
+    window.addEventListener("resize", onScroll);
+    update();
+  })();
+
   var links=Array.prototype.slice.call(document.querySelectorAll("aside.toc a"));
   var targets=links.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
   if(targets.length && "IntersectionObserver" in window){
