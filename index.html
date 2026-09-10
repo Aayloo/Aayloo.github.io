@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aylon · Data Science &amp; Quantitative Research</title>
+<meta name="description" content="Personal site of Aylon — data science and quantitative research, with projects on alpha signals, portfolio risk and an ML/DL/LLM knowledge base.">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#FAFAF7;color:#2C3A4E;
+  font-family:"Aptos","Segoe UI Variable Text","Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  line-height:1.68;font-size:16px;-webkit-font-smoothing:antialiased;
+  --bg:#FAFAF7;--card:#FFFFFF;--card2:#F5F7F4;
+  --line:#E4E8EE;--line2:#CFD7E2;
+  --ink:#111A28;--ink2:#4A5A72;--mute:#8494AA;
+  --teal:#0E9F87;--teal2:#E3F5F1;
+  --violet:#6D4AEF;--violet2:#EDE9FE;
+  --blue:#2F6FE4;--blue2:#E6EEFD;
+  --amber:#D9821A;--amber2:#FBF0DF;
+  --pixel:#F6CE3C;--pixelD:#D9A81F;--pixelO:#E88B2E;--pixelK:#232A38;
+  --mono:ui-monospace,"Cascadia Mono","Segoe UI Mono",Consolas,monospace;
+  --sh1:0 1px 2px rgba(17,26,40,.05),0 1px 3px rgba(17,26,40,.04);
+  --sh2:0 10px 30px rgba(17,26,40,.10);
+}
+h1,h2,h3,h4{font-family:"Aptos Display","Segoe UI Variable Display","Segoe UI","Noto Sans SC","PingFang SC",system-ui,sans-serif}
+html[data-lang="en"] .zh{display:none}
+html[data-lang="zh"] .en{display:none}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+/* soft background */
+.backdrop{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--bg)}
+.backdrop i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.backdrop i:nth-child(1){width:46vmax;height:46vmax;left:-14vmax;top:-16vmax;background:#DDF2EC}
+.backdrop i:nth-child(2){width:40vmax;height:40vmax;right:-14vmax;top:6vh;background:#E9E4FD}
+.backdrop i:nth-child(3){width:36vmax;height:36vmax;left:32vw;bottom:-20vmax;background:#FDF2DE}
+.backdrop::after{content:"";position:absolute;inset:0;opacity:.5;
+  background-image:radial-gradient(#111A28 .7px,transparent .7px);background-size:26px 26px;
+  mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 62%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 62%)}
+
+/* progress + nav */
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:200;
+  background:linear-gradient(90deg,var(--teal),var(--blue),var(--violet))}
+nav{position:sticky;top:0;z-index:100;background:rgba(250,250,247,.86);
+  backdrop-filter:blur(12px) saturate(1.3);border-bottom:1px solid var(--line)}
+.navin{max-width:1140px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:0 22px;height:56px}
+.brand{font-family:var(--mono);font-weight:800;font-size:14px;color:var(--ink);margin-right:16px;white-space:nowrap}
+.brand i{font-style:normal;color:var(--amber)}
+.navin .lk{padding:7px 11px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--ink2);white-space:nowrap}
+.navin .lk:hover{background:rgba(17,26,40,.05);color:var(--ink);text-decoration:none}
+.spacer{flex:1}
+.lang{display:flex;height:28px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.lang button{border:0;background:transparent;font-size:11.5px;font-weight:700;padding:0 10px;cursor:pointer;color:var(--mute);font-family:inherit}
+.lang button+button{border-left:1px solid var(--line)}
+.lang button[aria-selected="true"]{background:var(--ink);color:#fff}
+
+main{max-width:1140px;margin:0 auto;padding:0 22px 80px}
+.wrap{display:grid;grid-template-columns:168px minmax(0,1fr);gap:44px;align-items:start}
+aside.toc{position:sticky;top:92px;padding-top:30px}
+aside.toc .tl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 12px}
+aside.toc a{display:block;font-size:13.5px;font-weight:600;color:var(--mute);padding:5px 0 5px 13px;
+  border-left:2px solid transparent;transition:color .2s,border-color .2s}
+aside.toc a:hover{color:var(--ink2);text-decoration:none}
+aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
+.content{min-width:0}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:0}aside.toc{display:none}}
+
+/* hero */
+.hero{padding:60px 0 34px}
+.herotop{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.avatarwrap{flex:0 0 auto;position:relative;width:168px;height:168px}
+.avatarwrap::before{content:"";position:absolute;inset:-14px;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%,#FDF0C8,rgba(253,240,200,0) 68%)}
+.avatar{position:relative;width:168px;height:168px;border-radius:50%;overflow:hidden;
+  background:linear-gradient(160deg,#FFFDF4,#FDF3D8);
+  border:3px solid #fff;box-shadow:0 10px 26px rgba(17,26,40,.14),0 0 0 1px rgba(17,26,40,.06)}
+.avatar svg{display:block;width:100%;height:100%}
+.fields{margin:16px 0 0}
+.fields dt{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin:0 0 7px}
+.fields dd{margin:0;display:flex;flex-wrap:wrap;gap:6px}
+.fields dd span{font-size:12.5px;font-weight:600;color:var(--ink2);background:#fff;
+  border:1px solid var(--line);border-radius:8px;padding:4px 10px;box-shadow:var(--sh1)}
+.herotext{flex:1 1 340px;min-width:0}
+.hello{font-family:var(--mono);font-size:11.5px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+.hero h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;color:var(--ink);line-height:1.12;
+  letter-spacing:-.03em;margin:0 0 14px;text-wrap:balance}
+.hero .intro{font-size:16.5px;line-height:1.8;color:var(--ink2);max-width:60ch;margin:0}
+.hero .intro b{color:var(--ink);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;color:var(--ink2);box-shadow:var(--sh1)}
+
+/* section heads */
+.sh{padding:40px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sh .no{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--teal);letter-spacing:.1em}
+.sh h2{font-size:clamp(20px,2.3vw,26px);font-weight:800;color:var(--ink);letter-spacing:-.025em;margin:0}
+.sh .hint{margin-left:auto;font-size:12.5px;color:var(--mute)}
+.lead{font-size:15px;line-height:1.78;color:var(--ink2);max-width:70ch;margin:0 0 4px}
+
+/* about */
+.aboutcard{border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--sh1);padding:22px 24px}
+.aboutcard p{margin:0 0 12px;font-size:15px;line-height:1.82;color:var(--ink2)}
+.aboutcard p:last-child{margin-bottom:0}
+.aboutcard strong{color:var(--ink);font-weight:700}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:14px;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--line)}
+.facts div{background:var(--card);padding:12px 14px}
+.facts dt{font-size:11px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.facts dd{margin:3px 0 0;font-size:13.5px;font-weight:700;color:var(--ink)}
+
+/* projects */
+.track{margin-top:16px}
+.thead{display:flex;align-items:center;gap:11px;margin-bottom:12px;flex-wrap:wrap}
+.badge{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:6px}
+.track.qs .badge{background:var(--teal2);color:var(--teal)}
+.track.ml .badge{background:var(--violet2);color:var(--violet)}
+.thead h3{margin:0;font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.thead .cnt{margin-left:auto;font-size:12px;color:var(--mute);font-family:var(--mono)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:20px 22px 18px;box-shadow:var(--sh1);display:flex;flex-direction:column;
+  transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s,border-color .2s}
+.card::after{content:"";position:absolute;left:0;top:0;height:3px;width:38px;border-radius:3px 0 6px 0;background:var(--teal)}
+.track.ml .card::after{background:var(--violet)}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh2);border-color:var(--line2)}
+@media (prefers-reduced-motion:reduce){.card,.card:hover{transition:none;transform:none}}
+.card .idx{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--mute);letter-spacing:.1em}
+.card h4{margin:9px 0 7px;font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.015em}
+.card p{margin:0;font-size:13.7px;line-height:1.72;color:var(--ink2);flex:1}
+.card .tech{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.card .tech span{font-family:var(--mono);font-size:10.5px;color:var(--ink2);background:var(--card2);
+  border:1px solid var(--line);padding:2px 7px;border-radius:5px}
+.card .go{margin-top:14px;font-size:12.5px;font-weight:700;color:var(--teal);display:inline-flex;align-items:center;gap:6px}
+.track.ml .card .go{color:var(--violet)}
+.card .go svg{width:13px;height:13px}
+@media (max-width:820px){.cards{grid-template-columns:1fr}}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.sk{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px 19px 15px;box-shadow:var(--sh1)}
+.sk h4{margin:0 0 13px;font-size:13.5px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.sk h4 i{width:8px;height:8px;border-radius:50%;display:inline-block;flex:0 0 auto}
+.sk h4 em{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.sbar{margin:0 0 10px}
+.sbar:last-child{margin-bottom:0}
+.sbar .lbl{display:flex;justify-content:space-between;gap:10px;font-size:12.6px;color:var(--ink2);margin-bottom:5px}
+.sbar .lbl b{font-weight:600}
+.sbar .lbl em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--mute)}
+.sbar .strack{height:6px;border-radius:99px;background:var(--card2);border:1px solid var(--line);overflow:hidden}
+.sbar .fill{display:block;height:100%;border-radius:99px;width:var(--w);
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  transform-origin:left center;transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.sk.on .sbar .fill{transform:scaleX(1)}
+@media (prefers-reduced-motion:reduce){.sbar .fill{transform:none}}
+.legend2{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 14px;font-size:12.5px;color:var(--mute)}
+.legend2 span{display:inline-flex;align-items:center;gap:6px}
+.legend2 i{width:18px;height:6px;border-radius:99px;display:inline-block}
+
+/* experience */
+.xp{margin-top:6px;position:relative;padding-left:22px}
+.xp::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:1px;background:var(--line2)}
+.xpi{position:relative;padding:0 0 20px 14px}
+.xpi:last-child{padding-bottom:2px}
+.xpi::before{content:"";position:absolute;left:-22px;top:6px;width:11px;height:11px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--ac)}
+.xpi .when{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--mute);letter-spacing:.06em}
+.xpi .role{font-size:15px;font-weight:800;color:var(--ink);margin:3px 0 4px}
+.xpi p{margin:0;font-size:13.5px;line-height:1.72;color:var(--ink2);max-width:72ch}
+
+/* contact */
+.contact{margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:26px 28px;box-shadow:var(--sh1);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.contact h3{margin:0 0 5px;font-size:18px;color:var(--ink);letter-spacing:-.01em}
+.contact p{margin:0;font-size:13.6px;color:var(--ink2);max-width:54ch}
+.links{display:flex;gap:9px;flex-wrap:wrap}
+.links a{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;
+  padding:10px 16px;border-radius:10px;border:1px solid var(--line2);background:#fff;color:var(--ink);
+  box-shadow:var(--sh1);transition:border-color .2s,background .2s}
+.links a:hover{border-color:var(--teal);background:var(--teal2);text-decoration:none}
+.links svg{width:15px;height:15px}
+footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
+  font-family:var(--mono);font-size:10.5px;color:var(--mute);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+#toTop{position:fixed;right:20px;bottom:20px;z-index:120;width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line2);background:#fff;color:var(--ink);cursor:pointer;box-shadow:var(--sh2);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop svg{width:16px;height:16px}
+
+.rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+@media (max-width:760px){main{padding:0 16px 60px}.navin{padding:0 14px}.hero{padding:40px 0 26px}
+  .navin .lk{padding:6px 7px;font-size:12.5px}.avatar{width:104px;height:104px}}
+@media (max-width:420px){.links{width:100%}.links a{flex:1 1 auto;justify-content:center}}
+@media print{.backdrop,nav,.lang,#toTop{display:none}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="prog" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.93.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.1 8.65 21 10.6 21 13.5V21h-4v-6.6c0-1.57-.56-2.64-1.96-2.64-1.07 0-1.7.72-1.98 1.41-.1.25-.13.6-.13.94V21H9z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></g></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></g></symbol>
+</defs></svg>
+
+<nav>
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i></span>
+    <a class="lk" href="#about"><span class="zh">关于</span><span class="en">About</span></a>
+    <a class="lk" href="#work"><span class="zh">项目</span><span class="en">Work</span></a>
+    <a class="lk" href="#skills"><span class="zh">技能</span><span class="en">Skills</span></a>
+    <a class="lk" href="#background"><span class="zh">经历</span><span class="en">Background</span></a>
+    <a class="lk" href="#contact"><span class="zh">联系</span><span class="en">Contact</span></a>
+    <span class="spacer"></span>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <aside class="toc" aria-label="sections">
+      <p class="tl">Contents</p>
+      <a href="#about" class="on"><span class="zh">关于我</span><span class="en">About</span></a>
+      <a href="#work"><span class="zh">项目</span><span class="en">Work</span></a>
+      <a href="#skills"><span class="zh">技能</span><span class="en">Skills</span></a>
+      <a href="#background"><span class="zh">经历</span><span class="en">Background</span></a>
+      <a href="#contact"><span class="zh">联系</span><span class="en">Contact</span></a>
+    </aside>
+
+    <div class="content">
+
+      <!-- hero -->
+      <section class="hero" id="pagetop">
+        <div class="herotop">
+          <div class="avatarwrap">
+            <div class="avatar" role="img" aria-label="duck avatar">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="dY" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#FFE271"/><stop offset="1" stop-color="#F4C518"/>
+                  </linearGradient>
+                  <linearGradient id="dB" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#FFBB55"/><stop offset="1" stop-color="#E8932A"/>
+                  </linearGradient>
+                </defs>
+                <path d="M80 72 C71 46 76 30 89 21" stroke="#2B3243" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <path d="M100 68 C100 42 103 27 107 16" stroke="#2B3243" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <path d="M120 72 C129 48 124 32 111 23" stroke="#2B3243" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <ellipse cx="33" cy="154" rx="16" ry="11.5" fill="url(#dY)" stroke="#2B3243" stroke-width="3" transform="rotate(-16 33 154)"/>
+                <ellipse cx="167" cy="154" rx="16" ry="11.5" fill="url(#dY)" stroke="#2B3243" stroke-width="3" transform="rotate(16 167 154)"/>
+                <ellipse cx="100" cy="118" rx="62" ry="56" fill="url(#dY)" stroke="#2B3243" stroke-width="3.5"/>
+                <ellipse cx="78" cy="110" rx="7.5" ry="9.5" fill="#2B3243"/>
+                <ellipse cx="122" cy="110" rx="7.5" ry="9.5" fill="#2B3243"/>
+                <circle cx="75.4" cy="106" r="2.5" fill="#fff"/>
+                <circle cx="119.4" cy="106" r="2.5" fill="#fff"/>
+                <ellipse cx="100" cy="148" rx="45" ry="20" fill="url(#dB)" stroke="#2B3243" stroke-width="3.2"/>
+                <path d="M58 148 Q100 157 142 148" stroke="#2B3243" stroke-width="2.3" fill="none" opacity=".7"/>
+              </svg>
+            </div>
+          </div>
+          <div class="herotext">
+            <p class="hello">Data Scientist / AI Engineer</p>
+            <h1>Aylon</h1>
+            <p class="intro"><span class="zh">数学与物理训练背景，现于香港从事数据科学与 AI 工程，工作围绕数据管道、模型开发与评估、以及研究工具的工程化；同一套方法也用于系统化投资研究。</span>
+            <span class="en">Background in mathematics and physics, currently working in data science and AI engineering in Hong Kong — data pipelines, model development and evaluation, and engineering research tooling. The same methods are applied to systematic investment research.</span></p>
+            <dl class="fields">
+              <dt>Interested fields</dt>
+              <dd>
+                <span>Systematic signals &amp; factor research</span>
+                <span>Portfolio construction &amp; risk</span>
+                <span>Applied machine learning</span>
+                <span>LLM &amp; alternative data</span>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- about -->
+      <section id="about">
+        <div class="sh"><span class="no">01</span><h2><span class="zh">关于我</span><span class="en">About</span></h2></div>
+        <div class="aboutcard rv">
+          <p><span class="zh">我的工作方式可以概括成一条链：<strong>假设 → 数据 → 信号 → 组合 → 风险 → 归因</strong>。每个环节都要能说清楚，每个结果都要能被别人重新跑一遍。</span>
+          <span class="en">My way of working is one chain: <strong>hypothesis → data → signal → portfolio → risk → attribution</strong>. Every step should be explainable, and every result should be re-runnable by someone else.</span></p>
+          <p><span class="zh">这条链拆成两个公开部分：面向投研的 QS 项目集，以及支撑它的量化学习知识库——一边做研究，一边把底层方法补齐。</span>
+          <span class="en">That chain is split into two public parts: a QS research portfolio, and the quant knowledge base behind it — doing research while keeping the fundamentals sharp.</span></p>
+          <dl class="facts">
+            <div><dt><span class="zh">坐标</span><span class="en">Based in</span></dt><dd><span class="zh">香港</span><span class="en">Hong Kong</span></dd></div>
+            <div><dt><span class="zh">方向</span><span class="en">Focus</span></dt><dd><span class="zh">量化研究 · 数据科学</span><span class="en">Quant research · data science</span></dd></div>
+            <div><dt><span class="zh">语言</span><span class="en">Languages</span></dt><dd><span class="zh">中文 · 英文</span><span class="en">Chinese · English</span></dd></div>
+            <div><dt><span class="zh">工具</span><span class="en">Tools</span></dt><dd>Python · SQL · Git</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- work -->
+      <section id="work">
+        <div class="sh"><span class="no">02</span><h2><span class="zh">项目</span><span class="en">Work</span></h2>
+          <span class="hint"><span class="zh">公开仓库 · 可复现</span><span class="en">public repos · reproducible</span></span></div>
+        <p class="lead"><span class="zh">两条线：QS 投研项目集，以及支撑研究的 ML / DL / LLM 知识库；都在同一个 GitHub 仓库维护。</span>
+        <span class="en">Two tracks — the QS research portfolio and the ML/DL/LLM knowledge base behind it — kept in one GitHub repo.</span></p>
+
+        <div class="track qs">
+          <div class="thead"><span class="badge">QS</span>
+            <h3><span class="zh">投研项目集</span><span class="en">Quant research portfolio</span></h3>
+            <span class="cnt">2 projects</span></div>
+          <div class="cards">
+            <article class="card rv">
+              <span class="idx">04 · ALPHA</span>
+              <h4>Alpha Signal</h4>
+              <p><span class="zh">横截面信号的完整研究流程：因子诊断、合成与稳健性检验，输出可复核的信号表现，而不是一次性回测。</span>
+              <span class="en">The full path for a cross-sectional signal: factor diagnostics, combination and robustness checks — output that can be reviewed, not a one-off backtest.</span></p>
+              <div class="tech"><span>Python</span><span>Factor research</span><span>Validation</span></div>
+              <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+                <span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
+            </article>
+            <article class="card rv">
+              <span class="idx">05 · RISK</span>
+              <h4>Portfolio Risk</h4>
+              <p><span class="zh">组合层面的风险研究：权重约束、风险预算与回撤 / VaR 评估，把信号变成受约束的组合。</span>
+              <span class="en">Risk at the portfolio level: weight constraints, risk budgeting and drawdown / VaR evaluation — turning signals into a constrained portfolio.</span></p>
+              <div class="tech"><span>Optimisation</span><span>VaR / CVaR</span><span>Attribution</span></div>
+              <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+                <span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
+            </article>
+          </div>
+        </div>
+
+        <div class="track ml">
+          <div class="thead"><span class="badge">ML · DL · LLM</span>
+            <h3><span class="zh">量化学习知识库</span><span class="en">Quant learning knowledge base</span></h3>
+            <span class="cnt">5 modules</span></div>
+          <div class="cards">
+            <article class="card rv">
+              <span class="idx">MODULE 01</span>
+              <h4><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; time series</span></h4>
+              <p><span class="zh">估计、假设检验、平稳性与时序建模，为信号研究提供检验工具和判断标准。</span>
+              <span class="en">Estimation, hypothesis testing, stationarity and time-series modelling — the testing toolkit behind signal research.</span></p>
+              <div class="tech"><span>Statistics</span><span>Time series</span><span>Walk-forward</span></div>
+            </article>
+            <article class="card rv">
+              <span class="idx">MODULE 02</span>
+              <h4><span class="zh">机器学习</span><span class="en">Machine learning</span></h4>
+              <p><span class="zh">横截面建模与正则化、基线对比与模型选择，重点在金融数据上的稳健性。</span>
+              <span class="en">Cross-sectional modelling, regularisation, baselines and model selection — with an eye on robustness in financial data.</span></p>
+              <div class="tech"><span>scikit-learn</span><span>Regularisation</span><span>Model selection</span></div>
+            </article>
+            <article class="card rv">
+              <span class="idx">MODULE 03</span>
+              <h4><span class="zh">深度学习</span><span class="en">Deep learning</span></h4>
+              <p><span class="zh">时序与横截面深度模型、训练与验证设计，以及它和传统因子模型的关系。</span>
+              <span class="en">Sequence and cross-sectional deep models, training and validation design, and how they relate to classical factor models.</span></p>
+              <div class="tech"><span>PyTorch</span><span>Sequence models</span><span>Validation</span></div>
+            </article>
+            <article class="card rv">
+              <span class="idx">MODULE 04</span>
+              <h4><span class="zh">LLM 与另类数据</span><span class="en">LLM &amp; alternative data</span></h4>
+              <p><span class="zh">文本 → 情绪 / 事件因子 → 增量验证，也记录包括 null result 在内的真实结论。</span>
+              <span class="en">Text to sentiment / event factors to incremental validation — including honest reporting of null results.</span></p>
+              <div class="tech"><span>FinBERT</span><span>Embeddings</span><span>Alt data</span></div>
+            </article>
+            <article class="card rv">
+              <span class="idx">REPO</span>
+              <h4><span class="zh">框架图与时序图</span><span class="en">Framework &amp; sequence maps</span></h4>
+              <p><span class="zh">四张图说明两条线的关系、工作流与产出流程，是整个仓库的入口。</span>
+              <span class="en">Four maps describing how the two tracks relate, their workflow and output flow — the entry point to the repo.</span></p>
+              <div class="tech"><span>SVG</span><span>Workflow</span><span>Docs</span></div>
+              <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+                <span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- skills -->
+      <section id="skills">
+        <div class="sh"><span class="no">03</span><h2><span class="zh">技能</span><span class="en">Skills</span></h2>
+          <span class="hint"><span class="zh">按能力域分组</span><span class="en">grouped by capability</span></span></div>
+        <div class="legend2">
+          <span><i style="background:linear-gradient(90deg,#0E9F87,#2F6FE4)"></i><span class="zh">核心：日常主力</span><span class="en">Core — day-to-day</span></span>
+          <span><i style="background:linear-gradient(90deg,#2F6FE4,#6D4AEF)"></i><span class="zh">熟练：稳定使用</span><span class="en">Proficient — regular use</span></span>
+        </div>
+        <div class="skills">
+          <div class="sk rv"><h4><i style="background:var(--teal)"></i><span class="zh">量化研究</span><span class="en">Quantitative research</span><em>Core</em></h4>
+            <div class="sbar"><div class="lbl"><b><span class="zh">因子研究与信号构建</span><span class="en">Factor research &amp; signal design</span></b><em>Core</em></div>
+              <div class="strack"><span class="fill" style="--w:92%;--c1:#0E9F87;--c2:#2F6FE4"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">回测与交易成本</span><span class="en">Backtesting &amp; transaction costs</span></b><em>Core</em></div>
+              <div class="strack"><span class="fill" style="--w:88%;--c1:#0E9F87;--c2:#2F6FE4"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">组合优化与约束</span><span class="en">Portfolio optimisation</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:78%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">业绩与风险归因</span><span class="en">Performance &amp; risk attribution</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:76%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+          </div>
+          <div class="sk rv"><h4><i style="background:var(--violet)"></i><span class="zh">机器学习与 AI</span><span class="en">Machine learning &amp; AI</span><em>Core</em></h4>
+            <div class="sbar"><div class="lbl"><b><span class="zh">监督学习与正则化</span><span class="en">Supervised learning &amp; regularisation</span></b><em>Core</em></div>
+              <div class="strack"><span class="fill" style="--w:90%;--c1:#0E9F87;--c2:#2F6FE4"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">验证设计与基线对比</span><span class="en">Validation design &amp; baselines</span></b><em>Core</em></div>
+              <div class="strack"><span class="fill" style="--w:86%;--c1:#0E9F87;--c2:#2F6FE4"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">深度学习与时序模型</span><span class="en">Deep learning &amp; sequence models</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:79%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">NLP / LLM 流水线</span><span class="en">NLP / LLM pipelines</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:80%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+          </div>
+          <div class="sk rv"><h4><i style="background:var(--blue)"></i><span class="zh">数据与工程</span><span class="en">Data &amp; engineering</span><em>Core</em></h4>
+            <div class="sbar"><div class="lbl"><b>Python</b><em>Core</em></div>
+              <div class="strack"><span class="fill" style="--w:92%;--c1:#0E9F87;--c2:#2F6FE4"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">SQL 与数据建模</span><span class="en">SQL &amp; data modelling</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:83%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">数据管道与自动化</span><span class="en">Data pipelines &amp; automation</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:81%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">Git 与可复现项目</span><span class="en">Git &amp; reproducible projects</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:82%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+          </div>
+          <div class="sk rv"><h4><i style="background:var(--amber)"></i><span class="zh">金融与表达</span><span class="en">Finance &amp; communication</span></h4>
+            <div class="sbar"><div class="lbl"><b><span class="zh">市场与产品数据语言</span><span class="en">Market &amp; product data literacy</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:77%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">风险计量（VaR / 回撤）</span><span class="en">Risk measures (VaR / drawdown)</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:76%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">中英研究报告写作</span><span class="en">Bilingual research writing</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:81%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+            <div class="sbar"><div class="lbl"><b><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; visuals</span></b><em>Proficient</em></div>
+              <div class="strack"><span class="fill" style="--w:83%;--c1:#2F6FE4;--c2:#6D4AEF"></span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- background -->
+      <section id="background">
+        <div class="sh"><span class="no">04</span><h2><span class="zh">经历</span><span class="en">Background</span></h2>
+          <span class="hint"><span class="zh">按类型概述</span><span class="en">by type</span></span></div>
+        <div class="xp">
+          <div class="xpi rv" style="--ac:var(--blue)">
+            <div class="when"><span class="zh">现在</span><span class="en">Present</span></div>
+            <div class="role"><span class="zh">金融行业 · 建模 / 数据 / AI</span><span class="en">Financial services · modelling / data / AI</span></div>
+            <p><span class="zh">数据管道、模型评估、实验设计与自动化交付，把想法推进到可复用、可上线的形态。</span>
+            <span class="en">Data pipelines, model evaluation, experiment design and automation — taking ideas to a reusable, deployable form.</span></p>
+          </div>
+          <div class="xpi rv" style="--ac:var(--violet)">
+            <div class="when"><span class="zh">此前</span><span class="en">Earlier</span></div>
+            <div class="role"><span class="zh">量化方向实习 · 风险与策略测试</span><span class="en">Quant internship · risk &amp; strategy testing</span></div>
+            <p><span class="zh">接触风险计量与策略测试，理解交易与风险语言，学会用数据回答“策略在压力下是否成立”。</span>
+            <span class="en">Worked on risk measurement and strategy testing — learning the language of trading and risk, and whether a strategy holds under stress.</span></p>
+          </div>
+          <div class="xpi rv" style="--ac:var(--teal)">
+            <div class="when"><span class="zh">持续</span><span class="en">Ongoing</span></div>
+            <div class="role"><span class="zh">独立研究与公开作品集</span><span class="en">Independent research &amp; public portfolio</span></div>
+            <p><span class="zh">维护 QS 项目集与量化学习知识库，全部基于公开数据、可复现、可讨论。</span>
+            <span class="en">Maintaining the QS portfolio and quant knowledge base — public data, reproducible, open to discussion.</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- contact -->
+      <section id="contact">
+        <div class="sh"><span class="no">05</span><h2><span class="zh">联系</span><span class="en">Contact</span></h2></div>
+        <div class="contact rv">
+          <div>
+            <h3><span class="zh">聊聊研究、项目或合作</span><span class="en">Research, projects or collaboration</span></h3>
+            <p><span class="zh">代码与项目都在 GitHub；简历可按需索取，也欢迎通过邮件或 LinkedIn 联系。</span>
+            <span class="en">Code and projects live on GitHub; CV available on request — reach out by email or LinkedIn.</span></p>
+          </div>
+          <div class="links">
+            <a href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener"><svg><use href="#i-linkedin"/></svg>LinkedIn</a>
+            <a href="mailto:hello@example.com"><svg><use href="#i-mail"/></svg>Email</a>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>© 2026 Aylon · Hong Kong</span>
+        <span><span class="zh">公开版 · 不含内部信息</span><span class="en">public version · no internal data</span></span>
+      </footer>
+
+    </div>
+  </div>
+</main>
+
+<button id="toTop" aria-label="back to top"><svg><use href="#i-up"/></svg></button>
+
+<script>
+"use strict";
+(function(){
+  /* --- pixel duck avatar --- */
+  var GRID=[
+    "....................",
+    "....K.........K.....",
+    "....K....K....K.....",
+    "....K....K....K.....",
+    "...KKK..KKK..KKK....",
+    "..KKKKKKKKKKKKKKKK..",
+    ".KKKKKKKKKKKKKKKKKK.",
+    ".KYYYYYYYYYYYYYYYYK.",
+    ".KYYYYYYYYYYYYYYYYK.",
+    ".KYYYKKYYYYYKKYYYYK.",
+    ".KYYYKKYYYYYKKYYYYK.",
+    ".KYYYYYYYYYYYYYYYYK.",
+    ".KYYYYYYYYYYYYYYYYK.",
+    ".KYYOOOOOOOOOOOOYYK.",
+    ".KYYOOOOOOOOOOOOYYK.",
+    ".KYYOOOOOOOOOOOOYYK.",
+    "..KYYOOOOOOOOOOYYK..",
+    "..KYYYYYYYYYYYYYYK..",
+    "...KKYYYYYYYYYYKK...",
+    ".....KKKKKKKKKK....."
+  ];
+  var CLR={K:"#232A38",Y:"#F6CE3C",O:"#E88B2E",W:"#FFFFFF",D:"#D9A81F"};
+  var host=document.getElementById("avatar");
+  if(host){
+    var rows=GRID.length, cols=GRID[0].length, rects="";
+    for(var y=0;y<rows;y++){
+      var line=GRID[y];
+      for(var x=0;x<cols;x++){
+        var c=line.charAt(x);
+        if(c==="."||!CLR[c]) continue;
+        rects+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+CLR[c]+'"/>';
+      }
+    }
+    host.innerHTML='<svg viewBox="0 0 '+cols+' '+rows+'" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+rects+'</svg>';
+  }
+
+  /* --- language --- */
+  function read(){ try{ return localStorage.getItem("site.lang")==="en"?"en":"zh"; }catch(e){ return "zh"; } }
+  function apply(v){
+    document.documentElement.setAttribute("data-lang", v);
+    document.documentElement.setAttribute("lang", v==="zh" ? "zh-Hans" : "en");
+    document.querySelectorAll(".lang button").forEach(function(b){
+      b.setAttribute("aria-selected", b.getAttribute("data-v")===v ? "true" : "false");
+    });
+    try{ localStorage.setItem("site.lang", v); }catch(e){}
+  }
+  document.addEventListener("click", function(e){
+    var b=e.target.closest && e.target.closest(".lang button");
+    if(b) apply(b.getAttribute("data-v"));
+  });
+  apply(read());
+
+  /* --- scroll progress + back to top --- */
+  var prog=document.getElementById("prog"), topBtn=document.getElementById("toTop");
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?(window.scrollY/h)*100:0)+"%";
+    topBtn.classList.toggle("show", window.scrollY>420);
+  }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+  topBtn.addEventListener("click", function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+
+  /* --- staggered reveal --- */
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          var el=en.target;
+          var i=el.parentElement?Array.prototype.indexOf.call(el.parentElement.children,el):0;
+          el.style.transitionDelay=Math.min(i*70,280)+"ms";
+          el.classList.add("on");
+          io.unobserve(el);
+        }
+      });
+    },{threshold:.12,rootMargin:"0px 0px -8% 0px"});
+    document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+  }else{
+    document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("on"); });
+  }
+
+  /* --- toc scrollspy --- */
+  var links=Array.prototype.slice.call(document.querySelectorAll("aside.toc a"));
+  var targets=links.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if(targets.length && "IntersectionObserver" in window){
+    var spy=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          links.forEach(function(a){ a.classList.toggle("on", a.getAttribute("href")==="#"+en.target.id); });
+        }
+      });
+    },{rootMargin:"-25% 0px -60% 0px",threshold:0});
+    targets.forEach(function(t){ spy.observe(t); });
+  }
+})();
+</script>
+</body>
+</html>
+
