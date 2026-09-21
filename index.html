@@ -263,25 +263,28 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 /* notes */
 .nlead{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:16px;
   padding:20px 22px;box-shadow:var(--sh1);--mx:50%;--my:50%}
-.nlead::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
-  background:radial-gradient(280px circle at var(--mx) var(--my),rgba(14,159,135,.13),transparent 62%)}
-.nlead:hover::before{opacity:1}
-.nlead>*{position:relative;z-index:1}
-.nlead .nstatus{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10.5px;color:var(--mute)}
-.nlead .nstatus .ok{color:#0B6F5E;background:var(--teal2);border:1px solid #9FDCCF;border-radius:6px;
-  padding:2px 8px;font-weight:800}
-.nlead h4{margin:10px 0 7px;font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.015em}
-.nlead p{margin:0;font-size:13.6px;line-height:1.76;color:var(--ink2);max-width:72ch}
-.nlist{display:grid;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
-  box-shadow:var(--sh1);margin-top:12px}
-.nrow{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:13px 20px;
-  border-top:1px solid var(--line);transition:background .2s}
-.nrow:first-child{border-top:0}
-.nrow:hover{background:var(--card2)}
-.nrow b{font-size:13.8px;font-weight:700;color:var(--ink)}
-.nrow .st{font-family:var(--mono);font-size:10px;color:var(--mute);border:1px dashed var(--line2);
-  border-radius:6px;padding:2px 8px;white-space:nowrap}
-.nhint{margin:12px 0 0;font-size:12.5px;color:var(--mute)}
+.nlist2{display:grid;gap:12px}
+.nitem{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh1);
+  overflow:hidden;transition:border-color .25s,box-shadow .25s}
+.nitem[open]{border-color:var(--line2);box-shadow:var(--sh2)}
+.nitem>summary{list-style:none;cursor:pointer;display:block;padding:17px 22px;position:relative}
+.nitem>summary::-webkit-details-marker{display:none}
+.nitem>summary:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+.ntag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.1em;
+  color:var(--teal);margin-bottom:7px}
+.nitem h4{margin:0 0 6px;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.015em;padding-right:34px}
+.nsum{margin:0;font-size:13.2px;line-height:1.72;color:var(--ink2);max-width:78ch;padding-right:34px}
+.nchev{position:absolute;right:22px;top:24px;width:10px;height:10px;border-right:2px solid var(--mute);
+  border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.nitem[open] .nchev{transform:rotate(-135deg)}
+.nbody{padding:16px 22px 20px;border-top:1px solid var(--line)}
+.nbody p{margin:0 0 11px;font-size:13.6px;line-height:1.8;color:var(--ink2);max-width:80ch}
+.nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:13.6px;line-height:1.8;color:var(--ink2);max-width:80ch}
+.nbody li{margin-bottom:7px}
+.nbody b{color:var(--ink)}
+.nbody p:last-child,.nbody ol:last-child{margin-bottom:0}
+.nbody .take{margin:0;background:var(--teal2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;
+  padding:10px 14px;font-size:13.4px;line-height:1.75;color:#0B5A4C;max-width:80ch}
 
 /* contact */
 .contact{margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:18px;
@@ -367,9 +370,9 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
 /* 7 · backdrop: dot parallax + cursor glow */
 .backdrop::after{transform:translate3d(0,var(--dy,0),0)}
-.cglow{position:absolute;left:calc(var(--cx,50%) - 260px);top:calc(var(--cy,50%) - 260px);
-  width:520px;height:520px;border-radius:50%;pointer-events:none;opacity:0;filter:blur(8px);
-  background:radial-gradient(circle,rgba(14,159,135,.17),rgba(109,74,239,.10) 46%,transparent 68%);
+.cglow{position:absolute;left:calc(var(--cx,50%) - 130px);top:calc(var(--cy,50%) - 130px);
+  width:260px;height:260px;border-radius:50%;pointer-events:none;opacity:0;filter:blur(6px);
+  background:radial-gradient(circle,rgba(14,159,135,.13),rgba(109,74,239,.07) 44%,transparent 66%);
   transition:opacity .6s ease}
 @media (hover:hover) and (pointer:fine){.cglow{opacity:1}}
 
@@ -756,20 +759,87 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 
       <!-- notes -->
       <section id="notes">
-        <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记与写作</span><span class="en">Notes &amp; writing</span></span></h2>
-          <span class="hint"><span class="zh">写作清单 · 部分整理中</span><span class="en">writing list · some in draft</span></span></div>
-        <div class="nlead rv">
-          <div class="nstatus"><span class="ok"><span class="zh">整理中</span><span class="en">in draft</span></span><span>VALIDATION</span><span>·</span><span><span class="zh">约 6 分钟</span><span class="en">~6 min</span></span></div>
-          <h4><span class="zh">为什么单次留出切分会说谎</span><span class="en">Why a single hold-out split lies</span></h4>
-          <p><span class="zh">同一份数据换一个切分点，结论就能反转 —— 这篇写滚动窗口验证在设计上的三个取舍，以及我最后怎么选。</span>
-          <span class="en">Move the split point and the conclusion flips — three design trade-offs in walk-forward validation, and how I ended up choosing.</span></p>
+        <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
+          <span class="hint"><span class="zh">3 篇 · 点标题展开</span><span class="en">3 notes · tap a title to open</span></span></div>
+        <div class="nlist2">
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">VALIDATION</span>
+              <h4><span class="zh">为什么单次留出切分会说谎</span><span class="en">Why a single hold-out split lies</span></h4>
+              <p class="nsum"><span class="zh">同一份数据换一个切分点，结论就能反转 —— 所以验证设计要放在看收益之前。</span>
+              <span class="en">Move the split point and the conclusion flips — so validation design comes before looking at returns.</span></p>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">最常见的做法是把数据切成「训练段 + 测试段」跑一次，测试段表现不错就收工。问题在于测试段只有一段，它的结果强烈依赖你切在哪里；换一个起点，同一组因子可以从有效变成无效。</span>
+              <span class="en">The usual approach: cut the data into a train block and a test block, run it once, and stop when the test block looks good. But there is only one test block, and its result depends entirely on where you cut. Move the start date and the same factors can go from working to not working.</span></p>
+              <ol>
+                <li><span class="zh"><b>切分点数量与重训成本</b>：用滚动窗口（walk-forward）跑多个不重叠的测试窗，看的指标是「多数窗口是否同向」，而不是某一个窗口的峰值。数量越多结论越稳，但重训成本线性上升 —— 我的起步设置是 5 个窗口。</span>
+                <span class="en"><b>Number of folds vs retraining cost.</b> Run non-overlapping test windows and read the majority direction, not the best window. More windows means a steadier conclusion and linearly rising retraining cost — five is my starting point.</span></li>
+                <li><span class="zh"><b>窗口长度与制度漂移</b>：窗口越长越稳，但会把旧制度混进来；越短越贴近当下，噪声越大。折中做法是固定测试窗长度（例如 6 个月），把训练窗做成扩张窗口，让早期数据自然退出权重。</span>
+                <span class="en"><b>Window length vs regime drift.</b> Longer windows are steadier but mix in old regimes; shorter windows are noisier but closer to today. A workable compromise: fix the test window (say six months) and let the training window expand so old data fades out naturally.</span></li>
+                <li><span class="zh"><b>多重检验</b>：试过 20 个变体再挑出最好的那个，等于在测试集上做了 20 次选择，最好看的那个大概率是运气。要么事先固定假设，要么按变体数量做一次保守修正（例如 Bonferroni），并把这个过程写进记录。</span>
+                <span class="en"><b>Multiple testing.</b> Trying twenty variants and keeping the best one means making twenty choices on the test set — the winner is probably luck. Either pre-register the hypothesis or apply a conservative correction (Bonferroni, for instance), and record that you did.</span></li>
+              </ol>
+              <p class="take"><span class="zh">判断标准很简单：换个切分点结论就翻，这条信号就还没资格进组合。</span>
+              <span class="en">The test is simple: if the conclusion flips when you move the split point, the signal is not ready for a portfolio.</span></p>
+            </div>
+          </details>
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">COSTS</span>
+              <h4><span class="zh">交易成本假设如何悄悄改写夏普</span><span class="en">How cost assumptions quietly rewrite Sharpe</span></h4>
+              <p class="nsum"><span class="zh">同一组信号，换一套成本假设，夏普可以从 1.2 掉到 0.4 —— 成本不是最后扣的一项，是设计的一部分。</span>
+              <span class="en">The same signals can go from a Sharpe of 1.2 to 0.4 on different cost assumptions — costs are a design input, not a final deduction.</span></p>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">很多人把成本当成最后减掉的一个数。实际上换手率、点差和冲击成本各自都能单独把一条信号判死刑，而且它们互相不替代。</span>
+              <span class="en">Costs are often treated as a single number subtracted at the end. In practice turnover, spread and market impact can each kill a signal on their own, and none of them substitutes for the others.</span></p>
+              <ul>
+                <li><span class="zh"><b>先看换手，再看收益</b>：先算月均单边换手。如果换手超出资金容量能承受的范围，再漂亮的 IC 也没有意义。</span>
+                <span class="en"><b>Turnover first, returns second.</b> Compute average one-way monthly turnover before looking at performance. If turnover exceeds what the capacity can absorb, a beautiful IC means nothing.</span></li>
+                <li><span class="zh"><b>分层建模，别用一个常数</b>：显性成本（佣金、税费）+ 点差（按流动性分档，流动性差的标的给更宽的假设）+ 冲击成本（用成交量占比的平方根近似）。三层分开写，任何一层换成更准的模型都不用推翻整体。</span>
+                <span class="en"><b>Model in layers, not as one constant.</b> Explicit costs + spread (tiered by liquidity) + impact (roughly the square root of participation rate). Keeping the layers separate means you can replace any one of them without rebuilding everything.</span></li>
+                <li><span class="zh"><b>把成本做成区间而不是点估计</b>：给 5–15 bps 这样的区间，看结论在两端是否都成立。只有低成本端成立，就说明这是成本敏感型信号 —— 出路是降换手或换标池，而不是把假设调低。</span>
+                <span class="en"><b>Use a range, not a point estimate.</b> Test 5–15 bps and check whether the conclusion holds at both ends. If it only survives at the low end, the signal is cost-sensitive: the fix is lower turnover or a different universe, not a friendlier assumption.</span></li>
+                <li><span class="zh"><b>在组合层面评估成本</b>：同一批信号，等权、风险平价、带约束的优化，换手差别很大。成本要放在权重方案这一层比较，而不是只看单条信号的换手。</span>
+                <span class="en"><b>Evaluate at portfolio level.</b> Equal weight, risk parity and constrained optimisation produce very different turnover from the same signals. Compare costs where the weights are decided, not per signal.</span></li>
+              </ul>
+              <p class="take"><span class="zh">一个能通过的检查：把成本假设翻倍，结论是否仍然成立。如果不成立，那条信号卖的是低成本假设，不是预测能力。</span>
+              <span class="en">One check worth running: double the cost assumption. If the conclusion does not survive, the signal is selling a cheap-cost assumption rather than predictive power.</span></p>
+            </div>
+          </details>
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">ALT DATA</span>
+              <h4><span class="zh">把文本变成事件因子</span><span class="en">Turning text into event factors</span></h4>
+              <p class="nsum"><span class="zh">文本因子的难点不在抽取，而在回答「它比现有信息多出了什么」。</span>
+              <span class="en">The hard part of a text factor is not extraction — it is answering what it adds beyond what you already have.</span></p>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">从新闻、公告或社交文本到「事件因子」，链条通常只有四步：抽取、打分、因子化、回测。真正让结果失真的，几乎都在最后一步的比较基准上。</span>
+              <span class="en">From news, filings or social text to an event factor is usually four steps: extract, score, build the factor, backtest. Most of what goes wrong sits in the comparison you make at the last step.</span></p>
+              <ul>
+                <li><span class="zh"><b>时间戳是第一个坑</b>：文本的发布时间不等于数据可得时间。用收盘后才出现的新闻去解释当天收益，是最经典的未来函数。做法是把所有时间戳对齐到「下一个可交易时点」。</span>
+                <span class="en"><b>Timestamps come first.</b> Publication time is not availability time. Explaining today's return with news that appeared after the close is the classic look-ahead error. Align every timestamp to the next tradable point.</span></li>
+                <li><span class="zh"><b>情绪分数本身不是因子</b>：一个 -1 到 +1 的分数不带横截面区分度。要先做中性化（去掉市场、行业、规模成分），再看剩下的部分还有没有信息。</span>
+                <span class="en"><b>A sentiment score is not a factor.</b> A number between -1 and +1 carries no cross-sectional discrimination until you neutralise market, sector and size, then look at what is left.</span></li>
+                <li><span class="zh"><b>只认增量</b>：把动量、波动、规模等已有因子回归掉，看残差的 IC 还剩多少。增量接近零，说明这条文本因子只是已有因子的代理，不构成新信息。</span>
+                <span class="en"><b>Only incremental value counts.</b> Regress out momentum, volatility and size, then look at the residual IC. If the increment is near zero, the text factor is a proxy for something you already had.</span></li>
+                <li><span class="zh"><b>留一段完全不碰的样本外</b>：语言分布会漂移，模型在旧语料上学到的词、在新话题上会系统性失准。留最近 6 个月完全不参与调参，是检验它「还在不在工作」的最低成本方式。</span>
+                <span class="en"><b>Keep a truly untouched sample.</b> Language drifts: a model trained on older text misreads new topics in a systematic way. Holding out the most recent six months from all tuning is the cheapest way to see whether it still works.</span></li>
+              </ul>
+              <p class="take"><span class="zh">结论：文本因子值得做，但它的价值来自「已有数据没有的信息」，而不是把新闻变成数字。</span>
+              <span class="en">The takeaway: text factors are worth building, but their value comes from information you did not already have — not from turning news into numbers.</span></p>
+            </div>
+          </details>
+
         </div>
-        <div class="nlist rv">
-          <div class="nrow"><b><span class="zh">交易成本假设如何悄悄改写夏普</span><span class="en">Cost assumptions that quietly rewrite Sharpe</span></b><span class="st"><span class="zh">计划中</span><span class="en">planned</span></span></div>
-          <div class="nrow"><b><span class="zh">把文本变成事件因子</span><span class="en">Turning text into event factors</span></b><span class="st"><span class="zh">计划中</span><span class="en">planned</span></span></div>
-          <div class="nrow"><b><span class="zh">不成立的结论同样值得记录</span><span class="en">Null results deserve a record too</span></b><span class="st"><span class="zh">计划中</span><span class="en">planned</span></span></div>
-        </div>
-        <p class="nhint"><span class="zh">想看哪一篇，先说一声 —— 我按问的人排先后。</span><span class="en">Tell me which one to write first and I will reorder the list.</span></p>
       </section>
 
       <!-- contact -->
@@ -1067,19 +1137,22 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     paint();
   })();
 
-  /* backdrop: cursor glow */
+  /* backdrop: cursor glow that trails slightly behind the pointer */
   (function(){
     if(RM || !FINE || !bdEl) return;
-    var raf=false, mx=0, my=0;
+    var tx=0, ty=0, cx=0, cy=0, started=false, running=false;
+    function frame(){
+      cx += (tx-cx)*0.085;
+      cy += (ty-cy)*0.085;
+      bdEl.style.setProperty("--cx", cx.toFixed(1)+"px");
+      bdEl.style.setProperty("--cy", cy.toFixed(1)+"px");
+      if(Math.abs(tx-cx)>0.4 || Math.abs(ty-cy)>0.4){ requestAnimationFrame(frame); }
+      else { running=false; }
+    }
     window.addEventListener("pointermove", function(e){
-      mx=e.clientX; my=e.clientY;
-      if(raf) return;
-      raf=true;
-      requestAnimationFrame(function(){
-        raf=false;
-        bdEl.style.setProperty("--cx", mx+"px");
-        bdEl.style.setProperty("--cy", my+"px");
-      });
+      tx=e.clientX; ty=e.clientY;
+      if(!started){ started=true; cx=tx; cy=ty; }
+      if(!running){ running=true; requestAnimationFrame(frame); }
     }, {passive:true});
   })();
 
