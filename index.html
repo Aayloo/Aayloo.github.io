@@ -129,6 +129,24 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .aboutcard p:last-child{margin-bottom:0}
 .aboutcard strong{color:var(--ink);font-weight:700}
 
+/* about · interactive role switcher */
+.aboutcard .lede{margin-bottom:14px}
+.aTabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.aTab{appearance:none;cursor:pointer;font:inherit;font-size:13px;font-weight:700;color:var(--ink2);
+  background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:7px 15px;
+  transition:color .2s,background .2s,border-color .2s,transform .2s}
+.aTab:hover{transform:translateY(-1px);border-color:var(--line2);color:var(--ink)}
+.aTab[aria-selected="true"]{background:var(--teal2);border-color:#9FDCCF;color:#0B6F5E}
+.aTab:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.aPanel{display:none}
+.aPanel.on{display:block;animation:afade .35s ease both}
+@keyframes afade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .aTab{transition:none}
+  .aTab:hover{transform:none}
+  .aPanel.on{animation:none}
+}
+
 /* research interests (professor style, inline with bio) */
 .ri-block{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
 .ri-block h3{margin:0 0 4px;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
@@ -374,14 +392,23 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
       <section id="about">
         <div class="sh"><span class="no">01</span><h2><span class="zh">关于我</span><span class="en">About</span></h2></div>
         <div class="aboutcard rv">
-          <p><span class="zh">数据科学与 AI 工程背景，日常工作围绕数据管道、模型开发与评估，以及研究工具的工程化；工作之外的兴趣集中在系统化投资研究。</span>
-          <span class="en">Data science and AI engineering, with day-to-day work across data pipelines, model development and evaluation, and research tooling. Outside work, the focus is systematic investment research.</span></p>
-          <p><span class="zh">判断一份研究是否值得信，看的是<strong>结论在成本、风险与不同样本下是否依然成立</strong>，而非回测曲线的形状。公开工作因此分成两块：<strong>QS 项目集</strong>（信号与组合风险）与方法底座（统计、机器学习、深度学习、LLM）。</span>
-          <span class="en">What makes a study trustworthy is <strong>whether the conclusion still holds under costs, risk and different samples</strong> — not the shape of the equity curve. The public work is therefore split into two parts: a <strong>QS project portfolio</strong> (signals and portfolio risk), and the method stack behind it (statistics, machine learning, deep learning, LLM).</span></p>
+          <p class="lede"><span class="zh">数据科学与 AI 工程背景。日常围绕三件事：数据、模型，以及让两者可复现的工具。</span>
+          <span class="en">Data science and AI engineering. Day-to-day work comes down to three things: data, models, and the tooling that keeps both reproducible.</span></p>
+
+          <div class="aTabs" role="tablist" aria-label="About">
+            <button class="aTab" id="atab-0" role="tab" aria-selected="true" aria-controls="apanel-0"><span class="zh">数据</span><span class="en">Data</span></button>
+            <button class="aTab" id="atab-1" role="tab" aria-selected="false" aria-controls="apanel-1"><span class="zh">模型</span><span class="en">Models</span></button>
+            <button class="aTab" id="atab-2" role="tab" aria-selected="false" aria-controls="apanel-2"><span class="zh">工具</span><span class="en">Tooling</span></button>
+          </div>
+          <div class="aPanels">
+            <p class="aPanel on" id="apanel-0" role="tabpanel" aria-labelledby="atab-0"><span class="zh">把来源各异的数据整理成干净、可复用、有据可查的数据集。</span><span class="en">Turning scattered sources into clean, reusable, traceable datasets.</span></p>
+            <p class="aPanel" id="apanel-1" role="tabpanel" aria-labelledby="atab-1"><span class="zh">训练、评估与对比模型；看的是在真实条件下是否稳定，而不是单次分数。</span><span class="en">Training, evaluating and comparing models — judged on stability under real conditions, not on a single score.</span></p>
+            <p class="aPanel" id="apanel-2" role="tabpanel" aria-labelledby="atab-2"><span class="zh">把一次性的分析做成可复现、可交接、能长期维护的东西。</span><span class="en">Turning one-off analysis into work that is reproducible, handover-ready and maintainable.</span></p>
+          </div>
 
           <div class="ri-block">
             <h3><span class="zh">研究兴趣</span><span class="en">Research Interests</span></h3>
-            <p class="ri-note"><span class="zh">按主题排列，括号内为主要方法。</span><span class="en">Listed by theme, with primary methods.</span></p>
+            <p class="ri-note"><span class="zh">五个方向并列，副标给出主要方法。</span><span class="en">Five themes side by side, with primary methods beneath each.</span></p>
             <div class="ri-figure">
               <svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Research interests map">
                 <defs>
@@ -403,65 +430,65 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                   <g class="rnode">
                     <rect x="105" y="74" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="105" y="86" width="6" height="68" rx="3" fill="#0E9F87"/>
-                    <g class="zh"><text x="129" y="116" font-size="16" font-weight="800" fill="#111A28">系统化信号与因子</text>
-                    <text x="129" y="140" font-size="12" fill="#4A5A72">因子模型 · IC / IR</text></g>
-                    <g class="en"><text x="129" y="116" font-size="16" font-weight="800" fill="#111A28">Systematic alpha</text>
-                    <text x="129" y="140" font-size="12" fill="#4A5A72">factor models · IC / IR</text></g>
+                    <g class="zh"><text x="129" y="116" font-size="16" font-weight="800" fill="#111A28">数据与特征</text>
+                    <text x="129" y="140" font-size="12" fill="#4A5A72">管道 · 清洗 · 契约</text></g>
+                    <g class="en"><text x="129" y="116" font-size="16" font-weight="800" fill="#111A28">Data &amp; features</text>
+                    <text x="129" y="140" font-size="12" fill="#4A5A72">pipelines · features</text></g>
                   </g>
                   <!-- node 2 -->
                   <g class="rnode">
                     <rect x="645" y="74" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
-                    <rect x="645" y="86" width="6" height="68" rx="3" fill="#2F6FE4"/>
-                    <g class="zh"><text x="669" y="116" font-size="16" font-weight="800" fill="#111A28">组合构建与风险</text>
-                    <text x="669" y="140" font-size="12" fill="#4A5A72">优化 · 风险预算 · 归因</text></g>
-                    <g class="en"><text x="669" y="116" font-size="16" font-weight="800" fill="#111A28">Portfolio &amp; risk</text>
-                    <text x="669" y="140" font-size="12" fill="#4A5A72">optimisation · attribution</text></g>
+                    <rect x="645" y="86" width="6" height="68" rx="3" fill="#6D4AEF"/>
+                    <g class="zh"><text x="669" y="116" font-size="16" font-weight="800" fill="#111A28">建模与评估</text>
+                    <text x="669" y="140" font-size="12" fill="#4A5A72">监督学习 · 验证</text></g>
+                    <g class="en"><text x="669" y="116" font-size="16" font-weight="800" fill="#111A28">Modelling &amp; evaluation</text>
+                    <text x="669" y="140" font-size="12" fill="#4A5A72">training · validation</text></g>
                   </g>
                   <!-- node 3 -->
                   <g class="rnode">
                     <rect x="45" y="284" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
-                    <rect x="45" y="296" width="6" height="68" rx="3" fill="#6D4AEF"/>
-                    <g class="zh"><text x="69" y="326" font-size="16" font-weight="800" fill="#111A28">金融机器学习</text>
-                    <text x="69" y="350" font-size="12" fill="#4A5A72">横截面 · 滚动验证</text></g>
-                    <g class="en"><text x="69" y="326" font-size="16" font-weight="800" fill="#111A28">Applied ML</text>
-                    <text x="69" y="350" font-size="12" fill="#4A5A72">cross-sectional · walk-forward</text></g>
+                    <rect x="45" y="296" width="6" height="68" rx="3" fill="#D9821A"/>
+                    <g class="zh"><text x="69" y="326" font-size="16" font-weight="800" fill="#111A28">文本与语言模型</text>
+                    <text x="69" y="350" font-size="12" fill="#4A5A72">抽取 · 情绪 · 嵌入</text></g>
+                    <g class="en"><text x="69" y="326" font-size="16" font-weight="800" fill="#111A28">Text &amp; language models</text>
+                    <text x="69" y="350" font-size="12" fill="#4A5A72">extraction · embeddings</text></g>
                   </g>
                   <!-- node 4 -->
                   <g class="rnode">
                     <rect x="705" y="284" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
-                    <rect x="705" y="296" width="6" height="68" rx="3" fill="#D9821A"/>
-                    <g class="zh"><text x="729" y="326" font-size="16" font-weight="800" fill="#111A28">LLM 与另类数据</text>
-                    <text x="729" y="350" font-size="12" fill="#4A5A72">FinBERT · 增量检验</text></g>
-                    <g class="en"><text x="729" y="326" font-size="16" font-weight="800" fill="#111A28">LLM &amp; alt data</text>
-                    <text x="729" y="350" font-size="12" fill="#4A5A72">FinBERT · incremental tests</text></g>
+                    <rect x="705" y="296" width="6" height="68" rx="3" fill="#2F6FE4"/>
+                    <g class="zh"><text x="729" y="326" font-size="16" font-weight="800" fill="#111A28">信号与组合</text>
+                    <text x="729" y="350" font-size="12" fill="#4A5A72">因子 · 优化 · 归因</text></g>
+                    <g class="en"><text x="729" y="326" font-size="16" font-weight="800" fill="#111A28">Signals &amp; portfolios</text>
+                    <text x="729" y="350" font-size="12" fill="#4A5A72">factors · attribution</text></g>
                   </g>
                   <!-- node 5 -->
                   <g class="rnode">
                     <rect x="375" y="459" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="375" y="471" width="6" height="68" rx="3" fill="#5B6B85"/>
-                    <g class="zh"><text x="399" y="501" font-size="16" font-weight="800" fill="#111A28">可复现研究工程</text>
-                    <text x="399" y="525" font-size="12" fill="#4A5A72">数据契约 · 版本化流水线</text></g>
+                    <g class="zh"><text x="399" y="501" font-size="16" font-weight="800" fill="#111A28">可复现工程</text>
+                    <text x="399" y="525" font-size="12" fill="#4A5A72">版本化 · 自动化</text></g>
                     <g class="en"><text x="399" y="501" font-size="16" font-weight="800" fill="#111A28">Reproducible tooling</text>
-                    <text x="399" y="525" font-size="12" fill="#4A5A72">data contracts · pipelines</text></g>
+                    <text x="399" y="525" font-size="12" fill="#4A5A72">versioning · automation</text></g>
                   </g>
 
                   <!-- hub -->
                   <g class="hub">
                     <circle cx="500" cy="300" r="84" fill="url(#cg)"/>
-                    <g class="zh"><text x="500" y="292" text-anchor="middle" font-size="19" font-weight="800" fill="#fff">量化研究</text>
-                    <text x="500" y="318" text-anchor="middle" font-size="12" fill="#B7CBDD">Quant Research</text></g>
-                    <g class="en"><text x="500" y="294" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Quant</text>
-                    <text x="500" y="318" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Research</text></g>
+                    <g class="zh"><text x="500" y="292" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">数据科学与 AI</text>
+                    <text x="500" y="318" text-anchor="middle" font-size="12" fill="#B7CBDD">Data Science &amp; AI</text></g>
+                    <g class="en"><text x="500" y="294" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Data Science</text>
+                    <text x="500" y="318" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">&amp; AI</text></g>
                   </g>
                 </g>
               </svg>
             </div>
             <ul class="ri-list ri-compact">
-              <li style="--ac:var(--teal)"><b><span class="zh">系统化信号与因子</span><span class="en">Systematic alpha</span></b><em>factor models · IC / IR</em></li>
-              <li style="--ac:var(--blue)"><b><span class="zh">组合构建与风险</span><span class="en">Portfolio &amp; risk</span></b><em>optimisation · attribution</em></li>
-              <li style="--ac:var(--violet)"><b><span class="zh">金融机器学习</span><span class="en">Applied ML</span></b><em>cross-sectional · walk-forward</em></li>
-              <li style="--ac:var(--amber)"><b><span class="zh">LLM 与另类数据</span><span class="en">LLM &amp; alt data</span></b><em>FinBERT · incremental tests</em></li>
-              <li style="--ac:#5B6B85"><b><span class="zh">可复现研究工程</span><span class="en">Reproducible tooling</span></b><em>data contracts · pipelines</em></li>
+              <li style="--ac:var(--teal)"><b><span class="zh">数据与特征</span><span class="en">Data &amp; features</span></b><em>pipelines · features</em></li>
+              <li style="--ac:var(--violet)"><b><span class="zh">建模与评估</span><span class="en">Modelling &amp; evaluation</span></b><em>training · validation</em></li>
+              <li style="--ac:var(--amber)"><b><span class="zh">文本与语言模型</span><span class="en">Text &amp; language models</span></b><em>extraction · embeddings</em></li>
+              <li style="--ac:var(--blue)"><b><span class="zh">信号与组合</span><span class="en">Signals &amp; portfolios</span></b><em>factors · attribution</em></li>
+              <li style="--ac:#5B6B85"><b><span class="zh">可复现工程</span><span class="en">Reproducible tooling</span></b><em>versioning · automation</em></li>
             </ul>
           </div>
         </div>
@@ -693,6 +720,32 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
     if(b) apply(b.getAttribute("data-v"));
   });
   apply(read());
+
+  /* about · interactive role switcher */
+  (function(){
+    var tabs=Array.prototype.slice.call(document.querySelectorAll(".aTab"));
+    if(!tabs.length) return;
+    var panels=Array.prototype.slice.call(document.querySelectorAll(".aPanel"));
+    function pick(i){
+      tabs.forEach(function(t,k){
+        var on=(k===i);
+        t.setAttribute("aria-selected", on?"true":"false");
+        t.classList.toggle("on", on);
+      });
+      panels.forEach(function(p,k){ p.classList.toggle("on", k===i); });
+    }
+    tabs.forEach(function(t,i){
+      t.addEventListener("click", function(){ pick(i); });
+      t.addEventListener("keydown", function(e){
+        var d=(e.key==="ArrowRight"||e.key==="ArrowDown")?1:((e.key==="ArrowLeft"||e.key==="ArrowUp")?-1:0);
+        if(!d) return;
+        e.preventDefault();
+        var n=(i+d+tabs.length)%tabs.length;
+        pick(n); tabs[n].focus();
+      });
+    });
+    pick(0);
+  })();
 
   /* progress + nav state + parallax + back to top */
   var prog=document.getElementById("prog"), nav=document.getElementById("nav"), topBtn=document.getElementById("toTop");
