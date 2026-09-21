@@ -298,17 +298,147 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 #toTop:hover{transform:translateY(-3px)}
 #toTop svg{width:16px;height:16px}
 
+/* ---- motion layer ---- */
+/* 1 · hero: per-character name + typed keywords */
+.hero h1 .ch{display:inline-block;opacity:0;transform:translateY(.5em);
+  animation:chUp .55s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.16s + var(--i) * 55ms)}
+@keyframes chUp{to{opacity:1;transform:none}}
+.hero .intro .caret{display:inline-block;width:7px;height:15px;background:var(--teal);vertical-align:-2px;
+  margin-left:3px;animation:blink 1.05s steps(2,start) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* 2 · section head: mask reveal + rail fill */
+.sh{position:relative;padding-left:18px}
+.sh::before{content:"";position:absolute;left:0;top:48px;bottom:16px;width:2px;border-radius:2px;background:var(--line)}
+.sh::after{content:"";position:absolute;left:0;top:48px;width:2px;height:0;border-radius:2px;
+  background:linear-gradient(180deg,var(--teal),var(--blue));transition:height .8s cubic-bezier(.2,.7,.2,1)}
+.sh.on::after{height:calc(100% - 64px)}
+.sh h2{overflow:hidden;padding-bottom:2px}
+.sh h2 .shin{display:block;transform:translateY(110%);transition:transform .75s cubic-bezier(.2,.7,.2,1)}
+.sh.on h2 .shin{transform:none}
+
+/* 3 · cards & notes: cursor spotlight + tilt */
+.card,.note{--mx:50%;--my:50%}
+.note{position:relative;overflow:hidden}
+.card::before,.note::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  transition:opacity .3s;z-index:0;
+  background:radial-gradient(260px circle at var(--mx) var(--my),rgba(14,159,135,.14),transparent 62%)}
+.card:hover::before,.note:hover::before{opacity:1}
+.card>*,.note>*{position:relative;z-index:1}
+.card.pulse{animation:cardPulse 1.3s ease}
+@keyframes cardPulse{0%{box-shadow:0 0 0 0 rgba(14,159,135,.4)}100%{box-shadow:0 0 0 16px rgba(14,159,135,0)}}
+
+/* 4 · research map: node ↔ copy linkage */
+.ri-figure .rnode{cursor:pointer}
+.ri-figure.ready .rnode.hot{transform:translateY(-4px);transition-delay:0ms}
+.ri-figure .rnode.hot rect:first-of-type{stroke:var(--teal);filter:drop-shadow(0 12px 20px rgba(14,159,135,.22))}
+.ri-figure .rlink.hot{stroke:var(--teal);stroke-width:3;stroke-dasharray:5 6;animation:dashmove 1.1s linear infinite}
+.ri-list li.hot{color:var(--ink)}
+.ri-list li.hot::before{transform:scale(1.5)}
+.ri-cap{margin:12px 0 0;font-size:12.6px;color:var(--mute);min-height:20px;line-height:1.6;
+  transition:color .25s}
+.ri-cap.hot{color:var(--ink2)}
+.ri-cap b{color:var(--ink);font-weight:700}
+
+/* 5 · skill bars: counting value + shimmer */
+.sbar .lbl b{flex:1 1 auto}
+.sbar .lbl em{flex:0 0 auto;margin-left:8px}
+.sbar .lbl .pct{flex:0 0 auto;margin-left:8px;min-width:22px;text-align:right;font-style:normal;
+  font-family:var(--mono);font-size:10.5px;color:var(--mute);font-variant-numeric:tabular-nums}
+.sbar .strack{transition:height .25s ease,box-shadow .25s ease}
+.sbar:hover .strack{height:8px;box-shadow:0 0 0 3px rgba(14,159,135,.09)}
+.sbar .fill{position:relative;overflow:hidden}
+.sbar .fill::after{content:"";position:absolute;inset:0;transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.62),transparent)}
+.sk.on .sbar .fill::after{animation:sweep 1.5s .45s ease-out}
+@keyframes sweep{to{transform:translateX(100%)}}
+
+/* 6 · project flow: scroll narrative */
+.flow{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:44px;margin-top:14px}
+.fstep{min-height:56vh;display:flex;flex-direction:column;justify-content:center;max-width:54ch;
+  opacity:.34;transform:translateY(8px);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.fstep.on{opacity:1;transform:none}
+.fstep .fno{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--teal);letter-spacing:.1em}
+.fstep h3{margin:6px 0 8px;font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.fstep p{margin:0;font-size:14px;line-height:1.8;color:var(--ink2)}
+.fside{position:relative}
+.fhold{position:sticky;top:100px;height:calc(100vh - 150px);display:flex;align-items:center;
+  justify-content:center;gap:20px}
+.fpipe{position:relative;flex:0 0 auto;width:2px;height:62%;max-height:340px;border-radius:2px;
+  background:var(--line);overflow:hidden}
+.fpipe .ffill{position:absolute;left:0;top:0;width:100%;height:0;border-radius:2px;
+  background:linear-gradient(180deg,var(--teal),var(--blue) 60%,var(--violet));transition:height .3s linear}
+.fcol{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center}
+.ffigs{position:relative;width:100%;max-width:280px;aspect-ratio:1/1}
+.ffig{position:absolute;inset:0;opacity:0;transform:scale(.94);
+  transition:opacity .45s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.ffig.on{opacity:1;transform:none}
+.ffig svg{width:100%;height:100%;display:block}
+.fhint{margin:16px 0 0;font-size:11.5px;font-family:var(--mono);color:var(--mute);text-align:center;
+  position:relative;z-index:1}
+@media (max-width:900px){
+  .flow{grid-template-columns:1fr;gap:0;margin-top:6px}
+  .fside{display:none}
+  .fstep{min-height:auto;max-width:none;opacity:1;transform:none;padding:14px 0 14px 16px;
+    border-left:2px solid var(--line);transition:border-color .3s}
+  .fstep.on{border-left-color:var(--teal)}
+}
+
+/* 7 · backdrop: dot parallax + cursor glow */
+.backdrop::after{transform:translate3d(0,var(--dy,0),0)}
+.cglow{position:absolute;left:calc(var(--cx,50%) - 260px);top:calc(var(--cy,50%) - 260px);
+  width:520px;height:520px;border-radius:50%;pointer-events:none;opacity:0;filter:blur(8px);
+  background:radial-gradient(circle,rgba(14,159,135,.17),rgba(109,74,239,.10) 46%,transparent 68%);
+  transition:opacity .6s ease}
+@media (hover:hover) and (pointer:fine){.cglow{opacity:1}}
+
+/* 8 · micro-interactions */
+.navin .lk{position:relative}
+.navin .lk::after{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:2px;border-radius:2px;
+  background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.navin .lk:hover::after{transform:scaleX(1)}
+.hbtn,.links a{position:relative}
+.hbtn::after,.links a::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;
+  box-shadow:0 0 0 0 rgba(14,159,135,.35);transition:box-shadow .5s ease-out}
+.hbtn:hover::after,.links a:hover::after{box-shadow:0 0 0 7px rgba(14,159,135,0)}
+.card .go{position:relative}
+.card .go::after{content:"";position:absolute;left:0;bottom:-3px;height:1.5px;width:100%;background:currentColor;
+  border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+.card .go:hover::after{transform:scaleX(1)}
+#toTop .ring{position:absolute;inset:0;width:44px;height:44px;transform:rotate(-90deg)}
+#toTop .ring circle{fill:none;stroke-width:2.5}
+#toTop .ring .rb{stroke:var(--line)}
+#toTop .ring .rf{stroke:var(--teal);stroke-linecap:round;stroke-dasharray:125.7;stroke-dashoffset:125.7}
+body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay:calc(var(--li,0) * 45ms)}
+@keyframes langIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .hero h1 .ch{opacity:1;transform:none;animation:none}
+  .hero .intro .caret{animation:none}
+  .sh h2 .shin{transform:none;transition:none}
+  .sh::after{height:calc(100% - 64px)}
+  .fstep{opacity:1;transform:none;transition:none}
+  .ffig{transition:none}
+  .sbar .fill::after{animation:none}
+  .sbar:hover .strack{height:6px;box-shadow:none}
+  .cglow{display:none}
+  .card.pulse{animation:none}
+  body.langswap .zh,body.langswap .en{animation:none}
+  .navin .lk::after,.card .go::after,.hbtn::after,.links a::after{transition:none}
+}
+
 /* reveal */
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .rv.on{opacity:1;transform:none}
-.hero .hello,.hero h1,.hero .role,.hero .intro,.heroacts,.avatarwrap,.stats{opacity:0;animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards}
-.avatarwrap{animation-delay:.05s}.hero .hello{animation-delay:.12s}.hero h1{animation-delay:.2s}
-.hero .role{animation-delay:.28s}.hero .intro{animation-delay:.36s}.heroacts{animation-delay:.44s}.stats{animation-delay:.52s}
+.hero .hello,.hero .role,.hero .intro,.heroacts,.avatarwrap,.stats{opacity:0;animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards}
+.avatarwrap{animation-delay:.05s}.hero .hello{animation-delay:.12s}
+.hero .role{animation-delay:.26s}.hero .intro{animation-delay:.34s}.heroacts{animation-delay:.42s}.stats{animation-delay:.5s}
 @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .avatarwrap{animation-name:riseIn,floaty;animation-duration:.7s,6s;animation-delay:.05s,1.2s;animation-iteration-count:1,infinite;animation-fill-mode:forwards,none}
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
-  .hero .hello,.hero h1,.hero .role,.hero .intro,.heroacts,.avatarwrap,.stats{opacity:1;animation:none}
+  .hero .hello,.hero .role,.hero .intro,.heroacts,.avatarwrap,.stats{opacity:1;animation:none}
   .avatarwrap{animation:none}
 }
 @media (max-width:760px){main{padding:0 16px 56px}.navin{padding:0 14px}.hero{padding:36px 0 18px}
@@ -318,7 +448,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 </style>
 </head>
 <body>
-<div class="backdrop" aria-hidden="true"><i id="g1"></i><i id="g2"></i><i id="g3"></i></div>
+<div class="backdrop" aria-hidden="true"><i id="g1"></i><i id="g2"></i><i id="g3"></i><span class="cglow"></span></div>
 <div id="prog" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -370,9 +500,9 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
           </div>
           <div class="herotext">
             <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
-            <h1>Aylon</h1>
+            <h1 data-split>Aylon</h1>
             <p class="role">Data Scientist<span>·</span>AI Engineer<span>·</span>Quant</p>
-            <p class="intro"><span class="zh">横截面信号 · 组合风险 · 另类数据</span><span class="en">Cross-sectional signals · Portfolio risk · Alternative data</span></p>
+            <p class="intro"><span class="tw" data-en="Cross-sectional signals · Portfolio risk · Alternative data">横截面信号 · 组合风险 · 另类数据</span><span class="caret" aria-hidden="true"></span></p>
             <div class="heroacts">
               <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View projects</span></a>
               <a class="hbtn ghost" href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
@@ -390,7 +520,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
       <!-- about -->
       <section id="about">
-        <div class="sh"><span class="no">01</span><h2><span class="zh">关于我</span><span class="en">About</span></h2></div>
+        <div class="sh"><span class="no">01</span><h2><span class="shin"><span class="zh">关于我</span><span class="en">About</span></span></h2></div>
         <div class="aboutcard rv">
           <p class="lede"><span class="zh">数据科学与 AI 工程背景。日常围绕三件事：数据、模型，以及让两者可复现的工具。</span>
           <span class="en">Data science and AI engineering. Day-to-day work comes down to three things: data, models, and the tooling that keeps both reproducible.</span></p>
@@ -427,7 +557,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                   </g>
 
                   <!-- node 1 -->
-                  <g class="rnode">
+                  <g class="rnode" data-r="0" data-target="p-stat">
                     <rect x="105" y="74" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="105" y="86" width="6" height="68" rx="3" fill="#0E9F87"/>
                     <g class="zh"><text x="129" y="116" font-size="16" font-weight="800" fill="#111A28">数据与特征</text>
@@ -436,7 +566,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                     <text x="129" y="140" font-size="12" fill="#4A5A72">pipelines · features</text></g>
                   </g>
                   <!-- node 2 -->
-                  <g class="rnode">
+                  <g class="rnode" data-r="1" data-target="p-ml">
                     <rect x="645" y="74" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="645" y="86" width="6" height="68" rx="3" fill="#6D4AEF"/>
                     <g class="zh"><text x="669" y="116" font-size="16" font-weight="800" fill="#111A28">建模与评估</text>
@@ -445,7 +575,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                     <text x="669" y="140" font-size="12" fill="#4A5A72">training · validation</text></g>
                   </g>
                   <!-- node 3 -->
-                  <g class="rnode">
+                  <g class="rnode" data-r="2" data-target="p-llm">
                     <rect x="45" y="284" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="45" y="296" width="6" height="68" rx="3" fill="#D9821A"/>
                     <g class="zh"><text x="69" y="326" font-size="16" font-weight="800" fill="#111A28">文本与语言模型</text>
@@ -454,7 +584,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                     <text x="69" y="350" font-size="12" fill="#4A5A72">extraction · embeddings</text></g>
                   </g>
                   <!-- node 4 -->
-                  <g class="rnode">
+                  <g class="rnode" data-r="3" data-target="p-alpha">
                     <rect x="705" y="284" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="705" y="296" width="6" height="68" rx="3" fill="#2F6FE4"/>
                     <g class="zh"><text x="729" y="326" font-size="16" font-weight="800" fill="#111A28">信号与组合</text>
@@ -463,7 +593,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                     <text x="729" y="350" font-size="12" fill="#4A5A72">factors · attribution</text></g>
                   </g>
                   <!-- node 5 -->
-                  <g class="rnode">
+                  <g class="rnode" data-r="4" data-target="p-map">
                     <rect x="375" y="459" width="250" height="92" rx="16" fill="#fff" stroke="#E4E8EE" stroke-width="1.5"/>
                     <rect x="375" y="471" width="6" height="68" rx="3" fill="#5B6B85"/>
                     <g class="zh"><text x="399" y="501" font-size="16" font-weight="800" fill="#111A28">可复现工程</text>
@@ -483,6 +613,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
                 </g>
               </svg>
             </div>
+            <p class="ri-cap" id="riCap" aria-live="polite"></p>
             <ul class="ri-list ri-compact">
               <li style="--ac:var(--teal)"><b><span class="zh">数据与特征</span><span class="en">Data &amp; features</span></b><em>pipelines · features</em></li>
               <li style="--ac:var(--violet)"><b><span class="zh">建模与评估</span><span class="en">Modelling &amp; evaluation</span></b><em>training · validation</em></li>
@@ -496,8 +627,74 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
       <!-- work -->
       <section id="work">
-        <div class="sh"><span class="no">02</span><h2><span class="zh">项目</span><span class="en">Projects</span></h2>
+        <div class="sh"><span class="no">02</span><h2><span class="shin"><span class="zh">项目</span><span class="en">Projects</span></span></h2>
           <span class="hint"><span class="zh">公开仓库 · 可复现</span><span class="en">public repos · reproducible</span></span></div>
+        <div class="flow" id="flow">
+          <div class="fsteps">
+            <div class="fstep">
+              <span class="fno">01</span>
+              <h3><span class="zh">信号</span><span class="en">Signal</span></h3>
+              <p><span class="zh">从原始数据到一组可检验的信号：先做诊断与合成，再看它在成本、风险与不同样本下是否还站得住。</span>
+              <span class="en">From raw data to a set of testable signals: diagnostics and combination first, then whether it survives costs, risk and different samples.</span></p>
+            </div>
+            <div class="fstep">
+              <span class="fno">02</span>
+              <h3><span class="zh">组合</span><span class="en">Portfolio</span></h3>
+              <p><span class="zh">把信号变成受约束的组合：权重上限、风险预算、换手与成本控制 —— 先定义能亏多少，再谈能赚多少。</span>
+              <span class="en">Turning signals into a constrained portfolio: position limits, risk budgeting, turnover and cost control. Decide the downside first.</span></p>
+            </div>
+            <div class="fstep">
+              <span class="fno">03</span>
+              <h3><span class="zh">归因</span><span class="en">Attribution</span></h3>
+              <p><span class="zh">拆开收益来源：多少来自因子、多少来自风险暴露与交易成本；不成立的结论同样留档。</span>
+              <span class="en">Breaking the return into its sources — factor, risk exposure, trading cost — and keeping a record of what did not hold.</span></p>
+            </div>
+          </div>
+          <div class="fside">
+            <div class="fhold">
+              <span class="fpipe" aria-hidden="true"><span class="ffill" id="ffill"></span></span>
+              <div class="fcol">
+                <div class="ffigs" aria-hidden="true">
+                  <div class="ffig">
+                    <svg viewBox="0 0 300 300" fill="none">
+                      <line x1="30" y1="252" x2="272" y2="252" stroke="#E4E8EE" stroke-width="2"/>
+                      <line x1="30" y1="252" x2="30" y2="48" stroke="#E4E8EE" stroke-width="2"/>
+                      <path d="M30 214 L272 214" stroke="#D9821A" stroke-width="2" stroke-dasharray="6 6" opacity=".8"/>
+                      <path d="M30 238 L70 214 L104 224 L140 170 L176 180 L212 120 L248 76" stroke="#0E9F87" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="248" cy="76" r="5.5" fill="#0E9F87"/>
+                      <circle cx="248" cy="76" r="12" stroke="#0E9F87" stroke-width="1.5" opacity=".35"/>
+                    </svg>
+                  </div>
+                  <div class="ffig">
+                    <svg viewBox="0 0 300 300" fill="none">
+                      <line x1="30" y1="252" x2="272" y2="252" stroke="#E4E8EE" stroke-width="2"/>
+                      <path d="M30 92 L272 92" stroke="#E4E8EE" stroke-width="2" stroke-dasharray="6 6"/>
+                      <rect x="52" y="132" width="36" height="120" rx="7" fill="#2F6FE4" opacity=".85"/>
+                      <rect x="104" y="152" width="36" height="100" rx="7" fill="#0E9F87" opacity=".85"/>
+                      <rect x="156" y="178" width="36" height="74" rx="7" fill="#6D4AEF" opacity=".8"/>
+                      <rect x="208" y="198" width="36" height="54" rx="7" fill="#D9821A" opacity=".8"/>
+                    </svg>
+                  </div>
+                  <div class="ffig">
+                    <svg viewBox="0 0 300 300" fill="none">
+                      <rect x="32" y="70" width="118" height="26" rx="7" fill="#0E9F87" opacity=".85"/>
+                      <rect x="150" y="70" width="70" height="26" rx="7" fill="#2F6FE4" opacity=".85"/>
+                      <rect x="220" y="70" width="50" height="26" rx="7" fill="#D9821A" opacity=".85"/>
+                      <line x1="32" y1="124" x2="270" y2="124" stroke="#E4E8EE" stroke-width="2"/>
+                      <rect x="32" y="152" width="14" height="14" rx="4" fill="#0E9F87"/>
+                      <rect x="32" y="186" width="14" height="14" rx="4" fill="#2F6FE4"/>
+                      <rect x="32" y="220" width="14" height="14" rx="4" fill="#D9821A"/>
+                      <rect x="60" y="157" width="86" height="5" rx="2.5" fill="#E4E8EE"/>
+                      <rect x="60" y="191" width="58" height="5" rx="2.5" fill="#E4E8EE"/>
+                      <rect x="60" y="225" width="38" height="5" rx="2.5" fill="#E4E8EE"/>
+                    </svg>
+                  </div>
+                </div>
+                <p class="fhint"><span class="zh">滚动看流程</span><span class="en">scroll to follow the flow</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="roadmap" id="roadmap">
           <div class="rail" aria-hidden="true">
             <div class="rail-wrap">
@@ -515,7 +712,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
           </div>
           <div class="roadlist">
             <p class="glabel"><span class="badge qs">QS</span><span class="zh">投研项目集</span><span class="en">Quant research portfolio</span></p>
-            <article class="card rv">
+            <article class="card rv" id="p-alpha">
               <span class="idx">04 · ALPHA</span>
               <h4>Alpha Signal</h4>
               <p><span class="zh">横截面信号的完整研究流程：因子诊断、合成与稳健性检验，输出可复核的信号表现而非一次性回测。</span>
@@ -523,7 +720,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
               <div class="tech"><span>Python</span><span>Factor research</span><span>Validation</span></div>
               <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
             </article>
-            <article class="card rv">
+            <article class="card rv" id="p-risk">
               <span class="idx">05 · RISK</span>
               <h4>Portfolio Risk</h4>
               <p><span class="zh">组合层面的风险研究：权重约束、风险预算与回撤 / VaR 评估，把信号变成受约束的组合。</span>
@@ -532,35 +729,35 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
               <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
             </article>
             <p class="glabel"><span class="badge ml">ML · DL · LLM</span><span class="zh">量化学习知识库</span><span class="en">Quant learning knowledge base</span></p>
-            <article class="card rv">
+            <article class="card rv" id="p-stat">
               <span class="idx">MODULE 01</span>
               <h4><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; time series</span></h4>
               <p><span class="zh">估计、假设检验、平稳性与时序建模，为信号研究提供检验工具和判断标准。</span>
               <span class="en">Estimation, hypothesis testing, stationarity and time-series modelling — the testing toolkit behind signal research.</span></p>
               <div class="tech"><span>Statistics</span><span>Time series</span><span>Walk-forward</span></div>
             </article>
-            <article class="card rv">
+            <article class="card rv" id="p-ml">
               <span class="idx">MODULE 02</span>
               <h4><span class="zh">机器学习</span><span class="en">Machine learning</span></h4>
               <p><span class="zh">横截面建模与正则化、基线对比与模型选择，重点在金融数据上的稳健性。</span>
               <span class="en">Cross-sectional modelling, regularisation, baselines and model selection — with an eye on robustness in financial data.</span></p>
               <div class="tech"><span>scikit-learn</span><span>Regularisation</span><span>Model selection</span></div>
             </article>
-            <article class="card rv">
+            <article class="card rv" id="p-dl">
               <span class="idx">MODULE 03</span>
               <h4><span class="zh">深度学习</span><span class="en">Deep learning</span></h4>
               <p><span class="zh">时序与横截面深度模型、训练与验证设计，以及它和传统因子模型的关系。</span>
               <span class="en">Sequence and cross-sectional deep models, training and validation design, and how they relate to classical factor models.</span></p>
               <div class="tech"><span>PyTorch</span><span>Sequence models</span><span>Validation</span></div>
             </article>
-            <article class="card rv">
+            <article class="card rv" id="p-llm">
               <span class="idx">MODULE 04</span>
               <h4><span class="zh">LLM 与另类数据</span><span class="en">LLM &amp; alternative data</span></h4>
               <p><span class="zh">文本 → 情绪 / 事件因子 → 增量验证，也记录包括 null result 在内的真实结论。</span>
               <span class="en">Text to sentiment / event factors to incremental validation — including honest reporting of null results.</span></p>
               <div class="tech"><span>FinBERT</span><span>Embeddings</span><span>Alt data</span></div>
             </article>
-            <article class="card rv">
+            <article class="card rv" id="p-map">
               <span class="idx">REPO</span>
               <h4><span class="zh">框架图与时序图</span><span class="en">Framework &amp; sequence maps</span></h4>
               <p><span class="zh">四张图说明两条线的关系、工作流与产出流程，是整个仓库的入口。</span>
@@ -574,7 +771,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
       <!-- skills -->
       <section id="skills">
-        <div class="sh"><span class="no">03</span><h2><span class="zh">技能</span><span class="en">Skills</span></h2>
+        <div class="sh"><span class="no">03</span><h2><span class="shin"><span class="zh">技能</span><span class="en">Skills</span></span></h2>
           <span class="hint"><span class="zh">按能力域分组</span><span class="en">grouped by capability</span></span></div>
         <div class="legend2">
           <span><i style="background:linear-gradient(90deg,#0E9F87,#2F6FE4)"></i><span class="zh">核心：日常主力</span><span class="en">Core — day-to-day</span></span>
@@ -626,7 +823,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
       <!-- background -->
       <section id="background">
-        <div class="sh"><span class="no">04</span><h2><span class="zh">经历</span><span class="en">Background</span></h2>
+        <div class="sh"><span class="no">04</span><h2><span class="shin"><span class="zh">经历</span><span class="en">Background</span></span></h2>
           <span class="hint"><span class="zh">按类型概述</span><span class="en">by type</span></span></div>
         <div class="xp">
           <div class="xpi rv" style="--ac:var(--blue)">
@@ -652,7 +849,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
       <!-- notes -->
       <section id="notes">
-        <div class="sh"><span class="no">05</span><h2><span class="zh">笔记与写作</span><span class="en">Notes &amp; writing</span></h2>
+        <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记与写作</span><span class="en">Notes &amp; writing</span></span></h2>
           <span class="hint"><span class="zh">随研究更新</span><span class="en">updated as research goes</span></span></div>
         <div class="notes">
           <div class="note rv"><span class="tag">VALIDATION</span>
@@ -676,7 +873,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 
       <!-- contact -->
       <section id="contact">
-        <div class="sh"><span class="no">06</span><h2><span class="zh">联系</span><span class="en">Contact</span></h2></div>
+        <div class="sh"><span class="no">06</span><h2><span class="shin"><span class="zh">联系</span><span class="en">Contact</span></span></h2></div>
         <div class="contact rv">
           <div>
             <h3><span class="zh">聊聊研究、项目或合作</span><span class="en">Research, projects or collaboration</span></h3>
@@ -700,11 +897,58 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
   </div>
 </main>
 
-<button id="toTop" aria-label="back to top"><svg><use href="#i-up"/></svg></button>
+<button id="toTop" aria-label="back to top">
+  <svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle class="rb" cx="22" cy="22" r="20"/><circle class="rf" id="toTopRing" cx="22" cy="22" r="20"/></svg>
+  <svg aria-hidden="true"><use href="#i-up"/></svg>
+</button>
 
 <script>
 "use strict";
 (function(){
+  /* environment */
+  var RM = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches);
+  var FINE = !!(window.matchMedia && window.matchMedia("(hover:hover) and (pointer:fine)").matches);
+
+  /* hero: split the name into characters */
+  (function(){
+    var h1 = document.querySelector(".hero h1[data-split]");
+    if(!h1) return;
+    var txt = h1.textContent.replace(/\s+/g," ").trim();
+    h1.textContent = "";
+    Array.prototype.forEach.call(txt, function(c,i){
+      var s = document.createElement("span");
+      s.className = "ch";
+      s.textContent = c === " " ? "\u00A0" : c;
+      s.style.setProperty("--i", i);
+      h1.appendChild(s);
+    });
+  })();
+
+  /* hero: typed keyword line */
+  var twEl = document.querySelector(".hero .intro .tw");
+  var twZh = twEl ? twEl.textContent.replace(/\s+/g," ").trim() : "";
+  var twEn = twEl ? (twEl.getAttribute("data-en") || "") : "";
+  var twTimer = null;
+  function typeInto(el, text){
+    if(twTimer){ clearTimeout(twTimer); twTimer = null; }
+    if(!el) return;
+    if(RM){ el.textContent = text; return; }
+    el.textContent = "";
+    var i = 0;
+    (function step(){
+      i++;
+      el.textContent = text.slice(0, i);
+      twTimer = i < text.length ? setTimeout(step, 34) : null;
+    })();
+  }
+  function isEn(){ return document.documentElement.getAttribute("data-lang") === "en"; }
+  var langHooks = [];
+  function syncLang(){
+    typeInto(twEl, isEn() ? twEn : twZh);
+    langStagger();
+    langHooks.forEach(function(f){ try{ f(); }catch(e){} });
+  }
+
   /* language */
   function read(){ try{ return localStorage.getItem("site.lang")==="en"?"en":"zh"; }catch(e){ return "zh"; } }
   function apply(v){
@@ -714,12 +958,12 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
       b.setAttribute("aria-selected", b.getAttribute("data-v")===v ? "true" : "false");
     });
     try{ localStorage.setItem("site.lang", v); }catch(e){}
+    syncLang();
   }
   document.addEventListener("click", function(e){
     var b=e.target.closest && e.target.closest(".lang button");
     if(b) apply(b.getAttribute("data-v"));
   });
-  apply(read());
 
   /* about · interactive role switcher */
   (function(){
@@ -750,6 +994,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
   /* progress + nav state + parallax + back to top */
   var prog=document.getElementById("prog"), nav=document.getElementById("nav"), topBtn=document.getElementById("toTop");
   var g1=document.getElementById("g1"), g2=document.getElementById("g2"), g3=document.getElementById("g3");
+  var bdEl=document.querySelector(".backdrop"), heroEl=document.querySelector(".hero"), ringEl=document.getElementById("toTopRing");
   var ticking=false;
   function onScroll(){
     if(ticking) return;
@@ -764,6 +1009,14 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
       if(g1){ g1.style.transform="translate3d(0,"+(y*0.06)+"px,0)"; }
       if(g2){ g2.style.transform="translate3d(0,"+(-y*0.04)+"px,0)"; }
       if(g3){ g3.style.transform="translate3d(0,"+(y*0.03)+"px,0)"; }
+      if(bdEl){ bdEl.style.setProperty("--dy", ((y*0.12)%26).toFixed(1)+"px"); }
+      if(heroEl && !RM){
+        var hh=heroEl.offsetHeight||1, p=Math.min(y/hh,1);
+        heroEl.style.transform="translate3d(0,"+(y*0.14).toFixed(1)+"px,0)";
+        heroEl.style.opacity=String(Math.max(0,1-p*1.25));
+        heroEl.style.filter=p>0.02?("blur("+Math.min(p*2.4,2.4).toFixed(2)+"px)"):"none";
+      }
+      if(ringEl){ ringEl.setAttribute("stroke-dashoffset", String((1-(h>0?y/h:0))*125.7)); }
     });
   }
   window.addEventListener("scroll", onScroll, {passive:true});
@@ -792,6 +1045,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
           var i=el.parentElement?Array.prototype.indexOf.call(el.parentElement.children,el):0;
           el.style.transitionDelay=Math.min(i*70,300)+"ms";
           el.classList.add("on");
+          if(el.classList.contains("sk")) runPct(el);
           io.unobserve(el);
         }
       });
@@ -874,6 +1128,189 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
     },{rootMargin:"-25% 0px -60% 0px",threshold:0});
     targets.forEach(function(t){ spy.observe(t); });
   }
+
+  /* language swap: staggered fade of the visible copy */
+  function langStagger(){
+    if(RM) return;
+    var els=document.querySelectorAll("main .zh, main .en"), n=0;
+    Array.prototype.forEach.call(els, function(el){
+      if(getComputedStyle(el).display === "none") return;
+      el.style.setProperty("--li", Math.min(n, 8));
+      n++;
+    });
+    document.body.classList.remove("langswap");
+    void document.body.offsetWidth;
+    document.body.classList.add("langswap");
+    setTimeout(function(){ document.body.classList.remove("langswap"); }, 1100);
+  }
+
+  /* section heads: mask reveal + rail fill */
+  (function(){
+    var heads=document.querySelectorAll(".sh");
+    if(!heads.length) return;
+    if(RM || !("IntersectionObserver" in window)){
+      Array.prototype.forEach.call(heads, function(h){ h.classList.add("on"); });
+      return;
+    }
+    var shio=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add("on"); shio.unobserve(en.target); }
+      });
+    },{threshold:.35});
+    Array.prototype.forEach.call(heads, function(h){ shio.observe(h); });
+  })();
+
+  /* cards & notes: cursor spotlight + tilt */
+  (function(){
+    if(RM || !FINE) return;
+    Array.prototype.forEach.call(document.querySelectorAll(".card, .note"), function(el){
+      el.addEventListener("pointermove", function(e){
+        var r=el.getBoundingClientRect();
+        var x=e.clientX-r.left, y=e.clientY-r.top;
+        el.style.setProperty("--mx", x+"px");
+        el.style.setProperty("--my", y+"px");
+        el.style.transform="perspective(1000px) rotateX("+(((y/r.height)-.5)*-2.2).toFixed(2)
+          +"deg) rotateY("+(((x/r.width)-.5)*2.2).toFixed(2)+"deg) translateY(-3px)";
+      });
+      el.addEventListener("pointerleave", function(){ el.style.transform=""; });
+    });
+  })();
+
+  /* research map: node ↔ copy linkage */
+  (function(){
+    var nodes=Array.prototype.slice.call(document.querySelectorAll(".ri-figure .rnode"));
+    if(!nodes.length) return;
+    var cap=document.getElementById("riCap");
+    /* the rail paths are listed in the same order as the nodes */
+    var paths=Array.prototype.slice.call(document.querySelectorAll(".ri-figure .rlink path"));
+    var rows=Array.prototype.slice.call(document.querySelectorAll(".ri-list li"));
+    var hint={zh:"把鼠标移到节点上看每个方向在做什么；点一下跳到对应项目。",
+              en:"Hover a node to see what each theme covers — click to jump to the matching project."};
+    function setCap(i){
+      if(!cap) return;
+      if(i===null){ cap.innerHTML=hint[isEn()?"en":"zh"]; cap.classList.remove("hot"); return; }
+      var g=nodes[i].querySelector(isEn()?".en":".zh") || nodes[i].querySelector(".zh");
+      var ts=g?g.querySelectorAll("text"):[];
+      var a=ts[0]?ts[0].textContent.trim():"", b=ts[1]?ts[1].textContent.trim():"";
+      cap.innerHTML=b?("<b>"+a+"</b> · "+b):("<b>"+a+"</b>");
+      cap.classList.add("hot");
+    }
+    function hot(i,on){
+      nodes.forEach(function(n,k){ n.classList.toggle("hot", on && k===i); });
+      paths.forEach(function(p,k){ p.classList.toggle("hot", on && k===i); });
+      rows.forEach(function(r,k){ r.classList.toggle("hot", on && k===i); });
+      setCap(on?i:null);
+    }
+    function jump(n){
+      var el=document.getElementById(n.getAttribute("data-target")||"");
+      if(!el) return;
+      el.scrollIntoView({behavior:RM?"auto":"smooth", block:"center"});
+      if(RM) return;
+      el.classList.remove("pulse");
+      void el.offsetWidth;
+      el.classList.add("pulse");
+      setTimeout(function(){ el.classList.remove("pulse"); },1500);
+    }
+    nodes.forEach(function(n,i){
+      n.addEventListener("pointerenter", function(){ hot(i,true); });
+      n.addEventListener("pointerleave", function(){ hot(i,false); });
+      n.addEventListener("focus", function(){ hot(i,true); });
+      n.addEventListener("blur", function(){ hot(i,false); });
+      n.addEventListener("click", function(){ jump(n); });
+    });
+    rows.forEach(function(r,i){
+      r.addEventListener("pointerenter", function(){ hot(i,true); });
+      r.addEventListener("pointerleave", function(){ hot(i,false); });
+    });
+    setCap(null);
+    langHooks.push(function(){ setCap(null); });
+  })();
+
+  /* skills: numeric value next to each bar */
+  (function(){
+    Array.prototype.forEach.call(document.querySelectorAll(".sbar"), function(bar){
+      var fill=bar.querySelector(".fill"), lbl=bar.querySelector(".lbl");
+      if(!fill||!lbl||lbl.querySelector(".pct")) return;
+      if(!fill.style.getPropertyValue("--w")) return;
+      var s=document.createElement("i");
+      s.className="pct";
+      s.textContent="0";
+      lbl.appendChild(s);
+    });
+  })();
+  function runPct(sk){
+    var idx=0;
+    Array.prototype.forEach.call(sk.querySelectorAll(".sbar"), function(bar){
+      var pct=bar.querySelector(".pct"), fill=bar.querySelector(".fill");
+      if(!pct||!fill) return;
+      var w=parseInt(fill.style.getPropertyValue("--w"),10)||0;
+      var mine=idx++;
+      if(RM){ pct.textContent=w; return; }
+      setTimeout(function(){
+        var start=null;
+        requestAnimationFrame(function step(ts){
+          if(!start) start=ts;
+          var p=Math.min((ts-start)/900,1);
+          pct.textContent=Math.round(w*(1-Math.pow(1-p,3)));
+          if(p<1) requestAnimationFrame(step);
+        });
+      }, 140+mine*70);
+    });
+  }
+
+  /* project flow: scroll narrative */
+  (function(){
+    var flow=document.getElementById("flow");
+    if(!flow) return;
+    var steps=Array.prototype.slice.call(flow.querySelectorAll(".fstep"));
+    var figs=Array.prototype.slice.call(flow.querySelectorAll(".ffig"));
+    var fill=document.getElementById("ffill");
+    if(!steps.length) return;
+    if(RM){
+      steps.forEach(function(s){ s.classList.add("on"); });
+      if(figs[0]) figs[0].classList.add("on");
+      if(fill) fill.style.height="100%";
+      return;
+    }
+    var raf=false;
+    function paint(){
+      raf=false;
+      var mid=window.innerHeight*0.55, best=0, dist=Infinity;
+      steps.forEach(function(s,i){
+        var b=s.getBoundingClientRect(), c=b.top+b.height/2, d=Math.abs(c-mid);
+        if(d<dist){ dist=d; best=i; }
+      });
+      steps.forEach(function(s,i){ s.classList.toggle("on", i===best); });
+      figs.forEach(function(f,i){ f.classList.toggle("on", i===best); });
+      if(fill){
+        var r=flow.getBoundingClientRect();
+        var p=r.height>0?((mid-r.top)/r.height):0;
+        fill.style.height=(Math.max(0,Math.min(1,p))*100).toFixed(1)+"%";
+      }
+    }
+    function onScroll(){ if(raf) return; raf=true; requestAnimationFrame(paint); }
+    window.addEventListener("scroll", onScroll, {passive:true});
+    window.addEventListener("resize", onScroll);
+    paint();
+  })();
+
+  /* backdrop: cursor glow */
+  (function(){
+    if(RM || !FINE || !bdEl) return;
+    var raf=false, mx=0, my=0;
+    window.addEventListener("pointermove", function(e){
+      mx=e.clientX; my=e.clientY;
+      if(raf) return;
+      raf=true;
+      requestAnimationFrame(function(){
+        raf=false;
+        bdEl.style.setProperty("--cx", mx+"px");
+        bdEl.style.setProperty("--cy", my+"px");
+      });
+    }, {passive:true});
+  })();
+
+  apply(read());
 })();
 </script>
 </body>
