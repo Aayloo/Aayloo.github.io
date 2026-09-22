@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aylon · Data Science &amp; Quantitative Research</title>
+<title>Aylon · Data Scientist &amp; AI Engineer</title>
 <meta name="description" content="Aylon — data scientist and AI engineer in Hong Kong. Research interests: systematic alpha, portfolio construction and risk, applied machine learning, LLM and alternative data.">
 <link rel="icon" href="assets/psyduck.png">
 <style>
@@ -97,7 +97,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .hero h1{font-size:clamp(32px,4.6vw,48px);font-weight:800;color:var(--ink);line-height:1.1;
   letter-spacing:-.03em;margin:0 0 8px}
 .hero .role{font-size:clamp(17px,2vw,21px);font-weight:800;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em}
-.hero .role span{color:var(--mute);font-weight:600;margin:0 6px}
+.hero .role i{color:var(--mute);font-weight:600;font-style:normal;margin:0 8px}
 .hero .intro{font-size:16px;line-height:1.8;color:var(--ink2);max-width:62ch;margin:0}
 .hero .intro b{color:var(--ink);font-weight:700}
 .heroacts{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
@@ -371,32 +371,87 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 .piece{width:172px;background:#fff;border:1px solid var(--line);border-radius:12px;
   box-shadow:0 10px 24px rgba(17,26,40,.09);padding:9px 11px 10px}
 .piece.w200{width:200px}
-.piece .pl{display:block;font-family:var(--mono);font-size:9.5px;font-weight:800;color:var(--mute);
-  letter-spacing:.06em;margin-bottom:7px}
-.piece .ps{display:block;font-size:10px;color:var(--mute);margin-top:7px;line-height:1.4}
-.chip2{background:#fff;border:1px solid var(--line2);border-radius:999px;padding:5px 12px;
-  font-size:10.5px;font-weight:700;color:var(--ink2);white-space:nowrap;box-shadow:0 8px 18px rgba(17,26,40,.08)}
+.piece .pl,.pdata .pl,.prisk .pl{display:block;font-family:var(--mono);font-size:9.5px;font-weight:800;
+  color:var(--mute);letter-spacing:.06em;margin-bottom:7px}
+.piece .ps,.pdata .ps,.prisk .ps{display:block;font-size:10px;color:var(--mute);margin-top:7px;line-height:1.4}
+
+/* ① dark data panel */
+.pdata{position:relative;overflow:hidden;width:154px;background:#13294B;border-radius:12px;
+  padding:10px 12px 11px;box-shadow:0 14px 28px rgba(19,41,75,.28)}
+.pdata .pl{color:#9FB2C8;margin-bottom:8px}
+.pdata .ps{color:#8FA3BC;margin-top:8px}
+.prow{display:flex;gap:4px;margin-bottom:4px}
+.prow i{flex:1 1 auto;height:7px;border-radius:2px;background:rgba(255,255,255,.2);transition:background .5s ease}
+.prow i.bad{background:#E0776B}
+#obRaw.clean .prow i.bad{background:#6FE3C8}
+.pscan{position:absolute;left:0;right:0;top:0;height:2px;opacity:0;
+  background:linear-gradient(90deg,transparent,#6FE3C8,transparent)}
+#obRaw.clean .pscan{animation:scanline .9s ease-out}
+@keyframes scanline{0%{opacity:1;transform:translateY(2px)}100%{opacity:0;transform:translateY(76px)}}
+
+/* ② chips + stamp */
+.chip2{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line2);
+  border-radius:999px;padding:5px 12px;font-size:10.5px;font-weight:700;color:var(--ink2);
+  white-space:nowrap;box-shadow:0 8px 18px rgba(17,26,40,.08)}
 .chip2 b{color:var(--ink)}
-.pcells{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
-.pcells i{height:9px;border-radius:2.5px;background:#E8EDF3;transition:background .55s ease}
-.pcells i.bad{background:#F3D8CB}
-#obRaw.clean .pcells i.bad{background:#CBEBE3}
+.chip2 svg{width:11px;height:11px;flex:0 0 auto}
+.chip2.teal{background:var(--teal2);border-color:#9FDCCF;color:#0B6F5E}
+.chip2.teal b{color:#0B6F5E}
+.chip2.red{background:#FBEAE6;border-color:#F0C4BA;color:#A6402F}
+.chip2.red b{color:#8E3423}
+.pstamp{border:1.5px dashed #C0CCD9;background:rgba(255,255,255,.78);color:var(--mute);border-radius:10px;
+  padding:6px 13px;font-size:10.5px;font-weight:700;transform:rotate(-2deg);white-space:nowrap}
+
+/* ③ IC bars */
 .pbars2{display:flex;align-items:flex-end;gap:5px;height:44px}
 .pbars2 i{flex:1 1 auto;border-radius:3px;background:linear-gradient(180deg,#2F6FE4,#0E9F87);
-  height:var(--h);transform-origin:bottom;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.pw2{display:grid;gap:5px}
-.pw2 i{display:block;height:9px;border-radius:3px;width:var(--w);
-  background:linear-gradient(90deg,#2F6FE4,#0E9F87);position:relative;transition:width .6s cubic-bezier(.2,.7,.2,1)}
-.pw2 i.cap{background:linear-gradient(90deg,#D9821A,#EFB673)}
-.pw2 i.cap::after{content:"";position:absolute;right:-1px;top:-3px;bottom:-3px;width:2px;
-  background:#C8443A;border-radius:2px}
-.pstack2{display:flex;gap:2px;height:12px}
-.pstack2 i{height:100%;width:var(--f);border-radius:2px}
-.plegend{width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;
-  box-shadow:0 10px 24px rgba(17,26,40,.09);display:grid;gap:7px}
-.plegend span{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--ink2)}
-.plegend i{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+  height:var(--h);transform:scaleY(.05);transform-origin:bottom center;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.pbars2 i:nth-child(2){transition-delay:.06s}.pbars2 i:nth-child(3){transition-delay:.12s}
+.pbars2 i:nth-child(4){transition-delay:.18s}.pbars2 i:nth-child(5){transition-delay:.24s}
+.pbars2 i:nth-child(6){transition-delay:.3s}
+.fin.on .pbars2 i{transform:scaleY(1)}
+
+/* ④ signal curve */
 .pcurve{display:block;width:100%;height:auto}
+.pdraw{stroke-dasharray:280;stroke-dashoffset:280;
+  transition:stroke-dashoffset 1.1s cubic-bezier(.2,.7,.2,1) .1s}
+.fin.on .pdraw{stroke-dashoffset:0}
+.pcl{opacity:0;transition:opacity .5s ease .75s}
+.fin.on .pcl{opacity:.8}
+
+/* ⑤ allocation bar */
+.palloc{display:flex;gap:2px;height:16px}
+.palloc i{position:relative;width:var(--f);border-radius:3px;transform:scaleX(0);transform-origin:left center;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.palloc i:nth-child(2){transition-delay:.08s}.palloc i:nth-child(3){transition-delay:.16s}
+.palloc i:nth-child(4){transition-delay:.24s}
+.fin.on .palloc i{transform:scaleX(1)}
+.palloc i.cap::after{content:"";position:absolute;right:-1px;top:-3px;bottom:-3px;width:2px;
+  background:#C8443A;border-radius:2px}
+
+/* ⑥ risk ring */
+.prisk{display:flex;align-items:center;gap:11px;width:172px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:9px 12px;box-shadow:0 10px 24px rgba(17,26,40,.09)}
+.prisk svg{width:44px;height:44px;flex:0 0 auto;transform:rotate(-90deg)}
+.prisk circle{fill:none;stroke-width:6;opacity:0;transform:scale(.86);transform-box:fill-box;
+  transform-origin:center;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.prisk circle:nth-child(2){transition-delay:.08s}
+.prisk circle:nth-child(3){transition-delay:.16s}
+.fin.on .prisk circle{opacity:1;transform:none}
+.prisk .ptxt{min-width:0}
+.prisk .pl{margin-bottom:4px}
+.prisk .ps{margin-top:4px}
+
+/* ⑦ attribution */
+.pstack2{display:flex;gap:2px;height:12px}
+.pstack2.tall{height:18px}
+.pstack2 i{height:100%;width:var(--f);border-radius:2px;transform:scaleY(.4);opacity:0;
+  transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
+.fin.on .pstack2 i{transform:none;opacity:1}
+.pkeys{display:flex;flex-wrap:wrap;gap:4px 9px;margin-top:8px;font-family:var(--mono);font-size:9.5px;color:var(--mute)}
+.pkeys span{display:inline-flex;align-items:center;gap:4px}
+.pkeys span::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--c)}
 .fhint{margin:8px 0 0;font-size:11px;font-family:var(--mono);color:var(--mute);text-align:center}
 @media (max-width:900px){
   .flow{grid-template-columns:1fr;gap:0;margin-top:10px}
@@ -526,7 +581,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <div class="herotext">
             <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
             <h1 data-split>Aylon</h1>
-            <p class="role">Data Science<span>·</span>AI Engineering<span>·</span>Quantitative Research</p>
+            <p class="role"><span><span class="zh">数据科学家</span><span class="en">Data Scientist</span></span><i>·</i><span><span class="zh">AI 工程师</span><span class="en">AI Engineer</span></span></p>
             <p class="intro"><span class="tw" data-en="From data to models, to conclusions you can check">从数据到模型，再到能复核的结论</span><span class="caret" aria-hidden="true"></span></p>
             <div class="heroacts">
               <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View projects</span></a>
@@ -610,15 +665,22 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             <div class="fhold">
               <div class="fstage" id="fstage" aria-hidden="true">
                 <div class="fobj" id="obRaw"><div class="fin">
-                  <div class="piece">
+                  <div class="pdata">
                     <span class="pl"><span class="zh">原始数据</span><span class="en">Raw data</span></span>
-                    <div class="pcells"><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i></i><i class="bad"></i><i></i><i></i></div>
+                    <div class="prow"><i></i><i></i><i class="bad"></i><i></i></div>
+                    <div class="prow"><i></i><i class="bad"></i><i></i><i></i></div>
+                    <div class="prow"><i></i><i></i><i></i><i class="bad"></i></div>
+                    <div class="prow"><i class="bad"></i><i></i><i></i><i></i></div>
                     <span class="ps"><span class="zh">缺值 · 口径不一</span><span class="en">gaps · mismatched fields</span></span>
+                    <span class="pscan"></span>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obClean"><div class="fin">
-                  <div class="chip2"><span class="zh">清洗 · 对齐 → <b>可用数据集</b></span><span class="en">clean · align → <b>usable dataset</b></span></div>
+                  <div class="chip2 teal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
+                    <span class="zh">清洗 · 对齐 → <b>可用数据集</b></span><span class="en">clean · align → <b>usable dataset</b></span>
+                  </div>
                 </div></div>
 
                 <div class="fobj" id="obDiag"><div class="fin">
@@ -633,8 +695,8 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
                   <div class="piece">
                     <span class="pl"><span class="zh">信号 · 成本后</span><span class="en">signal · after cost</span></span>
                     <svg class="pcurve" viewBox="0 0 150 62" fill="none">
-                      <line x1="4" y1="52" x2="146" y2="52" stroke="#D9821A" stroke-width="1.6" stroke-dasharray="5 5" opacity=".8"/>
-                      <path d="M4 56 L26 40 L48 46 L72 26 L96 34 L120 14 L146 20" stroke="#0E9F87" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line class="pcl" x1="4" y1="52" x2="146" y2="52" stroke="#D9821A" stroke-width="1.6" stroke-dasharray="5 5"/>
+                      <path class="pdraw" d="M4 56 L26 40 L48 46 L72 26 L96 34 L120 14 L146 20" stroke="#0E9F87" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </div>
                 </div></div>
@@ -642,44 +704,47 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
                 <div class="fobj" id="obW"><div class="fin">
                   <div class="piece">
                     <span class="pl"><span class="zh">组合权重</span><span class="en">portfolio weights</span></span>
-                    <div class="pw2"><i style="--w:86%"></i><i style="--w:68%"></i><i style="--w:44%"></i><i class="cap" style="--w:58%"></i></div>
+                    <div class="palloc"><i style="--f:42%;background:#2F6FE4"></i><i style="--f:26%;background:#0E9F87"></i><i style="--f:18%;background:#6D4AEF"></i><i class="cap" style="--f:14%;background:#D9821A"></i></div>
                     <span class="ps"><span class="zh">第 4 项触及上限 · 被压回</span><span class="en">4th hits the cap · trimmed</span></span>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obLimit"><div class="fin">
-                  <div class="chip2"><span class="zh">权重上限 <b>25%</b></span><span class="en">position cap <b>25%</b></span></div>
+                  <div class="chip2 red"><span class="zh">权重上限 <b>25%</b></span><span class="en">position cap <b>25%</b></span></div>
                 </div></div>
 
                 <div class="fobj" id="obRisk"><div class="fin">
-                  <div class="piece">
-                    <span class="pl"><span class="zh">风险贡献</span><span class="en">risk contribution</span></span>
-                    <div class="pstack2"><i style="--f:46%;background:#2F6FE4"></i><i style="--f:32%;background:#0E9F87"></i><i style="--f:22%;background:#6D4AEF"></i></div>
-                    <span class="ps"><span class="zh">约束之后再平衡</span><span class="en">rebalanced under constraints</span></span>
+                  <div class="prisk">
+                    <svg viewBox="0 0 44 44">
+                      <circle cx="22" cy="22" r="18" stroke="#2F6FE4" stroke-dasharray="52 113.1" stroke-dashoffset="0"/>
+                      <circle cx="22" cy="22" r="18" stroke="#0E9F87" stroke-dasharray="36.2 113.1" stroke-dashoffset="-52"/>
+                      <circle cx="22" cy="22" r="18" stroke="#6D4AEF" stroke-dasharray="24.9 113.1" stroke-dashoffset="-88.2"/>
+                    </svg>
+                    <div class="ptxt">
+                      <span class="pl"><span class="zh">风险贡献</span><span class="en">risk contribution</span></span>
+                      <span class="ps"><span class="zh">约束后再平衡</span><span class="en">rebalanced under constraints</span></span>
+                    </div>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obTurn"><div class="fin">
-                  <div class="chip2"><span class="zh">换手 <b>32%</b> → 成本 <b>+8bps</b></span><span class="en">turnover <b>32%</b> → cost <b>+8bps</b></span></div>
+                  <div class="chip2"><span class="zh">换手 <b>32%</b> → 成本 <b>+<span data-to="8">0</span>bps</b></span><span class="en">turnover <b>32%</b> → cost <b>+<span data-to="8">0</span>bps</b></span></div>
                 </div></div>
 
                 <div class="fobj" id="obAttr"><div class="fin">
                   <div class="piece w200">
                     <span class="pl"><span class="zh">收益归因</span><span class="en">return attribution</span></span>
-                    <div class="pstack2" style="height:18px"><i style="--f:52%;background:#0E9F87"></i><i style="--f:28%;background:#2F6FE4"></i><i style="--f:20%;background:#D9821A"></i></div>
-                  </div>
-                </div></div>
-
-                <div class="fobj" id="obLegend"><div class="fin">
-                  <div class="plegend">
-                    <span><i style="background:#0E9F87"></i><span class="zh">因子</span><span class="en">factor</span></span>
-                    <span><i style="background:#2F6FE4"></i><span class="zh">风险暴露</span><span class="en">risk exposure</span></span>
-                    <span><i style="background:#D9821A"></i><span class="zh">交易成本</span><span class="en">trading cost</span></span>
+                    <div class="pstack2 tall"><i style="--f:52%;background:#0E9F87"></i><i style="--f:28%;background:#2F6FE4"></i><i style="--f:20%;background:#D9821A"></i></div>
+                    <div class="pkeys">
+                      <span style="--c:#0E9F87"><span class="zh">因子 52</span><span class="en">factor 52</span></span>
+                      <span style="--c:#2F6FE4"><span class="zh">风险 28</span><span class="en">risk 28</span></span>
+                      <span style="--c:#D9821A"><span class="zh">成本 20</span><span class="en">cost 20</span></span>
+                    </div>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obNull"><div class="fin">
-                  <div class="chip2"><span class="zh">不成立的结论 → <b>留档</b></span><span class="en">null results → <b>on record</b></span></div>
+                  <div class="pstamp"><span class="zh">不成立的结论 · 留档</span><span class="en">null results · on record</span></div>
                 </div></div>
               </div>
             </div>
@@ -1228,24 +1293,24 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 
     /* each object carries its own keyframes; they slide in, hold, then hand over */
     var SCENE=[
-      {id:"obRaw",    f:[{p:0,x:80,y:150,o:0},{p:.05,x:112,y:118,o:1},{p:.24,x:112,y:118,o:1},{p:.32,x:88,y:94,o:0}]},
-      {id:"obClean",  f:[{p:.10,x:334,y:58,o:0},{p:.16,x:302,y:84,o:1},{p:.26,x:302,y:84,o:1},{p:.33,x:278,y:62,o:0}]},
-      {id:"obDiag",   f:[{p:.20,x:330,y:248,o:0},{p:.27,x:298,y:214,o:1},{p:.36,x:298,y:214,o:1},{p:.44,x:274,y:192,o:0}]},
-      {id:"obCurve",  f:[{p:.26,x:150,y:336,o:0},{p:.33,x:118,y:300,o:1},{p:.48,x:118,y:300,o:1},{p:.56,x:94,y:278,o:0}]},
-      {id:"obW",      f:[{p:.34,x:86,y:214,o:0},{p:.42,x:128,y:170,o:1},{p:.58,x:128,y:170,o:1},{p:.64,x:104,y:146,o:0}]},
-      {id:"obLimit",  f:[{p:.40,x:342,y:100,o:0},{p:.47,x:302,y:132,o:1},{p:.58,x:302,y:132,o:1},{p:.66,x:278,y:110,o:0}]},
-      {id:"obRisk",   f:[{p:.46,x:340,y:342,o:0},{p:.55,x:298,y:302,o:1},{p:.66,x:298,y:302,o:1},{p:.74,x:274,y:278,o:0}]},
-      {id:"obTurn",   f:[{p:.54,x:60,y:438,o:0},{p:.61,x:114,y:398,o:1},{p:.70,x:114,y:398,o:1},{p:.78,x:90,y:374,o:0}]},
-      {id:"obAttr",   f:[{p:.68,x:140,y:278,o:0},{p:.75,x:180,y:238,o:1},{p:1,x:180,y:238,o:1}]},
-      {id:"obLegend", f:[{p:.72,x:342,y:394,o:0},{p:.80,x:304,y:358,o:1},{p:1,x:304,y:358,o:1}]},
-      {id:"obNull",   f:[{p:.84,x:110,y:468,o:0},{p:.90,x:180,y:432,o:1},{p:1,x:180,y:432,o:1}]}
+      {id:"obRaw",   f:[{p:0,x:80,y:150,s:.94,o:0},{p:.05,x:112,y:118,s:1,o:1},{p:.24,x:112,y:118,s:1,o:1},{p:.32,x:88,y:94,s:.97,o:0}]},
+      {id:"obClean", f:[{p:.10,x:334,y:58,s:.86,o:0},{p:.16,x:302,y:84,s:1,o:1},{p:.26,x:302,y:84,s:1,o:1},{p:.33,x:278,y:62,s:.94,o:0}]},
+      {id:"obDiag",  f:[{p:.20,x:330,y:248,s:.94,o:0},{p:.27,x:298,y:214,s:1,o:1},{p:.36,x:298,y:214,s:1,o:1},{p:.44,x:274,y:192,s:.97,o:0}]},
+      {id:"obCurve", f:[{p:.26,x:150,y:336,s:.94,o:0},{p:.33,x:118,y:300,s:1,o:1},{p:.48,x:118,y:300,s:1,o:1},{p:.56,x:94,y:278,s:.97,o:0}]},
+      {id:"obW",     f:[{p:.34,x:86,y:214,s:1.06,o:0},{p:.42,x:128,y:170,s:1,o:1},{p:.58,x:128,y:170,s:1,o:1},{p:.64,x:104,y:146,s:.96,o:0}]},
+      {id:"obLimit", f:[{p:.40,x:342,y:100,s:.9,o:0},{p:.47,x:302,y:132,s:1,o:1},{p:.58,x:302,y:132,s:1,o:1},{p:.66,x:278,y:110,s:.94,o:0}]},
+      {id:"obRisk",  f:[{p:.46,x:340,y:342,s:.94,o:0},{p:.55,x:298,y:302,s:1,o:1},{p:.66,x:298,y:302,s:1,o:1},{p:.74,x:274,y:278,s:.97,o:0}]},
+      {id:"obTurn",  f:[{p:.54,x:60,y:438,s:.9,o:0},{p:.61,x:114,y:398,s:1,o:1},{p:.70,x:114,y:398,s:1,o:1},{p:.78,x:90,y:374,s:.94,o:0}]},
+      {id:"obAttr",  f:[{p:.66,x:150,y:290,s:.94,o:0},{p:.74,x:200,y:248,s:1,o:1},{p:1,x:200,y:248,s:1,o:1}]},
+      {id:"obNull",  f:[{p:.82,x:130,y:452,s:.92,o:0},{p:.89,x:200,y:414,s:1,o:1},{p:1,x:200,y:414,s:1,o:1}]}
     ];
     function build(fr){
-      var prev={x:0,y:0,o:1};
+      var prev={x:0,y:0,s:1,o:1};
       return fr.map(function(f){
-        var g={p:f.p,x:prev.x,y:prev.y,o:prev.o};
+        var g={p:f.p,x:prev.x,y:prev.y,s:prev.s,o:prev.o};
         if(f.x!==undefined) g.x=f.x;
         if(f.y!==undefined) g.y=f.y;
+        if(f.s!==undefined) g.s=f.s;
         if(f.o!==undefined) g.o=f.o;
         prev=g;
         return g;
@@ -1254,7 +1319,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     var objs=[];
     SCENE.forEach(function(s){
       var el=document.getElementById(s.id);
-      if(el) objs.push({el:el,fr:build(s.f)});
+      if(el) objs.push({el:el,fin:el.querySelector(".fin"),fr:build(s.f),live:false});
     });
     function sample(fr,p){
       if(p<=fr[0].p) return fr[0];
@@ -1263,10 +1328,19 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         var a=fr[k], b=fr[k+1];
         if(p>=a.p&&p<=b.p){
           var span=b.p-a.p, t=span>0?(p-a.p)/span:0, e=t*t*(3-2*t);
-          return {x:a.x+(b.x-a.x)*e, y:a.y+(b.y-a.y)*e, o:a.o+(b.o-a.o)*e};
+          return {x:a.x+(b.x-a.x)*e, y:a.y+(b.y-a.y)*e, s:a.s+(b.s-a.s)*e, o:a.o+(b.o-a.o)*e};
         }
       }
       return fr[fr.length-1];
+    }
+    function countUp(el){
+      var to=parseFloat(el.getAttribute("data-to"))||0, start=null;
+      requestAnimationFrame(function step(ts){
+        if(!start) start=ts;
+        var q=Math.min((ts-start)/800,1);
+        el.textContent=Math.round(to*(1-Math.pow(1-q,3)));
+        if(q<1) requestAnimationFrame(step);
+      });
     }
     function clamp01(v){ return v<0?0:(v>1?1:v); }
     var rawEl=document.getElementById("obRaw");
@@ -1291,6 +1365,15 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         o.el.style.opacity=v.o.toFixed(3);
         o.el.style.visibility=v.o<0.01?"hidden":"visible";
         o.el.style.transform="translate("+v.x.toFixed(1)+"px,"+v.y.toFixed(1)+"px)";
+        if(o.fin) o.fin.style.transform="translate(-50%,-50%) scale("+v.s.toFixed(3)+")";
+        var on=v.o>0.55;
+        if(o.live!==on){
+          o.live=on;
+          if(o.fin){
+            o.fin.classList.toggle("on", on);
+            if(on) Array.prototype.forEach.call(o.fin.querySelectorAll("[data-to]"), countUp);
+          }
+        }
       });
     }
 
