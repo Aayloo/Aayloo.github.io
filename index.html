@@ -236,10 +236,17 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .skillcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
   box-shadow:0 18px 44px rgba(17,26,40,.10)}
 .skillcard .pl{display:block;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--mute);margin-bottom:12px}
-.skillcard ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
-.skillcard li{display:flex;align-items:center;gap:10px;font-size:13.6px;color:var(--ink2)}
-.skillcard li em{flex:0 0 auto;font-style:normal;font-family:var(--mono);font-size:9.5px;font-weight:800;
-  border-radius:5px;padding:2px 6px;white-space:nowrap}
+.skillcard ul{margin:0;padding:0;list-style:none;display:grid;gap:2px}
+.skillcard li{display:block;font-size:13.6px;color:var(--ink2)}
+.srow{display:flex;align-items:center;gap:12px;padding:6px 9px;border-radius:9px;color:inherit;
+  transition:background .2s,color .2s}
+.srow:hover{background:var(--card2);color:var(--ink);text-decoration:none}
+.srow .sn{position:relative;flex:1 1 auto;min-width:0}
+.srow .sn::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;
+  border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.srow:hover .sn::after{transform:scaleX(1)}
+.srow .to{flex:0 0 auto;font-family:var(--mono);font-size:10px;color:var(--mute);white-space:nowrap;transition:color .2s}
+.srow:hover .to{color:var(--teal)}
 .adots{position:absolute;left:46px;bottom:30px;display:flex;gap:8px;z-index:2}
 .adots button{appearance:none;width:24px;height:4px;border-radius:3px;border:0;background:var(--line2);cursor:pointer;
   transition:background .25s,width .25s}
@@ -257,16 +264,6 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
     border-bottom:1px solid var(--line);margin-bottom:20px;transition:none}
   .adots{display:none}
 }
-.lv1{background:var(--teal2);color:#0B6F5E;border:1px solid #9FDCCF}
-.lv2{background:var(--blue2);color:#1E4FB0;border:1px solid #BBD0F6}
-.lv3{background:var(--amber2);color:#8E5A12;border:1px solid #F0D2A6}
-.legend2{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 14px;font-size:12.5px;color:var(--mute)}
-.legend2 span{display:inline-flex;align-items:center;gap:6px}
-.legend2 i{font-style:normal;font-family:var(--mono);font-size:9.5px;font-weight:800;
-  border-radius:5px;padding:2px 6px}
-.legend2{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 14px;font-size:12.5px;color:var(--mute)}
-.legend2 span{display:inline-flex;align-items:center;gap:6px}
-.legend2 i{width:18px;height:6px;border-radius:99px;display:inline-block}
 
 /* background timeline */
 .xp{margin-top:6px;position:relative;padding-left:22px}
@@ -604,7 +601,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <div class="stats">
-          <div><b data-count="7">0</b><span><span class="zh">公开项目</span><span class="en">public projects</span></span></div>
+          <div><b data-count="6">0</b><span><span class="zh">公开项目</span><span class="en">public projects</span></span></div>
           <div><b data-count="5">0</b><span><span class="zh">研究方向</span><span class="en">research interests</span></span></div>
           <div><b data-count="4">0</b><span><span class="zh">知识模块</span><span class="en">knowledge modules</span></span></div>
           <div><b data-count="2">0</b><span><span class="zh">项目主线</span><span class="en">project tracks</span></span></div>
@@ -643,7 +640,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             <a class="chip" href="#p-ml"><b><span class="zh">模型与验证</span><span class="en">Models &amp; validation</span></b><em><span class="zh">监督学习 · 基线对比</span><span class="en">training · baselines</span></em></a>
             <a class="chip" href="#p-llm"><b><span class="zh">文本与语言模型</span><span class="en">Text &amp; language models</span></b><em><span class="zh">抽取 · 情绪 · 嵌入</span><span class="en">extraction · embeddings</span></em></a>
             <a class="chip" href="#p-alpha"><b><span class="zh">信号与组合</span><span class="en">Signals &amp; portfolios</span></b><em><span class="zh">因子 · 优化 · 归因</span><span class="en">factors · attribution</span></em></a>
-            <a class="chip" href="#p-map"><b><span class="zh">可复现与工程化</span><span class="en">Reproducibility</span></b><em><span class="zh">版本化 · 自动化</span><span class="en">versioning · automation</span></em></a>
+            <a class="chip" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><b><span class="zh">可复现与工程化</span><span class="en">Reproducibility</span></b><em><span class="zh">版本化 · 自动化</span><span class="en">versioning · automation</span></em></a>
           </div>
         </div>
       </section>
@@ -774,7 +771,6 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
                 <li><i></i><span>Machine Learning</span></li>
                 <li><i></i><span>Deep Learning</span></li>
                 <li><i></i><span>LLM &amp; Alt Data</span></li>
-                <li><i></i><span>Framework maps</span></li>
               </ol>
             </div>
           </div>
@@ -825,14 +821,6 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">Text to sentiment / event factors to incremental tests — and where spurious signal is most likely to creep in.</span></p>
               <div class="tech"><span>FinBERT</span><span>Embeddings</span><span>Alt data</span></div>
             </article>
-            <article class="card rv" id="p-map">
-              <span class="idx">REPO</span>
-              <h4><span class="zh">框架图与时序图</span><span class="en">Framework &amp; sequence maps</span></h4>
-              <p><span class="zh">四张图说明两条线的关系、工作流与产出路径，是进入整个仓库的入口。</span>
-              <span class="en">Four maps describing how the two tracks relate, their workflow and output path — the entry point to the repository.</span></p>
-              <div class="tech"><span>SVG</span><span>Workflow</span><span>Docs</span></div>
-              <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
-            </article>
           </div>
         </div>
       </section>
@@ -840,100 +828,95 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- skills -->
       <section id="skills">
         <div class="sh"><span class="no">03</span><h2><span class="shin"><span class="zh">技能</span><span class="en">Skills</span></span></h2>
-          <span class="hint"><span class="zh">三幕 · 随滚动推进</span><span class="en">three acts · scroll to advance</span></span></div>
+          <span class="hint"><span class="zh">三幕 · 每行都能点开看</span><span class="en">three acts · every row is a link</span></span></div>
 
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">skills · every line links to its output</span></span></div>
-          <div><b data-to="7">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">public projects · all reproducible</span></span></div>
+          <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">public projects · all reproducible</span></span></div>
           <div><b data-to="3">0</b><span><span class="zh">篇研究笔记 · 验证 / 成本 / 另类数据</span><span class="en">research notes · validation / cost / alt data</span></span></div>
         </div>
 
-        <div class="legend2">
-          <span><i class="lv1"><span class="zh">主力</span><span class="en">core</span></i><span class="zh">日常在用</span><span class="en">day-to-day</span></span>
-          <span><i class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></i><span class="zh">稳定使用</span><span class="en">regular use</span></span>
-          <span><i class="lv3"><span class="zh">在补</span><span class="en">building</span></i><span class="zh">正在建</span><span class="en">being built</span></span>
-        </div>
         <div class="acts" id="acts">
           <div class="ahold">
             <div class="astage">
 
               <section class="act on">
                 <div>
-                  <div class="kick">ACT 01 · OUTPUT</div>
-                  <h3><span class="zh">投研产出</span><span class="en">Research output</span></h3>
-                  <p class="asub"><span class="zh">信号怎么来、组合怎么约束、收益怎么拆开 —— 这条线上每一步都有公开产出。</span>
-                  <span class="en">How a signal is built, how the portfolio is constrained, how the return is decomposed — every step has a public output.</span></p>
-                  <div class="ameta">
-                    <div><b>2</b><span class="zh">公开项目</span><span class="en">projects</span></div>
-                    <div><b>6</b><span class="zh">相关技能</span><span class="en">skills</span></div>
-                  </div>
-                  <div class="acta"><a class="hbtn ghost" href="#p-alpha"><span class="zh">去看 Alpha 信号</span><span class="en">Open Alpha Signal</span><svg><use href="#i-arrow"/></svg></a></div>
-                </div>
-                <div class="skillcard">
-                  <span class="pl"><span class="zh">这一幕的技能</span><span class="en">skills in this act</span></span>
-                  <ul>
-                    <li><em class="lv1"><span class="zh">主力</span><span class="en">core</span></em><span class="zh">因子研究与信号构建</span><span class="en">Factor research &amp; signal design</span></li>
-                    <li><em class="lv1"><span class="zh">主力</span><span class="en">core</span></em><span class="zh">回测与交易成本</span><span class="en">Backtesting &amp; transaction costs</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">组合优化与约束</span><span class="en">Portfolio optimisation</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">业绩与风险归因</span><span class="en">Performance &amp; risk attribution</span></li>
-                    <li><em class="lv3"><span class="zh">在补</span><span class="en">building</span></em><span class="zh">风险计量（VaR / 回撤）</span><span class="en">Risk measures (VaR / drawdown)</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">市场与产品数据语言</span><span class="en">Market &amp; product data literacy</span></li>
-                  </ul>
-                </div>
-              </section>
-
-              <section class="act">
-                <div>
-                  <div class="kick">ACT 02 · METHODS</div>
-                  <h3><span class="zh">方法与模型</span><span class="en">Methods &amp; models</span></h3>
-                  <p class="asub"><span class="zh">统计、机器学习、深度学习与 LLM —— 每个模块都有可复现的记录，包括不成立的结论。</span>
-                  <span class="en">Statistics, machine learning, deep learning and LLMs — each module keeps a reproducible record, including the results that did not hold.</span></p>
-                  <div class="ameta">
-                    <div><b>4</b><span class="zh">知识模块</span><span class="en">modules</span></div>
-                    <div><b>4</b><span class="zh">相关技能</span><span class="en">skills</span></div>
-                  </div>
-                  <div class="acta"><a class="hbtn ghost" href="#p-ml"><span class="zh">去看知识库</span><span class="en">Open the knowledge base</span><svg><use href="#i-arrow"/></svg></a></div>
-                </div>
-                <div class="skillcard">
-                  <span class="pl"><span class="zh">这一幕的技能</span><span class="en">skills in this act</span></span>
-                  <ul>
-                    <li><em class="lv1"><span class="zh">主力</span><span class="en">core</span></em><span class="zh">监督学习与正则化</span><span class="en">Supervised learning &amp; regularisation</span></li>
-                    <li><em class="lv1"><span class="zh">主力</span><span class="en">core</span></em><span class="zh">验证设计与基线对比</span><span class="en">Validation design &amp; baselines</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">深度学习与时序模型</span><span class="en">Deep learning &amp; sequence models</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">NLP / LLM 流水线</span><span class="en">NLP / LLM pipelines</span></li>
-                  </ul>
-                </div>
-              </section>
-
-              <section class="act">
-                <div>
-                  <div class="kick">ACT 03 · CRAFT</div>
-                  <h3><span class="zh">工程与表达</span><span class="en">Engineering &amp; craft</span></h3>
-                  <p class="asub"><span class="zh">把研究做成别人也能跑的东西，再把它讲清楚 —— 代码、报告、图表都在这条线上。</span>
-                  <span class="en">Making research something someone else can run — and then explaining it: code, reports and visuals all live here.</span></p>
+                  <div class="kick">ACT 01 · DATA</div>
+                  <h3><span class="zh">数据与工程</span><span class="en">Data &amp; engineering</span></h3>
+                  <p class="asub"><span class="zh">把散乱的数据变成能直接用的东西：清洗、对齐、留痕，别人接手也能跑。</span>
+                  <span class="en">Turning scattered data into something usable — cleaning, aligning, leaving a trail, so someone else can run it.</span></p>
                   <div class="ameta">
                     <div><b>1</b><span class="zh">公开仓库</span><span class="en">public repo</span></div>
-                    <div><b>6</b><span class="zh">相关技能</span><span class="en">skills</span></div>
+                    <div><b>4</b><span class="zh">项技能</span><span class="en">skills</span></div>
                   </div>
                   <div class="acta"><a class="hbtn ghost" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">去看仓库</span><span class="en">Open the repo</span><svg><use href="#i-arrow"/></svg></a></div>
                 </div>
                 <div class="skillcard">
-                  <span class="pl"><span class="zh">这一幕的技能</span><span class="en">skills in this act</span></span>
+                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">skills · where each one can be checked</span></span>
                   <ul>
-                    <li><em class="lv1"><span class="zh">主力</span><span class="en">core</span></em>Python</li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">SQL 与数据建模</span><span class="en">SQL &amp; data modelling</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">数据管道与自动化</span><span class="en">Data pipelines &amp; automation</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">Git 与可复现项目</span><span class="en">Git &amp; reproducible projects</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">中英研究报告写作</span><span class="en">Bilingual research writing</span></li>
-                    <li><em class="lv2"><span class="zh">熟练</span><span class="en">proficient</span></em><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; visuals</span></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn">Python</span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">SQL 与数据建模</span><span class="en">SQL &amp; data modelling</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">数据管道与自动化</span><span class="en">Data pipelines &amp; automation</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">Git 与可复现项目</span><span class="en">Git &amp; reproducible projects</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="act">
+                <div>
+                  <div class="kick">ACT 02 · MODELS</div>
+                  <h3><span class="zh">模型与验证</span><span class="en">Models &amp; validation</span></h3>
+                  <p class="asub"><span class="zh">训练只是开始 —— 重点是验证设计与基线对比：换个样本，这条结论还成不成立。</span>
+                  <span class="en">Training is the easy part — validation design and baselines decide whether a conclusion survives a different sample.</span></p>
+                  <div class="ameta">
+                    <div><b>4</b><span class="zh">知识模块</span><span class="en">modules</span></div>
+                    <div><b>4</b><span class="zh">项技能</span><span class="en">skills</span></div>
+                  </div>
+                  <div class="acta"><a class="hbtn ghost" href="#p-ml"><span class="zh">去看知识库</span><span class="en">Open the knowledge base</span><svg><use href="#i-arrow"/></svg></a></div>
+                </div>
+                <div class="skillcard">
+                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">skills · where each one can be checked</span></span>
+                  <ul>
+                    <li><a class="srow" href="#p-ml"><span class="sn"><span class="zh">监督学习与正则化</span><span class="en">Supervised learning &amp; regularisation</span></span><span class="to"><span class="zh">知识库 02 ↗</span><span class="en">module 02 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-ml"><span class="sn"><span class="zh">验证设计与基线对比</span><span class="en">Validation design &amp; baselines</span></span><span class="to"><span class="zh">知识库 02 ↗</span><span class="en">module 02 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-dl"><span class="sn"><span class="zh">深度学习与时序模型</span><span class="en">Deep learning &amp; sequence models</span></span><span class="to"><span class="zh">知识库 03 ↗</span><span class="en">module 03 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-llm"><span class="sn"><span class="zh">NLP / LLM 流水线</span><span class="en">NLP / LLM pipelines</span></span><span class="to"><span class="zh">知识库 04 ↗</span><span class="en">module 04 ↗</span></span></a></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="act">
+                <div>
+                  <div class="kick">ACT 03 · RESEARCH</div>
+                  <h3><span class="zh">研究与表达</span><span class="en">Research &amp; writing</span></h3>
+                  <p class="asub"><span class="zh">从信号到组合再到归因，最后把结论写成别人能复核的东西。</span>
+                  <span class="en">From signal to portfolio to attribution — then writing it up so someone else can check it.</span></p>
+                  <div class="ameta">
+                    <div><b>2</b><span class="zh">公开项目</span><span class="en">projects</span></div>
+                    <div><b>8</b><span class="zh">项技能</span><span class="en">skills</span></div>
+                  </div>
+                  <div class="acta"><a class="hbtn ghost" href="#p-alpha"><span class="zh">去看 Alpha 信号</span><span class="en">Open Alpha Signal</span><svg><use href="#i-arrow"/></svg></a></div>
+                </div>
+                <div class="skillcard">
+                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">skills · where each one can be checked</span></span>
+                  <ul>
+                    <li><a class="srow" href="#p-alpha"><span class="sn"><span class="zh">因子研究与信号构建</span><span class="en">Factor research &amp; signal design</span></span><span class="to"><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-alpha"><span class="sn"><span class="zh">回测与交易成本</span><span class="en">Backtesting &amp; transaction costs</span></span><span class="to"><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">组合优化与约束</span><span class="en">Portfolio optimisation</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">业绩与风险归因</span><span class="en">Performance &amp; risk attribution</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">风险计量（VaR / 回撤）</span><span class="en">Risk measures (VaR / drawdown)</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">市场与产品数据语言</span><span class="en">Market &amp; product data literacy</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">中英研究报告写作</span><span class="en">Bilingual research writing</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">notes ↗</span></span></a></li>
+                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; visuals</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">notes ↗</span></span></a></li>
                   </ul>
                 </div>
               </section>
 
               <div class="adots" id="adots">
-                <button class="on" data-i="0" aria-label="第一幕 投研产出"></button>
-                <button data-i="1" aria-label="第二幕 方法与模型"></button>
-                <button data-i="2" aria-label="第三幕 工程与表达"></button>
+                <button class="on" data-i="0" aria-label="第一幕 数据与工程"></button>
+                <button data-i="1" aria-label="第二幕 模型与验证"></button>
+                <button data-i="2" aria-label="第三幕 研究与表达"></button>
               </div>
 
             </div>
