@@ -11,11 +11,13 @@
 html{scroll-behavior:smooth}
 body{
   margin:0;background:#FAFAF7;color:#2C3A4E;
-  font-family:"Aptos","Segoe UI Variable Text","Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-family:var(--f-body);
   line-height:1.68;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  --f-body:"Aptos","Segoe UI Variable Text","Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-head:"Aptos Display","Segoe UI Variable Display","Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
   --bg:#FAFAF7;--card:#FFFFFF;--card2:#F5F7F4;
   --line:#E4E8EE;--line2:#CFD7E2;
-  --ink:#111A28;--ink2:#4A5A72;--mute:#8494AA;
+  --ink:#111A28;--ink2:#4A5A72;--mute:#64748C;
   --teal:#0E9F87;--teal2:#E3F5F1;
   --violet:#6D4AEF;--violet2:#EDE9FE;
   --blue:#2F6FE4;--blue2:#E6EEFD;
@@ -24,7 +26,11 @@ body{
   --sh1:0 1px 2px rgba(17,26,40,.05),0 1px 3px rgba(17,26,40,.04);
   --sh2:0 12px 32px rgba(17,26,40,.12);
 }
-h1,h2,h3,h4{font-family:"Aptos Display","Segoe UI Variable Display","Segoe UI","Noto Sans SC","PingFang SC",system-ui,sans-serif}
+h1,h2,h3,h4{font-family:var(--f-head);line-height:1.16;text-wrap:balance}
+p{text-wrap:pretty}
+html[data-lang="zh"] .sh h2{letter-spacing:-.015em}
+html[data-lang="zh"] .act h3{letter-spacing:-.02em}
+html[data-lang="zh"] .hello{letter-spacing:.08em}
 html[data-lang="en"] .zh{display:none}
 html[data-lang="zh"] .en{display:none}
 a{color:var(--blue);text-decoration:none}
@@ -58,7 +64,7 @@ nav.stuck .navin{height:50px}
 .navin .lk:hover{background:rgba(17,26,40,.05);color:var(--ink);text-decoration:none}
 .spacer{flex:1}
 .lang{display:flex;height:28px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
-.lang button{border:0;background:transparent;font-size:11.5px;font-weight:700;padding:0 10px;cursor:pointer;color:var(--mute);font-family:inherit}
+.lang button{border:0;background:transparent;font-size:11px;font-weight:700;padding:0 10px;cursor:pointer;color:var(--mute);font-family:inherit}
 .lang button+button{border-left:1px solid var(--line)}
 .lang button[aria-selected="true"]{background:var(--ink);color:#fff}
 
@@ -67,7 +73,7 @@ section[id],article[id]{scroll-margin-top:78px}
 .wrap{display:grid;grid-template-columns:168px minmax(0,1fr);gap:44px;align-items:start}
 aside.toc{position:sticky;top:88px;padding-top:26px}
 aside.toc .tl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:0 0 12px}
-aside.toc a{display:block;font-size:13.2px;font-weight:600;color:var(--mute);padding:5px 0 5px 13px;
+aside.toc a{display:block;font-size:13.5px;font-weight:600;color:var(--mute);padding:5px 0 5px 13px;
   border-left:2px solid transparent;transition:color .2s,border-color .2s,transform .2s}
 aside.toc a:hover{color:var(--ink2);text-decoration:none;transform:translateX(2px)}
 aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
@@ -92,7 +98,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .avatar:hover{transform:rotate(-3deg) scale(1.03)}
 .avatar:hover img{transform:scale(1.12) rotate(3deg)}
 .herotext{flex:1 1 340px;min-width:0}
-.hello{font-family:var(--mono);font-size:11.5px;font-weight:800;letter-spacing:.16em;
+.hello{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.16em;
   text-transform:uppercase;color:var(--amber);margin:0 0 10px}
 .hero h1{font-size:clamp(32px,4.6vw,48px);font-weight:800;color:var(--ink);line-height:1.1;
   letter-spacing:-.03em;margin:0 0 8px}
@@ -117,41 +123,42 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .sh .hint{margin-left:auto;font-size:12.5px;color:var(--mute)}
 
 /* about */
-.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.tcard{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:16px;
-  padding:20px 20px 18px;box-shadow:var(--sh1);--mx:50%;--my:50%;
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.pillar{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:20px 20px 16px;box-shadow:var(--sh1);--mx:50%;--my:50%;
   transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .25s}
-.tcard::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
-  background:radial-gradient(240px circle at var(--mx) var(--my),rgba(14,159,135,.13),transparent 62%)}
-.tcard:hover::before{opacity:1}
-.tcard:hover{transform:translateY(-4px);box-shadow:var(--sh2);border-color:var(--line2)}
-.tcard>*{position:relative;z-index:1}
-.tcard .glyph{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;margin-bottom:12px}
-.tcard h4{margin:0 0 6px;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
-.tcard p{margin:0;font-size:13.4px;line-height:1.75;color:var(--ink2)}
-@media (max-width:820px){.trio{grid-template-columns:1fr}}
-
-/* research interests · chip wall */
-.ristrip{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
-.ristrip h3{margin:0 0 3px;font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
-.ristrip .ri-note{margin:0 0 12px;font-size:12.6px;color:var(--mute)}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--line);
-  border-radius:12px;padding:9px 14px;transition:border-color .22s,transform .22s,box-shadow .22s}
-.chip:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:var(--sh1);text-decoration:none}
-.chip b{font-size:13px;color:var(--ink);font-weight:700;letter-spacing:-.005em}
-.chip em{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--mute)}
-.chip:hover em{color:var(--ink2)}
-@media (prefers-reduced-motion:reduce){.chip,.tcard,.tcard:hover{transition:none;transform:none}}
+.pillar::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(260px circle at var(--mx) var(--my),rgba(14,159,135,.12),transparent 62%)}
+.pillar:hover::before{opacity:1}
+.pillar:hover{transform:translateY(-3px);box-shadow:var(--sh2);border-color:var(--line2)}
+.pillar>*{position:relative;z-index:1}
+.pillar .ph{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pillar .glyph{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto}
+.pillar h4{margin:0;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.pillar .psum{margin:0 0 15px;font-size:13.5px;line-height:1.75;color:var(--ink2)}
+.pillar .pl2{display:block;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.06em;
+  color:var(--mute);margin-bottom:8px}
+.pints{margin:0;padding:0;list-style:none;display:grid;gap:2px}
+.pint{display:block;padding:7px 9px;border-radius:9px;color:inherit;transition:background .2s}
+.pint:hover{background:var(--card2);text-decoration:none}
+.pint b{display:block;position:relative;font-size:13.5px;font-weight:700;color:var(--ink);letter-spacing:-.005em}
+.pint b::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;
+  border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.pint:hover b::after{transform:scaleX(1)}
+.pint em{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--mute);margin-top:3px}
+.pint em i{font-style:normal;color:var(--teal)}
+.pint:hover em{color:var(--ink2)}
+@media (max-width:820px){.pillars{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.pillar,.pillar:hover{transition:none;transform:none}}
 
 /* projects */
 .track{margin-top:16px}
 .thead{display:flex;align-items:center;gap:11px;margin-bottom:12px;flex-wrap:wrap}
-.badge{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:6px}
+.badge{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:6px}
 .track.qs .badge{background:var(--teal2);color:var(--teal)}
 .track.ml .badge{background:var(--violet2);color:var(--violet)}
 .thead h3{margin:0;font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
-.thead .cnt{margin-left:auto;font-size:12px;color:var(--mute);font-family:var(--mono)}
+.thead .cnt{margin-left:auto;font-size:12.5px;color:var(--mute);font-family:var(--mono)}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;
   padding:20px 22px 18px;box-shadow:var(--sh1);display:flex;flex-direction:column;overflow:hidden;
@@ -164,7 +171,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 @media (prefers-reduced-motion:reduce){.card,.card:hover{transition:none;transform:none}}
 .card .idx{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--mute);letter-spacing:.1em}
 .card h4{margin:9px 0 7px;font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.015em}
-.card p{margin:0;font-size:13.7px;line-height:1.72;color:var(--ink2);flex:1}
+.card p{margin:0;font-size:13.5px;line-height:1.72;color:var(--ink2);flex:1}
 .card .tech{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
 .card .tech span{font-family:var(--mono);font-size:10.5px;color:var(--ink2);background:var(--card2);
   border:1px solid var(--line);padding:2px 7px;border-radius:5px}
@@ -195,9 +202,9 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .rail-nodes li.hov i{border-color:var(--teal);transform:scale(1.06)}
 .roadlist .card.cur{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal2),var(--sh2)}
 .roadlist{display:grid;gap:14px;min-width:0}
-.glabel{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-size:13px;font-weight:700;color:var(--ink2)}
+.glabel{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-size:13.5px;font-weight:700;color:var(--ink2)}
 .glabel:first-child{margin-top:0}
-.glabel .badge{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:6px}
+.glabel .badge{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.12em;padding:3px 9px;border-radius:6px}
 .glabel .badge.qs{background:var(--teal2);color:var(--teal)}
 .glabel .badge.ml{background:var(--violet2);color:var(--violet)}
 .roadlist .card{width:100%}
@@ -211,9 +218,9 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
   background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh1);padding:22px 26px}
 .numband>div{border-left:2px solid var(--line);padding-left:20px}
 .numband>div:first-child{border-left:0;padding-left:0}
-.numband b{display:block;font-family:"Aptos Display","Segoe UI Variable Display","Segoe UI","Noto Sans SC",system-ui,sans-serif;
+.numband b{display:block;font-family:var(--f-head);
   font-size:clamp(34px,5vw,54px);line-height:1;letter-spacing:-.05em;color:var(--ink);font-variant-numeric:tabular-nums}
-.numband span{display:block;margin-top:7px;font-size:12.8px;color:var(--mute)}
+.numband span{display:block;margin-top:7px;font-size:12.5px;color:var(--mute)}
 .acts{position:relative;height:300vh;margin-top:6px}
 .ahold{position:sticky;top:78px;height:calc(100vh - 96px);display:flex;align-items:center}
 .astage{position:relative;width:100%;height:100%;overflow:hidden;border:1px solid var(--line);border-radius:20px;
@@ -224,17 +231,17 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .act.on{opacity:1;transform:none;filter:blur(0)}
 .act .kick{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--teal);margin-bottom:12px}
 .act h3{font-size:clamp(28px,4.2vw,48px);line-height:1.05;letter-spacing:-.035em;font-weight:800;color:var(--ink);margin:0 0 14px}
-.act .asub{margin:0;font-size:14.6px;line-height:1.75;color:var(--ink2);max-width:38ch}
+.act .asub{margin:0;font-size:14.5px;line-height:1.75;color:var(--ink2);max-width:38ch}
 .act .ameta{margin-top:20px;display:flex;gap:28px}
 .act .ameta div{font-family:var(--mono);font-size:10.5px;color:var(--mute)}
-.act .ameta b{display:block;font-family:"Aptos Display","Segoe UI",sans-serif;font-size:30px;line-height:1.1;
-  color:var(--ink);letter-spacing:-.03em}
+.act .ameta b{display:block;font-family:var(--f-head);font-size:30px;line-height:1.1;
+  color:var(--ink);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .act .acta{margin-top:22px}
 .skillcard{width:100%;max-width:340px;justify-self:center;background:var(--card);border:1px solid var(--line);
   border-radius:16px;padding:16px 18px;box-shadow:0 16px 38px rgba(17,26,40,.09)}
-.skillcard .pl{display:block;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--mute);margin-bottom:12px}
+.skillcard .pl{display:block;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--mute);margin-bottom:12px}
 .skillcard ul{margin:0;padding:0;list-style:none;display:grid;gap:2px}
-.skillcard li{display:block;font-size:13.2px;color:var(--ink2)}
+.skillcard li{display:block;font-size:13.5px;color:var(--ink2)}
 .srow{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:9px;color:inherit;
   transition:background .2s,color .2s}
 .srow:hover{background:var(--card2);color:var(--ink);text-decoration:none}
@@ -242,7 +249,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .srow .sn::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;
   border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .srow:hover .sn::after{transform:scaleX(1)}
-.srow .to{flex:0 0 auto;font-family:var(--mono);font-size:9.5px;color:var(--mute);white-space:nowrap;transition:color .2s}
+.srow .to{flex:0 0 auto;font-family:var(--mono);font-size:10.5px;color:var(--mute);white-space:nowrap;transition:color .2s}
 .srow:hover .to{color:var(--teal)}
 .adots{position:absolute;left:46px;bottom:30px;display:flex;gap:8px;z-index:2}
 .adots button{appearance:none;width:24px;height:4px;border-radius:3px;border:0;background:var(--line2);cursor:pointer;
@@ -284,27 +291,27 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nitem>summary{list-style:none;cursor:pointer;display:block;padding:17px 22px;position:relative}
 .nitem>summary::-webkit-details-marker{display:none}
 .nitem>summary:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
-.ntag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.1em;
+.ntag{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.1em;
   color:var(--teal);margin-bottom:7px}
 .nitem h4{margin:0 0 6px;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.015em;padding-right:34px}
-.nsum{margin:0;font-size:13.2px;line-height:1.72;color:var(--ink2);max-width:78ch;padding-right:34px}
+.nsum{margin:0;font-size:13.5px;line-height:1.72;color:var(--ink2);max-width:78ch;padding-right:34px}
 .nchev{position:absolute;right:22px;top:24px;width:10px;height:10px;border-right:2px solid var(--mute);
   border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .nitem[open] .nchev{transform:rotate(-135deg)}
 .nbody{padding:16px 22px 20px;border-top:1px solid var(--line)}
-.nbody p{margin:0 0 11px;font-size:13.6px;line-height:1.8;color:var(--ink2);max-width:80ch}
-.nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:13.6px;line-height:1.8;color:var(--ink2);max-width:80ch}
+.nbody p{margin:0 0 11px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
+.nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
 .nbody li{margin-bottom:7px}
 .nbody b{color:var(--ink)}
 .nbody p:last-child,.nbody ol:last-child{margin-bottom:0}
 .nbody .take{margin:0;background:var(--teal2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;
-  padding:10px 14px;font-size:13.4px;line-height:1.75;color:#0B5A4C;max-width:80ch}
+  padding:10px 14px;font-size:13.5px;line-height:1.75;color:#0B5A4C;max-width:80ch}
 
 /* contact */
 .contact{margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:18px;
   padding:26px 28px;box-shadow:var(--sh1);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .contact h3{margin:0 0 5px;font-size:18px;color:var(--ink);letter-spacing:-.01em}
-.contact p{margin:0;font-size:13.6px;color:var(--ink2);max-width:54ch}
+.contact p{margin:0;font-size:13.5px;color:var(--ink2);max-width:54ch}
 .links{display:flex;gap:9px;flex-wrap:wrap}
 .links a{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;
   padding:10px 16px;border-radius:10px;border:1px solid var(--line2);background:#fff;color:var(--ink);
@@ -359,7 +366,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 .fstep.on{opacity:1;transform:none}
 .fstep .fno{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--teal);letter-spacing:.1em}
 .fstep h3{margin:6px 0 8px;font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
-.fstep p{margin:0;font-size:14px;line-height:1.8;color:var(--ink2)}
+.fstep p{margin:0;font-size:14.5px;line-height:1.8;color:var(--ink2)}
 .fside{position:relative}
 .fpipe{position:absolute;left:50%;top:-5vh;bottom:-5vh;width:2px;margin-left:-1px;border-radius:2px;
   background:var(--line);
@@ -381,9 +388,9 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 .piece{width:172px;background:#fff;border:1px solid var(--line);border-radius:12px;
   box-shadow:0 10px 24px rgba(17,26,40,.09);padding:9px 11px 10px}
 .piece.w200{width:200px}
-.piece .pl,.pdata .pl,.prisk .pl{display:block;font-family:var(--mono);font-size:9.5px;font-weight:800;
+.piece .pl,.pdata .pl,.prisk .pl{display:block;font-family:var(--mono);font-size:10.5px;font-weight:800;
   color:var(--mute);letter-spacing:.06em;margin-bottom:7px}
-.piece .ps,.pdata .ps,.prisk .ps{display:block;font-size:10px;color:var(--mute);margin-top:7px;line-height:1.4}
+.piece .ps,.pdata .ps,.prisk .ps{display:block;font-size:10.5px;color:var(--mute);margin-top:7px;line-height:1.4}
 
 /* ① dark data panel */
 .pdata{position:relative;overflow:hidden;width:154px;background:#13294B;border-radius:12px;
@@ -459,7 +466,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 .pstack2 i{height:100%;width:var(--f);border-radius:2px;transform:scaleY(.4);opacity:0;
   transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
 .fin.on .pstack2 i{transform:none;opacity:1}
-.pkeys{display:flex;flex-wrap:wrap;gap:4px 9px;margin-top:8px;font-family:var(--mono);font-size:9.5px;color:var(--mute)}
+.pkeys{display:flex;flex-wrap:wrap;gap:4px 9px;margin-top:8px;font-family:var(--mono);font-size:10.5px;color:var(--mute)}
 .pkeys span{display:inline-flex;align-items:center;gap:4px}
 .pkeys span::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--c)}
 .fhint{margin:8px 0 0;font-size:11px;font-family:var(--mono);color:var(--mute);text-align:center}
@@ -588,10 +595,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <div class="herotext">
             <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
             <h1 data-split>Aylon</h1>
-            <p class="role"><span><span class="zh">数据科学家</span><span class="en">Data Scientist</span></span><i>·</i><span><span class="zh">AI 工程师</span><span class="en">AI Engineer</span></span></p>
-            <p class="intro"><span class="tw" data-en="From data to models, to conclusions you can check">从数据到模型，再到能复核的结论</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="role"><span><span class="zh">数据科学家</span><span class="en">Data Scientist</span></span><i>·</i><span><span class="zh">量化策略师</span><span class="en">Quantitative Strategist</span></span><i>·</i><span><span class="zh">AI 工程师</span><span class="en">AI Engineer</span></span></p>
+            <p class="intro"><span class="tw" data-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
             <div class="heroacts">
-              <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View projects</span></a>
+              <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View Projects</span></a>
               <a class="hbtn ghost" href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
               <a class="hbtn ghost" href="#contact"><svg><use href="#i-mail"/></svg><span class="zh">联系</span><span class="en">Contact</span></a>
             </div>
@@ -602,44 +609,77 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- about -->
       <section id="about">
         <div class="sh"><span class="no">01</span><h2><span class="shin"><span class="zh">关于我</span><span class="en">About</span></span></h2></div>
-        <div class="trio rv">
-          <div class="tcard">
-            <div class="glyph" style="background:var(--teal2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E9F87" stroke-width="1.9" stroke-linecap="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></div>
-            <h4><span class="zh">数据</span><span class="en">Data</span></h4>
-            <p><span class="zh">从零散来源到一份能直接用的数据集：清洗、核对、留痕，别人接手也能跑。</span>
-            <span class="en">From scattered sources to a dataset someone else can actually run: cleaning, checking, and leaving a trail.</span></p>
-          </div>
-          <div class="tcard">
-            <div class="glyph" style="background:var(--violet2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6D4AEF" stroke-width="1.9" stroke-linecap="round"><circle cx="6" cy="7" r="2.6"/><circle cx="18" cy="7" r="2.6"/><circle cx="12" cy="18" r="2.6"/><path d="M8.2 8.6 10.6 16M15.8 8.6 13.4 16M8.6 7h6.8"/></svg></div>
-            <h4><span class="zh">模型</span><span class="en">Models</span></h4>
-            <p><span class="zh">训练只是开始。重点是验证设计与基线对比 —— 换个样本，「有效」还成不成立。</span>
-            <span class="en">Training is the easy part. Validation design and baselines decide whether “it works” survives a different sample.</span></p>
-          </div>
-          <div class="tcard">
-            <div class="glyph" style="background:var(--amber2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D9821A" stroke-width="1.9" stroke-linecap="round"><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div>
-            <h4><span class="zh">工具</span><span class="en">Tooling</span></h4>
-            <p><span class="zh">把一次性的 notebook 变成能重复运行的流程：配置、版本、日志、文档。</span>
-            <span class="en">Turning a one-off notebook into something repeatable: config, versioning, logs, docs.</span></p>
-          </div>
+        <div class="pillars rv">
+          <article class="pillar">
+            <div class="ph">
+              <div class="glyph" style="background:var(--teal2)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0E9F87" stroke-width="1.9" stroke-linecap="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></div>
+              <h4><span class="zh">数据科学家</span><span class="en">Data Scientist</span></h4>
+            </div>
+            <p class="psum"><span class="zh">把杂乱的数据整理成能直接用的数据集。</span>
+            <span class="en">Turning messy data into a dataset that just works.</span></p>
+            <span class="pl2"><span class="zh">研究方向</span><span class="en">Research interests</span></span>
+            <ul class="pints">
+              <li><a class="pint" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+                <b><span class="zh">数据与特征</span><span class="en">Data &amp; Features</span></b>
+                <em><span class="zh">清洗 · 对齐 · 特征构造</span><span class="en">Cleaning · Aligning · Feature Construction</span> <i><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></i></em></a></li>
+              <li><a class="pint" href="#p-ml">
+                <b><span class="zh">模型与验证</span><span class="en">Models &amp; Validation</span></b>
+                <em><span class="zh">基线对比 · 滚动验证</span><span class="en">Baselines · Walk-Forward</span> <i><span class="zh">机器学习 ↗</span><span class="en">Machine Learning ↗</span></i></em></a></li>
+              <li><a class="pint" href="#p-stat">
+                <b><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; Time Series</span></b>
+                <em><span class="zh">估计 · 平稳性 · 预测</span><span class="en">Estimation · Stationarity · Forecasting</span> <i><span class="zh">知识库 01 ↗</span><span class="en">Module 01 ↗</span></i></em></a></li>
+            </ul>
+          </article>
+
+          <article class="pillar">
+            <div class="ph">
+              <div class="glyph" style="background:var(--violet2)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6D4AEF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 L10 12 L14 15 L20 7"/><path d="M15 7h5v5"/></svg></div>
+              <h4><span class="zh">量化策略师</span><span class="en">Quantitative Strategist</span></h4>
+            </div>
+            <p class="psum"><span class="zh">从信号到组合再到归因，每一步都能复核。</span>
+            <span class="en">From signal to portfolio to attribution — every step checkable.</span></p>
+            <span class="pl2"><span class="zh">研究方向</span><span class="en">Research interests</span></span>
+            <ul class="pints">
+              <li><a class="pint" href="#p-alpha">
+                <b><span class="zh">信号研究</span><span class="en">Signal Research</span></b>
+                <em><span class="zh">因子构建 · 稳健性检验</span><span class="en">Factor Construction · Robustness Checks</span> <i><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></i></em></a></li>
+              <li><a class="pint" href="#p-risk">
+                <b><span class="zh">组合与风险</span><span class="en">Portfolio &amp; Risk</span></b>
+                <em><span class="zh">权重约束 · 风险预算 · 换手控制</span><span class="en">Position Limits · Risk Budgeting · Turnover Control</span> <i><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></i></em></a></li>
+              <li><a class="pint" href="#p-risk">
+                <b><span class="zh">业绩归因</span><span class="en">Performance Attribution</span></b>
+                <em><span class="zh">收益来源拆解</span><span class="en">Decomposing Return Sources</span> <i><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></i></em></a></li>
+            </ul>
+          </article>
+
+          <article class="pillar">
+            <div class="ph">
+              <div class="glyph" style="background:var(--amber2)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#D9821A" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.2 6.2l2.8 2.8M15 15l2.8 2.8M17.8 6.2L15 9M9 15l-2.8 2.8"/></svg></div>
+              <h4><span class="zh">AI 工程师</span><span class="en">AI Engineer</span></h4>
+            </div>
+            <p class="psum"><span class="zh">把模型和文本做成可复现、可交接的流程。</span>
+            <span class="en">Turning models and text into pipelines that others can run.</span></p>
+            <span class="pl2"><span class="zh">研究方向</span><span class="en">Research interests</span></span>
+            <ul class="pints">
+              <li><a class="pint" href="#p-llm">
+                <b><span class="zh">文本与语言</span><span class="en">Text &amp; Language</span></b>
+                <em><span class="zh">抽取 · 情绪 · 嵌入</span><span class="en">Extraction · Sentiment · Embeddings</span> <i><span class="zh">知识库 04 ↗</span><span class="en">Module 04 ↗</span></i></em></a></li>
+              <li><a class="pint" href="#p-dl">
+                <b><span class="zh">深度学习与时序</span><span class="en">Deep Learning &amp; Time Series</span></b>
+                <em><span class="zh">序列模型 · 训练与验证</span><span class="en">Sequence Models · Training &amp; Validation</span> <i><span class="zh">知识库 03 ↗</span><span class="en">Module 03 ↗</span></i></em></a></li>
+              <li><a class="pint" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+                <b><span class="zh">可复现工程</span><span class="en">Reproducible Engineering</span></b>
+                <em><span class="zh">版本化 · 自动化 · 文档</span><span class="en">Versioning · Automation · Docs</span> <i><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></i></em></a></li>
+            </ul>
+          </article>
         </div>
 
-        <div class="ristrip rv">
-          <h3><span class="zh">研究兴趣</span><span class="en">Research interests</span></h3>
-          <p class="ri-note"><span class="zh">按主题列出投入最多的五块，下面一行是常用方法。</span><span class="en">Five themes I spend most time on, with the methods each one uses.</span></p>
-          <div class="chips">
-            <a class="chip" href="#p-stat"><b><span class="zh">数据与特征</span><span class="en">Data &amp; features</span></b><em><span class="zh">管道 · 清洗 · 契约</span><span class="en">pipelines · features</span></em></a>
-            <a class="chip" href="#p-ml"><b><span class="zh">模型与验证</span><span class="en">Models &amp; validation</span></b><em><span class="zh">监督学习 · 基线对比</span><span class="en">training · baselines</span></em></a>
-            <a class="chip" href="#p-llm"><b><span class="zh">文本与语言模型</span><span class="en">Text &amp; language models</span></b><em><span class="zh">抽取 · 情绪 · 嵌入</span><span class="en">extraction · embeddings</span></em></a>
-            <a class="chip" href="#p-alpha"><b><span class="zh">信号与组合</span><span class="en">Signals &amp; portfolios</span></b><em><span class="zh">因子 · 优化 · 归因</span><span class="en">factors · attribution</span></em></a>
-            <a class="chip" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><b><span class="zh">可复现与工程化</span><span class="en">Reproducibility</span></b><em><span class="zh">版本化 · 自动化</span><span class="en">versioning · automation</span></em></a>
-          </div>
-        </div>
       </section>
 
       <!-- work -->
       <section id="work">
         <div class="sh"><span class="no">02</span><h2><span class="shin"><span class="zh">项目</span><span class="en">Projects</span></span></h2>
-          <span class="hint"><span class="zh">公开仓库 · 可复现</span><span class="en">public repos · reproducible</span></span></div>
+          <span class="hint"><span class="zh">公开仓库 · 可复现</span><span class="en">Public repos · all reproducible</span></span></div>
         <div class="flow" id="flow">
           <div class="fsteps" id="stations">
             <div class="fstep">
@@ -667,12 +707,12 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <div class="fstage" id="fstage" aria-hidden="true">
                 <div class="fobj" id="obRaw"><div class="fin">
                   <div class="pdata">
-                    <span class="pl"><span class="zh">原始数据</span><span class="en">Raw data</span></span>
+                    <span class="pl"><span class="zh">原始数据</span><span class="en">Raw Data</span></span>
                     <div class="prow"><i></i><i></i><i class="bad"></i><i></i></div>
                     <div class="prow"><i></i><i class="bad"></i><i></i><i></i></div>
                     <div class="prow"><i></i><i></i><i></i><i class="bad"></i></div>
                     <div class="prow"><i class="bad"></i><i></i><i></i><i></i></div>
-                    <span class="ps"><span class="zh">缺值 · 口径不一</span><span class="en">gaps · mismatched fields</span></span>
+                    <span class="ps"><span class="zh">缺值 · 口径不一</span><span class="en">Gaps · Mismatched Fields</span></span>
                     <span class="pscan"></span>
                   </div>
                 </div></div>
@@ -680,21 +720,21 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
                 <div class="fobj" id="obClean"><div class="fin">
                   <div class="chip2 teal">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
-                    <span class="zh">清洗 · 对齐 → <b>可用数据集</b></span><span class="en">clean · align → <b>usable dataset</b></span>
+                    <span class="zh">清洗 · 对齐 → <b>可用数据集</b></span><span class="en">Clean · Align → <b>Usable Dataset</b></span>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obDiag"><div class="fin">
                   <div class="piece">
-                    <span class="pl"><span class="zh">因子诊断 · 分窗 IC</span><span class="en">factor IC by window</span></span>
+                    <span class="pl"><span class="zh">因子诊断 · 分窗 IC</span><span class="en">Factor IC by Window</span></span>
                     <div class="pbars2"><i style="--h:38%"></i><i style="--h:64%"></i><i style="--h:52%"></i><i style="--h:82%"></i><i style="--h:46%"></i><i style="--h:72%"></i></div>
-                    <span class="ps"><span class="zh">多数窗口同向 · 才留下</span><span class="en">same direction in most windows</span></span>
+                    <span class="ps"><span class="zh">多数窗口同向 · 才留下</span><span class="en">Same Direction in Most Windows</span></span>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obCurve"><div class="fin">
                   <div class="piece">
-                    <span class="pl"><span class="zh">信号 · 成本后</span><span class="en">signal · after cost</span></span>
+                    <span class="pl"><span class="zh">信号 · 成本后</span><span class="en">Signal · After Cost</span></span>
                     <svg class="pcurve" viewBox="0 0 150 62" fill="none">
                       <line class="pcl" x1="4" y1="52" x2="146" y2="52" stroke="#D9821A" stroke-width="1.6" stroke-dasharray="5 5"/>
                       <path class="pdraw" d="M4 56 L26 40 L48 46 L72 26 L96 34 L120 14 L146 20" stroke="#0E9F87" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -704,14 +744,14 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 
                 <div class="fobj" id="obW"><div class="fin">
                   <div class="piece">
-                    <span class="pl"><span class="zh">组合权重</span><span class="en">portfolio weights</span></span>
+                    <span class="pl"><span class="zh">组合权重</span><span class="en">Portfolio Weights</span></span>
                     <div class="palloc"><i style="--f:42%;background:#2F6FE4"></i><i style="--f:26%;background:#0E9F87"></i><i style="--f:18%;background:#6D4AEF"></i><i class="cap" style="--f:14%;background:#D9821A"></i></div>
-                    <span class="ps"><span class="zh">第 4 项触及上限 · 被压回</span><span class="en">4th hits the cap · trimmed</span></span>
+                    <span class="ps"><span class="zh">第 4 项触及上限 · 被压回</span><span class="en">4th Hits the Cap · Trimmed</span></span>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obLimit"><div class="fin">
-                  <div class="chip2 red"><span class="zh">权重上限 <b>25%</b></span><span class="en">position cap <b>25%</b></span></div>
+                  <div class="chip2 red"><span class="zh">权重上限 <b>25%</b></span><span class="en">Position Cap <b>25%</b></span></div>
                 </div></div>
 
                 <div class="fobj" id="obRisk"><div class="fin">
@@ -722,30 +762,30 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
                       <circle cx="22" cy="22" r="18" stroke="#6D4AEF" stroke-dasharray="24.9 113.1" stroke-dashoffset="-88.2"/>
                     </svg>
                     <div class="ptxt">
-                      <span class="pl"><span class="zh">风险贡献</span><span class="en">risk contribution</span></span>
-                      <span class="ps"><span class="zh">约束后再平衡</span><span class="en">rebalanced under constraints</span></span>
+                      <span class="pl"><span class="zh">风险贡献</span><span class="en">Risk Contribution</span></span>
+                      <span class="ps"><span class="zh">约束后再平衡</span><span class="en">Rebalanced Under Constraints</span></span>
                     </div>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obTurn"><div class="fin">
-                  <div class="chip2"><span class="zh">换手 <b>32%</b> → 成本 <b>+<span data-to="8">0</span>bps</b></span><span class="en">turnover <b>32%</b> → cost <b>+<span data-to="8">0</span>bps</b></span></div>
+                  <div class="chip2"><span class="zh">换手 <b>32%</b> → 成本 <b>+<span data-to="8">0</span>bps</b></span><span class="en">Turnover <b>32%</b> → cost <b>+<span data-to="8">0</span>bps</b></span></div>
                 </div></div>
 
                 <div class="fobj" id="obAttr"><div class="fin">
                   <div class="piece w200">
-                    <span class="pl"><span class="zh">收益归因</span><span class="en">return attribution</span></span>
+                    <span class="pl"><span class="zh">收益归因</span><span class="en">Return Attribution</span></span>
                     <div class="pstack2 tall"><i style="--f:52%;background:#0E9F87"></i><i style="--f:28%;background:#2F6FE4"></i><i style="--f:20%;background:#D9821A"></i></div>
                     <div class="pkeys">
-                      <span style="--c:#0E9F87"><span class="zh">因子 52</span><span class="en">factor 52</span></span>
-                      <span style="--c:#2F6FE4"><span class="zh">风险 28</span><span class="en">risk 28</span></span>
-                      <span style="--c:#D9821A"><span class="zh">成本 20</span><span class="en">cost 20</span></span>
+                      <span style="--c:#0E9F87"><span class="zh">因子 52</span><span class="en">Factor 52</span></span>
+                      <span style="--c:#2F6FE4"><span class="zh">风险 28</span><span class="en">Risk 28</span></span>
+                      <span style="--c:#D9821A"><span class="zh">成本 20</span><span class="en">Cost 20</span></span>
                     </div>
                   </div>
                 </div></div>
 
                 <div class="fobj" id="obNull"><div class="fin">
-                  <div class="pstamp"><span class="zh">不成立的结论 · 留档</span><span class="en">null results · on record</span></div>
+                  <div class="pstamp"><span class="zh">不成立的结论 · 留档</span><span class="en">Null Results · on Record</span></div>
                 </div></div>
               </div>
             </div>
@@ -756,61 +796,61 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             <div class="rail-wrap">
               <div class="rail-line"><span class="rail-fill" id="railfill"></span></div>
               <ol class="rail-nodes" aria-label="项目导航">
-                <li role="button" tabindex="0"><i></i><span>Alpha Signal</span></li>
-                <li role="button" tabindex="0"><i></i><span>Portfolio Risk</span></li>
-                <li role="button" tabindex="0"><i></i><span>Statistics &amp; TS</span></li>
-                <li role="button" tabindex="0"><i></i><span>Machine Learning</span></li>
-                <li role="button" tabindex="0"><i></i><span>Deep Learning</span></li>
-                <li role="button" tabindex="0"><i></i><span>LLM &amp; Alt Data</span></li>
+                <li role="button" tabindex="0"><i></i><span><span class="zh">Alpha 信号</span><span class="en">Alpha Signal</span></span></li>
+                <li role="button" tabindex="0"><i></i><span><span class="zh">组合风险</span><span class="en">Portfolio Risk</span></span></li>
+                <li role="button" tabindex="0"><i></i><span><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; Time Series</span></span></li>
+                <li role="button" tabindex="0"><i></i><span><span class="zh">机器学习</span><span class="en">Machine Learning</span></span></li>
+                <li role="button" tabindex="0"><i></i><span><span class="zh">深度学习</span><span class="en">Deep Learning</span></span></li>
+                <li role="button" tabindex="0"><i></i><span><span class="zh">LLM 与另类数据</span><span class="en">LLM &amp; Alternative Data</span></span></li>
               </ol>
             </div>
           </div>
           <div class="roadlist">
-            <p class="glabel"><span class="badge qs"><span class="zh">投研</span><span class="en">RESEARCH</span></span><span class="zh">投研项目集 · 信号与组合</span><span class="en">Quant research portfolio · signals &amp; risk</span></p>
+            <p class="glabel"><span class="badge qs"><span class="zh">投研</span><span class="en">RESEARCH</span></span><span class="zh">投研项目集 · 信号与组合</span><span class="en">Quant Research Portfolio · Signals &amp; Risk</span></p>
             <article class="card rv" id="p-alpha">
-              <span class="idx">04 · ALPHA</span>
+              <span class="idx">PROJECT 01 · ALPHA</span>
               <h4><span class="zh">Alpha 信号</span><span class="en">Alpha Signal</span></h4>
               <p><span class="zh">横截面信号的完整流程 —— 从因子诊断、合成到稳健性检验。关键取舍在验证设计：宁可少报一个因子，也不留下一份换样本就反转的结论。</span>
               <span class="en">The full path for a cross-sectional signal — diagnostics, combination, robustness. The trade-off sits in validation design: better one fewer factor than a conclusion that flips on a different sample.</span></p>
-              <div class="tech"><span>Python</span><span>Factor research</span><span>Validation</span></div>
+              <div class="tech"><span>Python</span><span>Factor Research</span><span>Validation</span></div>
               <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
             </article>
             <article class="card rv" id="p-risk">
-              <span class="idx">05 · RISK</span>
+              <span class="idx">PROJECT 02 · RISK</span>
               <h4><span class="zh">组合风险</span><span class="en">Portfolio Risk</span></h4>
               <p><span class="zh">把信号变成受约束的组合：权重上限、风险预算、换手控制。先定义能亏多少，再谈能赚多少。</span>
               <span class="en">Turning signals into a constrained portfolio — position limits, risk budgeting, turnover control. Define the downside before the upside.</span></p>
               <div class="tech"><span>Optimisation</span><span>VaR / CVaR</span><span>Attribution</span></div>
               <a class="go" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">在 GitHub 查看</span><span class="en">View on GitHub</span><svg><use href="#i-arrow"/></svg></a>
             </article>
-            <p class="glabel"><span class="badge ml"><span class="zh">方法</span><span class="en">METHODS</span></span><span class="zh">方法与模型知识库 · 统计 / ML / DL / LLM</span><span class="en">Methods &amp; models knowledge base · stats / ML / DL / LLM</span></p>
+            <p class="glabel"><span class="badge ml"><span class="zh">方法</span><span class="en">METHODS</span></span><span class="zh">方法与模型知识库 · 统计 / ML / DL / LLM</span><span class="en">Methods &amp; Models Knowledge Base · Stats / ML / DL / LLM</span></p>
             <article class="card rv" id="p-stat">
               <span class="idx">MODULE 01</span>
-              <h4><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; time series</span></h4>
+              <h4><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; Time Series</span></h4>
               <p><span class="zh">估计、假设检验、平稳性与时序建模 —— 这套工具决定了一个结论能不能被检验。</span>
               <span class="en">Estimation, hypothesis testing, stationarity and time-series modelling — the toolkit that decides whether a claim can be tested at all.</span></p>
-              <div class="tech"><span>Statistics</span><span>Time series</span><span>Walk-forward</span></div>
+              <div class="tech"><span>Statistics</span><span>Time Series</span><span>Walk-Forward</span></div>
             </article>
             <article class="card rv" id="p-ml">
               <span class="idx">MODULE 02</span>
-              <h4><span class="zh">机器学习</span><span class="en">Machine learning</span></h4>
+              <h4><span class="zh">机器学习</span><span class="en">Machine Learning</span></h4>
               <p><span class="zh">横截面建模、正则化与基线对比。重点不在模型多新，而在它相对基线多出了什么。</span>
               <span class="en">Cross-sectional modelling, regularisation and baselines. The question is not how new the model is, but what it adds over a baseline.</span></p>
-              <div class="tech"><span>scikit-learn</span><span>Regularisation</span><span>Model selection</span></div>
+              <div class="tech"><span>scikit-learn</span><span>Regularisation</span><span>Model Selection</span></div>
             </article>
             <article class="card rv" id="p-dl">
               <span class="idx">MODULE 03</span>
-              <h4><span class="zh">深度学习</span><span class="en">Deep learning</span></h4>
+              <h4><span class="zh">深度学习</span><span class="en">Deep Learning</span></h4>
               <p><span class="zh">时序与横截面深度模型，以及训练与验证设计 —— 也会记录它相对传统因子模型没有优势的情况。</span>
               <span class="en">Sequence and cross-sectional deep models, plus training and validation design — including where they fail to beat classical factor models.</span></p>
-              <div class="tech"><span>PyTorch</span><span>Sequence models</span><span>Validation</span></div>
+              <div class="tech"><span>PyTorch</span><span>Sequence Models</span><span>Validation</span></div>
             </article>
             <article class="card rv" id="p-llm">
               <span class="idx">MODULE 04</span>
-              <h4><span class="zh">LLM 与另类数据</span><span class="en">LLM &amp; alternative data</span></h4>
+              <h4><span class="zh">LLM 与另类数据</span><span class="en">LLM &amp; Alternative Data</span></h4>
               <p><span class="zh">文本 → 情绪 / 事件因子 → 增量检验；哪些环节最容易制造虚假信号，同样写清楚。</span>
               <span class="en">Text to sentiment / event factors to incremental tests — and where spurious signal is most likely to creep in.</span></p>
-              <div class="tech"><span>FinBERT</span><span>Embeddings</span><span>Alt data</span></div>
+              <div class="tech"><span>FinBERT</span><span>Embeddings</span><span>Alternative Data</span></div>
             </article>
           </div>
         </div>
@@ -819,12 +859,12 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- skills -->
       <section id="skills">
         <div class="sh"><span class="no">03</span><h2><span class="shin"><span class="zh">技能</span><span class="en">Skills</span></span></h2>
-          <span class="hint"><span class="zh">三幕 · 每行都能点开看</span><span class="en">three acts · every row is a link</span></span></div>
+          <span class="hint"><span class="zh">三幕 · 每行都能点开看</span><span class="en">Three acts · every row is a link</span></span></div>
 
         <div class="numband" id="numband">
-          <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">skills · every line links to its output</span></span></div>
-          <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">public projects · all reproducible</span></span></div>
-          <div><b data-to="3">0</b><span><span class="zh">篇研究笔记 · 验证 / 成本 / 另类数据</span><span class="en">research notes · validation / cost / alt data</span></span></div>
+          <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
+          <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
+          <div><b data-to="3">0</b><span><span class="zh">篇研究笔记 · 验证 / 成本 / 另类数据</span><span class="en">Research notes · validation / cost / alt data</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -834,22 +874,22 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <section class="act on">
                 <div>
                   <div class="kick">ACT 01 · DATA</div>
-                  <h3><span class="zh">数据与工程</span><span class="en">Data &amp; engineering</span></h3>
-                  <p class="asub"><span class="zh">把散乱的数据变成能直接用的东西：清洗、对齐、留痕，别人接手也能跑。</span>
+                  <h3><span class="zh">数据与工程</span><span class="en">Data &amp; Engineering</span></h3>
+                  <p class="asub"><span class="zh">把杂乱的数据变成能直接用的东西：清洗、对齐、留痕，别人接手也能跑。</span>
                   <span class="en">Turning scattered data into something usable — cleaning, aligning, leaving a trail, so someone else can run it.</span></p>
                   <div class="ameta">
-                    <div><b>1</b><span class="zh">公开仓库</span><span class="en">public repo</span></div>
-                    <div><b>4</b><span class="zh">项技能</span><span class="en">skills</span></div>
+                    <div><b>1</b><span class="zh">公开仓库</span><span class="en">Public repo</span></div>
+                    <div><b>4</b><span class="zh">项技能</span><span class="en">Skills</span></div>
                   </div>
-                  <div class="acta"><a class="hbtn ghost" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">去看仓库</span><span class="en">Open the repo</span><svg><use href="#i-arrow"/></svg></a></div>
+                  <div class="acta"><a class="hbtn ghost" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="zh">去看仓库</span><span class="en">Open the Repo</span><svg><use href="#i-arrow"/></svg></a></div>
                 </div>
                 <div class="skillcard">
-                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">skills · where each one can be checked</span></span>
+                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">Skills · where each one can be checked</span></span>
                   <ul>
-                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn">Python</span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
-                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">SQL 与数据建模</span><span class="en">SQL &amp; data modelling</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
-                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">数据管道与自动化</span><span class="en">Data pipelines &amp; automation</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
-                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">Git 与可复现项目</span><span class="en">Git &amp; reproducible projects</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn">Python</span><span class="to"><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">SQL 与数据建模</span><span class="en">SQL &amp; Data Modelling</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">数据管道与自动化</span><span class="en">Data Pipelines &amp; Automation</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></span></a></li>
+                    <li><a class="srow" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener"><span class="sn"><span class="zh">Git 与可复现项目</span><span class="en">Git &amp; Reproducible Projects</span></span><span class="to"><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></span></a></li>
                   </ul>
                 </div>
               </section>
@@ -857,22 +897,22 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <section class="act">
                 <div>
                   <div class="kick">ACT 02 · MODELS</div>
-                  <h3><span class="zh">模型与验证</span><span class="en">Models &amp; validation</span></h3>
+                  <h3><span class="zh">模型与验证</span><span class="en">Models &amp; Validation</span></h3>
                   <p class="asub"><span class="zh">训练只是开始 —— 重点是验证设计与基线对比：换个样本，这条结论还成不成立。</span>
                   <span class="en">Training is the easy part — validation design and baselines decide whether a conclusion survives a different sample.</span></p>
                   <div class="ameta">
-                    <div><b>4</b><span class="zh">知识模块</span><span class="en">modules</span></div>
-                    <div><b>4</b><span class="zh">项技能</span><span class="en">skills</span></div>
+                    <div><b>4</b><span class="zh">知识模块</span><span class="en">Modules</span></div>
+                    <div><b>4</b><span class="zh">项技能</span><span class="en">Skills</span></div>
                   </div>
-                  <div class="acta"><a class="hbtn ghost" href="#p-ml"><span class="zh">去看知识库</span><span class="en">Open the knowledge base</span><svg><use href="#i-arrow"/></svg></a></div>
+                  <div class="acta"><a class="hbtn ghost" href="#p-ml"><span class="zh">去看知识库</span><span class="en">Open the Knowledge Base</span><svg><use href="#i-arrow"/></svg></a></div>
                 </div>
                 <div class="skillcard">
-                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">skills · where each one can be checked</span></span>
+                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">Skills · where each one can be checked</span></span>
                   <ul>
-                    <li><a class="srow" href="#p-ml"><span class="sn"><span class="zh">监督学习与正则化</span><span class="en">Supervised learning &amp; regularisation</span></span><span class="to"><span class="zh">知识库 02 ↗</span><span class="en">module 02 ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-ml"><span class="sn"><span class="zh">验证设计与基线对比</span><span class="en">Validation design &amp; baselines</span></span><span class="to"><span class="zh">知识库 02 ↗</span><span class="en">module 02 ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-dl"><span class="sn"><span class="zh">深度学习与时序模型</span><span class="en">Deep learning &amp; sequence models</span></span><span class="to"><span class="zh">知识库 03 ↗</span><span class="en">module 03 ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-llm"><span class="sn"><span class="zh">NLP / LLM 流水线</span><span class="en">NLP / LLM pipelines</span></span><span class="to"><span class="zh">知识库 04 ↗</span><span class="en">module 04 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-ml"><span class="sn"><span class="zh">监督学习与正则化</span><span class="en">Supervised Learning &amp; Regularisation</span></span><span class="to"><span class="zh">知识库 02 ↗</span><span class="en">Module 02 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-ml"><span class="sn"><span class="zh">验证设计与基线对比</span><span class="en">Validation Design &amp; Baselines</span></span><span class="to"><span class="zh">知识库 02 ↗</span><span class="en">Module 02 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-dl"><span class="sn"><span class="zh">深度学习与时序模型</span><span class="en">Deep Learning &amp; Sequence Models</span></span><span class="to"><span class="zh">知识库 03 ↗</span><span class="en">Module 03 ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-llm"><span class="sn"><span class="zh">NLP / LLM 流水线</span><span class="en">NLP / LLM Pipelines</span></span><span class="to"><span class="zh">知识库 04 ↗</span><span class="en">Module 04 ↗</span></span></a></li>
                   </ul>
                 </div>
               </section>
@@ -880,26 +920,26 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <section class="act">
                 <div>
                   <div class="kick">ACT 03 · RESEARCH</div>
-                  <h3><span class="zh">研究与表达</span><span class="en">Research &amp; writing</span></h3>
+                  <h3><span class="zh">研究与表达</span><span class="en">Research &amp; Writing</span></h3>
                   <p class="asub"><span class="zh">从信号到组合再到归因，最后把结论写成别人能复核的东西。</span>
                   <span class="en">From signal to portfolio to attribution — then writing it up so someone else can check it.</span></p>
                   <div class="ameta">
-                    <div><b>2</b><span class="zh">公开项目</span><span class="en">projects</span></div>
-                    <div><b>8</b><span class="zh">项技能</span><span class="en">skills</span></div>
+                    <div><b>2</b><span class="zh">公开项目</span><span class="en">Projects</span></div>
+                    <div><b>8</b><span class="zh">项技能</span><span class="en">Skills</span></div>
                   </div>
                   <div class="acta"><a class="hbtn ghost" href="#p-alpha"><span class="zh">去看 Alpha 信号</span><span class="en">Open Alpha Signal</span><svg><use href="#i-arrow"/></svg></a></div>
                 </div>
                 <div class="skillcard">
-                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">skills · where each one can be checked</span></span>
+                  <span class="pl"><span class="zh">这一幕的技能 · 右边是它在哪能看到</span><span class="en">Skills · where each one can be checked</span></span>
                   <ul>
-                    <li><a class="srow" href="#p-alpha"><span class="sn"><span class="zh">因子研究与信号构建</span><span class="en">Factor research &amp; signal design</span></span><span class="to"><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-alpha"><span class="sn"><span class="zh">回测与交易成本</span><span class="en">Backtesting &amp; transaction costs</span></span><span class="to"><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">组合优化与约束</span><span class="en">Portfolio optimisation</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">业绩与风险归因</span><span class="en">Performance &amp; risk attribution</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">风险计量（VaR / 回撤）</span><span class="en">Risk measures (VaR / drawdown)</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
-                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">市场与产品数据语言</span><span class="en">Market &amp; product data literacy</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
-                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">中英研究报告写作</span><span class="en">Bilingual research writing</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">notes ↗</span></span></a></li>
-                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; visuals</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">notes ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-alpha"><span class="sn"><span class="zh">因子研究与信号构建</span><span class="en">Factor Research &amp; Signal Design</span></span><span class="to"><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-alpha"><span class="sn"><span class="zh">回测与交易成本</span><span class="en">Backtesting &amp; Transaction Costs</span></span><span class="to"><span class="zh">Alpha 信号 ↗</span><span class="en">Alpha Signal ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">组合优化与约束</span><span class="en">Portfolio Optimisation</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">业绩与风险归因</span><span class="en">Performance &amp; Risk Attribution</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">风险计量（VaR / 回撤）</span><span class="en">Risk Measures (VaR / Drawdown)</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">市场与产品数据语言</span><span class="en">Market &amp; Product Data Literacy</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
+                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">中英研究报告写作</span><span class="en">Bilingual Research Writing</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">Notes ↗</span></span></a></li>
+                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; Visuals</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">Notes ↗</span></span></a></li>
                   </ul>
                 </div>
               </section>
@@ -918,23 +958,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- background -->
       <section id="background">
         <div class="sh"><span class="no">04</span><h2><span class="shin"><span class="zh">经历</span><span class="en">Background</span></span></h2>
-          <span class="hint"><span class="zh">按类型概述</span><span class="en">by type</span></span></div>
+          <span class="hint"><span class="zh">按类型概述</span><span class="en">By type</span></span></div>
         <div class="xp">
           <div class="xpi rv" style="--ac:var(--blue)">
             <div class="when"><span class="zh">现在</span><span class="en">Present</span></div>
-            <div class="role"><span class="zh">金融行业 · 数据科学 / AI 工程</span><span class="en">Financial services · data science / AI engineering</span></div>
+            <div class="role"><span class="zh">金融行业 · 数据科学 / AI 工程</span><span class="en">Financial Services · Data Science / AI Engineering</span></div>
             <p><span class="zh">做数据管道、模型开发与评估、实验设计与自动化交付 —— 主要工作是把研究原型推到「别人也能跑」的形态。</span>
             <span class="en">Data pipelines, model development and evaluation, experiment design and automated delivery — mostly pushing research prototypes to a form someone else can run.</span></p>
           </div>
           <div class="xpi rv" style="--ac:var(--violet)">
             <div class="when"><span class="zh">此前</span><span class="en">Earlier</span></div>
-            <div class="role"><span class="zh">量化方向实习 · 风险与策略测试</span><span class="en">Quant internship · risk &amp; strategy testing</span></div>
+            <div class="role"><span class="zh">量化方向实习 · 风险与策略测试</span><span class="en">Quant Internship · Risk &amp; Strategy Testing</span></div>
             <p><span class="zh">接触风险计量与策略测试，理解交易与风险语言，学会用数据回答「策略在压力下是否成立」。</span>
             <span class="en">Worked on risk measurement and strategy testing — learning the language of trading and risk, and whether a strategy holds under stress.</span></p>
           </div>
           <div class="xpi rv" style="--ac:var(--teal)">
             <div class="when"><span class="zh">持续</span><span class="en">Ongoing</span></div>
-            <div class="role"><span class="zh">独立研究与公开作品集</span><span class="en">Independent research &amp; public portfolio</span></div>
+            <div class="role"><span class="zh">独立研究与公开作品集</span><span class="en">Independent Research &amp; Public Portfolio</span></div>
             <p><span class="zh">维护两个公开项目线（投研项目集 + 方法与模型知识库），全部基于公开数据、可复现、可讨论。</span>
             <span class="en">Maintaining two public tracks (research portfolio + methods knowledge base) — public data, reproducible, open to discussion.</span></p>
           </div>
@@ -1045,7 +1085,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 
       <footer>
         <span>© 2026 Aylon · Hong Kong</span>
-        <span><span class="zh">公开版 · 内容与代码均来自公开来源</span><span class="en">public version · public data and code only</span></span>
+        <span><span class="zh">公开版 · 内容与代码均来自公开来源</span><span class="en">Public version · public data and code only</span></span>
       </footer>
 
     </div>
@@ -1294,7 +1334,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
   /* cards & notes: cursor spotlight + tilt */
   (function(){
     if(RM || !FINE) return;
-    Array.prototype.forEach.call(document.querySelectorAll(".card, .note"), function(el){
+    Array.prototype.forEach.call(document.querySelectorAll(".card, .pillar"), function(el){
       el.addEventListener("pointermove", function(e){
         var r=el.getBoundingClientRect();
         var x=e.clientX-r.left, y=e.clientY-r.top;
