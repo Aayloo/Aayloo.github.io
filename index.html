@@ -110,14 +110,6 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .hbtn svg{width:15px;height:15px}
 @media (max-width:760px){.avatarwrap,.avatar{width:152px;height:152px}}
 
-/* stats */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:26px;
-  border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--line)}
-.stats div{background:var(--card);padding:14px 16px}
-.stats b{display:block;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.stats span{font-size:12px;color:var(--mute)}
-@media (max-width:700px){.stats{grid-template-columns:1fr 1fr}}
-
 /* section head */
 .sh{padding:44px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .sh .no{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--teal);letter-spacing:.1em}
@@ -197,6 +189,11 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
   flex:0 0 auto;position:relative;z-index:1;transition:border-color .3s,background .3s,transform .3s}
 .rail-nodes li.on{color:var(--ink);font-weight:700}
 .rail-nodes li.on i{border-color:var(--teal);background:var(--teal);transform:scale(1.1)}
+.rail-nodes li{cursor:pointer}
+.rail-nodes li:hover i{border-color:var(--teal)}
+.rail-nodes li.hov{color:var(--ink2)}
+.rail-nodes li.hov i{border-color:var(--teal);transform:scale(1.06)}
+.roadlist .card.cur{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal2),var(--sh2)}
 .roadlist{display:grid;gap:14px;min-width:0}
 .glabel{display:flex;align-items:center;gap:10px;margin:6px 0 0;font-size:13px;font-weight:700;color:var(--ink2)}
 .glabel:first-child{margin-top:0}
@@ -221,7 +218,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .ahold{position:sticky;top:78px;height:calc(100vh - 96px);display:flex;align-items:center}
 .astage{position:relative;width:100%;height:100%;overflow:hidden;border:1px solid var(--line);border-radius:20px;
   background:linear-gradient(180deg,#fff,#F8FAFC);box-shadow:var(--sh1)}
-.act{position:absolute;inset:0;padding:42px 46px;display:grid;grid-template-columns:minmax(0,1fr) 44%;gap:38px;
+.act{position:absolute;inset:0;padding:40px 44px;display:grid;grid-template-columns:minmax(0,1fr) 37%;gap:40px;
   align-items:center;opacity:0;transform:scale(.97);filter:blur(6px);
   transition:opacity .6s ease,transform .8s cubic-bezier(.16,.84,.24,1),filter .6s ease}
 .act.on{opacity:1;transform:none;filter:blur(0)}
@@ -233,19 +230,19 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .act .ameta b{display:block;font-family:"Aptos Display","Segoe UI",sans-serif;font-size:30px;line-height:1.1;
   color:var(--ink);letter-spacing:-.03em}
 .act .acta{margin-top:22px}
-.skillcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;
-  box-shadow:0 18px 44px rgba(17,26,40,.10)}
+.skillcard{width:100%;max-width:340px;justify-self:center;background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:16px 18px;box-shadow:0 16px 38px rgba(17,26,40,.09)}
 .skillcard .pl{display:block;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--mute);margin-bottom:12px}
 .skillcard ul{margin:0;padding:0;list-style:none;display:grid;gap:2px}
-.skillcard li{display:block;font-size:13.6px;color:var(--ink2)}
-.srow{display:flex;align-items:center;gap:12px;padding:6px 9px;border-radius:9px;color:inherit;
+.skillcard li{display:block;font-size:13.2px;color:var(--ink2)}
+.srow{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:9px;color:inherit;
   transition:background .2s,color .2s}
 .srow:hover{background:var(--card2);color:var(--ink);text-decoration:none}
 .srow .sn{position:relative;flex:1 1 auto;min-width:0}
 .srow .sn::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;
   border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .srow:hover .sn::after{transform:scaleX(1)}
-.srow .to{flex:0 0 auto;font-family:var(--mono);font-size:10px;color:var(--mute);white-space:nowrap;transition:color .2s}
+.srow .to{flex:0 0 auto;font-family:var(--mono);font-size:9.5px;color:var(--mute);white-space:nowrap;transition:color .2s}
 .srow:hover .to{color:var(--teal)}
 .adots{position:absolute;left:46px;bottom:30px;display:flex;gap:8px;z-index:2}
 .adots button{appearance:none;width:24px;height:4px;border-radius:3px;border:0;background:var(--line2);cursor:pointer;
@@ -521,14 +518,14 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 /* reveal */
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .rv.on{opacity:1;transform:none}
-.hero .hello,.hero .role,.hero .intro,.heroacts,.avatarwrap,.stats{opacity:0;animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards}
+.hero .hello,.hero .role,.hero .intro,.heroacts,.avatarwrap{opacity:0;animation:riseIn .7s cubic-bezier(.2,.7,.2,1) forwards}
 .avatarwrap{animation-delay:.05s}.hero .hello{animation-delay:.12s}
-.hero .role{animation-delay:.26s}.hero .intro{animation-delay:.34s}.heroacts{animation-delay:.42s}.stats{animation-delay:.5s}
+.hero .role{animation-delay:.26s}.hero .intro{animation-delay:.34s}.heroacts{animation-delay:.42s}
 @keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .avatarwrap{animation-name:riseIn,floaty;animation-duration:.7s,6s;animation-delay:.05s,1.2s;animation-iteration-count:1,infinite;animation-fill-mode:forwards,none}
 @media (prefers-reduced-motion:reduce){
   .rv{opacity:1;transform:none;transition:none}
-  .hero .hello,.hero .role,.hero .intro,.heroacts,.avatarwrap,.stats{opacity:1;animation:none}
+  .hero .hello,.hero .role,.hero .intro,.heroacts,.avatarwrap{opacity:1;animation:none}
   .avatarwrap{animation:none}
 }
 @media (max-width:760px){main{padding:0 16px 56px}.navin{padding:0 14px}.hero{padding:36px 0 18px}
@@ -599,12 +596,6 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <a class="hbtn ghost" href="#contact"><svg><use href="#i-mail"/></svg><span class="zh">联系</span><span class="en">Contact</span></a>
             </div>
           </div>
-        </div>
-        <div class="stats">
-          <div><b data-count="6">0</b><span><span class="zh">公开项目</span><span class="en">public projects</span></span></div>
-          <div><b data-count="5">0</b><span><span class="zh">研究方向</span><span class="en">research interests</span></span></div>
-          <div><b data-count="4">0</b><span><span class="zh">知识模块</span><span class="en">knowledge modules</span></span></div>
-          <div><b data-count="2">0</b><span><span class="zh">项目主线</span><span class="en">project tracks</span></span></div>
         </div>
       </section>
 
@@ -761,16 +752,16 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <div class="roadmap" id="roadmap">
-          <div class="rail" aria-hidden="true">
+          <div class="rail">
             <div class="rail-wrap">
               <div class="rail-line"><span class="rail-fill" id="railfill"></span></div>
-              <ol class="rail-nodes">
-                <li><i></i><span>Alpha Signal</span></li>
-                <li><i></i><span>Portfolio Risk</span></li>
-                <li><i></i><span>Statistics &amp; TS</span></li>
-                <li><i></i><span>Machine Learning</span></li>
-                <li><i></i><span>Deep Learning</span></li>
-                <li><i></i><span>LLM &amp; Alt Data</span></li>
+              <ol class="rail-nodes" aria-label="项目导航">
+                <li role="button" tabindex="0"><i></i><span>Alpha Signal</span></li>
+                <li role="button" tabindex="0"><i></i><span>Portfolio Risk</span></li>
+                <li role="button" tabindex="0"><i></i><span>Statistics &amp; TS</span></li>
+                <li role="button" tabindex="0"><i></i><span>Machine Learning</span></li>
+                <li role="button" tabindex="0"><i></i><span>Deep Learning</span></li>
+                <li role="button" tabindex="0"><i></i><span>LLM &amp; Alt Data</span></li>
               </ol>
             </div>
           </div>
@@ -1220,6 +1211,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       }
       if(active<0 && cards[0].getBoundingClientRect().top < vh) active=0;
       nodes.forEach(function(n,i){ n.classList.toggle("on", i<=active); });
+      if(active>=0) cards.forEach(function(c,i){ c.classList.toggle("cur", i===active); });
       if(active<0){ fill.style.height="0px"; return; }
       var lr=line.getBoundingClientRect();
       var nr=nodes[Math.min(active,nodes.length-1)].getBoundingClientRect();
@@ -1229,6 +1221,27 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       fill.style.height=h+"px";
     }
     function onScroll(){ if(raf) return; raf=true; requestAnimationFrame(update); }
+    /* rail ↔ card linkage: hover a card to light its node, click a node to jump */
+    cards.forEach(function(c,i){
+      c.addEventListener("pointerenter", function(){
+        nodes.forEach(function(n,k){ n.classList.toggle("hov", k===i); });
+      });
+      c.addEventListener("pointerleave", function(){
+        nodes.forEach(function(n){ n.classList.remove("hov"); });
+      });
+    });
+    function jump(i){
+      if(!cards[i]) return;
+      cards.forEach(function(c,k){ c.classList.toggle("cur", k===i); });
+      nodes.forEach(function(n,k){ n.classList.toggle("hov", k===i); });
+      cards[i].scrollIntoView({block:"center", behavior:"smooth"});
+    }
+    nodes.forEach(function(n,i){
+      n.addEventListener("click", function(){ jump(i); });
+      n.addEventListener("keydown", function(e){
+        if(e.key==="Enter"||e.key===" "){ e.preventDefault(); jump(i); }
+      });
+    });
     window.addEventListener("scroll", onScroll, {passive:true});
     window.addEventListener("resize", onScroll);
     update();
