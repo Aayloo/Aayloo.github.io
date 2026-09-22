@@ -342,7 +342,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 @keyframes cardPulse{0%{box-shadow:0 0 0 0 rgba(14,159,135,.4)}100%{box-shadow:0 0 0 16px rgba(14,159,135,0)}}
 
 /* 6 · project flow: scroll-driven scene (continuous, not a swap) */
-.flow{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:36px;margin-top:16px;position:relative}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:32px;margin-top:16px;position:relative}
 .fsteps{min-width:0}
 .fstep{min-height:48vh;display:flex;flex-direction:column;justify-content:center;max-width:46ch;
   opacity:.28;transform:translateY(8px);transition:opacity .4s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
@@ -363,9 +363,40 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 .fdot.on{border-color:var(--teal);background:var(--teal)}
 .fdot.now{animation:haloPulse 2.4s ease-in-out infinite}
 @keyframes haloPulse{0%,100%{box-shadow:0 0 0 0 rgba(14,159,135,.3)}50%{box-shadow:0 0 0 10px rgba(14,159,135,0)}}
-.fhold{position:sticky;top:calc(50vh - 200px);height:400px;display:flex;align-items:center;
+.fhold{position:sticky;top:calc(50vh - 260px);height:520px;display:flex;align-items:center;
   justify-content:center;z-index:1}
-.fscene{width:100%;max-width:340px;height:auto;display:block;will-change:transform}
+.fstage{position:relative;width:400px;height:500px;transform:scale(var(--k,1));transform-origin:center center}
+.fobj{position:absolute;left:0;top:0;width:0;height:0;will-change:transform,opacity}
+.fin{position:absolute;left:0;top:0;transform:translate(-50%,-50%)}
+.piece{width:172px;background:#fff;border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 10px 24px rgba(17,26,40,.09);padding:9px 11px 10px}
+.piece.w200{width:200px}
+.piece .pl{display:block;font-family:var(--mono);font-size:9.5px;font-weight:800;color:var(--mute);
+  letter-spacing:.06em;margin-bottom:7px}
+.piece .ps{display:block;font-size:10px;color:var(--mute);margin-top:7px;line-height:1.4}
+.chip2{background:#fff;border:1px solid var(--line2);border-radius:999px;padding:5px 12px;
+  font-size:10.5px;font-weight:700;color:var(--ink2);white-space:nowrap;box-shadow:0 8px 18px rgba(17,26,40,.08)}
+.chip2 b{color:var(--ink)}
+.pcells{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.pcells i{height:9px;border-radius:2.5px;background:#E8EDF3;transition:background .55s ease}
+.pcells i.bad{background:#F3D8CB}
+#obRaw.clean .pcells i.bad{background:#CBEBE3}
+.pbars2{display:flex;align-items:flex-end;gap:5px;height:44px}
+.pbars2 i{flex:1 1 auto;border-radius:3px;background:linear-gradient(180deg,#2F6FE4,#0E9F87);
+  height:var(--h);transform-origin:bottom;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.pw2{display:grid;gap:5px}
+.pw2 i{display:block;height:9px;border-radius:3px;width:var(--w);
+  background:linear-gradient(90deg,#2F6FE4,#0E9F87);position:relative;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.pw2 i.cap{background:linear-gradient(90deg,#D9821A,#EFB673)}
+.pw2 i.cap::after{content:"";position:absolute;right:-1px;top:-3px;bottom:-3px;width:2px;
+  background:#C8443A;border-radius:2px}
+.pstack2{display:flex;gap:2px;height:12px}
+.pstack2 i{height:100%;width:var(--f);border-radius:2px}
+.plegend{width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;
+  box-shadow:0 10px 24px rgba(17,26,40,.09);display:grid;gap:7px}
+.plegend span{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--ink2)}
+.plegend i{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+.pcurve{display:block;width:100%;height:auto}
 .fhint{margin:8px 0 0;font-size:11px;font-family:var(--mono);color:var(--mute);text-align:center}
 @media (max-width:900px){
   .flow{grid-template-columns:1fr;gap:0;margin-top:10px}
@@ -577,51 +608,80 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <div class="fside" id="fside">
             <span class="fpipe" aria-hidden="true"><span class="ffill" id="ffill"></span></span>
             <div class="fhold">
-              <svg class="fscene" id="fscene" viewBox="0 0 420 420" aria-hidden="true">
-                <g id="obAxis" opacity="0">
-                  <line x1="46" y1="336" x2="382" y2="336" stroke="#E4E8EE" stroke-width="2"/>
-                  <line x1="46" y1="336" x2="46" y2="86" stroke="#E4E8EE" stroke-width="2"/>
-                </g>
-                <g id="obPoints" opacity="0">
-                  <circle cx="84" cy="182" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="118" cy="238" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="152" cy="166" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="186" cy="282" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="214" cy="196" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="252" cy="240" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="286" cy="150" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="318" cy="212" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="346" cy="120" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="132" cy="298" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="268" cy="296" r="4.5" fill="#0E9F87" opacity=".45"/>
-                  <circle cx="196" cy="120" r="4.5" fill="#0E9F87" opacity=".45"/>
-                </g>
-                <g id="obCost" opacity="0">
-                  <line x1="46" y1="296" x2="382" y2="296" stroke="#D9821A" stroke-width="2" stroke-dasharray="7 7" opacity=".85"/>
-                </g>
-                <path id="obFit" d="M52 300 L108 236 L164 262 L222 186 L280 208 L344 118 L382 96" fill="none"
-                  stroke="#0E9F87" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
-                <g id="obBars" opacity="0">
-                  <line x1="60" y1="150" x2="360" y2="150" stroke="#CFD7E2" stroke-width="2" stroke-dasharray="7 7"/>
-                  <rect x="96" y="196" width="38" height="140" rx="8" fill="#2F6FE4" opacity=".85"/>
-                  <rect x="152" y="222" width="38" height="114" rx="8" fill="#0E9F87" opacity=".85"/>
-                  <rect x="208" y="252" width="38" height="84" rx="8" fill="#6D4AEF" opacity=".8"/>
-                  <rect x="264" y="276" width="38" height="60" rx="8" fill="#D9821A" opacity=".8"/>
-                </g>
-                <g id="obSeg" opacity="0">
-                  <rect x="58" y="186" width="150" height="30" rx="9" fill="#0E9F87" opacity=".88"/>
-                  <rect x="212" y="186" width="92" height="30" rx="9" fill="#2F6FE4" opacity=".88"/>
-                  <rect x="308" y="186" width="62" height="30" rx="9" fill="#D9821A" opacity=".88"/>
-                </g>
-                <g id="obLegend" opacity="0">
-                  <rect x="58" y="252" width="14" height="14" rx="4" fill="#0E9F87"/>
-                  <rect x="58" y="288" width="14" height="14" rx="4" fill="#2F6FE4"/>
-                  <rect x="58" y="324" width="14" height="14" rx="4" fill="#D9821A"/>
-                  <line x1="86" y1="259" x2="196" y2="259" stroke="#E4E8EE" stroke-width="6" stroke-linecap="round"/>
-                  <line x1="86" y1="295" x2="164" y2="295" stroke="#E4E8EE" stroke-width="6" stroke-linecap="round"/>
-                  <line x1="86" y1="331" x2="140" y2="331" stroke="#E4E8EE" stroke-width="6" stroke-linecap="round"/>
-                </g>
-              </svg>
+              <div class="fstage" id="fstage" aria-hidden="true">
+                <div class="fobj" id="obRaw"><div class="fin">
+                  <div class="piece">
+                    <span class="pl"><span class="zh">原始数据</span><span class="en">Raw data</span></span>
+                    <div class="pcells"><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="bad"></i><i></i><i></i><i></i><i></i><i></i><i class="bad"></i><i></i><i></i></div>
+                    <span class="ps"><span class="zh">缺值 · 口径不一</span><span class="en">gaps · mismatched fields</span></span>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obClean"><div class="fin">
+                  <div class="chip2"><span class="zh">清洗 · 对齐 → <b>可用数据集</b></span><span class="en">clean · align → <b>usable dataset</b></span></div>
+                </div></div>
+
+                <div class="fobj" id="obDiag"><div class="fin">
+                  <div class="piece">
+                    <span class="pl"><span class="zh">因子诊断 · 分窗 IC</span><span class="en">factor IC by window</span></span>
+                    <div class="pbars2"><i style="--h:38%"></i><i style="--h:64%"></i><i style="--h:52%"></i><i style="--h:82%"></i><i style="--h:46%"></i><i style="--h:72%"></i></div>
+                    <span class="ps"><span class="zh">多数窗口同向 · 才留下</span><span class="en">same direction in most windows</span></span>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obCurve"><div class="fin">
+                  <div class="piece">
+                    <span class="pl"><span class="zh">信号 · 成本后</span><span class="en">signal · after cost</span></span>
+                    <svg class="pcurve" viewBox="0 0 150 62" fill="none">
+                      <line x1="4" y1="52" x2="146" y2="52" stroke="#D9821A" stroke-width="1.6" stroke-dasharray="5 5" opacity=".8"/>
+                      <path d="M4 56 L26 40 L48 46 L72 26 L96 34 L120 14 L146 20" stroke="#0E9F87" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obW"><div class="fin">
+                  <div class="piece">
+                    <span class="pl"><span class="zh">组合权重</span><span class="en">portfolio weights</span></span>
+                    <div class="pw2"><i style="--w:86%"></i><i style="--w:68%"></i><i style="--w:44%"></i><i class="cap" style="--w:58%"></i></div>
+                    <span class="ps"><span class="zh">第 4 项触及上限 · 被压回</span><span class="en">4th hits the cap · trimmed</span></span>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obLimit"><div class="fin">
+                  <div class="chip2"><span class="zh">权重上限 <b>25%</b></span><span class="en">position cap <b>25%</b></span></div>
+                </div></div>
+
+                <div class="fobj" id="obRisk"><div class="fin">
+                  <div class="piece">
+                    <span class="pl"><span class="zh">风险贡献</span><span class="en">risk contribution</span></span>
+                    <div class="pstack2"><i style="--f:46%;background:#2F6FE4"></i><i style="--f:32%;background:#0E9F87"></i><i style="--f:22%;background:#6D4AEF"></i></div>
+                    <span class="ps"><span class="zh">约束之后再平衡</span><span class="en">rebalanced under constraints</span></span>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obTurn"><div class="fin">
+                  <div class="chip2"><span class="zh">换手 <b>32%</b> → 成本 <b>+8bps</b></span><span class="en">turnover <b>32%</b> → cost <b>+8bps</b></span></div>
+                </div></div>
+
+                <div class="fobj" id="obAttr"><div class="fin">
+                  <div class="piece w200">
+                    <span class="pl"><span class="zh">收益归因</span><span class="en">return attribution</span></span>
+                    <div class="pstack2" style="height:18px"><i style="--f:52%;background:#0E9F87"></i><i style="--f:28%;background:#2F6FE4"></i><i style="--f:20%;background:#D9821A"></i></div>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obLegend"><div class="fin">
+                  <div class="plegend">
+                    <span><i style="background:#0E9F87"></i><span class="zh">因子</span><span class="en">factor</span></span>
+                    <span><i style="background:#2F6FE4"></i><span class="zh">风险暴露</span><span class="en">risk exposure</span></span>
+                    <span><i style="background:#D9821A"></i><span class="zh">交易成本</span><span class="en">trading cost</span></span>
+                  </div>
+                </div></div>
+
+                <div class="fobj" id="obNull"><div class="fin">
+                  <div class="chip2"><span class="zh">不成立的结论 → <b>留档</b></span><span class="en">null results → <b>on record</b></span></div>
+                </div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1156,7 +1216,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     var steps=Array.prototype.slice.call(stations.querySelectorAll(".fstep"));
     var N=steps.length;
     if(!N) return;
-    var fill=document.getElementById("ffill"), scene=document.getElementById("fscene");
+    var fill=document.getElementById("ffill"), stage=document.getElementById("fstage");
 
     var dots=[];
     for(var i=0;i<N;i++){
@@ -1166,14 +1226,19 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       side.appendChild(d); dots.push(d);
     }
 
+    /* each object carries its own keyframes; they slide in, hold, then hand over */
     var SCENE=[
-      {id:"obAxis",   f:[{p:0,o:0},{p:.05,o:1},{p:1,o:1}]},
-      {id:"obPoints", f:[{p:0,y:12,o:0},{p:.05,o:1},{p:.24,o:1},{p:.34,y:-14,o:0}]},
-      {id:"obCost",   f:[{p:.02,o:0},{p:.15,o:1},{p:.26,o:1},{p:.36,o:0}]},
-      {id:"obFit",    f:[{p:0,o:0},{p:.10,o:1},{p:.26,o:1},{p:.36,y:-14,o:0}]},
-      {id:"obBars",   f:[{p:.30,y:56,o:0},{p:.41,y:0,o:1},{p:.60,y:0,o:1},{p:.68,y:-28,o:0}]},
-      {id:"obSeg",    f:[{p:.62,y:30,o:0},{p:.73,y:0,o:1},{p:1,y:0,o:1}]},
-      {id:"obLegend", f:[{p:.66,x:16,o:0},{p:.77,x:0,o:1},{p:1,x:0,o:1}]}
+      {id:"obRaw",    f:[{p:0,x:80,y:150,o:0},{p:.05,x:112,y:118,o:1},{p:.24,x:112,y:118,o:1},{p:.32,x:88,y:94,o:0}]},
+      {id:"obClean",  f:[{p:.10,x:334,y:58,o:0},{p:.16,x:302,y:84,o:1},{p:.26,x:302,y:84,o:1},{p:.33,x:278,y:62,o:0}]},
+      {id:"obDiag",   f:[{p:.20,x:330,y:248,o:0},{p:.27,x:298,y:214,o:1},{p:.36,x:298,y:214,o:1},{p:.44,x:274,y:192,o:0}]},
+      {id:"obCurve",  f:[{p:.26,x:150,y:336,o:0},{p:.33,x:118,y:300,o:1},{p:.48,x:118,y:300,o:1},{p:.56,x:94,y:278,o:0}]},
+      {id:"obW",      f:[{p:.34,x:86,y:214,o:0},{p:.42,x:128,y:170,o:1},{p:.58,x:128,y:170,o:1},{p:.64,x:104,y:146,o:0}]},
+      {id:"obLimit",  f:[{p:.40,x:342,y:100,o:0},{p:.47,x:302,y:132,o:1},{p:.58,x:302,y:132,o:1},{p:.66,x:278,y:110,o:0}]},
+      {id:"obRisk",   f:[{p:.46,x:340,y:342,o:0},{p:.55,x:298,y:302,o:1},{p:.66,x:298,y:302,o:1},{p:.74,x:274,y:278,o:0}]},
+      {id:"obTurn",   f:[{p:.54,x:60,y:438,o:0},{p:.61,x:114,y:398,o:1},{p:.70,x:114,y:398,o:1},{p:.78,x:90,y:374,o:0}]},
+      {id:"obAttr",   f:[{p:.68,x:140,y:278,o:0},{p:.75,x:180,y:238,o:1},{p:1,x:180,y:238,o:1}]},
+      {id:"obLegend", f:[{p:.72,x:342,y:394,o:0},{p:.80,x:304,y:358,o:1},{p:1,x:304,y:358,o:1}]},
+      {id:"obNull",   f:[{p:.84,x:110,y:468,o:0},{p:.90,x:180,y:432,o:1},{p:1,x:180,y:432,o:1}]}
     ];
     function build(fr){
       var prev={x:0,y:0,o:1};
@@ -1204,8 +1269,12 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       return fr[fr.length-1];
     }
     function clamp01(v){ return v<0?0:(v>1?1:v); }
-    var fit=document.getElementById("obFit"), fitLen=0;
-    if(fit&&fit.getTotalLength){ fitLen=fit.getTotalLength(); fit.style.strokeDasharray=fitLen; fit.style.strokeDashoffset=fitLen; }
+    var rawEl=document.getElementById("obRaw");
+    function fitStage(){
+      var col=side.getBoundingClientRect().width||420;
+      var k=Math.min(1,(col-14)/400);
+      document.documentElement.style.setProperty("--k",k.toFixed(3));
+    }
 
     function render(p){
       var idx=Math.min(N-1,Math.max(0,Math.floor(p*N)));
@@ -1215,22 +1284,24 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         d.classList.toggle("now", i===idx);
       });
       if(fill) fill.style.height=(p*100).toFixed(2)+"%";
-      if(scene) scene.style.transform="translateY("+(-p*24).toFixed(1)+"px)";
+      if(stage) stage.style.transform="scale(var(--k,1)) translateY("+(-p*14).toFixed(1)+"px)";
+      if(rawEl) rawEl.classList.toggle("clean", p>=.16);
       objs.forEach(function(o){
         var v=sample(o.fr,p);
         o.el.style.opacity=v.o.toFixed(3);
         o.el.style.visibility=v.o<0.01?"hidden":"visible";
         o.el.style.transform="translate("+v.x.toFixed(1)+"px,"+v.y.toFixed(1)+"px)";
       });
-      if(fit&&fitLen) fit.style.strokeDashoffset=(fitLen*(1-clamp01((p-.06)/.2))).toFixed(1);
     }
 
     if(RM){
+      fitStage();
       steps.forEach(function(s){ s.classList.add("on"); });
       dots.forEach(function(d){ d.classList.add("on"); });
       render(1);
       return;
     }
+    fitStage();
     var lastP=-1, raf=false;
     function paint(){
       var r=stations.getBoundingClientRect();
@@ -1241,7 +1312,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     }
     function onScroll(){ if(raf) return; raf=true; requestAnimationFrame(function(){ raf=false; paint(); }); }
     window.addEventListener("scroll", onScroll, {passive:true});
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", function(){ fitStage(); lastP=-1; paint(); });
     paint();
   })();
 
