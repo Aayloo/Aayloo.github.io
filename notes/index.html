@@ -48,7 +48,8 @@
 
   <div class="filters">
     <button class="chip" data-tag="all" aria-pressed="true"><span class="zh">全部</span><span class="en">All</span></button>
-    <button class="chip" data-tag="frontier" aria-pressed="false"><span class="zh">前沿解析</span><span class="en">Frontier</span></button>
+        <button class="chip" data-tag="frontier" aria-pressed="false"><span class="zh">前沿解析</span><span class="en">Frontier</span></button>
+        <button class="chip" data-tag="signal" aria-pressed="false"><span class="zh">信号研究</span><span class="en">Signal</span></button>
     <button class="chip" data-tag="method" aria-pressed="false"><span class="zh">概念方法</span><span class="en">Method</span></button>
     <button class="chip" data-tag="practice" aria-pressed="false"><span class="zh">工程实操</span><span class="en">Practice</span></button>
     <button class="chip" data-tag="benchmark" aria-pressed="false"><span class="zh">实测复现</span><span class="en">Benchmark</span></button>
@@ -61,6 +62,16 @@
 
   <div class="cards">
           <!-- NOTES:CARDS:START -->
+          <article class="ncard"
+                   data-card data-tags="signal method" data-text="因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零 Factor screening: why an in-sample Sharpe of 1.95 can be worth zero 同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。 Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors by t-statistic earn 1.95 in sample and 0.03 out of sample. signal method">
+            <div class="tagrow"><span class="tag t-signal">signal</span><span class="tag t-method">method</span></div>
+            <h3><a href="factor-screening/"><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span><span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></a></h3>
+            <p class="sub"><span class="zh">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span><span class="en">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span></p>
+            <p><span class="zh">同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。</span>
+               <span class="en">Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors by t-statistic earn 1.95 in sample and 0.03 out of sample.</span></p>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-09-2512 min<a class="more" href="factor-screening/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+          </article>
+
           <article class="ncard"
                    data-card data-tags="frontier method" data-text="Jev 与 System One Models：把 AI 变成代码里的一个判断 Jev and System One Models: turning AI into a decision inside your code 它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。 Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out. frontier method">
             <div class="tagrow"><span class="tag t-frontier">frontier</span><span class="tag t-method">method</span></div>

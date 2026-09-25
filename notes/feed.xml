@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-25</lastBuildDate>
   <item>
+    <title>因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</title>
+    <link>https://aayloo.github.io/notes/factor-screening/</link>
+    <guid>https://aayloo.github.io/notes/factor-screening/</guid>
+    <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
+    <description>同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。</description>
+  </item>
+  <item>
     <title>Jev 与 System One Models：把 AI 变成代码里的一个判断</title>
     <link>https://aayloo.github.io/notes/jev-system-one-models/</link>
     <guid>https://aayloo.github.io/notes/jev-system-one-models/</guid>

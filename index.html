@@ -988,7 +988,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">4 篇 · 点标题展开，长文另开页</span><span class="en">4 notes · long reads open a page</span></span></div>
+          <span class="hint"><span class="zh">5 篇 · 点标题展开，长文另开页</span><span class="en">5 notes · long reads open a page</span></span></div>
         <div class="nlist2">
 
           <details class="nitem rv">
@@ -1006,6 +1006,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <p class="take"><span class="zh">结论先行：Jev 不是分类算法 —— 分类只是它能做的五种形状之一；真正的区别是输出空间事前定义，且每个答案都带校准概率。</span>
               <span class="en">The short version: Jev is not a classification algorithm — classification is one of five shapes. The real difference is a predefined output space plus a calibrated probability on every answer.</span></p>
               <p><a href="notes/jev-system-one-models/"><span class="zh">打开全文（含 6 张流程图与对比表）→</span><span class="en">Open the full note (6 figures and comparison tables) →</span></a></p>
+            </div>
+          </details>
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">SIGNAL · 信号研究</span>
+              <h4><a href="notes/factor-screening/"><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span><span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></a></h4>
+              <p class="nsum"><span class="zh">同一份模拟数据、两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。</span>
+              <span class="en">Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors earn 1.95 in sample and 0.03 out.</span></p>
+              <a class="go" href="notes/factor-screening/"><span class="zh">读全文（3 张图 · 11 条文献）→</span><span class="en">Read the note (3 figures, 11 sources) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">400 个候选因子、8 个真因子、15 年样本：按 t 值取前 10，样本内漂亮、样本外归零，命中率只有 30%；更严格的五层过滤选出的 4 个全是噪声。附「证明一个因子需要多少年数据」的门槛计算（年化夏普 0.3 需要约 164 年）。</span>
+              <span class="en">400 candidates, eight real factors, fifteen years: the top ten by t-statistic collapse out of sample, with a 30% hit rate; a stricter filter picked four factors and none were real. Includes the arithmetic of how many years of data a factor needs.</span></p>
+              <p class="take"><span class="zh">结论先行：筛选的天花板由信噪比决定，不由方法决定——所以我不再问「这个因子是否存在」，而是问「我的决策有多依赖它」。</span>
+              <span class="en">The ceiling on screening is set by the signal, not the technique — so the question becomes how much the decision depends on the factor, not whether it exists.</span></p>
             </div>
           </details>
 

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零 · Notes</title>
+<meta name="description" content="用两档信噪比的模拟实验说明：因子筛选的天花板由信噪比决定，不由方法决定。附 10 篇可点开的前沿文献与「证明一个因子需要多少年数据」的门槛图。">
+<meta property="og:title" content="因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零">
+<meta property="og:description" content="筛选的天花板由信噪比决定，不由方法决定。">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">Signal · Research · 2026-09-25</div>
+    <h1><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span>
+        <span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></h1>
+    <p class="lede">
+      <span class="zh">我把同一个「因子动物园」放进两档信噪比里跑了一遍：<b>筛选的天花板由信噪比决定，不由方法决定</b>。强信号下随便筛都对，弱信号下再多技巧也只是在噪声里挑噪声。</span>
+      <span class="en">I ran the same factor zoo through two signal-to-noise regimes: <b>the ceiling on screening is set by the signal, not by the technique.</b></span>
+    </p>
+    <div class="kv">
+      <div>发布 / Published</div><div>2026-09-25</div>
+      <div>版本 / Version</div><div>v1.0</div>
+      <div>阅读 / Reading</div><div>约 12 分钟</div>
+      <div>标签 / Tags</div><div>信号研究 · 概念方法</div>
+      <div>数据 / Data</div><div><span class="zh">本文实验为模拟（代码可复现）；事实陈述均给出文献链接</span><span class="en">Simulation (code included); factual claims carry source links</span></div>
+    </div>
+  </header>
+
+  <div class="split">
+    <div class="prose">
+      <div class="tldr">
+        <h2>TL;DR</h2>
+        <ol>
+          <li><span class="zh"><b>弱信号下，"筛选"是幻觉。</b>模拟中 400 个候选、8 个真因子（年化夏普 0.3）、15 年样本：按 t 值挑出的前 10 名，样本内夏普 <b>1.95</b>，样本外 <b>0.03</b>，命中率只有 30%。</span>
+              <span class="en">With a weak signal, screening is an illusion: 400 candidates, 8 real (Sharpe 0.3), 15 years — the top-10 by t-statistic shows an in-sample Sharpe of <b>1.95</b> and <b>0.03</b> out of sample, with a 30% hit rate.</span></li>
+          <li><span class="zh"><b>信号强的时候，方法差别不大。</b>强信号档（300 个候选、12 个真、年化夏普 0.6）里，朴素筛选与更严格的流程结果几乎一样（样本外 1.63 vs 1.68）——所以不要用强信号的历史案例来证明你的流程好。</span>
+              <span class="en">When the signal is strong, the method barely matters (out-of-sample 1.63 vs 1.68) — never use a strong-signal case to prove your process works.</span></li>
+          <li><span class="zh"><b>多重检验的代价可以算出来。</b>要证明一个年化夏普 0.3 的因子存在，在 400 次检验的阈值下需要约 <b>164 年</b>数据；即使只做一次检验也要约 43 年。（近似公式，见第三节）</span>
+              <span class="en">The cost of multiple testing is computable: proving a Sharpe-0.3 factor against 400 tests needs roughly <b>164 years</b> of data; even a single test needs about 43.</span></li>
+          <li><span class="zh"><b>真实世界的证据方向一致。</b>文献给出的三件事：因子数量爆炸（Harvey–Liu–Zhu）、发表后收益衰减约一半（McLean–Pontiff）、大样本复制失败率很高（Hou–Xue–Zhang 等），而 2026 年的新论文把同样的问题带到了信用市场。</span>
+              <span class="en">The literature points the same way: a factor explosion, roughly halved returns after publication, and high replication failure rates — extended to credit markets in 2026 work.</span></li>
+          <li><span class="zh"><b>所以我不再"证明因子存在"，而是回答"决策有多依赖它"。</b>把单因子检验换成组合层边际贡献 + 收缩 + 敢说"这个我证不了"。</span>
+              <span class="en">So the useful question is no longer "does this factor exist" but "how much does the decision depend on it".</span></li>
+        </ol>
+      </div>
+
+      <div class="callout co-warn">
+        <span class="lbl">口径 · Scope</span>
+        <p><span class="zh">本文实验是<b>模拟</b>：月度数据、alpha 恒定、噪声独立同分布，因此它只能说明"机制"，不能代表真实市场的具体数字。<b>事实性陈述</b>（因子数量、发表后衰减、复制失败率）来自第四节列出的文献，链接均已核对可打开（核对日期 2026-09-25）。</span>
+        <span class="en">The experiment is a <b>simulation</b> (monthly data, constant alpha, i.i.d. noise): it demonstrates a mechanism, not real-world magnitudes. Factual claims come from the sources in section 8, each link verified on 2026-09-25.</span></p>
+      </div>
+
+      <h2 id="s1"><span class="num">01</span><span class="zh">为什么写这篇</span><span class="en">Why this note exists</span></h2>
+      <p><span class="zh">做因子研究的人都会经历同一个瞬间：把 300 个候选因子丢进回测，按 t 值排序，取前 10 个，得到一个漂亮的夏普，然后拿它去讲一个故事。</span>
+      <span class="en">Every factor researcher goes through the same moment: throw 300 candidates into a backtest, sort by t-statistic, keep the top ten, get a beautiful Sharpe, and tell a story about it.</span></p>
+      <p><span class="zh">问题在于：<b>在同一份数据上挑选和评估，等于用同一张考卷出题又答题。</b>挑选这一步本身就在消耗样本的信息量，而你最后看到的夏普里，混进了"挑"这个动作带来的运气。</span>
+      <span class="en">The problem: selecting and evaluating on the same data is like writing and answering the same exam. The selection step consumes information from the sample, and the final Sharpe quietly includes the luck of having picked.</span></p>
+      <p><span class="zh">这篇想回答三个具体问题：弱的信号能被筛出来吗？强信号下筛选有没有价值？如果我必须给出一个数字，我该怎么算"我到底需要多少数据"？</span>
+      <span class="en">Three concrete questions: can a weak signal be screened out at all; is screening even valuable when the signal is strong; and if I had to give a number, how much data would I need?</span></p>
+
+      <h2 id="s2"><span class="num">02</span><span class="zh">文献先把现实说清楚了</span><span class="en">What the literature already established</span></h2>
+      <p><span class="zh">这不是我的新发现，学术界的结论比我狠得多。四组结果连起来是一条完整的证据链：<span class="sup">[1][2][3][4][5]</span></span>
+      <span class="en">None of this is new: the academic results are harsher than my experiment. Four strands form one chain of evidence.<span class="sup">[1][2][3][4][5]</span></span></p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 1｜文献给出的三件事（链接见第八节）</span><span class="en">Table 1｜Three findings from the literature</span></caption>
+          <thead><tr><th><span class="zh">结论</span><span class="en">Finding</span></th><th><span class="zh">含义</span><span class="en">What it means</span></th><th><span class="zh">来源</span><span class="en">Source</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="zh">因子数量爆炸，传统 t&gt;2 门槛过低</span><span class="en">Factor proliferation; t&gt;2 is too low</span></td>
+              <td><span class="zh">候选越多，需要越高的显著性门槛；该文提出新的多重检验调整后门槛，量级明显高于 2</span><span class="en">More candidates require a higher bar; the paper proposes an adjusted threshold well above 2</span></td>
+              <td>Harvey, Liu &amp; Zhu<span class="sup">[1]</span></td>
+            </tr>
+            <tr>
+              <td><span class="zh">发表之后收益衰减</span><span class="en">Returns decay after publication</span></td>
+              <td><span class="zh">样本外（发表后）收益平均约为样本内的一半，说明一部分"发现"来自数据挖掘而非真实定价错误</span><span class="en">Post-publication returns drop to roughly half of in-sample, evidence that part of the "discovery" was data mining</span></td>
+              <td>McLean &amp; Pontiff<span class="sup">[2]</span></td>
+            </tr>
+            <tr>
+              <td><span class="zh">大规模复制的失败率很高</span><span class="en">Large-scale replication fails often</span></td>
+              <td><span class="zh">在统一口径下重做大量异象，多数无法通过严格显著性检验；后续研究给出更乐观但同样苛刻的版本</span><span class="en">Re-running many anomalies under one protocol, most fail strict significance; later work is more constructive but equally demanding</span></td>
+              <td>Hou–Xue–Zhang；Jensen–Kelly–Pedersen<span class="sup">[3][4]</span></td>
+            </tr>
+            <tr>
+              <td><span class="zh">问题正在向其他资产蔓延</span><span class="en">The problem extends to other asset classes</span></td>
+              <td><span class="zh">2026 年的新论文把"复制危机"搬到信用市场，并开始讨论因子之间共同定价的结构</span><span class="en">2026 papers move the replication question into credit markets and study co-pricing structure among factors</span></td>
+              <td>arXiv 2026<span class="sup">[8][9]</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="tnote"><span class="zh">注：这些论文的结论不是"因子研究没用"，而是"筛选标准必须与候选数量匹配"。</span>
+        <span class="en">Note: the conclusion is not that factor research is pointless, but that the screening bar must match the number of candidates.</span></p>
+      </div>
+
+      <h2 id="s3"><span class="num">03</span><span class="zh">我的实验：两档信噪比</span><span class="en">My experiment: two regimes</span></h2>
+      <p><span class="zh">为了看清机制，我造了两个"因子动物园"，每个因子都是月度收益序列，其中只有少数几个带真实的 alpha，其余全是噪声（带共同因子结构，所以因子之间有相关性簇）。样本内用来筛选，随后在<b>未见过的</b>样本外评估。<span class="sup">[10]</span></span>
+      <span class="en">I built two simulated zoos of monthly factor series: a few carry genuine alpha, the rest are noise with a common-factor structure (so clusters exist). Selection happens in-sample; evaluation happens on unseen data.<span class="sup">[10]</span></span></p>
+      <ul>
+        <li><span class="zh"><b>强信号档</b>：300 个候选、12 个真、年化夏普 0.60、样本内 20 年</span><span class="en"><b>Strong regime</b>: 300 candidates, 12 real, annualised Sharpe 0.60, 20 years in-sample</span></li>
+        <li><span class="zh"><b>弱信号档</b>：400 个候选、8 个真、年化夏普 0.30、样本内 15 年（更接近真实的因子研究条件）</span><span class="en"><b>Weak regime</b>: 400 candidates, 8 real, annualised Sharpe 0.30, 15 years — closer to a real research setting</span></li>
+      </ul>
+
+      <figure>
+        <img src="../assets/figs/f7-tstat-zoo.svg" alt="弱信号档中 400 个因子的 t 统计量分布，真因子落在噪声之内">
+        <figcaption><b>图 1｜弱信号档：真因子藏在噪声里</b>（来源：本文模拟，seed 11；脚本 <code>tools/make_figs_factor.py</code> 可复现）。
+        <span class="zh">真因子的 t 值区间是 <b>0.23 ~ 2.20</b>，而噪声因子的最大 |t| 达到 <b>2.89</b>——也就是说，<b>没有任何一个真因子能达到"看起来显著"的位置，反而有噪声比真信号更显著</b>。Bonferroni 门槛（400 次检验）是 |t| &gt; 3.84，两边都过不了。</span>
+        <span class="en">Real factors span t = 0.23–2.20, while the largest noise |t| reaches 2.89: no real factor looks significant, and some noise looks better than the truth. The Bonferroni bar for 400 tests is |t| &gt; 3.84 — neither side clears it.</span></figcaption>
+      </figure>
+
+      <p><span class="zh">接下来看四种做法在同一份模拟里的表现：全选、按 t 值取前 10（最常见的偷懒法）、五层过滤（下面第四节详述）、以及"上帝视角"（只用真因子，现实中不存在，作为上限参照）。</span>
+      <span class="en">Four approaches, same simulated data: use everything, top-10 by t-statistic, a five-layer filter (section 4), and an oracle that keeps only the true factors as an upper bound.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f8-insample-vs-oos.svg" alt="两档信噪比下四种筛选规则的样本外夏普对比">
+        <figcaption><b>图 2｜只看样本外：弱信号下按 t 值排名，挑到的基本是噪声</b>（来源：本文模拟；hit = 选中的因子里真因子的比例）。
+        <span class="zh">弱信号档的数字最难堪也最有价值：<b>按 t 值取前 10，样本内夏普 1.95，样本外 0.03，命中率 30%</b>；即便是更严格的五层过滤，选出的 4 个因子<b>全部是噪声</b>（命中率 0%）。而"上帝视角"只有 0.40——请注意，<b>真实可得的收益上限本来就很低</b>，样本内那个 1.95 是挑选动作制造出来的。</span>
+        <span class="en">The weak regime is the useful one: top-10 by t-statistic shows 1.95 in-sample, 0.03 out of sample, 30% hit rate; even the stricter filter picks four factors — all noise. The oracle earns 0.40: the attainable ceiling is low, and that 1.95 was manufactured by selection.</span></figcaption>
+      </figure>
+
+      <div class="callout co-infer">
+        <span class="lbl">推断 · Inference</span>
+        <p><span class="zh">强信号档的对照很关键：300 个候选、12 个真、夏普 0.6 时，朴素筛选和五层过滤几乎一样（样本外 1.63 vs 1.68，命中率都是 80%）。<b>结论：方法的价值只在弱信号区显现，而真实世界恰恰是弱信号区。</b>如果你只能用强信号的历史案例来证明流程有效，那你其实什么都没证明。</span>
+        <span class="en">In the strong regime the naive and layered rules are indistinguishable (1.63 vs 1.68, both 80% hit). The method only matters in the weak regime — which is where real research lives. A process demonstrated only on strong-signal history demonstrates nothing.</span></p>
+      </div>
+
+      <h2 id="s4"><span class="num">04</span><span class="zh">证明一个因子存在，需要多少年数据</span><span class="en">How much data does proof need</span></h2>
+      <p><span class="zh">多重检验的代价可以算出来。用 t 统计量与年化夏普之间的近似关系 t ≈ SR × √年数，反解就得到"达到显著所需要的年数" = (t 门槛 / SR)²。</span>
+      <span class="en">The cost is computable. Using the approximation t ≈ SR × √years, the data needed is (threshold / SR)².</span></p>
+
+      <figure>
+        <img src="../assets/figs/f9-selection-curve.svg" alt="不同真实夏普与检验次数下，达到显著所需的年数">
+        <figcaption><b>图 3｜达到显著所需的年数（对数刻度）</b>（来源：标准 t 检验代数，本文计算；近似公式忽略复利与自相关，真实数据往往需要更久）。
+        <span class="zh">读法：<b>年化夏普 0.3 的因子，在 400 次检验的门槛下需要约 164 年数据</b>；只做一次检验也要约 43 年。年化夏普 0.6 的因子在同样门槛下约需 41 年，单次检验约 11 年。这条曲线解释了一个日常现象：<b>很多"因子研究"不是在发现规律，而是在用不足的样本给噪声命名。</b></span>
+        <span class="en">Read it this way: a Sharpe-0.3 factor needs about 164 years of data against 400 tests, or about 43 years for a single test; a Sharpe-0.6 factor needs about 41 and 11 years respectively. Much of what is called factor research is naming noise with too little data.</span></figcaption>
+      </figure>
+
+      <h2 id="s5"><span class="num">05</span><span class="zh">那我实际怎么做</span><span class="en">What I actually do about it</span></h2>
+      <p><span class="zh">实验跑完，我把自己的流程改成下面五条。它不是"更好的筛子"，而是<b>承认单因子检验的能力上限</b>之后的替代做法。</span>
+      <span class="en">Five changes to my own workflow. Not a better sieve — a response to the limits of single-factor testing.</span></p>
+      <ol>
+        <li><span class="zh"><b>先写经济故事，再看数据。</b>候选因子的来源先要有机制解释（风险补偿、行为偏差、制度约束）；没有故事的因子即使 t 值高也进不了池子——这是最低成本的事前筛选。</span>
+          <span class="en"><b>Economic story first.</b> A candidate needs a mechanism (risk premia, behaviour, constraints) before any data. No story, no entry — the cheapest filter available.</span></li>
+        <li><span class="zh"><b>把"筛选"换成"组合层边际贡献"。</b>不看单因子的 t 值排名，而是问：把它加进现有组合，夏普/回撤/换手各变化多少？这直接对应决策，而不是对应统计显著性。<span class="sup">[5]</span></span>
+          <span class="en"><b>Replace screening with portfolio marginal contribution.</b> Ask what changes in Sharpe, drawdown and turnover when the factor joins the book — a decision question rather than a significance question.<span class="sup">[5]</span></span></li>
+        <li><span class="zh"><b>用收缩，而不是硬选。</b>与其在"留下/丢弃"之间二选一，不如给所有候选一个按证据强度缩减的权重（贝叶斯收缩 / 岭回归），让弱证据自带惩罚。</span>
+          <span class="en"><b>Shrink instead of selecting.</b> Rather than keep-or-drop, weight every candidate by the strength of its evidence (Bayesian shrinkage, ridge), so weak evidence penalises itself.</span></li>
+        <li><span class="zh"><b>对多重检验诚实定价。</b>报告筛选过程本身：试了多少个变体、用什么门槛、如果按 Bonferroni 或 Deflated Sharpe Ratio 折算，结论还剩多少。<span class="sup">[7]</span></span>
+          <span class="en"><b>Price the multiple testing honestly.</b> Disclose the search: how many variants, which bar, and what survives after a Bonferroni or Deflated-Sharpe adjustment.<span class="sup">[7]</span></span></li>
+        <li><span class="zh"><b>敢说"这个我证不了"。</b>当样本量根本不足（如图 3 的 164 年），正确回答不是编一个理由，而是承认不确定性，并改用对结论影响更小的决策——例如降低仓位而不是全押。</span>
+          <span class="en"><b>Say "I cannot prove this".</b> When the data is simply insufficient (see the 164 years), the honest answer is to admit it and make a decision that depends less on the claim — smaller size instead of full conviction.</span></li>
+      </ol>
+
+      <h2 id="s6"><span class="num">06</span><span class="zh">局限与反方观点</span><span class="en">Limits and the other side</span></h2>
+      <ul>
+        <li><span class="zh"><b>我的实验是模拟，不是市场。</b>alpha 恒定、噪声独立、没有制度变迁与拥挤度变化。现实中真因子的 alpha 会衰减，所以弱信号档的"五层过滤全军覆没"在真实世界里可能更糟，也可能因为经济机制的存在而更好——模拟给不出答案。</span>
+          <span class="en"><b>The experiment is a simulation.</b> Constant alpha, i.i.d. noise, no regime change or crowding. Real alphas decay; the real-world outcome could be worse — or better, if genuine mechanisms exist.</span></li>
+        <li><span class="zh"><b>文献本身有分歧。</b>以复制失败率为例，Hou–Xue–Zhang 的口径偏严格（微观市值、等权），Jensen–Kelly–Pedersen 用不同的检验框架得到的可复制比例明显更高。引用单一结论是危险的。<span class="sup">[3][4]</span></span>
+          <span class="en"><b>The literature disagrees.</b> Replication failure rates depend on protocol (microcaps, equal weighting) versus a different testing framework that finds much higher replicability. Quoting one side is dangerous.<span class="sup">[3][4]</span></span></li>
+        <li><span class="zh"><b>图 3 是近似。</b>t ≈ SR√年数 忽略了复利、自相关与偏度；若收益有自相关，实际所需样本更长。它的用途是给出量级感，不是精确答案。</span>
+          <span class="en"><b>Figure 3 is an approximation.</b> It ignores compounding, autocorrelation and skew; autocorrelated returns need longer. Use it for orders of magnitude, not precision.</span></li>
+        <li><span class="zh"><b>反方观点：不筛选更危险。</b>如果因为"筛不出来"就什么都不做，组合会被噪声稀释——实验里"全选"的样本外夏普在弱信号档是 −0.13。正确姿态是收缩与分散，而不是放弃。</span>
+          <span class="en"><b>The other side:</b> not screening is worse. Using everything gave −0.13 out of sample in the weak regime. The answer is shrinkage and diversification, not surrender.</span></li>
+      </ul>
+
+      <h2 id="s7"><span class="num">07</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
+      <div class="callout co-opinion">
+        <span class="lbl">观点 · Opinion</span>
+        <p><span class="zh">我认为"因子筛选"这个词误导了很多人：它听起来像是从沙子里挑金子，但大多数时候我们面对的是<b>一堆看起来都像金子的沙子</b>。实验里弱信号档的五层过滤选出 4 个因子、命中 0 个——这不是因为流程写得差，而是因为在那个信噪比下，任何流程都做不到。</span>
+        <span class="en">"Factor screening" misleads: it sounds like picking gold from sand, when usually the sand all glitters. In the weak regime the layered filter picked four factors and none were real — not because the process was sloppy, but because at that signal-to-noise nothing would work.</span></p>
+        <p><span class="zh">所以我把研究目标从"证明某个因子存在"改成"我的决策有多依赖这个结论"。后者可以回答，前者往往不能。面试里我更愿意说：这个信号我测过，样本量对应到图 3 大约是 40 年，我手上只有 15 年，所以我只给它小仓位——<b>而不是说它夏普 1.95</b>。</span>
+        <span class="en">So my research question changed from "does this factor exist" to "how much does my decision depend on it". The first is usually unanswerable; the second is answerable — and is what I would say in an interview, rather than quoting a Sharpe of 1.95.</span></p>
+      </div>
+
+      <h2 id="s8"><span class="num">08</span><span class="zh">来源（链接均于 2026-09-25 核查）</span><span class="en">Sources (links verified 2026-09-25)</span></h2>
+      <ol class="refs">
+        <li>Harvey, C. R., Liu, Y., &amp; Zhu, H. (2016). <i>… and the Cross-Section of Expected Returns</i>. Review of Financial Studies.
+          <a href="https://doi.org/10.1093/rfs/hhv059">doi.org/10.1093/rfs/hhv059</a>
+          <span class="zh">（DOI 已用 Crossref 核对；出版社页面会拦截自动访问，浏览器可正常打开）</span></li>
+        <li>McLean, R. D., &amp; Pontiff, J. (2016). <i>Does Academic Research Destroy Stock Return Predictability?</i> Journal of Finance.
+          <a href="https://doi.org/10.1111/jofi.12365">doi.org/10.1111/jofi.12365</a></li>
+        <li>Hou, K., Xue, C., &amp; Zhang, L. (2020). <i>Replicating Anomalies</i>. Review of Financial Studies.
+          <a href="https://doi.org/10.1093/rfs/hhy131">doi.org/10.1093/rfs/hhy131</a> ·
+          <span class="zh">公开复制数据：</span><span class="en">public replication data:</span>
+          <a href="https://global-q.org/factors.html">global-q.org/factors.html</a></li>
+        <li>Jensen, T. I., Kelly, B., &amp; Pedersen, L. H. (2023). <i>Is There a Replication Crisis in Finance?</i> Journal of Finance.
+          <a href="https://doi.org/10.1111/jofi.13249">doi.org/10.1111/jofi.13249</a></li>
+        <li>Feng, G., Giglio, S., &amp; Xiu, D. (2020). <i>Taming the Factor Zoo: A Test of New Factors</i>. Journal of Finance.
+          <a href="https://doi.org/10.1111/jofi.12883">doi.org/10.1111/jofi.12883</a></li>
+        <li>Gu, S., Kelly, B., &amp; Xiu, D. (2020). <i>Empirical Asset Pricing via Machine Learning</i>. Review of Financial Studies.
+          <a href="https://doi.org/10.1093/rfs/hhaa009">doi.org/10.1093/rfs/hhaa009</a></li>
+        <li>Bailey, D. H., &amp; López de Prado, M. (2014). <i>The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting and Non-Normality</i>. Journal of Portfolio Management.
+          <a href="https://doi.org/10.3905/jpm.2014.40.5.094">doi.org/10.3905/jpm.2014.40.5.094</a>
+          <span class="zh">（该 DOI 经 Crossref 核对存在）</span></li>
+        <li>arXiv (2026-04). <i>The Corporate Bond Factor Replication Crisis</i>.
+          <a href="https://arxiv.org/abs/2604.07880">arxiv.org/abs/2604.07880</a></li>
+        <li>arXiv (2026-04). <i>The Co-Pricing Factor Zoo</i>.
+          <a href="https://arxiv.org/abs/2604.04430">arxiv.org/abs/2604.04430</a></li>
+        <li>arXiv (2023-11). <i>Forking Paths in Financial Economics</i>（研究自由度与多重检验）.
+          <a href="https://arxiv.org/abs/2401.08606">arxiv.org/abs/2401.08606</a></li>
+        <li>本文实验代码：<code>tools/make_figs_factor.py</code>（固定随机种子，可完全复现；模拟设定见第三节）。</li>
+      </ol>
+
+      <h2 id="s9"><span class="num">09</span><span class="zh">三分钟英文讲稿</span><span class="en">English summary (three-minute read)</span></h2>
+      <div class="callout co-fact">
+        <span class="lbl">English summary</span>
+        <p>I simulated two factor zoos to separate the effect of the screening method from the effect of the signal itself. In the strong regime — 300 candidates, 12 real factors, annualised Sharpe 0.6 over twenty years — a naive top-ten-by-t-statistic screen and a stricter five-layer filter performed almost identically out of sample, 1.63 versus 1.68, with the same 80% hit rate. Methods look clever when the signal is strong.</p>
+        <p>In the weak regime — 400 candidates, eight real factors, Sharpe 0.3 over fifteen years — the top ten by t-statistic produced an in-sample Sharpe of 1.95 and an out-of-sample Sharpe of 0.03, with only 30% of the picks being real. The stricter filter did worse: four picks, none real. No true factor even reached |t| = 2.89, while some noise factors did. The Bonferroni bar for 400 tests was |t| &gt; 3.84, and nothing on either side cleared it.</p>
+        <p>That leads to an arithmetic I now use in practice: with t ≈ SR × √years, proving a Sharpe-0.3 factor against 400 tests would need roughly 164 years of data, and even a single test about 43 years. So I stopped asking whether a factor exists and started asking how much my decision depends on it — marginal contribution at portfolio level, shrinkage instead of keep-or-drop, and an honest "I cannot prove this" when the sample is simply too short.</p>
+      </div>
+
+      <h2 id="cite"><span class="num">10</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
+      <div class="cite">
+        <pre id="citeText">Aylon (2026). 因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零. Notes, v1.0. https://aayloo.github.io/notes/factor-screening/</pre>
+        <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
+      </div>
+
+      <h2 id="upd"><span class="num">11</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
+      <div class="tbl-wrap">
+        <table class="upd">
+          <thead><tr><th><span class="zh">版本</span><span class="en">Version</span></th><th><span class="zh">日期</span><span class="en">Date</span></th><th><span class="zh">改动</span><span class="en">Change</span></th></tr></thead>
+          <tbody>
+            <tr><td>v1.0</td><td>2026-09-25</td>
+              <td><span class="zh">初版。两档信噪比模拟 + 11 条来源（链接已核查）。</span>
+                  <span class="en">First version: two-regime simulation and eleven verified sources.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="pager" aria-label="pagination">
+        <a href="../jev-system-one-models/">
+          <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+          <span class="v"><span class="zh">← Jev 与 System One Models</span><span class="en">← Jev and System One Models</span></span>
+        </a>
+        <a href="../">
+          <span class="k"><span class="zh">目录</span><span class="en">Index</span></span>
+          <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+        </a>
+      </nav>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="tt">Contents</div>
+      <a href="#s1"><span class="zh">01 为什么写这篇</span><span class="en">01 Why</span></a>
+      <a href="#s2"><span class="zh">02 文献怎么说</span><span class="en">02 Literature</span></a>
+      <a href="#s3"><span class="zh">03 我的实验</span><span class="en">03 Experiment</span></a>
+      <a href="#s4"><span class="zh">04 需要多少年数据</span><span class="en">04 How much data</span></a>
+      <a href="#s5"><span class="zh">05 我实际怎么做</span><span class="en">05 What I do</span></a>
+      <a href="#s6"><span class="zh">06 局限与反方</span><span class="en">06 Limits</span></a>
+      <a href="#s7"><span class="zh">07 我的判断</span><span class="en">07 My take</span></a>
+      <a href="#s8"><span class="zh">08 来源</span><span class="en">08 Sources</span></a>
+      <a href="#s9"><span class="zh">09 英文讲稿</span><span class="en">09 English</span></a>
+      <a href="#upd"><span class="zh">11 更新日志</span><span class="en">11 Changelog</span></a>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footin">
+      <span>© 2026 Aylon · <span class="zh">本页文字为原创，引用请注明来源</span><span class="en">Original text; please cite if reused</span></span>
+      <span class="spacer"></span>
+      <a href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>
