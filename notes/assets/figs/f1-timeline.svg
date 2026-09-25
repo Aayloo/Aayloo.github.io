@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" width="1200" height="460" role="img"
+     aria-label="From pretrained LLMs to calibrated decisions: four generations of optimization targets">
+  <defs>
+    <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748C"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="460" fill="#FFFFFF"/>
+
+  <text x="40" y="52" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="22"
+        font-weight="650" fill="#111A28">优化目标演进：从「人类偏好」到「校准决策」</text>
+  <text x="40" y="80" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14"
+        fill="#64748C">Four generations of training objectives — Jev belongs to the fourth (RLCD / System One Models)</text>
+
+  <!-- 01 -->
+  <g>
+    <rect x="40" y="128" width="250" height="248" rx="14" fill="#FFFFFF" stroke="#E4E8EE"/>
+    <path d="M40,142 a14,14 0 0 1 14,-14 h222 a14,14 0 0 1 14,14 v34 h-250 z" fill="#F5F7F4"/>
+    <text x="62" y="156" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="15"
+          font-weight="650" fill="#111A28">01 · 预训练语言模型</text>
+    <text x="62" y="180" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5"
+          fill="#64748C">Pretrained LLM</text>
+    <text x="62" y="218" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">优化目标</text>
+    <text x="62" y="240" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">下一个词预测</text>
+    <text x="62" y="282" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">输出</text>
+    <text x="62" y="304" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">文本（字符串）</text>
+    <text x="62" y="346" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">主要用途</text>
+    <text x="62" y="366" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">写出来给人看</text>
+  </g>
+  <line x1="292" y1="252" x2="326" y2="252" stroke="#64748C" stroke-width="1.6" marker-end="url(#ar1)"/>
+
+  <!-- 02 -->
+  <g>
+    <rect x="330" y="128" width="250" height="248" rx="14" fill="#FFFFFF" stroke="#E4E8EE"/>
+    <path d="M330,142 a14,14 0 0 1 14,-14 h222 a14,14 0 0 1 14,14 v34 h-250 z" fill="#E6EEFD"/>
+    <text x="352" y="156" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="15"
+          font-weight="650" fill="#111A28">02 · 对话模型</text>
+    <text x="352" y="180" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5"
+          fill="#64748C">RLHF</text>
+    <text x="352" y="218" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">优化目标</text>
+    <text x="352" y="240" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">人类偏好</text>
+    <text x="352" y="282" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">输出</text>
+    <text x="352" y="304" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">文本（字符串）</text>
+    <text x="352" y="346" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">已知代价</text>
+    <text x="352" y="366" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">过度自信 · 不可靠</text>
+  </g>
+  <line x1="582" y1="252" x2="616" y2="252" stroke="#64748C" stroke-width="1.6" marker-end="url(#ar1)"/>
+
+  <!-- 03 -->
+  <g>
+    <rect x="620" y="128" width="250" height="248" rx="14" fill="#FFFFFF" stroke="#E4E8EE"/>
+    <path d="M620,142 a14,14 0 0 1 14,-14 h222 a14,14 0 0 1 14,14 v34 h-250 z" fill="#EDE9FE"/>
+    <text x="642" y="156" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="15"
+          font-weight="650" fill="#111A28">03 · 推理模型</text>
+    <text x="642" y="180" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5"
+          fill="#64748C">RLVR</text>
+    <text x="642" y="218" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">优化目标</text>
+    <text x="642" y="240" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">可验证奖励</text>
+    <text x="642" y="282" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">输出</text>
+    <text x="642" y="304" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">文本（含推理链）</text>
+    <text x="642" y="346" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">主要用途</text>
+    <text x="642" y="366" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">答案可自动判对错</text>
+  </g>
+  <line x1="872" y1="252" x2="906" y2="252" stroke="#0E9F87" stroke-width="2" marker-end="url(#ar1)"/>
+
+  <!-- 04 -->
+  <g>
+    <rect x="910" y="128" width="250" height="248" rx="14" fill="#F7FDFB" stroke="#0E9F87" stroke-width="1.6"/>
+    <path d="M910,142 a14,14 0 0 1 14,-14 h222 a14,14 0 0 1 14,14 v34 h-250 z" fill="#E3F5F1"/>
+    <text x="932" y="156" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="15"
+          font-weight="650" fill="#0A5A4C">04 · System One Model</text>
+    <text x="932" y="180" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5"
+          fill="#0A6E5E">RLCD · Jev</text>
+    <text x="932" y="218" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">优化目标</text>
+    <text x="932" y="240" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" font-weight="650" fill="#0A5A4C">校准决策</text>
+    <text x="932" y="282" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">输出</text>
+    <text x="932" y="304" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">类型化决策 + 概率</text>
+    <text x="932" y="346" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">主要用途</text>
+    <text x="932" y="366" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#111A28">嵌进代码做判断</text>
+  </g>
+
+  <text x="40" y="424" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">
+    来源：TypeSafe AI《Introducing System One Models &amp; Jev》（2026-09-15）；本图为自绘示意，前三个阶段不标注具体年份。
+  </text>
+</svg>

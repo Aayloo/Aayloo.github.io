@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel>
+  <title>Aylon · Notes</title>
+  <link>https://aayloo.github.io/notes/</link>
+  <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
+  <lastBuildDate>2026-09-25</lastBuildDate>
+  <item>
+    <title>Jev 与 System One Models：把 AI 变成代码里的一个判断</title>
+    <link>https://aayloo.github.io/notes/jev-system-one-models/</link>
+    <guid>https://aayloo.github.io/notes/jev-system-one-models/</guid>
+    <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
+    <description>它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。</description>
+  </item>
+  <item>
+    <title>术语表：System One · RLCD · 校准 · 类型安全</title>
+    <link>https://aayloo.github.io/notes/glossary/</link>
+    <guid>https://aayloo.github.io/notes/glossary/</guid>
+    <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
+    <description>本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。</description>
+  </item>
+</channel></rss>

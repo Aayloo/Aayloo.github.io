@@ -1,0 +1,47 @@
+/* ============================================================================
+   tokens.css —— 设计令牌
+
+   上半段（GENERATED 区）由 tools/sync_tokens.py 从个人站 index.html 自动抽取，
+   只读取个人站、从不写入；下半段（LOCAL 区）是 Notes 站自己的补充色，不会被覆盖。
+
+   重新同步：python tools/sync_tokens.py --site "<personal-site>/index.html"
+   ========================================================================== */
+
+/* GENERATED:START —— 来源：个人站 Aayloo.github.io/index.html */
+:root{
+  --f-body:"Aptos","Segoe UI Variable Text","Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-head:"Aptos Display","Segoe UI Variable Display","Segoe UI","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --bg:#FAFAF7;
+  --card:#FFFFFF;
+  --card2:#F5F7F4;
+  --line:#E4E8EE;
+  --line2:#CFD7E2;
+  --ink:#111A28;
+  --ink2:#4A5A72;
+  --mute:#64748C;
+  --teal:#0E9F87;
+  --teal2:#E3F5F1;
+  --violet:#6D4AEF;
+  --violet2:#EDE9FE;
+  --blue:#2F6FE4;
+  --blue2:#E6EEFD;
+  --amber:#D9821A;
+  --amber2:#FBF0DF;
+  --mono:ui-monospace,"Cascadia Mono","Segoe UI Mono",Consolas,monospace;
+  --sh1:0 1px 2px rgba(17,26,40,.05),0 1px 3px rgba(17,26,40,.04);
+  --sh2:0 12px 32px rgba(17,26,40,.12);
+  --mx:50%;
+  --my:50%;
+  --h:38%"></i><i style="--h:64%"></i><i style="--h:52%"></i><i style="--h:82%"></i><i style="--h:46%"></i><i style="--h:72%"></i></div> <span class="ps"><span class="zh">多数窗口同向 · 才留下</span><span class="en">Same Direction in Most Windows</span></span> </div> </div></div> <div class="fobj" id="obCurve"><div class="fin"> <div class="piece"> <span class="pl"><span class="zh">信号 · 成本后</span><span class="en">Signal · After Cost</span></span> <svg class="pcurve" viewBox="0 0 150 62" fill="none"> <line class="pcl" x1="4" y1="52" x2="146" y2="52" stroke="#D9821A" stroke-width="1.6" stroke-dasharray="5 5"/> <path class="pdraw" d="M4 56 L26 40 L48 46 L72 26 L96 34 L120 14 L146 20" stroke="#0E9F87" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/> </svg> </div> </div></div> <div class="fobj" id="obW"><div class="fin"> <div class="piece"> <span class="pl"><span class="zh">组合权重</span><span class="en">Portfolio Weights</span></span> <div class="palloc"><i style="--f:42%;
+  --f:26%;
+  --c:#0E9F87"><span class="zh">因子 52</span><span class="en">Factor 52</span></span> <span style="--c:#2F6FE4"><span class="zh">风险 28</span><span class="en">Risk 28</span></span> <span style="--c:#D9821A"><span class="zh">成本 20</span><span class="en">Cost 20</span></span> </div> </div> </div></div> <div class="fobj" id="obNull"><div class="fin"> <div class="pstamp"><span class="zh">不成立的结论 · 留档</span><span class="en">Null Results · on Record</span></div> </div></div> </div> </div> </div> </div> <div class="roadmap" id="roadmap"> <div class="rail"> <div class="rail-wrap"> <div class="rail-line"><span class="rail-fill" id="railfill"></span></div> <ol class="rail-nodes" aria-label="项目导航"> <li role="button" tabindex="0"><i></i><span><span class="zh">Alpha 信号</span><span class="en">Alpha Signal</span></span></li> <li role="button" tabindex="0"><i></i><span><span class="zh">组合风险</span><span class="en">Portfolio Risk</span></span></li> <li role="button" tabindex="0"><i></i><span><span class="zh">统计与时间序列</span><span class="en">Statistics &amp;
+  --ac:var(--blue)"> <div class="when"><span class="zh">现在</span><span class="en">Present</span></div> <div class="role"><span class="zh">金融行业 · 数据科学 / AI 工程</span><span class="en">Financial Services · Data Science / AI Engineering</span></div> <p><span class="zh">做数据管道、模型开发与评估、实验设计与自动化交付 —— 主要工作是把研究原型推到「别人也能跑」的形态。</span> <span class="en">Data pipelines, model development and evaluation, experiment design and automated delivery — mostly pushing research prototypes to a form someone else can run.</span></p> </div> <div class="xpi rv" style="--ac:var(--violet)"> <div class="when"><span class="zh">此前</span><span class="en">Earlier</span></div> <div class="role"><span class="zh">量化方向实习 · 风险与策略测试</span><span class="en">Quant Internship · Risk &amp;
+}
+/* GENERATED:END */
+
+/* LOCAL:START —— 仅 Notes 站使用，不随个人站同步 */
+:root{
+  --red:#C0392B;    /* 提示与警告（观点/风险卡片） */
+  --red2:#FBEAE7;
+}
+/* LOCAL:END */

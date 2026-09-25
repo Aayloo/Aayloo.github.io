@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notes · 前沿技术阅读笔记</title>
+<meta name="description" content="前沿技术的阅读笔记：事实、推断、观点分开写，每个数字都带出处。">
+<meta property="og:title" content="Notes · 前沿技术阅读笔记">
+<meta property="og:description" content="事实、推断、观点分开写；每个数字都带出处。">
+<meta property="og:type" content="website">
+<link rel="alternate" type="application/rss+xml" title="Notes RSS" href="feed.xml">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="./" aria-current="page"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/" title="个人站"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">Notes · 阅读笔记</div>
+    <h1><span class="zh">把前沿技术读成能用的东西</span><span class="en">Reading frontier technology into something usable</span></h1>
+    <p class="lede">
+      <span class="zh">这里放我读完一篇论文、一个新品、一套方法之后的整理结果。原则只有一条：<b>事实、推断、观点分开写</b>，官方口径与我的判断不混在一起，每个数字都能点回出处。</span>
+      <span class="en">Notes from reading papers, new products and methods. One rule: <b>facts, inferences and opinions stay apart</b> — official claims are never blended with my own judgement, and every number links back to a source.</span>
+    </p>
+    <div class="rule">
+      <span><b><span class="zh">事实</span><span class="en">Fact</span></b> · <span class="zh">可点回原文</span><span class="en">link to the original</span></span>
+      <span><b><span class="zh">推断</span><span class="en">Inference</span></b> · <span class="zh">标注为推断</span><span class="en">labelled as such</span></span>
+      <span><b><span class="zh">观点</span><span class="en">Opinion</span></b> · <span class="zh">单独成段</span><span class="en">in its own block</span></span>
+      <span><b><span class="zh">图</span><span class="en">Figures</span></b> · <span class="zh">全部自绘</span><span class="en">all self-drawn</span></span>
+    </div>
+  </header>
+
+  <div class="filters">
+    <button class="chip" data-tag="all" aria-pressed="true"><span class="zh">全部</span><span class="en">All</span></button>
+    <button class="chip" data-tag="frontier" aria-pressed="false"><span class="zh">前沿解析</span><span class="en">Frontier</span></button>
+    <button class="chip" data-tag="method" aria-pressed="false"><span class="zh">概念方法</span><span class="en">Method</span></button>
+    <button class="chip" data-tag="practice" aria-pressed="false"><span class="zh">工程实操</span><span class="en">Practice</span></button>
+    <button class="chip" data-tag="benchmark" aria-pressed="false"><span class="zh">实测复现</span><span class="en">Benchmark</span></button>
+    <button class="chip" data-tag="essay" aria-pressed="false"><span class="zh">随笔</span><span class="en">Essay</span></button>
+    <label class="search">
+      <span aria-hidden="true">🔍</span>
+      <input type="search" placeholder="搜索标题或关键词…" aria-label="搜索笔记">
+    </label>
+  </div>
+
+  <div class="cards">
+          <!-- NOTES:CARDS:START -->
+          <article class="ncard"
+                   data-card data-tags="frontier method" data-text="Jev 与 System One Models：把 AI 变成代码里的一个判断 Jev and System One Models: turning AI into a decision inside your code 它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。 Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out. frontier method">
+            <div class="tagrow"><span class="tag t-frontier">frontier</span><span class="tag t-method">method</span></div>
+            <h3><a href="jev-system-one-models/"><span class="zh">Jev 与 System One Models：把 AI 变成代码里的一个判断</span><span class="en">Jev and System One Models: turning AI into a decision inside your code</span></a></h3>
+            <p class="sub"><span class="zh">Jev and System One Models: turning AI into a decision inside your code</span><span class="en">Jev 与 System One Models：把 AI 变成代码里的一个判断</span></p>
+            <p><span class="zh">它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。</span>
+               <span class="en">Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out.</span></p>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-09-2516 min<a class="more" href="jev-system-one-models/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+          </article>
+
+          <article class="ncard"
+                   data-card data-tags="method" data-text="术语表：System One · RLCD · 校准 · 类型安全 Glossary: System One, RLCD, calibration, type safety 本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。 Every term used in these notes: a one-line definition, why it matters, and a source anchor other notes link to. method">
+            <div class="tagrow"><span class="tag t-method">method</span></div>
+            <h3><a href="glossary/"><span class="zh">术语表：System One · RLCD · 校准 · 类型安全</span><span class="en">Glossary: System One, RLCD, calibration, type safety</span></a></h3>
+            <p class="sub"><span class="zh">Glossary: System One, RLCD, calibration, type safety</span><span class="en">术语表：System One · RLCD · 校准 · 类型安全</span></p>
+            <p><span class="zh">本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。</span>
+               <span class="en">Every term used in these notes: a one-line definition, why it matters, and a source anchor other notes link to.</span></p>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-09-255 min<a class="more" href="glossary/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+          </article>
+
+        </div>
+        <h2 class="sec" id="planned"><span class="zh">在写 / 计划中</span><span class="en">In progress / planned</span></h2>
+        <div class="cards">
+
+          <article class="ncard is-planned"
+                   data-card data-tags="method" data-text="校准概率：为什么「我有 90% 把握」大多不可信 Calibrated probabilities: why &quot;I&#x27;m 90% sure&quot; usually isn&#x27;t 可靠性曲线、ECE、温度缩放与保序回归——把一个概率变成可以拿来做判断的东西，需要哪几步。 Reliability diagrams, ECE, temperature scaling and isotonic regression: what it takes to make a probability usable. method">
+            <div class="tagrow"><span class="tag t-method">method</span></div>
+            <h3><span class="zh">校准概率：为什么「我有 90% 把握」大多不可信</span><span class="en">Calibrated probabilities: why &quot;I&#x27;m 90% sure&quot; usually isn&#x27;t</span></h3>
+            <p class="sub"><span class="zh">Calibrated probabilities: why &quot;I&#x27;m 90% sure&quot; usually isn&#x27;t</span><span class="en">校准概率：为什么「我有 90% 把握」大多不可信</span></p>
+            <p><span class="zh">可靠性曲线、ECE、温度缩放与保序回归——把一个概率变成可以拿来做判断的东西，需要哪几步。</span>
+               <span class="en">Reliability diagrams, ECE, temperature scaling and isotonic regression: what it takes to make a probability usable.</span></p>
+            <div class="foot"><span class="st st-plan"><span class="zh">计划中</span><span class="en">Planned</span></span>—10 min</div>
+          </article>
+
+          <article class="ncard is-planned"
+                   data-card data-tags="practice" data-text="把 AI 当成 if 语句：类型化决策层的设计模式 AI as an if-statement: patterns for a typed decision layer 输出空间先定义、阈值可配、低置信度有出口、每个决策可回溯——四件事决定这套东西能不能上生产。 Predefined output space, tunable thresholds, an exit for low confidence, an audit trail: four things that decide whether it can go to production. practice">
+            <div class="tagrow"><span class="tag t-practice">practice</span></div>
+            <h3><span class="zh">把 AI 当成 if 语句：类型化决策层的设计模式</span><span class="en">AI as an if-statement: patterns for a typed decision layer</span></h3>
+            <p class="sub"><span class="zh">AI as an if-statement: patterns for a typed decision layer</span><span class="en">把 AI 当成 if 语句：类型化决策层的设计模式</span></p>
+            <p><span class="zh">输出空间先定义、阈值可配、低置信度有出口、每个决策可回溯——四件事决定这套东西能不能上生产。</span>
+               <span class="en">Predefined output space, tunable thresholds, an exit for low confidence, an audit trail: four things that decide whether it can go to production.</span></p>
+            <div class="foot"><span class="st st-plan"><span class="zh">计划中</span><span class="en">Planned</span></span>—12 min</div>
+          </article>
+
+          <article class="ncard is-planned"
+                   data-card data-tags="benchmark practice" data-text="实测：手写规则 vs LLM 提示词 vs 类型化决策层 Benchmark: handwritten rules vs LLM prompting vs a typed decision layer 同一份合成数据、三套方案、四条曲线：准确率、校准误差、延迟、每千次决策成本。代码与图表全部可复现。 One synthetic dataset, three approaches, four curves: accuracy, calibration error, latency, cost per thousand decisions. benchmark practice">
+            <div class="tagrow"><span class="tag t-benchmark">benchmark</span><span class="tag t-practice">practice</span></div>
+            <h3><span class="zh">实测：手写规则 vs LLM 提示词 vs 类型化决策层</span><span class="en">Benchmark: handwritten rules vs LLM prompting vs a typed decision layer</span></h3>
+            <p class="sub"><span class="zh">Benchmark: handwritten rules vs LLM prompting vs a typed decision layer</span><span class="en">实测：手写规则 vs LLM 提示词 vs 类型化决策层</span></p>
+            <p><span class="zh">同一份合成数据、三套方案、四条曲线：准确率、校准误差、延迟、每千次决策成本。代码与图表全部可复现。</span>
+               <span class="en">One synthetic dataset, three approaches, four curves: accuracy, calibration error, latency, cost per thousand decisions.</span></p>
+            <div class="foot"><span class="st st-plan"><span class="zh">计划中</span><span class="en">Planned</span></span>—14 min</div>
+          </article>
+
+          <article class="ncard is-planned"
+                   data-card data-tags="essay" data-text="Jev 为什么叫 Jev：智能变便宜之后会发生什么 Why Jev is called Jev: what happens when intelligence gets cheap 从杰文斯悖论说起：效率提升没有减少煤炭消耗，反而增加了。同样的逻辑放到「每单位智能的成本」上会推出什么。 The Jevons paradox: efficiency gains raised coal consumption instead of lowering it — and the same logic applied to the cost of intelligence. essay">
+            <div class="tagrow"><span class="tag t-essay">essay</span></div>
+            <h3><span class="zh">Jev 为什么叫 Jev：智能变便宜之后会发生什么</span><span class="en">Why Jev is called Jev: what happens when intelligence gets cheap</span></h3>
+            <p class="sub"><span class="zh">Why Jev is called Jev: what happens when intelligence gets cheap</span><span class="en">Jev 为什么叫 Jev：智能变便宜之后会发生什么</span></p>
+            <p><span class="zh">从杰文斯悖论说起：效率提升没有减少煤炭消耗，反而增加了。同样的逻辑放到「每单位智能的成本」上会推出什么。</span>
+               <span class="en">The Jevons paradox: efficiency gains raised coal consumption instead of lowering it — and the same logic applied to the cost of intelligence.</span></p>
+            <div class="foot"><span class="st st-plan"><span class="zh">计划中</span><span class="en">Planned</span></span>—7 min</div>
+          </article>
+          <!-- NOTES:CARDS:END -->
+  </div>
+  <p class="noresult" hidden>没有匹配的笔记。</p>
+
+  <footer>
+    <div class="footin">
+      <span>© 2026 Aylon · <span class="zh">保留所有权利</span><span class="en">All rights reserved</span></span>
+      <span class="spacer"></span>
+      <a href="about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+      <a href="feed.xml">RSS</a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

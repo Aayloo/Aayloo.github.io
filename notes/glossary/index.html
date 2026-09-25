@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>术语表：System One · RLCD · 校准 · 类型安全 · Notes</title>
+<meta name="description" content="System One Model、RLCD、RLHF、RLVR、校准、ECE、类型安全、幻觉、cardinality、阈值：一句话定义 + 为什么重要 + 出处。">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="./" aria-current="page"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">Glossary · v1.0 · 2026-09-25</div>
+    <h1><span class="zh">术语表</span><span class="en">Glossary</span></h1>
+    <p class="lede">
+      <span class="zh">每一条给三样东西：一句话定义、为什么它重要、出处。其他笔记引用这里的锚点，避免同一个词在不同文章里被解释成两回事。</span>
+      <span class="en">Each entry gives a one-line definition, why it matters, and a source. Other notes link to these anchors so a term never means two different things in two articles.</span>
+    </p>
+  </header>
+
+  <div class="split">
+    <div class="prose">
+      <h2 id="system-one"><span class="num">01</span>System One Model</h2>
+      <p><span class="zh"><b>定义</b>：TypeSafe AI 提出的一类模型，目标是直接产出「软件能用的快速结构化决策」，而不是生成给人读的文本。</span>
+      <span class="en"><b>Definition</b>: a class of models proposed by TypeSafe AI, built to produce fast structured decisions software can use directly, rather than text written for people.</span></p>
+      <p><span class="zh"><b>为什么重要</b>：把「模型输出」当成接口而不是文案，后面才能谈阈值、自动化与审计。名字取自 Kahneman 的 System 1（快、直觉）与 System 2（慢、推理）之分。<span class="sup">[1]</span></span>
+      <span class="en"><b>Why it matters</b>: treating model output as an interface rather than copy is what makes thresholds, automation and audit possible. The name comes from Kahneman's System 1 / System 2 distinction.<span class="sup">[1]</span></span></p>
+
+      <h2 id="rlcd"><span class="num">02</span>RLCD</h2>
+      <p><span class="zh"><b>定义</b>：Reinforcement Learning for Calibrated Decisions，官方给出的第三类训练范式，优化目标是「答案附带诚实、校准的概率」。</span>
+      <span class="en"><b>Definition</b>: Reinforcement Learning for Calibrated Decisions — the third training paradigm in the vendor's framing, optimising for answers that carry honest, calibrated probabilities.</span></p>
+      <p><span class="zh"><b>为什么重要</b>：RLHF 优化人类偏好、RLVR 优化可自动验证的对错，两者都不直接约束「模型说自己有多确定」。RLCD 补的正是这一格。<span class="sup">[1]</span></span>
+      <span class="en"><b>Why it matters</b>: RLHF optimises human preference and RLVR optimises verifiable correctness; neither constrains how confident the model claims to be. RLCD targets exactly that.<span class="sup">[1]</span></span></p>
+
+      <h2 id="rlhf"><span class="num">03</span>RLHF 与 RLVR</h2>
+      <p><span class="zh"><b>RLHF</b>：Reinforcement Learning from Human Feedback，用人类偏好当奖励信号，产出了今天所说的「对话模型」。<b>RLVR</b>：Reinforcement Learning with Verifiable Rewards，用可程序化验证的对错当奖励，是推理模型的路线。<span class="sup">[1]</span></span>
+      <span class="en"><b>RLHF</b> uses human preference as the reward signal and produced today's chat models. <b>RLVR</b> uses programmatically verifiable correctness, the route behind reasoning models.<span class="sup">[1]</span></span></p>
+
+      <h2 id="calibration"><span class="num">04</span>校准（Calibration）</h2>
+      <p><span class="zh"><b>定义</b>：模型说「0.9」的那批判断里，实际对的比例接近 90%，就叫校准。反之叫过度自信。</span>
+      <span class="en"><b>Definition</b>: among all judgements the model rates 0.9, roughly 90% should actually be correct. When that holds, the model is calibrated; when they are wrong far more often, it is overconfident.</span></p>
+      <p><span class="zh"><b>为什么重要</b>：概率只有在校准时才能拿来做阈值判断。一个 95% 能做对、但从不告诉你何时处于那 5% 的模型，无法被自动化的流程依赖。<span class="sup">[1]</span></span>
+      <span class="en"><b>Why it matters</b>: a probability is only usable for thresholds when it is calibrated. A model that is right 95% of the time but never signals which 5% it is wrong on cannot be depended on inside an automated pipeline.<span class="sup">[1]</span></span></p>
+
+      <h2 id="ece"><span class="num">05</span>ECE（Expected Calibration Error）</h2>
+      <p><span class="zh"><b>定义</b>：把预测概率分箱，比较每个箱内「平均置信度」与「实际正确率」的差距再加权平均，得到一个衡量校准好坏的数字。<b>本文补充</b>，非官方术语表内容。</span>
+      <span class="en"><b>Definition</b>: bin the predicted probabilities, compare average confidence against observed accuracy in each bin, then take a weighted average. This entry is <b>added by this note</b>, not part of the vendor's own glossary.</span></p>
+
+      <h2 id="type-safety"><span class="num">06</span>类型安全（Type safety）</h2>
+      <p><span class="zh"><b>定义</b>：输出取值空间事先定义好（例如只能从五个标签里选一个），模型不可能产出范围外的值，也就不存在「解析失败」这一步。</span>
+      <span class="en"><b>Definition</b>: the output space is defined in advance (say, one of five labels), so out-of-range values cannot occur and there is no parsing step to fail.</span></p>
+      <p><span class="zh"><b>为什么重要</b>：类型错误在 Agent 里只是麻烦，但在有延迟保证的系统里、或者在依赖链深处，是直接的故障。<span class="sup">[1]</span></span>
+      <span class="en"><b>Why it matters</b>: a type error is an annoyance in an agent, but a hard failure inside a system with latency guarantees or deep in a dependency chain.<span class="sup">[1]</span></span></p>
+
+      <h2 id="hallucination"><span class="num">07</span>幻觉（Hallucination）</h2>
+      <p><span class="zh"><b>定义</b>：生成看起来合理但事实错误的内容。本文中的关键推论是——当输出空间被限定成有限选项、模型不生成自由文本时，这个失败模式的空间被大幅压缩。官方把它列为「零幻觉」，并承认该 0% 来自机制保证而非实测统计。<span class="sup">[1][2]</span></span>
+      <span class="en"><b>Definition</b>: plausible-looking but false content. The key inference here: once the output space is a small finite set and no free text is generated, the room for this failure mode narrows sharply. The vendor claims "zero hallucinations" and notes that the 0% comes from a structural guarantee rather than a measured statistic.<span class="sup">[1][2]</span></span></p>
+
+      <h2 id="threshold"><span class="num">08</span>阈值与拒答（Threshold / abstain）</h2>
+      <p><span class="zh"><b>定义</b>：在代码里规定「概率高于多少就自动执行，低于多少就交给人工」。这是把模型的不确定性翻译成业务流程的唯一支点。本文补充。</span>
+      <span class="en"><b>Definition</b>: code that says how confident is confident enough to act, and below what level a human takes over. This is the single hinge that turns model uncertainty into an operating rule. Added by this note.</span></p>
+
+      <h2 id="cardinality"><span class="num">09</span>Cardinality（输出选项数）</h2>
+      <p><span class="zh"><b>定义</b>：一次决策可选结果的个数。官方提到单次支持到 255，更高时需要拆成「先打分、再显式选择」的两段式。这个上限会直接影响能不能把一个大问题一次问完。<span class="sup">[1]</span></span>
+      <span class="en"><b>Definition</b>: how many possible outcomes a single decision may have. The vendor reports support up to 255 in one call, with a two-stage scoring-then-choosing scheme beyond that. The limit shapes whether a problem can be asked in one shot.<span class="sup">[1]</span></span></p>
+
+      <h2 id="jevons"><span class="num">10</span>杰文斯悖论（Jevons paradox）</h2>
+      <p><span class="zh"><b>定义</b>：蒸汽机效率提升降低了单位煤炭消耗，却因为用得起的地方变多，总消耗反而上升。Jev 的名字取自 William Stanley Jevons；官方把它类比到「每单位智能的成本」：成本每降一个数量级，会解锁新的应用量级。<span class="sup">[1]</span></span>
+      <span class="en"><b>Definition</b>: more efficient steam engines lowered coal per unit of work yet raised total coal use, because more uses became affordable. The name Jev comes from William Stanley Jevons; the vendor applies the analogy to the cost of intelligence — each order of magnitude cheaper unlocks an order of magnitude more uses.<span class="sup">[1]</span></span></p>
+
+      <hr>
+      <h2 id="refs"><span class="num">11</span><span class="zh">来源</span><span class="en">Sources</span></h2>
+      <ol class="refs">
+        <li>Diogo Almeida. <i>Introducing System One Models &amp; Jev</i>. TypeSafe AI Blog, 2026-09-15.
+          <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">typesafe.ai/blog/introducing-system-one-models-and-jev</a></li>
+        <li>TypeSafe AI 官网首页（含 193.6× faster / 444.6× cheaper 与 $42 per billion input tokens 的表述），访问日期 2026-09-25。
+          <a href="https://typesafe.ai/">typesafe.ai</a></li>
+      </ol>
+
+      <h2 id="upd"><span class="num">12</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
+      <div class="tbl-wrap">
+        <table class="upd">
+          <thead><tr><th>版本</th><th>日期</th><th><span class="zh">改动</span><span class="en">Change</span></th></tr></thead>
+          <tbody>
+            <tr><td>v1.0</td><td>2026-09-25</td>
+              <td><span class="zh">初版：10 条术语，依据官方发布文与官网首页。</span><span class="en">First version: 10 entries, based on the launch post and the homepage.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="tt">Terms</div>
+      <a href="#system-one">System One Model</a>
+      <a href="#rlcd">RLCD</a>
+      <a href="#rlhf">RLHF / RLVR</a>
+      <a href="#calibration"><span class="zh">校准</span><span class="en">Calibration</span></a>
+      <a href="#ece">ECE</a>
+      <a href="#type-safety"><span class="zh">类型安全</span><span class="en">Type safety</span></a>
+      <a href="#hallucination"><span class="zh">幻觉</span><span class="en">Hallucination</span></a>
+      <a href="#threshold"><span class="zh">阈值与拒答</span><span class="en">Threshold</span></a>
+      <a href="#cardinality">Cardinality</a>
+      <a href="#jevons"><span class="zh">杰文斯悖论</span><span class="en">Jevons paradox</span></a>
+      <a href="#refs"><span class="zh">来源</span><span class="en">Sources</span></a>
+      <a href="#upd"><span class="zh">更新日志</span><span class="en">Changelog</span></a>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footin">
+      <a href="../"><span class="zh">← 返回笔记目录</span><span class="en">← All notes</span></a>
+      <span class="spacer"></span>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

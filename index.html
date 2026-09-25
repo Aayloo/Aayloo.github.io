@@ -298,6 +298,10 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nchev{position:absolute;right:22px;top:24px;width:10px;height:10px;border-right:2px solid var(--mute);
   border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .nitem[open] .nchev{transform:rotate(-135deg)}
+.nitem h4 a{color:inherit;text-decoration:none}
+.nitem h4 a:hover{color:var(--teal)}
+.nitem .go{display:inline-block;margin-top:7px;font-size:12.5px;font-weight:800;color:var(--teal);text-decoration:none}
+.nitem .go:hover{text-decoration:underline}
 .nbody{padding:16px 22px 20px;border-top:1px solid var(--line)}
 .nbody p{margin:0 0 11px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
 .nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
@@ -984,8 +988,26 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">3 篇 · 点标题展开</span><span class="en">3 notes · tap a title to open</span></span></div>
+          <span class="hint"><span class="zh">4 篇 · 点标题展开，长文另开页</span><span class="en">4 notes · long reads open a page</span></span></div>
         <div class="nlist2">
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">FRONTIER · 前沿解析</span>
+              <h4><a href="notes/jev-system-one-models/"><span class="zh">Jev 与 System One Models：把 AI 变成代码里的一个判断</span><span class="en">Jev and System One Models: turning AI into a decision inside your code</span></a></h4>
+              <p class="nsum"><span class="zh">它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。</span>
+              <span class="en">Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out.</span></p>
+              <a class="go" href="notes/jev-system-one-models/"><span class="zh">读全文（6 张图 · 对比表）→</span><span class="en">Read the full note (6 figures, comparison tables) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">2026-09-15 发布、早期访问。它放弃生成字符串，换来的是延迟、成本与类型安全三件事同时改善；文章拆开它的定义、机制、能落地的位置，以及哪些话目前只能算官方口径。</span>
+              <span class="en">Released 2026-09-15 in early access. It gives up string generation and buys lower latency, lower cost and type safety at once. The note covers the definition, the mechanism, where it fits, and which claims are vendor-only.</span></p>
+              <p class="take"><span class="zh">结论先行：Jev 不是分类算法 —— 分类只是它能做的五种形状之一；真正的区别是输出空间事前定义，且每个答案都带校准概率。</span>
+              <span class="en">The short version: Jev is not a classification algorithm — classification is one of five shapes. The real difference is a predefined output space plus a calibrated probability on every answer.</span></p>
+              <p><a href="notes/jev-system-one-models/"><span class="zh">打开全文（含 6 张流程图与对比表）→</span><span class="en">Open the full note (6 figures and comparison tables) →</span></a></p>
+            </div>
+          </details>
 
           <details class="nitem rv">
             <summary>

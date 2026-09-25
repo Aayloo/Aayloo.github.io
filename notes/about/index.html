@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>写作原则 · Notes</title>
+<meta name="description" content="这套笔记怎么写：事实、推断、观点分层；数字带出处；示意与实测分开；错了就记勘误。">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="./" aria-current="page"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">How I write</div>
+    <h1><span class="zh">写作原则</span><span class="en">Four rules</span></h1>
+    <p class="lede">
+      <span class="zh">这套笔记的目标不是「看起来很懂」，而是让读者能快速判断<strong>哪一句话该信、信到什么程度</strong>。</span>
+      <span class="en">The goal is not to look informed — it is to let a reader judge quickly which sentence to trust, and how much.</span>
+    </p>
+  </header>
+
+  <div class="split">
+    <div class="prose">
+      <h2 id="r1"><span class="num">01</span><span class="zh">三层分开</span><span class="en">Three layers</span></h2>
+      <ul>
+        <li><span class="zh"><b>事实层</b>：原文怎么说、数据是多少。带编号引用，可直接点回来源。</span>
+           <span class="en"><b>Facts</b>: what the source says and what the numbers are. Numbered, clickable references.</span></li>
+        <li><span class="zh"><b>推断层</b>：我根据事实推出来的结论。用黄色卡片标注「推断」，并写清推理链。</span>
+           <span class="en"><b>Inferences</b>: what I derive from the facts — marked in amber, with the reasoning shown.</span></li>
+        <li><span class="zh"><b>观点层</b>：我的偏好与判断，没有对错可言。用紫色卡片标成观点，不和事实混在一段里。</span>
+           <span class="en"><b>Opinions</b>: preferences and judgement calls, marked in violet and never blended into a factual paragraph.</span></li>
+      </ul>
+
+      <h2 id="r2"><span class="num">02</span><span class="zh">数字必须能追</span><span class="en">Numbers must be traceable</span></h2>
+      <p><span class="zh">凡出现性能、价格、市场规模一类的数字，都要回答三个问题：<b>谁说的</b>（官方／第三方／我自己测）、<b>在什么口径下</b>、<b>样本是什么</b>。做不到就写「官方口径」并说明来源是营销材料。</span>
+      <span class="en">For any performance, price or size number, three questions must be answered: who measured it, under what definition, on what sample. If that cannot be established, the note says "vendor claim" and says so plainly.</span></p>
+
+      <h2 id="r3"><span class="num">03</span><span class="zh">示意与实测分开</span><span class="en">Illustration vs measurement</span></h2>
+      <p><span class="zh">图分两类：一类是把概念画清楚（图上会写「示意图」），一类是跑出来的结果（图上会写数据来源与口径）。两者不混着用，也不把示意图当成证据。</span>
+      <span class="en">Two kinds of figures: sketches that explain a concept, and results that were actually run. Both are labelled; a sketch is never used as evidence.</span></p>
+
+      <h2 id="r4"><span class="num">04</span><span class="zh">更新与勘误</span><span class="en">Updates and errata</span></h2>
+      <p><span class="zh">每篇底部有版本号和更新日志。事实错了直接改并记在日志里；观点变了另起一段写「我改主意的原因」，不悄悄覆盖旧文。</span>
+      <span class="en">Every note carries a version number and a changelog. Factual errors get fixed and recorded; changed opinions are written as a new paragraph explaining why, never silently overwritten.</span></p>
+
+      <h2 id="r5"><span class="num">05</span><span class="zh">不写什么</span><span class="en">What is left out</span></h2>
+      <ul>
+        <li><span class="zh">产业格局预测、融资与市场规模推算：噪声大于信息。</span><span class="en">Market-size forecasts and funding gossip: more noise than signal.</span></li>
+        <li><span class="zh">任何雇主或客户的真实数据、系统名、字段名与流程细节。</span><span class="en">Any real data, system name, field name or process detail from an employer or client.</span></li>
+        <li><span class="zh">没有出处的「业内都知道」。</span><span class="en">"Everyone knows" without a source.</span></li>
+      </ul>
+
+      <h2 id="r6"><span class="num">06</span><span class="zh">引用格式</span><span class="en">How to cite these notes</span></h2>
+      <div class="cite">
+        <span class="zh">引用本文时请用：</span><span class="en">Please cite as:</span>
+        <pre>Aylon (2026). &lt;title&gt;. Notes. https://aayloo.github.io/notes/&lt;slug&gt;/</pre>
+      </div>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="tt">Contents</div>
+      <a href="#r1"><span class="zh">三层分开</span><span class="en">Three layers</span></a>
+      <a href="#r2"><span class="zh">数字必须能追</span><span class="en">Traceable numbers</span></a>
+      <a href="#r3"><span class="zh">示意与实测分开</span><span class="en">Sketch vs measurement</span></a>
+      <a href="#r4"><span class="zh">更新与勘误</span><span class="en">Updates</span></a>
+      <a href="#r5"><span class="zh">不写什么</span><span class="en">What is left out</span></a>
+      <a href="#r6"><span class="zh">引用格式</span><span class="en">Citation</span></a>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footin">
+      <a href="../"><span class="zh">← 返回笔记目录</span><span class="en">← All notes</span></a>
+      <span class="spacer"></span>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

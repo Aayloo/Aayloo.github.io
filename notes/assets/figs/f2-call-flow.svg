@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img"
+     aria-label="One Jev call: unstructured state in, typed decision with calibrated probability out, routed by threshold">
+  <defs>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748C"/>
+    </marker>
+    <marker id="ar2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0E9F87"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="560" fill="#FFFFFF"/>
+
+  <text x="40" y="50" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="22"
+        font-weight="650" fill="#111A28">一次调用：非结构化状态进，类型化决策 + 校准概率出</text>
+  <text x="40" y="78" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14"
+        fill="#64748C">One call, then ordinary code decides what happens next</text>
+
+  <!-- A 输入 -->
+  <g>
+    <rect x="40" y="150" width="220" height="188" rx="12" fill="#FFFFFF" stroke="#E4E8EE"/>
+    <rect x="40" y="150" width="220" height="40" rx="12" fill="#F5F7F4"/>
+    <rect x="40" y="178" width="220" height="12" fill="#F5F7F4"/>
+    <text x="58" y="175" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+          font-weight="650" fill="#111A28">非结构化状态</text>
+    <text x="58" y="216" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">文本 · 半结构化字段</text>
+    <text x="58" y="240" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">残缺单据 · 程序状态</text>
+    <text x="58" y="282" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13" fill="#64748C">输入强调</text>
+    <text x="58" y="304" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">结构化程序状态，</text>
+    <text x="58" y="324" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">而非连续对话</text>
+  </g>
+  <line x1="262" y1="244" x2="306" y2="244" stroke="#64748C" stroke-width="1.6" marker-end="url(#ar2)"/>
+
+  <!-- B 模型 -->
+  <g>
+    <rect x="310" y="126" width="286" height="236" rx="12" fill="#F7FDFB" stroke="#0E9F87" stroke-width="1.6"/>
+    <rect x="310" y="126" width="286" height="46" rx="12" fill="#E3F5F1"/>
+    <rect x="310" y="158" width="286" height="14" fill="#E3F5F1"/>
+    <text x="330" y="156" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="16"
+          font-weight="650" fill="#0A5A4C">Jev · System One Model</text>
+    <text x="330" y="200" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">并行采样：一次查询</text>
+    <text x="330" y="222" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">同时产生全部输出</text>
+    <text x="330" y="262" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">端到端</text>
+    <text x="402" y="262" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" font-weight="650" fill="#0A5A4C">70 – 500 ms</text>
+    <text x="330" y="292" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">输入</text>
+    <text x="378" y="292" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" font-weight="650" fill="#0A5A4C">$0.042 / MTok</text>
+    <text x="330" y="322" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">输出</text>
+    <text x="378" y="322" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" font-weight="650" fill="#0A5A4C">不计费</text>
+    <text x="330" y="348" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">不生成字符串 → 无类型错误</text>
+  </g>
+  <line x1="598" y1="244" x2="642" y2="244" stroke="#0E9F87" stroke-width="2" marker-end="url(#ar2g)"/>
+
+  <!-- C 输出 -->
+  <g>
+    <rect x="646" y="126" width="244" height="236" rx="12" fill="#FFFFFF" stroke="#E4E8EE"/>
+    <rect x="646" y="126" width="244" height="40" rx="12" fill="#EDE9FE"/>
+    <rect x="646" y="154" width="244" height="12" fill="#EDE9FE"/>
+    <text x="664" y="152" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+          font-weight="650" fill="#4B2FBF">类型化决策 + 校准概率</text>
+    <rect x="666" y="188" width="204" height="76" rx="9" fill="#0F172A"/>
+    <text x="682" y="212" font-family="Consolas, monospace" font-size="13" fill="#9FE8D2">label: "claim"</text>
+    <text x="682" y="234" font-family="Consolas, monospace" font-size="13" fill="#C9D6EA">p: 0.93</text>
+    <text x="682" y="256" font-family="Consolas, monospace" font-size="13" fill="#C9D6EA">schema: validated</text>
+    <rect x="666" y="284" width="204" height="12" rx="6" fill="#F5F7F4"/>
+    <rect x="666" y="284" width="190" height="12" rx="6" fill="#0E9F87"/>
+    <text x="666" y="322" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">概率 = 模型说「我有多确定」</text>
+    <text x="666" y="344" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">校准 = 说 0.9 时真的九成对</text>
+  </g>
+  <line x1="892" y1="244" x2="932" y2="244" stroke="#64748C" stroke-width="1.6" marker-end="url(#ar2)"/>
+
+  <!-- D 分叉 -->
+  <text x="940" y="150" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+        font-weight="650" fill="#111A28">阈值判定（写在你代码里）</text>
+  <g>
+    <rect x="936" y="170" width="222" height="82" rx="11" fill="#E3F5F1" stroke="#0E9F87"/>
+    <text x="956" y="198" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14"
+          font-weight="650" fill="#0A5A4C">p ≥ 阈值 → 自主执行</text>
+    <text x="956" y="222" font-family="Consolas, monospace" font-size="12" fill="#0A6E5E">if d.p &gt;= 0.90:</text>
+    <text x="956" y="240" font-family="Consolas, monospace" font-size="12" fill="#0A6E5E">    post(d)</text>
+  </g>
+  <g>
+    <rect x="936" y="282" width="222" height="82" rx="11" fill="#FBF0DF" stroke="#D9821A"/>
+    <text x="956" y="310" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14"
+          font-weight="650" fill="#8A5209">p &lt; 阈值 → 人工复核</text>
+    <text x="956" y="334" font-family="Consolas, monospace" font-size="12" fill="#8A5209">else:</text>
+    <text x="956" y="352" font-family="Consolas, monospace" font-size="12" fill="#8A5209">    queue.review(d)</text>
+  </g>
+  <path d="M892,220 C914,220 914,211 936,211" fill="none" stroke="#0E9F87" stroke-width="1.6"/>
+  <path d="M892,268 C914,268 914,323 936,323" fill="none" stroke="#D9821A" stroke-width="1.6"/>
+
+  <!-- 审计留痕 -->
+  <rect x="40" y="420" width="1118" height="76" rx="12" fill="#F5F7F4" stroke="#E4E8EE"/>
+  <text x="62" y="450" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+        font-weight="650" fill="#111A28">审计留痕（这一步通常被忽略，但决定了系统能不能上生产）</text>
+  <text x="62" y="476" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">
+    每个决策记下：输入摘要 · 输出标签 · 概率 · 当时阈值 · 模型版本 · 时间戳 · 谁处理了低置信度个案
+  </text>
+
+  <text x="40" y="536" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">
+    来源：TypeSafe AI（2026-09-15）官方口径；阈值示例为本文自设。本图为自绘示意。
+  </text>
+</svg>

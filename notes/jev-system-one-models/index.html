@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jev 与 System One Models：把 AI 变成代码里的一个判断 · Notes</title>
+<meta name="description" content="Jev 是什么、不是什么、怎么用：非结构化状态进，带校准概率的类型化决策出。含流程图、对比表、成本换算与官方口径的偏差说明。">
+<meta property="og:title" content="Jev 与 System One Models：把 AI 变成代码里的一个判断">
+<meta property="og:description" content="它不是更聪明的分类器，而是一类新的接口。">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">Frontier · Method · 2026-09-25</div>
+    <h1><span class="zh">Jev 与 System One Models：把 AI 变成代码里的一个判断</span>
+        <span class="en">Jev and System One Models: turning AI into a decision inside your code</span></h1>
+    <p class="lede">
+      <span class="zh">它不是「更聪明的分类器」，而是一类新的接口：<b>非结构化状态进，带校准概率的类型化决策出</b>。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。</span>
+      <span class="en">Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out.</span>
+    </p>
+    <div class="kv">
+      <div>发布 / Published</div><div>2026-09-25</div>
+      <div>更新 / Updated</div><div>2026-09-25</div>
+      <div>版本 / Version</div><div>v1.0</div>
+      <div>阅读 / Reading</div><div>约 16 分钟</div>
+      <div>标签 / Tags</div><div>前沿解析 · 概念方法</div>
+      <div>数据 / Data</div><div><span class="zh">全部来自公开官方材料；本文无实测数据</span><span class="en">Public vendor material only; no first-party measurements here</span></div>
+    </div>
+  </header>
+
+  <div class="split">
+    <div class="prose">
+      <div class="tldr">
+        <h2>TL;DR</h2>
+        <ol>
+          <li><span class="zh">Jev 是 TypeSafe AI 的 <b>System One Model</b>，2026-09-15 发布、早期访问。官方定位一句话：非结构化状态进，<b>类型化概率决策</b>出。<span class="sup">[1]</span></span>
+              <span class="en">Jev is TypeSafe AI's System One Model, released 2026-09-15 in early access: unstructured state in, typed probabilistic decisions out.<span class="sup">[1]</span></span></li>
+          <li><span class="zh">它<b>不是分类算法</b>。分类只是它能做的五种形状之一（分类、路由、打分、抽取、分支），真正的区别在于输出空间事前定义、每个答案带校准概率、且不生成字符串。<span class="sup">[1]</span></span>
+              <span class="en">It is <b>not a classification algorithm</b>. Classification is one of five shapes; the real difference is a predefined output space, a calibrated probability on every answer, and no string generation.<span class="sup">[1]</span></span></li>
+          <li><span class="zh">速度与价格的差异来自<b>采样方式</b>：一次查询并行产生全部输出，而不是逐 token 串行生成。官方口径 70–500 ms、输入 $0.042/MTok、输出不计费。<span class="sup">[1]</span></span>
+              <span class="en">The speed and price difference comes from <b>sampling</b>: all outputs in one query instead of token-by-token. Vendor figures: 70–500 ms, $0.042/MTok input, output free.<span class="sup">[1]</span></span></li>
+          <li><span class="zh">真正的卖点不是「更准」，而是<b>能被代码依赖</b>：知道自己在哪些个案上不确定，于是可以设阈值、可以让低置信度走人工、可以审计。<span class="sup">[1]</span></span>
+              <span class="en">The selling point is not being more accurate but being <b>dependable inside code</b>: knowing where it is unsure, so thresholds, human review and audit become possible.<span class="sup">[1]</span></span></li>
+          <li><span class="zh">本文所有性能与价格数字均是<b>官方口径</b>（官方自己也承认评测 workflow 由自家团队构造、参考答案偏向 OpenAI 与 Anthropic 的模型）。截至发稿我没有 early access key，<b>没有实测</b>。</span>
+              <span class="en">Every performance and price number here is a <b>vendor claim</b> — the vendor itself notes the eval workflows were built by its own capability team and the reference answers favour OpenAI and Anthropic models. I had no access key, so <b>nothing here is measured by me</b>.<span class="sup">[1][2]</span></span></li>
+        </ol>
+      </div>
+
+      <div class="callout co-warn">
+        <span class="lbl">读法 · How to read this</span>
+        <p><span class="zh">全文只用两类原材料：TypeSafe AI 的官方发布文（2026-09-15）与官网首页，访问日期 2026-09-25。凡属官方说法，我都标成「官方口径」；凡属我的推导，用黄色卡片标成「推断」；凡属偏好与判断，用紫色卡片标成「观点」。<b>官方口径 ≠ 已验证事实</b>，这一点在第十节展开。</span>
+        <span class="en">Two sources only: the vendor's launch post (2026-09-15) and its homepage, accessed 2026-09-25. Vendor statements are labelled as claims, derivations in amber, opinions in violet. A vendor claim is not a verified fact — see section 10.</span></p>
+      </div>
+
+      <h2 id="s1"><span class="num">01</span><span class="zh">为什么写这篇</span><span class="en">Why this note exists</span></h2>
+      <p><span class="zh">我在做文档识别与流程自动化的过程中反复遇到同一个卡点：<b>规则的边界太清楚，模型的输出又太自由</b>。</span>
+      <span class="en">Working on document understanding and process automation, I kept hitting the same wall: hand-written rules are too brittle, while model output is too free-form.</span></p>
+      <p><span class="zh">用规则写「什么算 A 类单据」，遇到版式变化就失效；用 LLM 读，判断质量更好，但它返回一段文本，还是要解析、校验、处理它偶尔越界的情况——而且慢、贵、结果不稳定。中间那一格（<b>判断带不确定性，但输出必须严格结构化</b>）一直缺一个合适的接口。</span>
+      <span class="en">Rules break when the layout changes. An LLM reads better, but returns text: it still has to be parsed and validated, it sometimes goes out of range, and it is slow, costly and inconsistent. The middle cell — a judgement that carries uncertainty but returns strictly structured output — had no good interface.</span></p>
+      <p><span class="zh">Jev 声称要填的就是这一格。这篇文章的目的不是替它背书，而是把「它到底提供什么、边界在哪、该怎么判断要不要用」讲清楚。</span>
+      <span class="en">Jev claims to fill exactly that cell. This note is not an endorsement: it tries to pin down what it actually offers, where its boundaries are, and how to decide whether to use it.</span></p>
+
+      <h2 id="s2"><span class="num">02</span><span class="zh">它是什么</span><span class="en">What it is</span></h2>
+      <p><span class="zh">官方定义（原文）：Jev 是一个 <b>System One Model</b>——「a new class of frontier models built to make fast, structured decisions that software can use directly」，一句话版本是「a frontier-intelligence function call: <b>unstructured state in, typed probabilistic decisions out</b>」。<span class="sup">[1]</span></span>
+      <span class="en">Official definition: Jev is a <b>System One Model</b> — "a new class of frontier models built to make fast, structured decisions that software can use directly", summarised as "a frontier-intelligence function call: unstructured state in, typed probabilistic decisions out".<span class="sup">[1]</span></span></p>
+      <p><span class="zh">配套的技术主张有三条：新的模型架构、<b>并行采样器</b>（parallel sampler）、以及一套新的训练方法 <b>RLCD</b>（Reinforcement Learning for Calibrated Decisions，面向校准决策的强化学习）。官方把它的定位放在既有两代之后：RLHF 优化人类偏好产出对话模型，RLVR 用可验证奖励产出推理模型，RLCD 则直接以「带校准概率的决策」为训练目标。<span class="sup">[1]</span></span>
+      <span class="en">Three technical claims accompany it: a new architecture, a <b>parallel sampler</b>, and a new training method, <b>RLCD</b> — Reinforcement Learning for Calibrated Decisions. The vendor places it after two earlier generations: RLHF optimised human preference into chat models, RLVR used verifiable rewards into reasoning models, and RLCD trains directly for calibrated decisions.<span class="sup">[1]</span></span></p>
+
+      <figure>
+        <img src="../assets/figs/f1-timeline.svg" alt="四代优化目标对照：预训练、RLHF、RLVR、RLCD">
+        <figcaption><b>图 1｜四代优化目标的演进：Jev 落在第四代</b>（来源：TypeSafe AI《Introducing System One Models &amp; Jev》2026-09-15，本文自绘）。
+        <span class="zh">看这张图只需要记住一件事：前三代的产物都是<b>文本</b>，第四代的产物是<b>决策</b>。这不只是格式差别，它决定了后面能不能设阈值、能不能审计、能不能嵌进代码。</span>
+        <span class="en">The thing to take away: the first three generations produce text, the fourth produces a decision. That is not a formatting detail — it is what makes thresholds, audit and embedding possible.</span></figcaption>
+      </figure>
+
+      <h2 id="s3"><span class="num">03</span><span class="zh">它不是什么</span><span class="en">What it is not</span></h2>
+      <p><span class="zh">这一节比上一节重要。新产品发布时，误读通常发生在边界上。</span>
+      <span class="en">This section matters more than the previous one: misreadings usually happen at the boundaries.</span></p>
+      <ul>
+        <li><span class="zh"><b>不是分类算法。</b>分类是它的一种用法，但「逻辑回归 / 随机森林」意义上的分类器输出是标签，附加概率需要另行校准；Jev 的定义里，输出空间前置、概率校准、不生成字符串是三件事一起的。<span class="sup">[1]</span></span>
+          <span class="en"><b>Not a classification algorithm.</b> Classification is one use. A logistic regression or random forest outputs a label and needs separate calibration; here, a predefined output space, calibrated probability and no string generation come as a package.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>不是聊天模型。</b>官方明确说它<b>放弃字符串生成</b>，因此不适用于写文案、写代码、开放式问答、需要推理链的任务。拿它去聊天，等于放弃了它的全部优势。<span class="sup">[1]</span></span>
+          <span class="en"><b>Not a chat model.</b> The vendor explicitly gives up string generation, so writing, coding, open-ended Q&amp;A and chain-of-thought tasks are out. Using it for chat discards everything it is good at.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>不是你训练出来的自有模型。</b>它是通过 API 调用的托管模型（早期访问）；可以调阈值、可以定义输出空间，但「用你的数据重训一遍」不在当前描述内。<span class="sup">[1]</span></span>
+          <span class="en"><b>Not a model you train yourself.</b> It is a hosted, API-accessed model in early access: you tune thresholds and define the output space, but retraining on your own data is not part of the current description.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>不是「万能判断器」。</b>它做判断，不做检索、不算数、不查数据库；事实类输入仍然要由你的系统先准备好。</span>
+          <span class="en"><b>Not a universal oracle.</b> It makes judgements; it does not retrieve, compute or query databases. Your system still has to prepare the facts.</span></li>
+      </ul>
+
+      <div class="callout co-infer">
+        <span class="lbl">推断 · Inference</span>
+        <p><span class="zh">「不生成字符串」看起来是能力上的退让，实际上是三个收益同时到手的<em>交易</em>：不做逐 token 的自回归 → 延迟与成本同时下降；输出空间有限 → 类型错误与幻觉的空间被压缩；概率内建 → 可以做阈值。三者是同一次设计取舍的三个侧面，而不是三种独立功能。</span>
+        <span class="en">Giving up strings is not simply a sacrifice: it is one trade that yields three things at once — no autoregressive decoding (lower latency and cost), a finite output space (little room for type errors or hallucination), and a built-in probability (thresholds become possible). One design choice, three faces.</span></p>
+      </div>
+
+      <h2 id="s4"><span class="num">04</span><span class="zh">一次调用长什么样</span><span class="en">What one call looks like</span></h2>
+      <p><span class="zh">把一次调用摊开，只有四步：把状态（文本、残缺字段、程序状态）交给模型 → 模型返回一组<b>类型化的决策</b>，每个都带概率 → 你在代码里设阈值决定谁自动执行 → 低置信度的走人工，并留下记录。</span>
+      <span class="en">One call, four steps: hand over the state (text, partial fields, program state); the model returns <b>typed decisions</b> each carrying a probability; your code applies a threshold to decide what runs automatically; low-confidence cases go to a human, with a record kept.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f2-call-flow.svg" alt="一次 Jev 调用的流程：状态进、决策出、阈值分流、审计留痕">
+        <figcaption><b>图 2｜一次调用的全流程与阈值分流</b>（来源：流程依据官方描述自绘；阈值 0.90 / 0.60 为本文示例值）。
+        <span class="zh">右侧两个分支是整套东西的价值所在：<b>高置信度自动执行、低置信度转人工</b>。没有这一步，概率就只是个好看的装饰。</span>
+        <span class="en">The two branches on the right are where the value sits: act when confident, hand over when not. Without that step a probability is just decoration.</span></figcaption>
+      </figure>
+
+      <h2 id="s5"><span class="num">05</span><span class="zh">为什么快两个数量级</span><span class="en">Why it is two orders of magnitude faster</span></h2>
+      <p><span class="zh">现有 LLM 是自回归的：一个 token 一个 token 地生成，每个都依赖前一个，时间和费用随输出长度线性累加。官方称 System One Models 用<b>并行采样</b>——在一次查询里同时产生全部输出，所以不随「输出个数」累积延迟。<span class="sup">[1]</span></span>
+      <span class="en">Existing LLMs are autoregressive: one token at a time, each conditioned on the last, so time and cost accumulate with output length. System One Models instead use a <b>parallel sampler</b>: all outputs are produced within a single query, so latency does not accumulate with the number of outputs.<span class="sup">[1]</span></span></p>
+
+      <figure>
+        <img src="../assets/figs/f3-sampling.svg" alt="串行逐 token 采样与并行采样对比">
+        <figcaption><b>图 3｜串行逐 token vs 一次并行</b>（来源：官方描述与官方区间数据；本图为示意，非等比时间轴）。
+        <span class="zh">同一类决策任务，官方给出的差是 <b>40×–200× 更快</b>。注意这个倍数有自己的前提：它来自官方挑选的 workflow，不是随机抽样（第十节）。</span>
+        <span class="en">On comparable decision tasks the vendor reports <b>40x–200x faster</b>. The multiple has a premise of its own: it comes from the vendor's chosen workflows, not random sampling (section 10).</span></figcaption>
+      </figure>
+
+      <h2 id="s6"><span class="num">06</span><span class="zh">校准：为什么「有概率」比「更准」重要</span><span class="en">Calibration: why a probability beats accuracy</span></h2>
+      <p><span class="zh">官方对这件事的表述很直接：如果一个模型有 95% 的情况下能做对，但从不说自己什么时候处在错的 5% 里，那么这个任务就没法被自动化。<span class="sup">[1]</span></span>
+      <span class="en">The vendor puts it plainly: if a model does a task correctly 95% of the time but never signals which 5% it is wrong on, that task cannot be automated.<span class="sup">[1]</span></span></p>
+      <p><span class="zh">「校准」的含义是：模型说 0.9 的那一批判断里，实际对的比例接近 90%。做不到这一点，概率只是一个数字，不能作为阈值依据。校准的常用检验工具是<b>可靠性曲线</b>——横轴是模型声称的置信度，纵轴是实际正确率，理想情况是 45° 对角线。</span>
+      <span class="en">Calibration means: among judgements rated 0.9, roughly 90% are actually right. Without it, a probability is just a number and cannot carry a threshold. The standard check is a <b>reliability diagram</b> — claimed confidence on the x-axis, observed accuracy on the y-axis, the diagonal being perfect.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f4-reliability.svg" alt="可靠性曲线：过度自信的模型与校准良好的模型对比">
+        <figcaption><b>图 4｜可靠性曲线：过度自信 vs 校准良好</b>（来源：概念依据官方「calibrated confidence」说明自绘；<b>本图为示意，不是实测结果</b>——曲线形状用来说明概念，不代表任何具体模型的真实表现）。
+        <span class="zh">要用的区域是右下角：只有当置信度真的对应成功率时，「高于 0.9 就自动执行」这条规则才站得住。</span>
+        <span class="en">The zone that matters is the upper right: "act automatically above 0.9" only holds if confidence actually maps to success rate.</span></figcaption>
+      </figure>
+
+      <div class="callout co-infer">
+        <span class="lbl">推断 · Inference</span>
+        <p><span class="zh">校准的价值随「错误代价」上升而上升。在可以方便人工复查的场景里，不校准只是多花人力；在延迟敏感、或者判断被埋在依赖链深处的场景里，不校准等于把不确定性当成确定性来用——这才是官方所说的「deal-breaker」。<span class="sup">[1]</span></span>
+        <span class="en">Calibration matters more as the cost of error rises. Where a human can easily review, poor calibration merely costs labour; where latency matters or the decision sits deep in a dependency chain, treating uncertainty as certainty is the deal-breaker the vendor describes.<span class="sup">[1]</span></span></p>
+      </div>
+
+      <h2 id="s7"><span class="num">07</span><span class="zh">成本与延迟怎么算</span><span class="en">Cost and latency, and how to check them</span></h2>
+      <p><span class="zh">官方价格口径：输入 <b>$0.042 / MTok</b>（即每十亿输入 token 42 美元），输出不计费；延迟 <b>70–500 ms</b>。对照的现有 LLM 区间是输入 $0.20–10 / MTok、输出约为输入价的 5 倍，端到端 3–329 秒。<span class="sup">[1]</span></span>
+      <span class="en">Vendor pricing: <b>$0.042 / MTok</b> input (i.e. $42 per billion input tokens) with output free, at <b>70–500 ms</b>. The comparison range for existing LLMs is $0.20–10 / MTok input, output about 5x the input price, and 3–329 s end to end.<span class="sup">[1]</span></span></p>
+      <p><span class="zh">为了让这两组数字可比较，我做了最简单的换算：假设<b>每次决策消耗 1,000 个输入 token</b>，那么 1,000 次决策正好用掉 1 MTok，可以直接用单价读——LLM 是 $0.20–10.00，Jev 是 $0.042。这个换算剔除了输出 token（对 Jev 恰好是 0，对 LLM 是偏保守的算法），假设是本文的，不是官方的。</span>
+      <span class="en">To make the two comparable I applied the simplest possible conversion: assume <b>1,000 input tokens per decision</b>, so 1,000 decisions consume exactly 1 MTok and the unit price can be read directly — $0.20–10.00 for LLMs, $0.042 for Jev. Output tokens are excluded (exactly zero for Jev, and conservative for LLMs). The assumption is mine, not the vendor's.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f5-cost-latency.svg" alt="延迟与每千次决策输入成本对比">
+        <figcaption><b>图 5｜延迟（左）与每千次决策输入成本（右）</b>（来源：单价与延迟区间来自 TypeSafe AI 官方材料；成本换算按本文假设「每次决策 1,000 输入 token」）。
+        <span class="zh">官方首页另有一组汇总数字：<b>193.6× faster / 444.6× cheaper</b>，并注明「based on workflows for System One tasks」。用之前先看清楚它是哪一组 workflow 上测出来的。</span>
+        <span class="en">The homepage also states <b>193.6x faster / 444.6x cheaper</b>, flagged as "based on workflows for System One tasks". Before quoting it, note which workflows it came from.</span></figcaption>
+      </figure>
+
+      <h2 id="s8"><span class="num">08</span><span class="zh">一个具体场景：单据分拣与路由</span><span class="en">A concrete case: document sorting and routing</span></h2>
+      <p><span class="zh">下面这个流程纯粹是示意：我不引用任何真实业务数据，数字都是编的，只用来说明「决策层插在哪一步、阈值怎么起作用」。</span>
+      <span class="en">The flow below is purely illustrative: no real business data, invented numbers, only there to show where a decision layer sits and how thresholds work.</span></p>
+      <p><span class="zh">设想一批版式不统一的单据：OCR 会带进噪声，字段有时缺、有时串行。传统做法是写一堆规则来判定类型与完整性；这里的做法是在规范化之后插一层决策：<b>这属于哪一类</b>（分类）、<b>这个字段值能不能采信</b>（打分）、<b>缺的字段是不是必须退回补件</b>（分支），每一项都带概率。</span>
+      <span class="en">Take a pile of inconsistently formatted documents: OCR brings noise, fields are sometimes missing or misaligned. The conventional answer is a pile of rules. The alternative inserts a decision layer after normalisation: which category is this, is this field value trustworthy, and must it be sent back for more material — each with a probability.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f6-scenario-flow.svg" alt="单据分拣与路由流程示意，含决策层与三个阈值出口">
+        <figcaption><b>图 6｜决策层的位置与三个出口</b>（来源：本文自绘示意；阈值 0.90 / 0.60 为示例值，不涉及任何机构的真实流程或数据）。
+        <span class="zh">左下那条虚线是这个设计最容易被忽略、却最关键的部分：<b>人工复核的结果要回流成评测集</b>。否则你永远不知道校准有没有漂移、阈值该不该调。</span>
+        <span class="en">The dashed line at the bottom is the most overlooked part: human review has to feed back into an evaluation set. Otherwise you never learn whether calibration is drifting or the threshold needs moving.</span></figcaption>
+      </figure>
+
+      <div class="callout co-infer">
+        <span class="lbl">推断 · Inference</span>
+        <p><span class="zh">这类场景的运营指标其实是两条线：<b>自动执行覆盖率</b>与<b>错误率</b>。阈值往下调，覆盖率上升、错误率也上升，同时人工复核量下降；往上调则相反。这本质上和风控里「覆盖率 vs 精度」的取舍是同一件事——所以真正要调的不是模型，是这条曲线上的取点。</span>
+        <span class="en">Operating this kind of pipeline really means managing two curves: coverage of automatic execution and error rate. Lower the threshold and coverage rises along with errors while review volume falls; raise it and the reverse. It is the same trade-off as precision versus coverage in risk control — the thing you tune is the point on that curve, not the model.</span></p>
+      </div>
+
+      <h2 id="s9"><span class="num">09</span><span class="zh">三者对比</span><span class="en">Three-way comparison</span></h2>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 1｜现有 LLM、经典分类器与 Jev 的对照（前两列为通用常识与本文补充，第三列为官方口径）</span>
+          <span class="en">Table 1｜LLMs, classical classifiers and Jev. Columns 1–2 are general knowledge and this note's additions; column 3 is the vendor's own account.</span></caption>
+          <thead>
+            <tr>
+              <th></th>
+              <th><span class="zh">现有 LLM</span><span class="en">Existing LLM</span></th>
+              <th><span class="zh">经典分类器</span><span class="en">Classical classifier</span></th>
+              <th><span class="zh">Jev（官方口径）</span><span class="en">Jev (vendor account)</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="zh">优化目标</span><span class="en">Objective</span></td>
+              <td><span class="zh">人类偏好 / 可验证奖励</span><span class="en">Human preference / verifiable reward</span></td>
+              <td><span class="zh">训练集上的损失最小化</span><span class="en">Loss minimisation on training data</span></td>
+              <td class="hi"><span class="zh">校准决策（RLCD）</span><span class="en">Calibrated decisions (RLCD)</span></td></tr>
+            <tr><td><span class="zh">输出</span><span class="en">Output</span></td>
+              <td><span class="zh">字符串，需解析校验</span><span class="en">Strings; parse and validate</span></td>
+              <td><span class="zh">标签（+ 未校准分数）</span><span class="en">Label (+ uncalibrated score)</span></td>
+              <td class="hi"><span class="zh">类型化值 + 校准概率</span><span class="en">Typed value + calibrated probability</span></td></tr>
+            <tr><td><span class="zh">采样</span><span class="en">Sampling</span></td>
+              <td><span class="zh">串行，逐 token</span><span class="en">Sequential, token by token</span></td>
+              <td><span class="zh">一次前向</span><span class="en">One forward pass</span></td>
+              <td class="hi"><span class="zh">一次查询并行产生全部输出</span><span class="en">All outputs in one query</span></td></tr>
+            <tr><td><span class="zh">延迟</span><span class="en">Latency</span></td>
+              <td>3 – 329 s</td>
+              <td><span class="zh">微秒 – 毫秒</span><span class="en">µs – ms</span></td>
+              <td class="hi">70 – 500 ms</td></tr>
+            <tr><td><span class="zh">输入成本</span><span class="en">Input cost</span></td>
+              <td>$0.20 – 10 / MTok</td>
+              <td><span class="zh">≈ 0（本地）</span><span class="en">≈ 0 (local)</span></td>
+              <td class="hi">$0.042 / MTok</td></tr>
+            <tr><td><span class="zh">概率可信度</span><span class="en">Trust in the probability</span></td>
+              <td><span class="zh">过度自信且不一致</span><span class="en">Overconfident, inconsistent</span></td>
+              <td><span class="zh">需另行校准</span><span class="en">Needs separate calibration</span></td>
+              <td class="hi"><span class="zh">校准为训练目标</span><span class="en">Calibration is the training target</span></td></tr>
+            <tr><td><span class="zh">类型错误</span><span class="en">Type errors</span></td>
+              <td><span class="zh">会发生，需容错</span><span class="en">Happen; needs handling</span></td>
+              <td><span class="zh">不会（闭集）</span><span class="en">No (closed set)</span></td>
+              <td class="hi"><span class="zh">官方称不可能发生</span><span class="en">Vendor: impossible by construction</span></td></tr>
+            <tr><td><span class="zh">适合</span><span class="en">Fits</span></td>
+              <td><span class="zh">对话、写作、代码、开放问题</span><span class="en">Chat, writing, code, open problems</span></td>
+              <td><span class="zh">标签空间小而稳定的任务</span><span class="en">Small, stable label spaces</span></td>
+              <td class="hi"><span class="zh">人工在环的流程、实时判断、大批量打分</span><span class="en">Human-in-the-loop flows, real-time decisions, bulk scoring</span></td></tr>
+            <tr><td><span class="zh">不适合</span><span class="en">Does not fit</span></td>
+              <td><span class="zh">需要确定性与延迟保证的链路</span><span class="en">Anything needing determinism and latency guarantees</span></td>
+              <td><span class="zh">规则边界模糊、语义复杂的判断</span><span class="en">Fuzzy, semantically complex judgements</span></td>
+              <td class="hi"><span class="zh">需要自由文本或长链推理的任务</span><span class="en">Free-text generation or long reasoning chains</span></td></tr>
+          </tbody>
+        </table>
+        <p class="tnote"><span class="zh">注：第三列除延迟与成本外均为官方自述；官方同时承认类型错误的 0% 来自「schema matching is guaranteed」的机制保证，而非实测统计。<span class="sup">[1][2]</span></span>
+        <span class="en">Note: column 3 is the vendor's own account; the vendor also notes the 0% type-error figure follows from a structural guarantee ("schema matching is guaranteed") rather than a measurement.<span class="sup">[1][2]</span></span></p>
+      </div>
+
+      <h2 id="s10"><span class="num">10</span><span class="zh">局限与反方观点</span><span class="en">Limits and the case against</span></h2>
+      <p><span class="zh">这一节我尽量站到对面去写。目前关于 Jev 的全部公开信息都来自一家公司自己的叙述，而官方在同一篇里已经把该被质疑的地方标了出来——这点值得肯定，但也不能因此免除验证义务。</span>
+      <span class="en">I have tried to argue the other side here. All public information on Jev comes from the company itself, and to its credit the vendor flags where scepticism is due — which does not remove the need to verify.</span></p>
+      <ul>
+        <li><span class="zh"><b>评测口径由卖方定义。</b>官方承认：评测 workflow 由其模型能力团队构造，可能存在偏差；参考答案取 GPT-6 Astra 与 Fable 5.1 的平均，偏向 OpenAI 与 Anthropic，官方估计这反而低估了自家表现；LLM 一侧的数字来自 OpenRouter，复杂查询可能被路由到更强的模型。<span class="sup">[1]</span></span>
+          <span class="en"><b>The vendor defines the yardstick.</b> The vendor acknowledges the workflows were built by its own capability team; the reference answer is the average of GPT-6 Astra and Fable 5.1, biased toward OpenAI and Anthropic (which the vendor says understates its own results); and the LLM-side numbers come from OpenRouter, where complex queries may be routed to stronger models.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>「零幻觉、零类型错误」是机制推论，不是独立实测。</b>官方明说那一项数字不是经验值。机制上说得通（不生成自由文本，就不存在越界生成），但它衡量的是失败模式的空间，不等于准确率。<span class="sup">[1]</span></span>
+          <span class="en"><b>"Zero hallucination, zero type errors" is a structural argument, not an independent measurement.</b> The vendor states the figure is not empirical. The mechanism is plausible — no free text means nothing to go out of range — but it bounds a failure mode rather than establishing accuracy.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>价格可持续性未经验证。</b>官方自己写了「我们无法证明它没有补贴」；早期访问阶段的价格未必是长期价格。<span class="sup">[1]</span></span>
+          <span class="en"><b>Price sustainability is unproven.</b> The vendor writes that it cannot prove the pricing is not subsidised; early-access pricing need not be long-term pricing.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>服务与合规细节未知。</b>官方提到评测多数在西海岸的笔记本上跑（服务当前所在区域）；训练数据来源、是否用于训练、私有部署、数据留存都未在这两篇材料里说明。<span class="sup">[1]</span></span>
+          <span class="en"><b>Service and compliance details are unknown.</b> The vendor notes evals were mostly run from laptops on the West Coast, where the service currently sits. Training data provenance, opt-out, on-premise deployment and retention are not covered in these two pieces.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>能力边界仍然模糊。</b>官方 FAQ 自己列了六个待展开的问题：为什么需要新的训练算法、适合哪些用例、它是否只是个更小的 LLM、公开基准表现如何、训练数据从哪来、结果为何可能。</span>
+          <span class="en"><b>Capability boundaries remain open.</b> The vendor's own FAQ lists six questions it has not yet answered: why a new training algorithm was needed, which use cases fit, whether it is just a smaller LLM, how it performs on public benchmarks, where the training data comes from, and how the results are possible.<span class="sup">[1]</span></span></li>
+      </ul>
+
+      <div class="callout co-warn">
+        <span class="lbl">待验证 · To verify</span>
+        <p><span class="zh">我目前没有 early access，因此以下都还没做过：① 用同一批数据把「提示词 + JSON」与「决策层」跑成对照；② 用可靠性曲线检查它声称的概率是否真的校准；③ 在长尾样本（版式异常、字段缺失）上看概率是否随难度下降；④ 记录 p50/p95 延迟而不是平均值。做完会写进「实测复现」那一篇。</span>
+        <span class="en">I have no early access, so none of the following has been done yet: (1) a like-for-like comparison of prompt-plus-JSON against a decision layer on one dataset; (2) a reliability diagram to test whether the claimed probabilities are calibrated; (3) long-tail behaviour (odd layouts, missing fields) and whether confidence falls with difficulty; (4) p50/p95 latency instead of averages. Results will go into the benchmark note.</span></p>
+      </div>
+
+      <h2 id="s11"><span class="num">11</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
+      <div class="callout co-opinion">
+        <span class="lbl">观点 · Opinion</span>
+        <p><span class="zh">我认为 Jev 这类东西真正的意义不在「更准」，而在<b>把不确定性变成可以写进代码的对象</b>。过去两年我们一直在用「让模型更聪明」来解决可靠性问题，但可靠性其实是接口问题：如果输出没有概率、没有取值范围、没有审计记录，再聪明的模型也只能待在人的后面。</span>
+        <span class="en">The real significance is not accuracy but turning uncertainty into something you can write code against. The last two years have tried to buy reliability with intelligence, but reliability is an interface problem: without probabilities, bounded outputs and an audit trail, even a brilliant model stays behind a human.</span></p>
+        <p><span class="zh">如果要判断这一类产品值不值得投入，我会先问三个问题：<b>它会把我的哪一段人工流程变成机器流程</b>（而不是「它能做什么」）；<b>错误代价 vs 复核成本</b> 是否划算；<b>概率是否真的校准</b>（这一条决定了前两条能不能成立）。三个问题答不上任何一个，就先只做离线跑分，别接进生产链路。</span>
+        <span class="en">To judge whether a product like this is worth adopting, I would ask three questions first: which human step does it actually turn into a machine step (not what it can do in general); does the cost of error beat the cost of review; and are the probabilities genuinely calibrated — the third determines whether the first two hold. If any of them has no answer, keep it in offline scoring and out of production.</span></p>
+        <p><span class="zh">最后一句保留意见：<b>目前的证据强度还不足以支撑采购决策</b>。它值得的是两周的试点，不是一份年度合同。</span>
+        <span class="en">One reservation to end on: the evidence so far is not strong enough to support a purchasing decision. It earns a two-week pilot, not an annual contract.</span></p>
+      </div>
+
+      <h2 id="s12"><span class="num">12</span><span class="zh">落地前该问的八个问题</span><span class="en">Eight questions before a pilot</span></h2>
+      <p><span class="zh">如果要把这类服务接进内部流程，我整理了一份提问清单。每条都附上「为什么要问」，方便直接拿去开会问供应商。</span>
+      <span class="en">If a service like this is to enter an internal pipeline, here is the list of questions I would bring to the vendor, each with the reason it matters.</span></p>
+      <ol>
+        <li><span class="zh"><b>校准怎么评估？</b>用可靠性曲线还是单一数字？分箱方式与样本量是多少？——决定「概率能不能拿来设阈值」。<span class="sup">[1]</span></span>
+          <span class="en"><b>How is calibration evaluated?</b> Reliability diagram or a single number; what binning and sample size? This decides whether the probability can carry a threshold.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>分布外会怎样？</b>换一批版式、换一个业务线之后，置信度是否可靠地下降？——校准失效通常发生在换场景的时候，不在同分布内。</span>
+          <span class="en"><b>What happens out of distribution?</b> Does confidence fall reliably when layouts or business lines change? Calibration usually breaks on a change of setting, not within one.</span></li>
+        <li><span class="zh"><b>能不能拒答？</b>有没有显式的「我不知道 / 弃权」输出，而不是被迫在给定标签里挑一个？——这决定低置信度个案能不能优雅退出。</span>
+          <span class="en"><b>Can it abstain?</b> Is there an explicit "I don't know" output rather than being forced to pick a label? This determines whether low-confidence cases can exit gracefully.</span></li>
+        <li><span class="zh"><b>输出选项上限多少？</b>官方提到单次支持到 255，更高需两段式。<span class="sup">[1]</span>——直接决定一个大问题能不能一次问完。</span>
+          <span class="en"><b>What is the cardinality limit?</b> The vendor reports up to 255 in one call with a two-stage scheme beyond that.<span class="sup">[1]</span> It decides whether a problem fits in one shot.</span></li>
+        <li><span class="zh"><b>延迟分布如何？</b>要 p50 / p95 / p99，不要平均值；并确认服务所在区域与你的用户之间的距离。<span class="sup">[1]</span></span>
+          <span class="en"><b>What is the latency distribution?</b> Ask for p50 / p95 / p99 rather than an average, and confirm where the service sits relative to your users.<span class="sup">[1]</span></span></li>
+        <li><span class="zh"><b>我们的数据会被用于训练吗？</b>能不能关闭、留存多久、能不能删除？——金融与保险场景里这一条通常先于性能讨论。</span>
+          <span class="en"><b>Is our data used for training?</b> Can it be turned off, how long is it retained, can it be deleted? In finance and insurance this usually precedes any performance discussion.</span></li>
+        <li><span class="zh"><b>能不能私有化 / 区域部署？</b>如果监管不允许把数据发到外部服务，这一条直接决定可行性。</span>
+          <span class="en"><b>Is private or regional deployment possible?</b> If regulation forbids sending data to an external service, this single answer decides feasibility.</span></li>
+        <li><span class="zh"><b>版本与回滚怎么办？</b>模型升级后概率会不会变？能不能固定版本、能不能 A/B 比较？——上线之后真正的风险是「同一个输入，行为悄悄变了」。</span>
+          <span class="en"><b>How do versions and rollbacks work?</b> Do probabilities shift after an upgrade; can a version be pinned and A/B compared? The real risk in production is silent behavioural change on the same input.</span></li>
+      </ol>
+
+      <hr>
+
+      <h2 id="refs"><span class="num">13</span><span class="zh">来源</span><span class="en">Sources</span></h2>
+      <ol class="refs">
+        <li>Diogo Almeida. <i>Introducing System One Models &amp; Jev</i>. TypeSafe AI Blog, 2026-09-15.
+          <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">typesafe.ai/blog/introducing-system-one-models-and-jev</a>
+          <br><span class="zh">本文引用的定义、四代对照、评测方法与偏差说明、成本与延迟区间、命名来源（Kahneman / Jevons）、Doom 与 Wikiracing 演示、cardinality 上限均出自此文。</span>
+          <span class="en">Definitions, the four-generation comparison, eval methodology and stated biases, cost and latency ranges, naming (Kahneman / Jevons), the Doom and Wikiracing demos and the cardinality limit all come from this post.</span></li>
+        <li>TypeSafe AI 官网首页，访问日期 2026-09-25。
+          <a href="https://typesafe.ai/">typesafe.ai</a>
+          <br><span class="zh">193.6× faster / 444.6× cheaper 与 $42 per billion input tokens 的表述出自首页；官方在发布文中说明这组数字来自其挑选的 workflow 评测。</span>
+          <span class="en">The 193.6x / 444.6x and $42 per billion input tokens statements come from the homepage; the launch post explains they derive from the vendor's chosen workflow evals.</span></li>
+        <li>Daniel Kahneman. <i>Thinking, Fast and Slow</i>. Farrar, Straus and Giroux, 2011.
+          <br><span class="zh">「System 1 / System 2」命名的出处（官方 FAQ 指明灵感来源）。</span>
+          <span class="en">Source of the System 1 / System 2 naming, which the vendor's FAQ cites as the inspiration.</span></li>
+        <li>Jevons paradox. Wikipedia.
+          <a href="https://en.wikipedia.org/wiki/Jevons_paradox">en.wikipedia.org/wiki/Jevons_paradox</a>
+          <br><span class="zh">「效率提升反而增加总消耗」这一经济史背景（模型命名取自 William Stanley Jevons）。</span>
+          <span class="en">Background on efficiency gains raising total consumption; the model is named after William Stanley Jevons.</span></li>
+      </ol>
+
+      <h2 id="cite"><span class="num">14</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
+      <div class="cite">
+        <pre id="citeText">Aylon (2026). Jev 与 System One Models：把 AI 变成代码里的一个判断. Notes, v1.0. https://aayloo.github.io/notes/jev-system-one-models/</pre>
+        <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
+      </div>
+
+      <h2 id="upd"><span class="num">15</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
+      <div class="tbl-wrap">
+        <table class="upd">
+          <thead><tr><th><span class="zh">版本</span><span class="en">Version</span></th><th><span class="zh">日期</span><span class="en">Date</span></th><th><span class="zh">改动</span><span class="en">Change</span></th></tr></thead>
+          <tbody>
+            <tr><td>v1.0</td><td>2026-09-25</td>
+              <td><span class="zh">初版。依据官方 2026-09-15 发布文与官网首页；本文无实测数据，待拿到访问权限后补「实测复现」一篇。</span>
+                  <span class="en">First version, based on the 2026-09-15 launch post and homepage. No first-party measurements yet; a benchmark note will follow once access is available.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="pager" aria-label="pagination">
+        <a href="../">
+          <span class="k"><span class="zh">目录</span><span class="en">Index</span></span>
+          <span class="v"><span class="zh">← 全部笔记</span><span class="en">← All notes</span></span>
+        </a>
+        <a href="../glossary/">
+          <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+          <span class="v"><span class="zh">术语表：System One · RLCD · 校准 →</span><span class="en">Glossary: System One, RLCD, calibration →</span></span>
+        </a>
+      </nav>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="tt">Contents</div>
+      <a href="#s1"><span class="zh">01 为什么写这篇</span><span class="en">01 Why</span></a>
+      <a href="#s2"><span class="zh">02 它是什么</span><span class="en">02 What it is</span></a>
+      <a href="#s3"><span class="zh">03 它不是什么</span><span class="en">03 What it is not</span></a>
+      <a href="#s4"><span class="zh">04 一次调用</span><span class="en">04 One call</span></a>
+      <a href="#s5"><span class="zh">05 为什么快</span><span class="en">05 Why faster</span></a>
+      <a href="#s6"><span class="zh">06 校准</span><span class="en">06 Calibration</span></a>
+      <a href="#s7"><span class="zh">07 成本与延迟</span><span class="en">07 Cost</span></a>
+      <a href="#s8"><span class="zh">08 具体场景</span><span class="en">08 Use case</span></a>
+      <a href="#s9"><span class="zh">09 三者对比</span><span class="en">09 Comparison</span></a>
+      <a href="#s10"><span class="zh">10 局限与反方</span><span class="en">10 Limits</span></a>
+      <a href="#s11"><span class="zh">11 我的判断</span><span class="en">11 My take</span></a>
+      <a href="#s12"><span class="zh">12 该问的八个问题</span><span class="en">12 Eight questions</span></a>
+      <a href="#refs"><span class="zh">13 来源</span><span class="en">13 Sources</span></a>
+      <a href="#upd"><span class="zh">15 更新日志</span><span class="en">15 Changelog</span></a>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footin">
+      <span>© 2026 Aylon · <span class="zh">本页文字为原创，引用请注明来源</span><span class="en">Original text; please cite if reused</span></span>
+      <span class="spacer"></span>
+      <a href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>
