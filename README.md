@@ -1,7 +1,7 @@
 # aayloo.github.io
 
-个人网站源码 · 数据科学与量化研究
-Personal site · Data Science & Quantitative Research
+个人网站源码 —— 数据科学家 · 量化策略师 · AI 工程师
+Personal site — Data Scientist · Quantitative Strategist · AI Engineer
 
 **网站地址：<https://aayloo.github.io/>**
 
@@ -43,6 +43,13 @@ python -m http.server 8000
 - 站内仅包含公开内容：研究方向、公开项目与技能概览
 - 不含任何雇主机密、内部工作数据或未公开材料
 - 公开项目代码在 [quant-research-hub](https://github.com/Aayloo/quant-research-hub)
+
+## License
+
+**代码**（本仓库内的 HTML / CSS / JavaScript）：[MIT](LICENSE) —— 可以自由使用、修改、分发，保留版权声明即可。
+
+**内容**（站内文字、图像、笔记与项目说明）：© 2026 Aylon，保留所有权利。
+欢迎引用并附上来源链接，但请勿整篇转载或作为自己的作品发布。
 
 ## 联系
 
