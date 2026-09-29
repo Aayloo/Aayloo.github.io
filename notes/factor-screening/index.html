@@ -221,12 +221,13 @@
         <li>本文实验代码：<code>tools/make_figs_factor.py</code>（固定随机种子，可完全复现；模拟设定见第三节）。</li>
       </ol>
 
-      <h2 id="s9"><span class="num">09</span><span class="zh">三分钟英文讲稿</span><span class="en">English summary (three-minute read)</span></h2>
-      <div class="callout co-fact">
-        <span class="lbl">English summary</span>
-        <p>I simulated two factor zoos to separate the effect of the screening method from the effect of the signal itself. In the strong regime — 300 candidates, 12 real factors, annualised Sharpe 0.6 over twenty years — a naive top-ten-by-t-statistic screen and a stricter five-layer filter performed almost identically out of sample, 1.63 versus 1.68, with the same 80% hit rate. Methods look clever when the signal is strong.</p>
-        <p>In the weak regime — 400 candidates, eight real factors, Sharpe 0.3 over fifteen years — the top ten by t-statistic produced an in-sample Sharpe of 1.95 and an out-of-sample Sharpe of 0.03, with only 30% of the picks being real. The stricter filter did worse: four picks, none real. No true factor even reached |t| = 2.89, while some noise factors did. The Bonferroni bar for 400 tests was |t| &gt; 3.84, and nothing on either side cleared it.</p>
-        <p>That leads to an arithmetic I now use in practice: with t ≈ SR × √years, proving a Sharpe-0.3 factor against 400 tests would need roughly 164 years of data, and even a single test about 43 years. So I stopped asking whether a factor exists and started asking how much my decision depends on it — marginal contribution at portfolio level, shrinkage instead of keep-or-drop, and an honest "I cannot prove this" when the sample is simply too short.</p>
+      <h2 id="share"><span class="num">09</span><span class="zh">分享版摘要</span><span class="en">Shareable summary</span></h2>
+      <div class="cite" id="shareText">
+        <span class="zh">可直接贴出去的版本：</span><span class="en">Ready to post:</span>
+        <pre>400 个候选因子、8 个真因子、15 年样本：按 t 值挑出的前 10 名，样本内夏普 1.95，样本外 0.03，命中率只有 30%。真因子的 t 值区间是 0.23–2.20，而噪声因子的最大 |t| 是 2.89 —— 真信号比噪声还不起眼。
+
+算一笔账：用 t ≈ SR × √年数 反解，年化夏普 0.3 的因子要对抗 400 次检验，需要约 164 年数据；只做一次检验也要约 43 年。所以问题不该是「这个因子是否存在」，而是「我的决策有多依赖它」。</pre>
+        <button class="chip" type="button" data-copy="#shareText" data-done-label="已复制 ✓">复制这段</button>
       </div>
 
       <h2 id="cite"><span class="num">10</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
@@ -269,7 +270,7 @@
       <a href="#s6"><span class="zh">06 局限与反方</span><span class="en">06 Limits</span></a>
       <a href="#s7"><span class="zh">07 我的判断</span><span class="en">07 My take</span></a>
       <a href="#s8"><span class="zh">08 来源</span><span class="en">08 Sources</span></a>
-      <a href="#s9"><span class="zh">09 英文讲稿</span><span class="en">09 English</span></a>
+      <a href="#share"><span class="zh">09 分享版摘要</span><span class="en">09 Shareable</span></a>
       <a href="#upd"><span class="zh">11 更新日志</span><span class="en">11 Changelog</span></a>
     </aside>
   </div>

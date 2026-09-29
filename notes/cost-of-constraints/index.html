@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>约束的代价：多资产组合里，每个"不许超"都在收费 · Notes</title>
+<meta name="description" content="同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps；但样本短的时候，约束不是成本而是保险。含四张自绘图与七条可点开的文献。">
+<meta property="og:title" content="约束的代价：多资产组合里，每个不许超都在收费">
+<meta property="og:description" content="同样 8% 波动预算下，四条机构约束一共拿走 46.8 bps；但样本短的时候，约束是保险。">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">Portfolio · 2026-09-29</div>
+    <h1><span class="zh">约束的代价：多资产组合里，每个"不许超"都在收费</span>
+        <span class="en">Every constraint has a price</span></h1>
+    <p class="lede">
+      <span class="zh">在同样的 8% 波动预算下，<b>四条典型机构约束一共拿走 46.8 bps 的预期收益/年</b>。但故事的另一半是：当你手上的样本很短时，同样的约束不是成本，而是<b>保险</b>——它挡住的是估计误差，不是市场。</span>
+      <span class="en">At an identical 8% volatility budget, four ordinary institutional constraints cost <b>46.8 bps a year</b> of expected return. The other half of the story: when your sample is short, the same constraints act as insurance against estimation error.</span>
+    </p>
+    <div class="kv">
+      <div>发布 / Published</div><div>2026-09-29</div>
+      <div>版本 / Version</div><div>v1.0</div>
+      <div>阅读 / Reading</div><div>约 12 分钟</div>
+      <div>标签 / Tags</div><div>组合构建</div>
+      <div>数据 / Data</div><div><span class="zh">7 资产模拟（代码可复现）；文献 7 条均已核对链接</span><span class="en">7-asset simulation (code included); seven verified sources</span></div>
+    </div>
+  </header>
+
+  <div class="split">
+    <div class="prose">
+      <div class="tldr">
+        <h2>TL;DR</h2>
+        <ol>
+          <li><span class="zh"><b>无约束的"最优"很吓人。</b>同样 8% 波动预算下，模型把 <b>63.8% 押在信用债</b>、18% 在 REITs、13.9% 在新兴市场股票——这不是洞察，这是误差放大器。</span>
+              <span class="en">The unconstrained optimum puts <b>63.8% in credit</b> at an 8% volatility budget — an error amplifier, not an insight.</span></li>
+          <li><span class="zh"><b>四条约束合计 46.8 bps/年</b>：单资产上限 20%（27.9）、久期上限 2 年（7.0）、月度换手上限 25%（13.5）、禁投清单（10.1）。<b>但不是简单相加</b>——四条单价算术和是 58.5，合起来只有 46.8，因为约束之间会互相遮蔽。</span>
+              <span class="en">The four constraints cost 46.8 bps in total, against 58.5 bps if added up naively — constraints mask each other.</span></li>
+          <li><span class="zh"><b>每条约束的价格取决于它"最后"值多少钱。</b>从全约束组合里单独拿掉换手上限，收益一分钱都不多（+0.0 bps）——它在其他三条存在时已经不起作用了。</span>
+              <span class="en">A constraint is worth what it costs last: removing the turnover cap from the fully constrained portfolio adds nothing.</span></li>
+          <li><span class="zh"><b>收紧上限是非线性的。</b>从 60% 收到 40% 只要 8.7 bps，从 20% 再收到 16% 要 39.4 bps。<b>而且 16% 已接近可行下限</b>（7 个资产时低于 1/7 ≈ 14.3% 在数学上就无解）。</span>
+              <span class="en">Tightening is non-linear, and with seven assets a cap below 1/7 is simply infeasible.</span></li>
+          <li><span class="zh"><b>样本越短，约束越是保险。</b>30 条随机路径：估计窗口只有 24 个月时，无约束组合的样本外超额夏普 10 分位是 <b>−0.02</b>，全约束组合是 <b>+0.18</b>；样本拉长到 240 个月，两者收敛（0.41 vs 0.42）。</span>
+              <span class="en">With a 24-month estimation window the 10th-percentile out-of-sample Sharpe is −0.02 unconstrained versus +0.18 constrained; at 240 months they converge.</span></li>
+        </ol>
+      </div>
+
+      <div class="callout co-warn">
+        <span class="lbl">口径 · Scope</span>
+        <p><span class="zh">本文用<b>7 个资产、年化参数设定的模拟</b>（股票 7%/16%、国债 3.5%/5%、信用债 5%/7%、黄金 4%/14%、REITs 7.5%/18%、新兴市场 8%/20%、现金 2%），基准组合是满足全部约束的政策组合。<b>数字来自模拟，不是任何真实组合的历史业绩</b>；它说明的是机制与量级，不是市场的具体答案。代码：<code>tools/make_figs_constraints.py</code>（固定种子）。</span>
+        <span class="en">A simulated seven-asset universe with stated annual parameters; the benchmark policy portfolio is compliant with every constraint. Numbers illustrate a mechanism and its scale, not real portfolio history. Code included, fixed seed.</span></p>
+      </div>
+
+      <h2 id="s1"><span class="num">01</span><span class="zh">会议上的那句话</span><span class="en">The sentence in the meeting</span></h2>
+      <p><span class="zh">"单资产不超过 20%，久期不超过 2 年，月度换手控制在 25% 以内，新兴市场先别碰。"</span>
+      <span class="en">"No single asset above 20%, duration under two years, monthly turnover below 25%, and stay out of emerging markets."</span></p>
+      <p><span class="zh">这几句话在投委会里从不引起争论，因为每一条听起来都合理，都是风控语言。<b>但没人说出它们的价格。</b>结果通常是：模型给出的权重被手工"修一修"，一年后跟基准比，说不清是判断对了还是被约束磨平了。</span>
+      <span class="en">Nobody argues with these sentences — each sounds prudent. But nobody says what they cost. The weights get hand-adjusted, and a year later nobody can tell whether the view paid off or the constraint sanded it away.</span></p>
+      <p><span class="zh">这篇想做的就是把价格算出来：<b>在同样的风险预算下，每条约束、以及它们合在一起，究竟拿走多少预期收益。</b></span>
+      <span class="en">This note prices them: at a fixed risk budget, how much expected return does each constraint — and all of them together — actually take?</span></p>
+
+      <h2 id="s2"><span class="num">02</span><span class="zh">先把"无约束最优"亮出来</span><span class="en">Look at the unconstrained optimum first</span></h2>
+      <p><span class="zh">实验的统一口径是：<b>波动不超过 8%，在此前提下最大化预期收益</b>。这个口径比"最大化夏普"更接近机构实务（风险预算先定，收益尽量争取），也避免了"全押现金"这类退化解。</span>
+      <span class="en">The common yardstick: maximise expected return subject to volatility ≤ 8%. This mirrors institutional practice — the risk budget comes first — and avoids degenerate solutions.</span></p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 1｜无约束最优 vs 全约束组合（同样 8% 波动预算）</span>
+          <span class="en">Table 1｜Unconstrained vs fully constrained, same 8% volatility budget</span></caption>
+          <thead><tr><th><span class="zh">资产</span><span class="en">Asset</span></th>
+            <th><span class="zh">无约束最优</span><span class="en">Unconstrained</span></th>
+            <th><span class="zh">全约束</span><span class="en">Constrained</span></th></tr></thead>
+          <tbody>
+            <tr><td><span class="zh">股票</span><span class="en">Equities</span></td><td>0.0%</td><td>20.0%</td></tr>
+            <tr><td><span class="zh">国债</span><span class="en">Govt bonds</span></td><td>0.0%</td><td>17.1%</td></tr>
+            <tr><td><span class="zh">信用债</span><span class="en">Credit</span></td><td><b>63.8%</b></td><td>20.0%</td></tr>
+            <tr><td><span class="zh">黄金</span><span class="en">Gold</span></td><td>4.2%</td><td>20.0%</td></tr>
+            <tr><td><span class="zh">REITs</span><span class="en">REITs</span></td><td>18.0%</td><td>20.0%</td></tr>
+            <tr><td><span class="zh">新兴市场</span><span class="en">EM equities</span></td><td>13.9%</td><td>0.0%</td></tr>
+            <tr><td><span class="zh">现金</span><span class="en">Cash</span></td><td>0.0%</td><td>2.9%</td></tr>
+            <tr><td><span class="zh">预期收益</span><span class="en">Expected return</span></td><td>5.83%</td><td>5.36%</td></tr>
+            <tr><td><span class="zh">组合久期</span><span class="en">Portfolio duration</span></td><td>2.55 年</td><td>1.83 年</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><span class="zh">先看左边这列：模型把六成资金压在一个资产上。<b>这不是因为它更了解信用债，而是因为它对预期收益的估计太自信</b>——这正是 Michaud 1989 说的"优化器是误差放大器"。<span class="sup">[1]</span></span>
+      <span class="en">The left column is the point: 64% in one asset, not because the model knows credit better, but because it trusts its own point estimates.<span class="sup">[1]</span></span></p>
+
+      <h2 id="s3"><span class="num">03</span><span class="zh">每条约束的价格</span><span class="en">The price of each constraint</span></h2>
+      <figure>
+        <img src="../assets/figs/f10-constraint-cost.svg" alt="每条约束单独与合并施加时，在同样 8% 波动预算下损失的预期收益">
+        <figcaption><b>图 1｜每条约束的价格（同样 8% 波动预算，年化 bps）</b>（来源：本文模拟，<code>tools/make_figs_constraints.py</code>）。
+        <span class="zh">蓝色是单条约束单独施加，红色是四条一起。注意最后那根柱子：<b>四条一起拿走 46.8 bps，小于四条单价的算术和 58.5 bps</b>——约束彼此会遮蔽。</span>
+        <span class="en">Blue: each constraint alone. Red: all four. The total, 46.8 bps, is below the arithmetic sum of 58.5 — the constraints overlap.</span></figcaption>
+      </figure>
+      <ul>
+        <li><span class="zh"><b>单资产上限 20%：27.9 bps</b>——四项里最贵的一组，因为它直接切断"集中押注"的能力。</span>
+          <span class="en"><b>Single-asset cap 20%: 27.9 bps</b> — the most expensive, because it removes concentration precisely where the optimiser wants it.</span></li>
+        <li><span class="zh"><b>月度换手上限 25%：13.5 bps</b>——它的价格取决于你从哪里出发。基准组合与最优解差得越远，这条约束越贵。</span>
+          <span class="en"><b>Turnover cap 25%: 13.5 bps</b> — priced relative to the starting portfolio; the further the optimum, the costlier the cap.</span></li>
+        <li><span class="zh"><b>禁投清单（去掉新兴市场）：10.1 bps</b>——删掉一个资产等于删掉一维自由度，价格不高但不可逆。</span>
+          <span class="en"><b>Exclusion list: 10.1 bps</b> — deleting an asset removes a degree of freedom: cheap here, but irreversible.</span></li>
+        <li><span class="zh"><b>久期上限 2 年：7.0 bps</b>——最便宜的一条，因为它只在优化器想把久期拉长时才咬人。</span>
+          <span class="en"><b>Duration cap 2y: 7.0 bps</b> — the cheapest, because it only bites when the optimiser wants duration.</span></li>
+      </ul>
+
+      <h2 id="s4"><span class="num">04</span><span class="zh">约束之间会互相遮蔽</span><span class="en">Constraints mask each other</span></h2>
+      <figure>
+        <img src="../assets/figs/f11-marginal-cost.svg" alt="每条约束的孤立代价与在全约束组合中的边际价值对比">
+        <figcaption><b>图 2｜孤立代价 vs 边际价格</b>（来源：本文模拟）。
+        <span class="zh">读法：蓝柱是"只加这一条要付多少"，绿柱是"在已经有三条的组合里，拿掉这一条能赚回多少"。<b>换手上限的绿柱是 0.0</b>——它在全约束组合里已经不起作用，因为 20% 上限把权重压平之后，本来也没有多少可换。</span>
+        <span class="en">Blue: cost of adding it alone. Green: gain from removing it when the others are present. The turnover cap's green bar is zero — with the 20% cap already flattening weights, there is nothing left to turn over.</span></figcaption>
+      </figure>
+      <div class="callout co-infer">
+        <span class="lbl">推断 · Inference</span>
+        <p><span class="zh">这意味着"逐条评估约束"是错的方法。正确的问法是<b>组合层面的边际</b>：把候选约束集当成一个包裹，用"逐条加入"和"逐条移除"两个方向各跑一遍，看价格在哪个方向出现。<b>如果两条约束指向同一个方向（比如上限与换手），第二条几乎必然便宜</b>——但这不代表它没用，在极端行情里它可能是唯一有效的那条。</span>
+        <span class="en">Evaluating constraints one by one is the wrong method. Ask the portfolio-level marginal: add each constraint, then remove each from the full set. Two constraints pulling the same way guarantee a cheap second addition — which does not make it useless under stress.</span></p>
+      </div>
+
+      <h2 id="s5"><span class="num">05</span><span class="zh">收紧上限是非线性的</span><span class="en">Tightening is not linear</span></h2>
+      <figure>
+        <img src="../assets/figs/f12-cap-curve.svg" alt="单资产上限从 60% 收紧到 16% 的代价曲线">
+        <figcaption><b>图 3｜上限收紧的代价曲线</b>（来源：本文模拟）。
+        <span class="zh">从 60% 收到 40%：8.7 bps。从 20% 收到 16%：39.4 bps。<b>曲线的斜率在右边陡增</b>，因为可选权重集合被压得越来越小。另外要记住一个硬约束：7 个资产、权重和必须为 1 时，<b>任何低于 1/7 ≈ 14.3% 的上限在数学上无解</b>——会上提约束前应该先做这个检查。</span>
+        <span class="en">From 60% to 40%: 8.7 bps. From 20% to 16%: 39.4 bps. And remember the hard limit: with seven assets summing to one, a cap below 1/7 is infeasible.</span></figcaption>
+      </figure>
+
+      <h2 id="s6"><span class="num">06</span><span class="zh">但样本短的时候，约束是保险</span><span class="en">With short samples, constraints are insurance</span></h2>
+      <p><span class="zh">上面全是"用真实参数算出来的代价"。现实中你并不知道真实参数，只能从历史里估。这时结论会翻转一部分——这就是 Michaud 与 Jagannathan &amp; Ma 之间的张力：<b>一位说约束有害，另一位说"错误的约束反而有用"</b>。<span class="sup">[1][2]</span></span>
+      <span class="en">Everything above is priced with true parameters. In practice you estimate them from history — where a different result appears: Michaud says constraints hurt, Jagannathan &amp; Ma show wrong constraints often help.<span class="sup">[1][2]</span></span></p>
+      <figure>
+        <img src="../assets/figs/f13-estimation-window.svg" alt="估计窗口长度对样本外超额夏普的影响：无约束与全约束组合对比">
+        <figcaption><b>图 4｜估计窗口 vs 样本外表现（30 条随机路径）</b>（来源：本文模拟；阴影为 10 分位）。
+        <span class="zh">估计窗口只有 24 个月时：无约束组合的样本外超额夏普 10 分位是 <b>−0.02</b>，全约束是 <b>+0.18</b>；窗口拉到 240 个月，两者收敛（0.41 vs 0.42）。<b>约束的价格不是固定的——它随你的样本长度变化，短样本里是负的（即"保费"）。</b></span>
+        <span class="en">At a 24-month window the 10th percentile is −0.02 unconstrained vs +0.18 constrained; at 240 months they converge. The price of a constraint is not a constant: with short samples it is negative.</span></figcaption>
+      </figure>
+      <p><span class="zh">这解释了一个常见困惑：为什么"回测里约束拖累业绩"，而"实盘里加了约束反而更稳"。两个说法都对——<b>只是在用不同的样本长度说话</b>。</span>
+      <span class="en">This resolves a common paradox: constraints look like a drag in backtests and like ballast in live portfolios. Both are right — they are just measured on different sample lengths.</span></p>
+
+      <h2 id="s7"><span class="num">07</span><span class="zh">所以我在实际工作里怎么做</span><span class="en">What I actually do</span></h2>
+      <ol>
+        <li><span class="zh"><b>先报价格，再谈约束。</b>任何约束提案都附一句"在我们 8% 风险预算下约值 X bps"——这句话让讨论从偏好变成取舍。</span>
+          <span class="en"><b>Price it before you debate it.</b> Every constraint proposal carries a line: about X bps at our risk budget.</span></li>
+        <li><span class="zh"><b>用包裹定价，不用逐条定价。</b>报告"逐条加入"和"逐条移除"两个方向——只报一个方向会系统性高估约束的代价。</span>
+          <span class="en"><b>Price the package, not the items.</b> Report both add-one and remove-one margins; a single direction overstates the cost.</span></li>
+        <li><span class="zh"><b>约束要按"它挡住什么"来设计，而不是按习惯。</b>挡集中度用上限，挡误差放大用收缩与上限，挡流动性用换手，每家机构的约束清单应该长短不一。</span>
+          <span class="en"><b>Design constraints by what they block.</b> Caps block concentration, shrinkage and caps block error amplification, turnover limits block liquidity risk.</span></li>
+        <li><span class="zh"><b>先查可行性再上会。</b>1/n 这道小学算术能挡掉一部分提案（n 是可选资产数）。</span>
+          <span class="en"><b>Check feasibility first.</b> The arithmetic of 1/n, with n the number of eligible assets, kills some proposals before the meeting.</span></li>
+        <li><span class="zh"><b>样本短时，把约束当成不确定性预算来管</b>：与其纠结"要不要加 20% 上限"，不如问"我凭什么相信 64% 这个数字"。<span class="sup">[3]</span></span>
+          <span class="en"><b>With short samples, treat constraints as an uncertainty budget.</b> The real question is not the cap; it is why anyone believes 64%.<span class="sup">[3]</span></span></li>
+      </ol>
+
+      <h2 id="s8"><span class="num">08</span><span class="zh">局限与反方观点</span><span class="en">Limits and the other side</span></h2>
+      <ul>
+        <li><span class="zh"><b>参数是我设的。</b>预期收益、波动与相关矩阵都是假设，换一组数字，bps 会变。这篇文章的价值在方法（怎么定价、怎么读边际），不在具体数值。</span>
+          <span class="en"><b>The parameters are mine.</b> Change them and the bps change. The contribution is the method, not the numbers.</span></li>
+        <li><span class="zh"><b>没有交易成本与税。</b>换手上限的真实价值部分来自成本节省，本文的换手代价只算收益维度，因此<b>低估了换手上限的合理性</b>。</span>
+          <span class="en"><b>No costs or taxes.</b> Part of the value of a turnover limit is the cost it saves, which is outside this measurement.</span></li>
+        <li><span class="zh"><b>约束的价值有很大一部分是"防人"而不是"防模型"。</b>禁投清单、单资产上限常来自合规与委托要求，这时候谈 bps 只是让代价可见，不是否定约束。</span>
+          <span class="en"><b>Much of a constraint's value is governance, not modelling.</b> Pricing them makes the cost visible without arguing them away.</span></li>
+        <li><span class="zh"><b>反方：为什么不干脆别用优化器？</b>1/N 在文献里常常打赢样本内最优的均值方差组合，而且不需要估计参数。这确实是本文结论的自然延伸——如果你的参数估计不够好，约束或等权是同一件事的两种说法。<span class="sup">[4]</span></span>
+          <span class="en"><b>The other side: why use an optimiser at all?</b> 1/N often beats in-sample mean-variance with no parameter estimation.<span class="sup">[4]</span></span></li>
+      </ul>
+
+      <h2 id="s9"><span class="num">09</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
+      <div class="callout co-opinion">
+        <span class="lbl">观点 · Opinion</span>
+        <p><span class="zh">我认为"约束的代价"这个说法本身就容易误导：<b>约束不是免费的，但它也不是纯粹的损耗——它买到的是对你自己估计误差的保险</b>。样本越长、对参数越有信心，这份保险越贵；样本越短、模型越自信，这份保险越值。</span>
+        <span class="en">"The cost of constraints" is itself misleading: a constraint is not a pure loss — it buys insurance against your own estimation error. The longer your sample, the dearer the insurance; the shorter it is, the more it is worth.</span></p>
+        <p><span class="zh">所以我在会上只会说一句：<b>"这条约束值 28 bps，它挡住的是我们把 64% 押在一个资产上的风险——如果你们认为那个 64% 靠得住，我们就该删掉它；如果不确定，那就留着。"</b>把偏好问题翻译成价格问题，是我从这套实验里学到的最有用的东西。</span>
+        <span class="en">So the sentence I would use: this constraint costs 28 bps and it blocks a 64% bet; if you believe the 64%, remove it; if not, keep it. Turning a preference into a price is the practical lesson.</span></p>
+      </div>
+
+      <h2 id="s10"><span class="num">10</span><span class="zh">来源（链接均于 2026-09-29 核查）</span><span class="en">Sources (links verified 2026-09-29)</span></h2>
+      <ol class="refs">
+        <li>Michaud, R. O. (1989). <i>The Markowitz Optimization Enigma: Is 'Optimized' Optimal?</i> Financial Analysts Journal.
+          <a href="https://doi.org/10.2469/faj.v45.n1.31">doi.org/10.2469/faj.v45.n1.31</a></li>
+        <li>Jagannathan, R., &amp; Ma, T. (2003). <i>Risk Reduction in Large Portfolios: Why Imposing the Wrong Constraints Helps</i>. Journal of Finance.
+          <a href="https://doi.org/10.1111/1540-6261.00580">doi.org/10.1111/1540-6261.00580</a> ·
+          <span class="zh">免费工作论文版：</span><span class="en">free working paper:</span>
+          <a href="https://doi.org/10.3386/w8922">NBER w8922</a></li>
+        <li>Black, F., &amp; Litterman, R. (1992). <i>Global Portfolio Optimization</i>. Financial Analysts Journal.
+          <a href="https://doi.org/10.2469/faj.v48.n5.28">doi.org/10.2469/faj.v48.n5.28</a></li>
+        <li>DeMiguel, V., Garlappi, L., &amp; Uppal, R. (2009). <i>Optimal Versus Naive Diversification</i>. Review of Financial Studies.
+          <a href="https://doi.org/10.1093/rfs/hhm075">doi.org/10.1093/rfs/hhm075</a></li>
+        <li>Clarke, R., de Silva, H., &amp; Thorley, S. (2011). <i>Minimum-Variance Portfolio Composition</i>. Journal of Portfolio Management.
+          <a href="https://doi.org/10.3905/jpm.2010.2010.1.009">doi.org/10.3905/jpm.2010.2010.1.009</a></li>
+        <li>arXiv (2026-07). <i>Fragility of Minimum-Variance Portfolios</i>.
+          <a href="https://arxiv.org/abs/2607.18624">arxiv.org/abs/2607.18624</a></li>
+        <li>arXiv (2026-09). <i>Decision-Focused Learning for Mean-Variance Portfolio Optimization via KKT-Based Reformulation</i>.
+          <a href="https://arxiv.org/abs/2609.21427">arxiv.org/abs/2609.21427</a></li>
+        <li>本文实验代码：<code>tools/make_figs_constraints.py</code>（固定种子；模拟设定见开头「口径」）。</li>
+      </ol>
+
+      <h2 id="share"><span class="num">11</span><span class="zh">分享版摘要</span><span class="en">Shareable summary</span></h2>
+      <div class="cite" id="shareText">
+        <span class="zh">可直接贴出去的版本：</span><span class="en">Ready to post:</span>
+        <pre>同样 8% 的波动预算下，四条典型机构约束一共拿走 46.8 bps/年 —— 单资产上限 20%（27.9）、久期上限 2 年（7.0）、月度换手上限 25%（13.5）、禁投清单（10.1）。但不是简单相加：四条单价的算术和是 58.5 bps，合起来只有 46.8，因为约束之间会互相遮蔽。
+
+更反直觉的一半：约束的价格不是常数。估计窗口只有 24 个月时，无约束组合样本外超额夏普的 10 分位是 −0.02，加了约束反而是 +0.18；样本拉长到 240 个月，两者收敛。约束买到的，其实是对自己估计误差的保险。</pre>
+        <button class="chip" type="button" data-copy="#shareText" data-done-label="已复制 ✓">复制这段</button>
+      </div>
+
+      <h2 id="cite"><span class="num">12</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
+      <div class="cite">
+        <pre id="citeText">Aylon (2026). 约束的代价：多资产组合里，每个"不许超"都在收费. Notes, v1.0. https://aayloo.github.io/notes/cost-of-constraints/</pre>
+        <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
+      </div>
+
+      <h2 id="upd"><span class="num">13</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
+      <div class="tbl-wrap">
+        <table class="upd">
+          <thead><tr><th><span class="zh">版本</span><span class="en">Version</span></th><th><span class="zh">日期</span><span class="en">Date</span></th><th><span class="zh">改动</span><span class="en">Change</span></th></tr></thead>
+          <tbody>
+            <tr><td>v1.0</td><td>2026-09-29</td>
+              <td><span class="zh">初版：7 资产模拟、四张图、8 条来源（链接已核查）。</span>
+                  <span class="en">First version: seven-asset simulation, four figures, eight verified sources.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="pager" aria-label="pagination">
+        <a href="../factor-screening/">
+          <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
+          <span class="v"><span class="zh">← 因子筛选：样本内 1.95，样本外归零</span><span class="en">← Factor screening</span></span>
+        </a>
+        <a href="../">
+          <span class="k"><span class="zh">目录</span><span class="en">Index</span></span>
+          <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+        </a>
+      </nav>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="tt">Contents</div>
+      <a href="#s1"><span class="zh">01 会议上的那句话</span><span class="en">01 The sentence</span></a>
+      <a href="#s2"><span class="zh">02 无约束最优</span><span class="en">02 Unconstrained</span></a>
+      <a href="#s3"><span class="zh">03 每条约束的价格</span><span class="en">03 Price list</span></a>
+      <a href="#s4"><span class="zh">04 约束互相遮蔽</span><span class="en">04 Masking</span></a>
+      <a href="#s5"><span class="zh">05 非线性</span><span class="en">05 Non-linear</span></a>
+      <a href="#s6"><span class="zh">06 短样本是保险</span><span class="en">06 Insurance</span></a>
+      <a href="#s7"><span class="zh">07 我怎么做</span><span class="en">07 In practice</span></a>
+      <a href="#s8"><span class="zh">08 局限与反方</span><span class="en">08 Limits</span></a>
+      <a href="#s9"><span class="zh">09 我的判断</span><span class="en">09 My take</span></a>
+      <a href="#s10"><span class="zh">10 来源</span><span class="en">10 Sources</span></a>
+      <a href="#share"><span class="zh">11 分享版摘要</span><span class="en">11 Shareable</span></a>
+      <a href="#upd"><span class="zh">13 更新日志</span><span class="en">13 Changelog</span></a>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footin">
+      <span>© 2026 Aylon · <span class="zh">本页文字为原创，引用请注明来源</span><span class="en">Original text; please cite if reused</span></span>
+      <span class="spacer"></span>
+      <a href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

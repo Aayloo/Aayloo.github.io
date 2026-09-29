@@ -3,7 +3,14 @@
   <title>Aylon · Notes</title>
   <link>https://aayloo.github.io/notes/</link>
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
-  <lastBuildDate>2026-09-25</lastBuildDate>
+  <lastBuildDate>2026-09-29</lastBuildDate>
+  <item>
+    <title>约束的代价：多资产组合里，每个&quot;不许超&quot;都在收费</title>
+    <link>https://aayloo.github.io/notes/cost-of-constraints/</link>
+    <guid>https://aayloo.github.io/notes/cost-of-constraints/</guid>
+    <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
+    <description>同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps/年；但样本短的时候，同样的约束是保险而不是成本。四张图 + 八条可点开的文献。</description>
+  </item>
   <item>
     <title>因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</title>
     <link>https://aayloo.github.io/notes/factor-screening/</link>
