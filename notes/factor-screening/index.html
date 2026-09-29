@@ -10,6 +10,7 @@
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
 </head>
 <body>
 <div id="prog"></div>
@@ -78,6 +79,8 @@
       <span class="en">The problem: selecting and evaluating on the same data is like writing and answering the same exam. The selection step consumes information from the sample, and the final Sharpe quietly includes the luck of having picked.</span></p>
       <p><span class="zh">这篇想回答三个具体问题：弱的信号能被筛出来吗？强信号下筛选有没有价值？如果我必须给出一个数字，我该怎么算"我到底需要多少数据"？</span>
       <span class="en">Three concrete questions: can a weak signal be screened out at all; is screening even valuable when the signal is strong; and if I had to give a number, how much data would I need?</span></p>
+      <p><span class="zh">文章的读法是这样的：第 2 节先把学术界的结论摆出来（谁测的、在什么口径下），第 3 节用两个模拟把机制演一遍，第 4 节把它变成一个可以手算的公式，最后三节是我实际怎么改流程、这套结论哪里不成立、以及我自己的判断。<b>如果只读一节，读第 4 节</b>——那一节的算术最容易被带进日常工作。</span>
+      <span class="en">How to read it: section 2 gives the literature (who measured what, under which protocol), section 3 runs two simulations, section 4 turns it into arithmetic you can do by hand, and the last three sections cover process changes, limits and my own view.</span></p>
 
       <h2 id="s2"><span class="num">02</span><span class="zh">文献先把现实说清楚了</span><span class="en">What the literature already established</span></h2>
       <p><span class="zh">这不是我的新发现，学术界的结论比我狠得多。四组结果连起来是一条完整的证据链：<span class="sup">[1][2][3][4][5]</span></span>
@@ -143,6 +146,9 @@
         <p><span class="zh">强信号档的对照很关键：300 个候选、12 个真、夏普 0.6 时，朴素筛选和五层过滤几乎一样（样本外 1.63 vs 1.68，命中率都是 80%）。<b>结论：方法的价值只在弱信号区显现，而真实世界恰恰是弱信号区。</b>如果你只能用强信号的历史案例来证明流程有效，那你其实什么都没证明。</span>
         <span class="en">In the strong regime the naive and layered rules are indistinguishable (1.63 vs 1.68, both 80% hit). The method only matters in the weak regime — which is where real research lives. A process demonstrated only on strong-signal history demonstrates nothing.</span></p>
       </div>
+      <h3>把两张图放到一起看</h3>
+      <p><span class="zh">图 1 说的是"<b>信号在哪里</b>"：真因子和噪声完全混在一起，你无法只靠眼睛把它们分开。图 2 说的是"<b>结果会怎样</b>"：在弱信号档里，按 t 值取前 10 得到的样本外夏普只有 0.03，而"上帝视角"（只用真因子）也只有 0.40。两句合起来是一个让人不太舒服的结论——<b>不是你的筛子差，而是这片地质本来就没有多少金子</b>，所以"筛出 0 个"有时就是正确答案。</span>
+      <span class="en">Figure 1 shows where the signal sits (mixed into the noise); figure 2 shows what follows (an out-of-sample Sharpe of 0.03 for the naive pick, and only 0.40 for the oracle). Together they say the problem is not a weak sieve but thin ore — and "picking nothing" is sometimes the correct answer.</span></p>
 
       <h2 id="s4"><span class="num">04</span><span class="zh">证明一个因子存在，需要多少年数据</span><span class="en">How much data does proof need</span></h2>
       <p><span class="zh">多重检验的代价可以算出来。用 t 统计量与年化夏普之间的近似关系 t ≈ SR × √年数，反解就得到"达到显著所需要的年数" = (t 门槛 / SR)²。</span>
@@ -154,6 +160,9 @@
         <span class="zh">读法：<b>年化夏普 0.3 的因子，在 400 次检验的门槛下需要约 164 年数据</b>；只做一次检验也要约 43 年。年化夏普 0.6 的因子在同样门槛下约需 41 年，单次检验约 11 年。这条曲线解释了一个日常现象：<b>很多"因子研究"不是在发现规律，而是在用不足的样本给噪声命名。</b></span>
         <span class="en">Read it this way: a Sharpe-0.3 factor needs about 164 years of data against 400 tests, or about 43 years for a single test; a Sharpe-0.6 factor needs about 41 and 11 years respectively. Much of what is called factor research is naming noise with too little data.</span></figcaption>
       </figure>
+      <h3>手算一遍：164 年是怎么来的</h3>
+      <p><span class="zh">这一步值得自己推一遍，因为它只用到中学统计。年化夏普为 SR 的策略，在 T 年样本上的 t 统计量约等于 <code>t ≈ SR × √T</code>。要对抗 n 次检验，5% 双尾的 Bonferroni 门槛是 <code>t* = Φ⁻¹(1 − 0.05/(2n))</code>。把 400 次检验代进去得到 <b>t* ≈ 3.84</b>；再令 <code>SR × √T ≥ 3.84</code>，解出 <code>T ≥ (3.84 / 0.3)² ≈ 164 年</code>。如果这个因子其实是 0.6 的夏普，同一门槛只需要 41 年；如果连多重检验都不做（n = 1，t* ≈ 1.96），0.3 的夏普也要 43 年。<b>这三个数字连起来说明：长度不足时，"没通过检验"和"不存在"是两件事。</b></span>
+      <span class="en">Worth doing by hand: for annualised Sharpe SR over T years, t ≈ SR × √T. Against n tests the Bonferroni bar is t* = Φ⁻¹(1 − 0.05/2n), which is about 3.84 for 400 tests. Solving gives T ≈ (3.84/0.3)² ≈ 164 years; with Sharpe 0.6 it drops to 41 years, and with no multiple-testing correction (n = 1, t* ≈ 1.96) a Sharpe-0.3 factor still needs 43 years. Failing a test and not existing are different things.</span></p>
 
       <h2 id="s5"><span class="num">05</span><span class="zh">那我实际怎么做</span><span class="en">What I actually do about it</span></h2>
       <p><span class="zh">实验跑完，我把自己的流程改成下面五条。它不是"更好的筛子"，而是<b>承认单因子检验的能力上限</b>之后的替代做法。</span>
@@ -181,6 +190,15 @@
           <span class="en"><b>Figure 3 is an approximation.</b> It ignores compounding, autocorrelation and skew; autocorrelated returns need longer. Use it for orders of magnitude, not precision.</span></li>
         <li><span class="zh"><b>反方观点：不筛选更危险。</b>如果因为"筛不出来"就什么都不做，组合会被噪声稀释——实验里"全选"的样本外夏普在弱信号档是 −0.13。正确姿态是收缩与分散，而不是放弃。</span>
           <span class="en"><b>The other side:</b> not screening is worse. Using everything gave −0.13 out of sample in the weak regime. The answer is shrinkage and diversification, not surrender.</span></li>
+      </ul>
+      <h3>三个常见误解</h3>
+      <ul>
+        <li><span class="zh"><b>"提高门槛就能解决。"</b>门槛只能减少误选，不能创造信息。当真因子的 t 值（0.23–2.20）低于噪声的最大值（2.89）时，<b>再高的门槛也只会把所有东西一起筛掉</b>——这就是弱信号档里五层过滤命中 0 个的原因。</span>
+          <span class="en"><b>"A higher bar fixes it."</b> A bar reduces false picks; it does not create information. When true factors sit below the noisiest noise, raising the bar removes everything at once.</span></li>
+        <li><span class="zh"><b>"换了机器学习就不一样。"</b>机器学习改变的是"如何组合信息"，不改变"信息有多少"。因子动物园的问题本质是<b>样本量与候选数之比</b>，换模型不改变这个比值。</span>
+          <span class="en"><b>"Machine learning changes the picture."</b> ML changes how information is combined, not how much exists; the ratio of sample size to candidate count is unchanged.</span></li>
+        <li><span class="zh"><b>"样本外归零说明信号是假的。"</b>不一定。可能是信号真实但被成本、容量或拥挤度吃掉了；也可能是样本外恰好处在不利制度。正确的表述是<b>"现有证据不足以支持这个仓位"</b>，而不是"这个规律不存在"。</span>
+          <span class="en"><b>"Zero out of sample means the signal is fake."</b> Not necessarily: it may be real but eaten by costs, capacity or crowding — or simply out of regime. Say "the evidence does not yet support the position", not "the pattern does not exist".</span></li>
       </ul>
 
       <h2 id="s7"><span class="num">07</span><span class="zh">我的判断</span><span class="en">My take</span></h2>

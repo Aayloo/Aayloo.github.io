@@ -10,6 +10,7 @@
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
 </head>
 <body>
 <div id="prog"></div>
@@ -79,12 +80,16 @@
       <span class="en">Rules break when the layout changes. An LLM reads better, but returns text: it still has to be parsed and validated, it sometimes goes out of range, and it is slow, costly and inconsistent. The middle cell — a judgement that carries uncertainty but returns strictly structured output — had no good interface.</span></p>
       <p><span class="zh">Jev 声称要填的就是这一格。这篇文章的目的不是替它背书，而是把「它到底提供什么、边界在哪、该怎么判断要不要用」讲清楚。</span>
       <span class="en">Jev claims to fill exactly that cell. This note is not an endorsement: it tries to pin down what it actually offers, where its boundaries are, and how to decide whether to use it.</span></p>
+      <p><span class="zh">阅读建议：第 2 到第 4 节是"是什么、不是什么、长什么样"，可以当作概念梳理读；第 6 节（校准）与第 7 节（成本）是技术核心，决定它在真实流程里能不能用；第 10 节之后是我的判断与待验证清单。<b>如果只读两节，读第 3 节和第 6 节</b>——分别回答"别把它当成什么"和"凭什么信它的概率"。</span>
+      <span class="en">How to read it: sections 2–4 cover what it is, what it is not and what a call looks like; sections 6 and 7 are the technical core — calibration and cost — that decide whether it survives contact with a real pipeline; sections 10 onwards are my view and open questions.</span></p>
 
       <h2 id="s2"><span class="num">02</span><span class="zh">它是什么</span><span class="en">What it is</span></h2>
       <p><span class="zh">官方定义（原文）：Jev 是一个 <b>System One Model</b>——「a new class of frontier models built to make fast, structured decisions that software can use directly」，一句话版本是「a frontier-intelligence function call: <b>unstructured state in, typed probabilistic decisions out</b>」。<span class="sup">[1]</span></span>
       <span class="en">Official definition: Jev is a <b>System One Model</b> — "a new class of frontier models built to make fast, structured decisions that software can use directly", summarised as "a frontier-intelligence function call: unstructured state in, typed probabilistic decisions out".<span class="sup">[1]</span></span></p>
       <p><span class="zh">配套的技术主张有三条：新的模型架构、<b>并行采样器</b>（parallel sampler）、以及一套新的训练方法 <b>RLCD</b>（Reinforcement Learning for Calibrated Decisions，面向校准决策的强化学习）。官方把它的定位放在既有两代之后：RLHF 优化人类偏好产出对话模型，RLVR 用可验证奖励产出推理模型，RLCD 则直接以「带校准概率的决策」为训练目标。<span class="sup">[1]</span></span>
       <span class="en">Three technical claims accompany it: a new architecture, a <b>parallel sampler</b>, and a new training method, <b>RLCD</b> — Reinforcement Learning for Calibrated Decisions. The vendor places it after two earlier generations: RLHF optimised human preference into chat models, RLVR used verifiable rewards into reasoning models, and RLCD trains directly for calibrated decisions.<span class="sup">[1]</span></span></p>
+      <p><span class="zh">压成三句话记住：<b>① 输入是"状态"而不是"对话"</b>——你给它一段程序状态，它不需要像聊天那样理解上下文；<b>② 输出是"决策 + 概率"而不是"文字"</b>——取值空间由你事先定义；<b>③ 训练目标是"让概率值得信"</b>，而不是"让人类觉得回答得好"。这三点合起来，才是"接口"在这里的意思。</span>
+      <span class="en">Three sentences to remember: the input is state rather than a conversation; the output is a decision plus a probability rather than text; the training target is that the probability deserves trust. Together, that is what "interface" means here.</span></p>
 
       <figure>
         <img src="../assets/figs/f1-timeline.svg" alt="四代优化目标对照：预训练、RLHF、RLVR、RLCD">
@@ -112,6 +117,17 @@
         <p><span class="zh">「不生成字符串」看起来是能力上的退让，实际上是三个收益同时到手的<em>交易</em>：不做逐 token 的自回归 → 延迟与成本同时下降；输出空间有限 → 类型错误与幻觉的空间被压缩；概率内建 → 可以做阈值。三者是同一次设计取舍的三个侧面，而不是三种独立功能。</span>
         <span class="en">Giving up strings is not simply a sacrifice: it is one trade that yields three things at once — no autoregressive decoding (lower latency and cost), a finite output space (little room for type errors or hallucination), and a built-in probability (thresholds become possible). One design choice, three faces.</span></p>
       </div>
+      <h3>四个常见误解，逐个拆开</h3>
+      <ul>
+        <li><span class="zh"><b>"这不就是个分类器吗？"</b>分类只是它的一种形状。真正的差别有三处：输出空间由你事先定义（不是模型自由发挥）、每个答案自带校准概率、以及不生成任何自由文本。<b>把它当分类器用，等于放弃了后两项。</b></span>
+          <span class="en"><b>"Isn't this just a classifier?"</b> Classification is one shape. The differences: you define the output space, every answer carries a calibrated probability, and no free text is generated.</span></li>
+        <li><span class="zh"><b>"不幻觉，所以可以全自动。"</b>不幻觉不等于不出错。它不会编造取值之外的标签，但依然可能<b>判断错</b>——把 A 类判成 B 类，只是它会告诉你自己有多确定。能不能全自动，取决于错误代价，而不是概率好不好看。</span>
+          <span class="en"><b>"No hallucination means full automation."</b> It can still judge wrongly; it just reports how confident it is. Full automation is a question of the cost of error.</span></li>
+        <li><span class="zh"><b>"便宜就能替代 LLM。"</b>两者解决的是不同问题：LLM 负责<b>写出来</b>与开放式推理，决策层负责<b>做判断并给出置信度</b>。真实系统里通常是 LLM 处理文档与解释，决策层负责阈值与路由。</span>
+          <span class="en"><b>"Cheaper means it replaces LLMs."</b> They solve different problems: LLMs write and reason openly; a decision layer judges and quantifies confidence. Real systems use both.</span></li>
+        <li><span class="zh"><b>"阈值设成 0.9 就安全了。"</b>阈值不是安全参数，而是<b>业务参数</b>：调高会减少错误，同时把更多个案推给人工。要盯的是"复核率"与"漏检率"两条线的组合，而不是单一阈值。</span>
+          <span class="en"><b>"A 0.9 threshold makes it safe."</b> It is a business parameter: raising it cuts errors and pushes cases to humans. Monitor the pair — review rate and miss rate.</span></li>
+      </ul>
 
       <h2 id="s4"><span class="num">04</span><span class="zh">一次调用长什么样</span><span class="en">What one call looks like</span></h2>
       <p><span class="zh">把一次调用摊开，只有四步：把状态（文本、残缺字段、程序状态）交给模型 → 模型返回一组<b>类型化的决策</b>，每个都带概率 → 你在代码里设阈值决定谁自动执行 → 低置信度的走人工，并留下记录。</span>
@@ -185,6 +201,9 @@
         <p><span class="zh">这类场景的运营指标其实是两条线：<b>自动执行覆盖率</b>与<b>错误率</b>。阈值往下调，覆盖率上升、错误率也上升，同时人工复核量下降；往上调则相反。这本质上和风控里「覆盖率 vs 精度」的取舍是同一件事——所以真正要调的不是模型，是这条曲线上的取点。</span>
         <span class="en">Operating this kind of pipeline really means managing two curves: coverage of automatic execution and error rate. Lower the threshold and coverage rises along with errors while review volume falls; raise it and the reverse. It is the same trade-off as precision versus coverage in risk control — the thing you tune is the point on that curve, not the model.</span></p>
       </div>
+      <h3>阈值 0.9 到底意味着什么</h3>
+      <p><span class="zh">设想每月 1,000 份材料进来，阈值设 0.9：假设约 70% 的个案概率超过阈值，就是 <b>700 份自动落库、300 份进人工复核</b>。如果"0.9"真的意味着九成正确，那么自动落库的那 700 份里约有 <b>70 份是错的</b>；若把阈值加到 0.95，可能只剩 400 份自动、约 20 份错，代价是人工量从 300 涨到 600。于是问题不再是"模型准不准"，而变成一个纯粹的算术题：<b>你更愿意承担 50 份错单，还是多花 300 次人工？</b>这也解释了为什么校准如此关键——如果模型说 0.9 而实际只有 0.7 对，上面每一个数字都要重算。</span>
+      <span class="en">Take 1,000 documents a month at a 0.9 threshold: if 70% clear it, 700 post automatically and 300 go to review. If 0.9 truly means 90% accurate, about 70 of those 700 are wrong. Raise it to 0.95 and perhaps 400 post automatically with 20 errors, at the cost of 600 reviews. The question stops being "is the model accurate" and becomes arithmetic: fifty wrong postings, or three hundred extra reviews? That is why calibration decides everything here.</span></p>
 
       <h2 id="s9"><span class="num">09</span><span class="zh">三者对比</span><span class="en">Three-way comparison</span></h2>
       <div class="tbl-wrap">

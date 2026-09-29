@@ -1,0 +1,180 @@
+/* ============================================================================
+   editorial.css —— 笔记文章版式（B · 杂志编辑式）
+
+   用法：笔记页在 site.css 之后链接本文件（覆盖排版，不影响交互脚本）。
+   设计要点：米色纸面、衬线标题与正文、首字下沉、更宽的行距与段距、
+   图整宽出血、表格斑马纹、编号圆形引用。
+   ========================================================================== */
+
+:root{
+  --paper:#FBF9F4;
+  --paper2:#FFFDF8;
+  --e-ink:#1B1A17;
+  --e-body:#3F3A32;
+  --e-rule:#E2DCCE;
+  --e-accent:#A8341C;
+  --e-blue:#2B3A67;
+  --e-serif:Georgia,"Times New Roman","Songti SC","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+}
+
+body{
+  background:var(--paper);
+  color:var(--e-body);
+  font-family:var(--e-serif);
+  font-size:19px;
+  line-height:1.9;
+  letter-spacing:.004em;
+  text-wrap:pretty;
+}
+.ntop{background:rgba(251,249,244,.92)}
+.brand{font-family:var(--e-serif);letter-spacing:-.01em}
+.ntop a.lk{font-family:var(--f-body)}
+.wrap{max-width:1180px}
+
+/* ---------- 页头 ---------- */
+.nhero{padding:74px 0 30px;border-bottom:0}
+.nhero .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;color:var(--e-accent);font-weight:600}
+.nhero h1{
+  font-family:var(--e-serif);font-size:clamp(34px,4.6vw,56px);line-height:1.1;
+  letter-spacing:-.02em;color:var(--e-ink);margin:20px 0 0;max-width:900px;
+}
+.nhero .lede{
+  font-size:20px;line-height:1.78;color:#5A5347;max-width:700px;margin-top:22px;
+}
+.nhero .kv{
+  display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:30px;padding:14px 0;
+  border-top:1px solid var(--e-rule);border-bottom:1px solid var(--e-rule);
+  font-family:var(--f-body);font-size:13.5px;color:#8A8172;
+}
+.nhero .kv>div{display:inline}
+.nhero .kv>div:nth-child(odd){color:#A79D8B}
+
+/* ---------- 版心与段落 ---------- */
+/* 注意：不要在这里写 grid-template-columns，否则会覆盖 site.css 在窄屏的单栏规则，
+   把正文挤成一条细柱（踩过这个坑）。列宽交给 site.css 管理。 */
+.split{padding:44px 0 80px}
+.prose{max-width:700px;font-size:19px;line-height:1.92;color:var(--e-body)}
+.prose p{margin:1.28em 0}
+.prose>p:first-of-type::first-letter{
+  float:left;font-size:74px;line-height:.82;padding:8px 12px 0 0;color:var(--e-accent);font-weight:700;
+}
+.prose b,.prose strong{color:var(--e-ink);font-weight:700}
+.prose em{font-style:italic;color:#5A5347}
+.prose ul,.prose ol{margin:1.25em 0;padding-left:24px}
+.prose li{margin:12px 0}
+.prose a{color:var(--e-blue);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+html[lang] .prose{font-variant-numeric:tabular-nums}
+
+/* ---------- 标题层级 ---------- */
+.prose h2{
+  font-family:var(--e-serif);font-size:clamp(27px,3.1vw,36px);line-height:1.22;
+  color:var(--e-ink);letter-spacing:-.012em;margin:76px 0 6px;padding-top:0;border-top:0;
+}
+.prose h2::after{content:"";display:block;width:66px;height:3px;background:var(--e-accent);margin-top:16px;opacity:.9}
+.prose h2 .num{
+  display:block;font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--e-accent);
+  margin:0 0 12px;font-weight:600;
+}
+.prose h3{font-size:22px;color:var(--e-ink);margin:40px 0 8px;letter-spacing:-.008em}
+.prose hr{border-top:1px solid var(--e-rule)}
+
+/* ---------- 摘要与提示卡 ---------- */
+.tldr{
+  margin:40px 0;padding:28px 32px;background:var(--paper2);border:1px solid var(--e-rule);
+  border-left:0;border-radius:2px;box-shadow:none;
+}
+.tldr h2{
+  margin:0 0 14px;font-family:var(--f-body);font-size:13px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--e-accent);
+}
+.tldr h2::after{display:none}
+.tldr ol{margin:0;padding-left:24px}
+.tldr li{margin:13px 0;font-size:18px;line-height:1.8}
+.takeaway{
+  margin:32px 0;padding:8px 0 8px 22px;border-left:4px solid var(--e-accent);
+  background:none;border-radius:0;font-style:italic;font-size:20.5px;line-height:1.75;color:#3A342B;
+}
+.callout{
+  margin:32px 0;padding:22px 26px;background:var(--paper2);border:1px solid var(--e-rule);
+  border-left:4px solid var(--e-accent);border-radius:2px;
+}
+.callout .lbl{
+  font-family:var(--f-body);font-size:11.5px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--e-accent);
+}
+.co-fact{background:#F7F9FC;border-left-color:var(--e-blue)}
+.co-fact .lbl{color:var(--e-blue)}
+.co-infer{background:#FDF8F1;border-left-color:#B4701C}
+.co-infer .lbl{color:#8A5410}
+.co-opinion{background:#F8F6FD;border-left-color:#5B45B8}
+.co-opinion .lbl{color:#4B37A0}
+.co-warn{background:#FDF6F4;border-left-color:var(--e-accent)}
+
+/* ---------- 图 ---------- */
+.prose figure{margin:44px 0}
+.prose figure img{
+  border:1px solid var(--e-rule);border-radius:2px;background:#fff;
+  box-shadow:0 12px 30px rgba(27,26,23,.06);
+}
+.prose figcaption{
+  margin-top:14px;font-family:var(--f-body);font-size:14.5px;line-height:1.72;color:#8A8172;
+}
+.prose figcaption b{color:#5A5347}
+@media (min-width:1240px){
+  .prose figure{margin-left:-80px;margin-right:-80px}
+}
+
+/* ---------- 表格 ---------- */
+.tbl{font-family:var(--f-body);font-size:15.5px;margin:30px 0}
+.tbl caption{font-family:var(--f-body);font-size:14px;color:#8A8172;padding-bottom:12px;text-align:left}
+.tbl th,.tbl td{padding:13px 14px;border-bottom:1px solid var(--e-rule);vertical-align:top}
+.tbl thead th{
+  background:#F5F1E8;color:#5A5347;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:700;
+}
+.tbl td:first-child{color:var(--e-ink);font-weight:700}
+.tbl tbody tr:nth-child(even){background:#FDFBF6}
+.tbl .hi{background:#F6F1E6}
+.tnote{font-family:var(--f-body);font-size:13.5px;color:#8A8172}
+
+/* ---------- 来源与引用 ---------- */
+.refs{font-family:var(--f-body);font-size:15px;list-style:none;counter-reset:r;padding:0}
+.refs li{
+  counter-increment:r;position:relative;padding-left:36px;margin:14px 0;color:#5A5347;line-height:1.75;
+}
+.refs li::before{
+  content:counter(r);position:absolute;left:0;top:3px;width:22px;height:22px;border-radius:50%;
+  background:var(--e-accent);color:#fff;font-size:12.5px;line-height:22px;text-align:center;font-weight:600;
+}
+.refs a{word-break:break-word}
+.sup{font-family:var(--f-body);font-size:11.5px;vertical-align:super;color:var(--e-accent)}
+.cite{
+  margin:30px 0;padding:22px 24px;background:var(--paper2);border:1px dashed var(--e-rule);
+  border-radius:2px;font-family:var(--f-body);font-size:15px;
+}
+.cite pre{font-family:var(--mono);font-size:13.5px;line-height:1.75;white-space:pre-wrap;color:#4A453C}
+
+/* ---------- 侧栏目录与页脚 ---------- */
+.toc{font-family:var(--f-body);border-left:1px solid var(--e-rule)}
+.toc .tt{color:#A79D8B;letter-spacing:.16em}
+.toc a{font-size:14.5px;padding:5px 0;color:#8A8172}
+.toc a.on{color:var(--e-accent);font-weight:700}
+.pager a{border:1px solid var(--e-rule);border-radius:2px;background:var(--paper2);box-shadow:none}
+.pager .v{font-family:var(--e-serif)}
+footer{border-top:1px solid var(--e-rule);color:#8A8172}
+.footin{font-family:var(--f-body)}
+
+/* ---------- 移动端 ---------- */
+@media (max-width:900px){
+  body{font-size:18px;line-height:1.88}
+  .prose{font-size:18px}
+  .nhero{padding-top:52px}
+  .prose>p:first-of-type::first-letter{font-size:60px;padding:6px 10px 0 0}
+  .prose h2{margin-top:60px}
+  .tldr{padding:22px 20px}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .prose{max-width:none}
+  .prose figure{margin-left:0;margin-right:0}
+}

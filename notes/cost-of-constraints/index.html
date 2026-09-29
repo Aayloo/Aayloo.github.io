@@ -10,6 +10,7 @@
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
 </head>
 <body>
 <div id="prog"></div>
@@ -78,6 +79,8 @@
       <span class="en">Nobody argues with these sentences — each sounds prudent. But nobody says what they cost. The weights get hand-adjusted, and a year later nobody can tell whether the view paid off or the constraint sanded it away.</span></p>
       <p><span class="zh">这篇想做的就是把价格算出来：<b>在同样的风险预算下，每条约束、以及它们合在一起，究竟拿走多少预期收益。</b></span>
       <span class="en">This note prices them: at a fixed risk budget, how much expected return does each constraint — and all of them together — actually take?</span></p>
+      <p><span class="zh">读的时候只需要抓住一件事：<b>本文所有的"代价"都是相对量</b>——相对于 8% 的波动预算、相对于一个已经合规的基准组合、相对于当下的约束清单。换一组前提，数字会完全不一样，但<b>比较的方法是一样的</b>，这也是我最希望读者带走的部分。下面每一节都先给结论，再讲为什么。</span>
+      <span class="en">One thing to hold on to: every cost here is relative — to an 8% volatility budget, to a compliant benchmark, and to the current list of constraints. Change the premises and the numbers change; the way of comparing them does not.</span></p>
 
       <h2 id="s2"><span class="num">02</span><span class="zh">先把"无约束最优"亮出来</span><span class="en">Look at the unconstrained optimum first</span></h2>
       <p><span class="zh">实验的统一口径是：<b>波动不超过 8%，在此前提下最大化预期收益</b>。这个口径比"最大化夏普"更接近机构实务（风险预算先定，收益尽量争取），也避免了"全押现金"这类退化解。</span>
@@ -104,6 +107,9 @@
       </div>
       <p><span class="zh">先看左边这列：模型把六成资金压在一个资产上。<b>这不是因为它更了解信用债，而是因为它对预期收益的估计太自信</b>——这正是 Michaud 1989 说的"优化器是误差放大器"。<span class="sup">[1]</span></span>
       <span class="en">The left column is the point: 64% in one asset, not because the model knows credit better, but because it trusts its own point estimates.<span class="sup">[1]</span></span></p>
+      <h3>怎么读表 1</h3>
+      <p><span class="zh">看两列之间的<b>差别</b>，比看两列的绝对值更有信息量。第一，信用债从 63.8% 被压到 20%——那条上限切断的正是模型最爱下注的地方。第二，股票从 0% 被动升到 20%：模型原本根本不想要股票，是上限把资金"挤"过去的，这属于<b>约束的副作用</b>，不是模型的观点。第三，久期从 2.55 年降到 1.83 年，下降的部分来自久期上限，而不是优化器主动选择更短的久期。这三处变化合起来，才是"46.8 bps"的来历。</span>
+      <span class="en">Read the difference between the columns, not the levels. Credit is capped from 63.8% to 20% — the cap cuts exactly where the optimiser wanted to bet. Equities rise from 0% to 20% because the cap pushes money there: a side effect, not a view. Duration falls from 2.55 to 1.83 years because of the duration cap, not because the optimiser prefers it.</span></p>
 
       <h2 id="s3"><span class="num">03</span><span class="zh">每条约束的价格</span><span class="en">The price of each constraint</span></h2>
       <figure>
@@ -122,6 +128,9 @@
         <li><span class="zh"><b>久期上限 2 年：7.0 bps</b>——最便宜的一条，因为它只在优化器想把久期拉长时才咬人。</span>
           <span class="en"><b>Duration cap 2y: 7.0 bps</b> — the cheapest, because it only bites when the optimiser wants duration.</span></li>
       </ul>
+      <h3>把 27.9 bps 翻译成钱</h3>
+      <p><span class="zh">bps 这个词容易让人麻木，换成钱会清楚很多：对一个 10 亿港元的组合，<b>27.9 bps ≈ 每年 279 万港元的预期收益</b>；四条约束加总 46.8 bps ≈ 468 万港元。要提醒两点：这是<b>预期</b>收益的差，不是每年必然发生的损失，某些年份完全可能因为约束而少亏；而且它衡量的是"理论代价"，在样本很短、参数不可信的场景里，同一组约束的净效果可能是正的（见第 6 节）。</span>
+      <span class="en">bps numbs the senses; money does not. On a HKD 1bn book, 27.9 bps is about HKD 2.79m of expected return a year, and all four constraints together about HKD 4.68m. Two caveats: this is a difference in expected return, not a guaranteed annual loss, and in short-sample settings the same constraints can be worth more than they cost (section 6).</span></p>
 
       <h2 id="s4"><span class="num">04</span><span class="zh">约束之间会互相遮蔽</span><span class="en">Constraints mask each other</span></h2>
       <figure>
@@ -180,6 +189,15 @@
           <span class="en"><b>Much of a constraint's value is governance, not modelling.</b> Pricing them makes the cost visible without arguing them away.</span></li>
         <li><span class="zh"><b>反方：为什么不干脆别用优化器？</b>1/N 在文献里常常打赢样本内最优的均值方差组合，而且不需要估计参数。这确实是本文结论的自然延伸——如果你的参数估计不够好，约束或等权是同一件事的两种说法。<span class="sup">[4]</span></span>
           <span class="en"><b>The other side: why use an optimiser at all?</b> 1/N often beats in-sample mean-variance with no parameter estimation.<span class="sup">[4]</span></span></li>
+      </ul>
+      <h3>三个常见误解</h3>
+      <ul>
+        <li><span class="zh"><b>"约束越少越好。"</b>不对。本文第 6 节显示，估计窗口越短，约束带来的样本外保护越明显（10 分位从 −0.02 提到 +0.18）。约束多不等于差，<b>约束与你的参数质量不匹配才差</b>。</span>
+          <span class="en"><b>"Fewer constraints is better."</b> No: with short estimation windows, constraints improved the 10th-percentile outcome from −0.02 to +0.18. What hurts is a constraint set that does not match the quality of your estimates.</span></li>
+        <li><span class="zh"><b>"代价不大就无所谓。"</b>46.8 bps 听起来很小，但它对抗的是夏普 0.5–0.6 这个量级的策略——<b>它相当于吃掉约 8%–9% 的预期超额收益</b>。在长期复利里，这类"看起来很小"的数字才是最终决定成败的那一批。</span>
+          <span class="en"><b>"The cost is too small to care about."</b> 46.8 bps against a Sharpe of 0.5–0.6 is roughly 8–9% of expected excess return — the kind of small number that compounds into the final answer.</span></li>
+        <li><span class="zh"><b>"算这个是为了删掉约束。"</b>不是。合规、委托与治理类约束不该被 bps 论证掉；把它们定价的目的是<b>让取舍变得可见</b>——知道价格之后，会议讨论的就不再是"我觉得"，而是"我们愿意为这条约束付多少"。</span>
+          <span class="en"><b>"Pricing constraints is an argument for removing them."</b> No. Mandate and governance constraints should not be argued away by bps; pricing them makes the trade-off visible so the discussion becomes "how much are we willing to pay for this rule".</span></li>
       </ul>
 
       <h2 id="s9"><span class="num">09</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
