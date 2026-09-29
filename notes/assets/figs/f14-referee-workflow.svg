@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560" role="img"
+     aria-label="Proposer and frozen referee: the division of labour when an AI agent mines investment factors">
+  <defs>
+    <marker id="ar14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748C"/>
+    </marker>
+    <marker id="ar14g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0E9F87"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="560" fill="#FFFFFF"/>
+
+  <text x="40" y="50" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="22"
+        font-weight="650" fill="#111A28">谁提议，谁裁判：分工图</text>
+  <text x="40" y="78" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#64748C">
+    Propose, don't judge — the agent proposes, a referee it cannot touch decides
+  </text>
+
+  <!-- 提案者 -->
+  <g>
+    <rect x="40" y="140" width="270" height="230" rx="14" fill="#FFFFFF" stroke="#E4E8EE"/>
+    <path d="M40,154 a14,14 0 0 1 14,-14 h242 a14,14 0 0 1 14,14 v34 h-270 z" fill="#E6EEFD"/>
+    <text x="62" y="168" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="15.5"
+          font-weight="650" fill="#111A28">提案者 Proposer</text>
+    <text x="62" y="192" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">可以是脚本 / bandit / 语言模型</text>
+    <text x="62" y="228" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">· 提出候选因子</text>
+    <text x="62" y="254" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">· 写回测、跑参数</text>
+    <text x="62" y="280" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">· 甚至自己写诊断工具</text>
+    <text x="62" y="316" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" font-weight="650" fill="#1D4FA8">可以进化、可以犯错</text>
+    <text x="62" y="342" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">但不可以自己宣布胜利</text>
+  </g>
+  <line x1="312" y1="255" x2="366" y2="255" stroke="#64748C" stroke-width="1.6" marker-end="url(#ar14)"/>
+  <text x="318" y="242" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12" fill="#64748C">提交候选</text>
+
+  <!-- 冻结裁判 -->
+  <g>
+    <rect x="370" y="120" width="330" height="270" rx="14" fill="#F7FDFB" stroke="#0E9F87" stroke-width="1.8"/>
+    <path d="M370,134 a14,14 0 0 1 14,-14 h302 a14,14 0 0 1 14,14 v34 h-330 z" fill="#E3F5F1"/>
+    <text x="392" y="148" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="15.5"
+          font-weight="650" fill="#0A5A4C">冻结裁判 Frozen referee</text>
+    <text x="392" y="172" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#0A6E5E">提案者无法触碰、无法改写</text>
+    <text x="392" y="208" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">① 只看提交之后才出现的市场结果</text>
+    <text x="392" y="238" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">② 用投注式证据（e-value）逐月累计</text>
+    <text x="392" y="268" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#111A28">③ 任意停时都成立的假发现保证</text>
+    <text x="392" y="308" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#0A5A4C">→ 换句话说：</text>
+    <text x="392" y="330" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#0A5A4C">「看一次就停」也不再作弊</text>
+    <text x="392" y="362" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">代价：认证需要时间（见第 4 节）</text>
+  </g>
+  <line x1="702" y1="230" x2="756" y2="200" stroke="#0E9F87" stroke-width="2" marker-end="url(#ar14g)"/>
+  <line x1="702" y1="290" x2="756" y2="330" stroke="#64748C" stroke-width="1.6" marker-end="url(#ar14)"/>
+
+  <!-- 两个出口 -->
+  <g>
+    <rect x="760" y="150" width="200" height="96" rx="12" fill="#E3F5F1" stroke="#0E9F87"/>
+    <text x="780" y="182" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+          font-weight="650" fill="#0A5A4C">放行（认证）</text>
+    <text x="780" y="208" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#0A6E5E">证据够强才通过</text>
+    <text x="780" y="230" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#0A6E5E">可以进组合</text>
+  </g>
+  <g>
+    <rect x="760" y="280" width="200" height="96" rx="12" fill="#F5F7F4" stroke="#CFD7E2"/>
+    <text x="780" y="312" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+          font-weight="650" fill="#4A5A72">淘汰（退回）</text>
+    <text x="780" y="338" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">证据不足就等</text>
+    <text x="780" y="360" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#64748C">不能"先放着"</text>
+  </g>
+  <g>
+    <rect x="984" y="196" width="176" height="134" rx="12" fill="#FFFDF8" stroke="#E4E8EE"/>
+    <text x="1002" y="226" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5"
+          font-weight="650" fill="#111A28">为什么要冻结</text>
+    <text x="1002" y="252" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#4A5A72">同一个进程里</text>
+    <text x="1002" y="274" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#4A5A72">自己判断自己，</text>
+    <text x="1002" y="296" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#4A5A72">等于把裁判换成</text>
+    <text x="1002" y="318" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#4A5A72">自己的队友。</text>
+  </g>
+
+  <!-- 底部对照 -->
+  <rect x="40" y="420" width="1120" height="96" rx="12" fill="#FDF8F3" stroke="#EADCC8"/>
+  <text x="62" y="452" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="14.5"
+        font-weight="650" fill="#8A5410">漏水的裁判（同进程自我判断）会发生什么</text>
+  <text x="62" y="480" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13.5" fill="#4A5A72">
+    本文模拟：每 1,000 个提案，边看边停的裁判错误放行约 205 个；冻结裁判只有约 39 个（少 5.2 倍）。
+  </text>
+  <text x="62" y="504" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#8A7355">
+    论文口径：冻结裁判比漏水的裁判少放行 5–11 倍的"不达标因子"，且没有哪个提案者能弥补这个差距。
+  </text>
+
+  <text x="40" y="544" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12" fill="#64748C">
+    来源：Bo Qu 等《Propose, Don't Judge: An Anytime-Valid Referee for LLM Agents That Mine Investment Factors》(arXiv, 2026-09-22)；本图为自绘示意。
+  </text>
+</svg>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 挖因子，谁来当裁判 · Notes</title>
+<meta name="description" content="2026 年三篇论文指向同一件事：提议可以交给 AI，裁判不能。含机制流程图与三张模拟图，以及一套可落地的审查流程。">
+<meta property="og:title" content="AI 挖因子，谁来当裁判">
+<meta property="og:description" content="提议可以交给 AI，裁判不能——2026 年三篇论文的同一结论。">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="nhero">
+    <div class="eyebrow">Signal · Models · 2026-09-29</div>
+    <h1><span class="zh">AI 挖因子，谁来当裁判</span>
+        <span class="en">Let the agent propose; let the referee judge</span></h1>
+    <p class="lede">
+      <span class="zh">2026 年 9 月，三篇论文从三个角度撞上同一件事：<b>提议可以交给 AI，裁判必须留在外面</b>。我把主论文的机制做了一遍简化复现——边看边停的裁判，每 1,000 个提案会错误放行约 <b>205</b> 个；冻结裁判只有 <b>39</b> 个，代价是等待时间。</span>
+      <span class="en">Three papers published within one week of each other in September 2026 point at the same division of labour: let the agent propose, keep the judge outside. In my replication a peeking referee wrongfully admits about 205 of every 1,000 proposals; a frozen one admits 39 — at the price of waiting.</span>
+    </p>
+    <div class="kv">
+      <div>发布 / Published</div><div>2026-09-29</div>
+      <div>版本 / Version</div><div>v1.0</div>
+      <div>阅读 / Reading</div><div>约 14 分钟</div>
+      <div>标签 / Tags</div><div>信号 · 模型与验证</div>
+      <div>数据 / Data</div><div><span class="zh">模拟实验（代码可复现）+ 三篇 2026 年 9 月 arXiv 论文</span><span class="en">Simulation (code included) + three arXiv papers from September 2026</span></div>
+    </div>
+  </header>
+
+  <div class="split">
+    <div class="prose">
+      <div class="tldr">
+        <h2>TL;DR</h2>
+        <ol>
+          <li><span class="zh"><b>AI 已经接管了因子研究的全流程</b>：提因子、回测、筛选、淘汰。主论文问的是——这些工作里，哪一件应该收回来？答案是<b>判断</b>。</span>
+              <span class="en">Agents now run the whole factor research loop. The paper asks which of those jobs should be taken back: the answer is judging.</span></li>
+          <li><span class="zh"><b>机制是"冻结裁判"</b>：裁判只看提交之后才出现的市场结果，用投注式证据（e-value）逐月累计，因此<b>任何时刻停止都有效</b>——"边看边停"不再能作弊。<span class="sup">[1]</span></span>
+              <span class="en">The mechanism is a frozen referee scoring only on post-submission outcomes, accumulating betting evidence, valid at any stopping time.<span class="sup">[1]</span></span></li>
+          <li><span class="zh"><b>我的复现：差距是 5.2 倍。</b>每 1,000 个提案，边看边停的裁判错误放行 <b>205</b> 个，冻结裁判 <b>39</b> 个，先切一半数据再确认的 <b>2</b> 个——而三者拿到的真因子分别是 99%、67%、51%。</span>
+              <span class="en">My replication: 205 vs 39 vs 2 wrongful admissions per 1,000 proposals — while capturing 99%, 67% and 51% of the true factors.</span></li>
+          <li><span class="zh"><b>认证的价格是时间。</b>真因子年化夏普 1.0 时，冻结裁判平均要等 <b>58 个月</b>；夏普 2.0 时降到 22 个月（约 480 个交易日，与论文说的"约 500 个交易日"同一量级）。先切一半数据的做法则固定要等满十年。</span>
+              <span class="en">Certification costs time: 58 months at Sharpe 1.0, 22 months at 2.0 — the same order of magnitude as the paper's ~500 trading days. The split-sample rule always waits the full decade.</span></li>
+          <li><span class="zh"><b>另两篇是配套的警告。</b>同一段文本，七个模型给出的指标排序相关平均只有 <b>0.52</b>；而"让 agent 自我进化"在 18 条长周期轨迹里<b>没有一致增益</b>。AI 会更强，但"更强"目前还没有稳定兑现——这更说明裁判要留在外面。<span class="sup">[2][3]</span></span>
+              <span class="en">Two companion warnings: across seven models, textual measures rank-correlate at only 0.52 on average; and self-evolving agents showed no consistent gain across 18 long-horizon trajectories.<span class="sup">[2][3]</span></span></li>
+        </ol>
+      </div>
+
+      <div class="callout co-warn">
+        <span class="lbl">口径 · Scope</span>
+        <p><span class="zh">本文有两类材料，我会分开标注：<b>① 论文事实</b>——三篇 2026 年 9 月的 arXiv 预印本，链接在最后一节，均于 2026-09-29 核对可打开；<b>② 我的复现</b>——我自己的合成世界（月度收益、独立同分布、单一波动），实现了一个简化版的投注式裁判，<b>不是论文的原始代码</b>（论文未附公开代码）。因此本文的绝对数字只能读作"同一量级的示意"，不能读作论文结论的独立验证。</span>
+        <span class="en">Two kinds of material, labelled separately: paper facts (three September 2026 arXiv preprints, links checked on 2026-09-29) and my own replication in a synthetic world, using a simplified betting-based referee rather than the authors' code, which is not public. Read my numbers as the same order of magnitude, not as independent confirmation.</span></p>
+      </div>
+
+      <h2 id="s1"><span class="num">01</span><span class="zh">为什么写这篇</span><span class="en">Why this note exists</span></h2>
+      <p><span class="zh">上个月我用一篇文章讲过因子筛选的困境：候选太多、样本太少，按 t 值排名挑出来的东西，样本外大多是噪声。<span class="sup">[4]</span> 那篇的结论是"筛选的天花板由信噪比决定"。但它留了一个没说透的问题：<b>如果挖掘这件事本身被自动化了，会发生什么？</b></span>
+      <span class="en">A previous note argued that factor screening is capped by signal-to-noise: rank by t-statistic and most survivors are noise out of sample. It left one question open — what happens when the mining itself is automated?<span class="sup">[4]</span></span></p>
+      <p><span class="zh">2026 年 9 月这一周给出了答案，而且是从三个不同方向来的：一篇讲<b>谁来判断</b>，一篇讲<b>连测量都不稳定</b>，一篇讲<b>自我进化没有稳定收益</b>。三篇合起来是一句对做研究的人很重要的话——<b>AI 让"想法"变便宜了，于是稀缺的东西变成了"裁判"</b>。</span>
+      <span class="en">The last week of September 2026 answered it from three directions: who judges, why even measurement is unstable, and why self-evolution has not delivered. Together: AI made ideas cheap, so the scarce thing is now the referee.</span></p>
+
+      <h2 id="s2"><span class="num">02</span><span class="zh">主论文：提议权与判断权的分离</span><span class="en">The main paper: separating proposing from judging</span></h2>
+      <p><span class="zh">《Propose, Don't Judge》的开场是一句很直白的话：语言模型 agent 现在已经跑完了整个量化因子研究流程——提出因子、回测、选出幸存者、淘汰其余的。<span class="sup">[1]</span> 作者问：这些工作里，哪一件应该收回来？</span>
+      <span class="en">"Propose, Don't Judge" opens plainly: language-model agents now run the entire quantitative factor pipeline — proposing, backtesting, selecting survivors, retiring the rest. The authors ask which of those jobs should be taken back.<span class="sup">[1]</span></span></p>
+      <p><span class="zh">他们的答案是<b>"受约束的自我进化"</b>：agent 可以提议，但必须由一个<b>它不能触碰的冻结裁判</b>来判定。裁判只根据提交之后才出现的市场结果打分，方式是"投注"——每来一期数据就押一次，把证据累加成一个非负的过程。<b>这样的检验在任何停止时刻都有效</b>，也就是说：agent 再怎么"看一次就停"，统计保证都不会被破坏。</span>
+      <span class="en">Their answer is governed self-evolution: the agent may propose, but a frozen referee it cannot touch decides. The referee scores only on outcomes revealed after submission, betting each period and accumulating a non-negative process — valid at every stopping time, so peek-and-stop no longer breaks the guarantee.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f14-referee-workflow.svg" alt="提案者与冻结裁判的分工流程图">
+        <figcaption><b>图 1｜提议权与判断权的分离</b>（来源：依据论文 [1] 自绘；本图为示意，不是论文原图）。
+        <span class="zh">这是全文的地图：左边可以进化、可以犯错，中间那层不能碰、不能改，右边只有"放行"与"淘汰"两个出口。<b>关键不是模型多聪明，而是裁判不在模型手里。</b></span>
+        <span class="en">The map of the whole argument: the left side may evolve and make mistakes, the middle layer cannot be touched or rewritten, and the right side has only two exits — admit or retire.</span></figcaption>
+      </figure>
+
+      <p><span class="zh">论文的实验设计也值得抄一遍：三个提案者（脚本、bandit、语言模型）× 一个冻结裁判 + 三个"故意漏水"的裁判，先在一个<b>种了真值</b>的合成世界里比，再放到 CSI 500 上做十年走查。结果有两条：</span>
+      <span class="en">The experiment design is worth copying: three proposers (a script, a bandit, a language model) crossed with the frozen referee and three deliberately leaky ones — first in a synthetic world with planted truth, then a ten-year walk-forward on the CSI 500.</span></p>
+      <ul>
+        <li><span class="zh"><b>谁当裁判，决定放行多少噪声</b>：冻结裁判比漏水的裁判少放行 <b>5–11 倍</b>的"不达标因子"，而且<b>没有任何提案者能补上这个差距</b>。</span>
+          <span class="en"><b>Who judges sets the noise admitted:</b> the frozen referee lets through 5–11× fewer sub-threshold factors, and no proposer closes that gap.</span></li>
+        <li><span class="zh"><b>谁提议，决定产出多少</b>：语言模型胜过脚本、与 bandit 持平，并且多出一样 bandit 没有的能力——<b>给自己写诊断工具</b>。</span>
+          <span class="en"><b>Who proposes sets the yield:</b> the language model beats the script, matches the bandit, and adds one capability a bandit lacks — writing its own diagnostic probes.</span></li>
+      </ul>
+      <div class="callout co-fact">
+        <span class="lbl">论文事实 · Paper facts</span>
+        <p><span class="zh">论文自己给了三个价格：① 被认证的真因子平均要等<b>约 500 个交易日</b>；② 被认证组合的夏普<b>落后</b>于没有门槛的版本；③ 裁判的结论不受提案者策略影响——"判断属于流程，提议与造工具属于 agent"。<span class="sup">[1]</span></span>
+          <span class="en">The paper names three prices: an admitted true factor waits about 500 trading days; the certified portfolio's Sharpe trails the ungated one; and the verdict does not depend on the proposal policy. Judging belongs to the procedure; proposing and instrument-making belong to the agent.<span class="sup">[1]</span></span></p>
+      </div>
+
+      <h2 id="s3"><span class="num">03</span><span class="zh">我的复现：三个裁判，三张成绩单</span><span class="en">My replication: three referees, three scorecards</span></h2>
+      <p><span class="zh">论文没有公开代码，所以我用自己的方式把机制跑了一遍。世界很简单，但足够说明问题：一个提案者连续提出候选因子，其中 <b>20% 是真的</b>（年化夏普 1.0），其余是纯噪声；每个候选有 10 年月度数据，三种裁判独立判断。</span>
+      <span class="en">The paper ships no code, so I rebuilt the mechanism my own way. The world is simple but sufficient: an agent proposes candidates one at a time, 20% carry real alpha (annualised Sharpe 1.0) and the rest are pure noise; each candidate has ten years of monthly data and three referees judge independently.</span></p>
+      <ul>
+        <li><span class="zh"><b>边看边停</b>：每个月做一次检验，看到单尾显著就宣布（现实里最常见的做法）。</span>
+          <span class="en"><b>Peeking:</b> test every month and declare as soon as the one-sided test is significant — the most common practice in the wild.</span></li>
+        <li><span class="zh"><b>先切一半</b>：前五年筛选、后五年确认，两段都过才宣布。</span>
+          <span class="en"><b>Split and confirm:</b> screen on the first five years, confirm on the next five.</span></li>
+        <li><span class="zh"><b>冻结裁判</b>：投注式证据逐月累计，达到 1/α 才宣布（我的简化版 e-process）。</span>
+          <span class="en"><b>Frozen referee:</b> accumulate betting evidence monthly and declare at 1/α — my simplified e-process.</span></li>
+      </ul>
+
+      <figure>
+        <img src="../assets/figs/f15-fdr-curve.svg" alt="三种裁判的错误放行率与放行物构成对比">
+        <figcaption><b>图 2｜谁当裁判，决定放行多少噪声</b>（来源：本文模拟，<code>tools/make_figs_referee.py</code>，固定种子）。
+        <span class="zh">左边是本文最重要的一个数字：每 1,000 个提案，边看边停错误放行 <b>205</b> 个，冻结裁判 <b>39</b> 个——<b>5.2 倍</b>，正好落在论文报告的 5–11 倍区间里。右边解释为什么：边看边停对"噪声"和"真信号"一样敏感，所以它放行出来的东西里<b>约有一半是噪声</b>；而先切一半的做法几乎不放噪声，代价见下一张图。</span>
+        <span class="en">The headline number: 205 wrongful admissions per 1,000 proposals for the peeking referee versus 39 for the frozen one — a factor of 5.2, inside the paper's 5–11× range. The right panel explains why: peeking reacts to noise as readily as to truth.</span></figcaption>
+      </figure>
+
+      <figure>
+        <img src="../assets/figs/f16-yield-mix.svg" alt="每 100 个真因子下三种裁判放行的真因子与噪声数量对比">
+        <figcaption><b>图 3｜放行得多，还是放行得干净</b>（来源：本文模拟）。
+        <span class="zh">典型的"产量 vs 纯度"取舍：每 100 个真因子，边看边停放行 99 个真、101 个假；冻结裁判放行 67 个真、19 个假；先切一半最干净（51 真、1 假），但它<b>把一半的真因子直接丢掉了</b>——因为确认那一段本身也要过门槛，而门槛会杀掉小效应。</span>
+        <span class="en">A classic yield-versus-purity trade-off: per 100 true factors, peeking admits 99 true and 101 false; the frozen referee 67 true and 19 false; the split-sample rule is cleanest (51 and 1) but throws away half the truth.</span></figcaption>
+      </figure>
+
+      <h2 id="s4"><span class="num">04</span><span class="zh">认证的价格是时间</span><span class="en">The price of certification is time</span></h2>
+      <p><span class="zh">冻结裁判不是免费的午餐。它要求"提交之后的数据"，而攒证据需要时间——<b>效应越弱，等得越久</b>。这和我在因子筛选那篇里算过的"164 年"是同一件事的两个侧面：统计上没把握，就只能用时间去换。</span>
+      <span class="en">The frozen referee is not free: it needs post-submission data, and evidence takes time. The weaker the effect, the longer the wait — the same physics as the 164 years computed in the screening note.</span></p>
+
+      <figure>
+        <img src="../assets/figs/f17-waiting-time.svg" alt="三种裁判认证真因子所需的中位等待时间随真实夏普的变化">
+        <figcaption><b>图 4｜认证的等待时间</b>（来源：本文模拟；横轴是真因子的年化夏普）。
+        <span class="zh">真因子夏普 1.0 时，冻结裁判要等 <b>58 个月</b>；夏普 2.0 时缩短到 <b>22 个月</b>——约 480 个交易日，与论文说的"约 500 个交易日"是同一量级。而"先切一半"是条水平线：<b>无论信号多强，都要等满 120 个月</b>。这就是论文里"被认证组合的夏普落后"的来源。</span>
+        <span class="en">At Sharpe 1.0 the frozen referee waits 58 months; at 2.0 it drops to 22 — about 480 trading days, the same order of magnitude as the paper's ~500. The split-sample line is flat: 120 months regardless of signal strength.</span></figcaption>
+      </figure>
+
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 1｜三种裁判的成绩单（本文模拟，固定种子）</span><span class="en">Table 1｜Three referees, three scorecards (my simulation, fixed seed)</span></caption>
+          <thead><tr>
+            <th><span class="zh">裁判</span><span class="en">Referee</span></th>
+            <th><span class="zh">每千提案错误放行</span><span class="en">Noise per 1,000</span></th>
+            <th><span class="zh">真因子放行率</span><span class="en">True admitted</span></th>
+            <th><span class="zh">放行物中噪声占比</span><span class="en">Noise share of admissions</span></th>
+            <th><span class="zh">等待时间（夏普 1.0）</span><span class="en">Wait (Sharpe 1.0)</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td><span class="zh">边看边停</span><span class="en">Peeking</span></td><td>205</td><td>99%</td><td>约一半</td><td>21 个月</td></tr>
+            <tr><td><span class="zh">冻结裁判</span><span class="en">Frozen referee</span></td><td><b>39</b></td><td>67%</td><td>23%</td><td>58 个月</td></tr>
+            <tr><td><span class="zh">先切一半</span><span class="en">Split and confirm</span></td><td>2</td><td>51%</td><td>2%</td><td>固定 120 个月</td></tr>
+          </tbody>
+        </table>
+        <p class="tnote"><span class="zh">注：三者不是"好/坏"排序，而是三种不同的取舍。<b>真正的问题是"谁在决定什么时候停"</b>，而不是"门槛设多高"。</span>
+        <span class="en">Note: three different trade-offs, not a ranking. The real question is who decides when to stop, not how high the bar is.</span></p>
+      </div>
+
+      <h2 id="s5"><span class="num">05</span><span class="zh">第二篇：同一段文本，七个模型七个数字</span><span class="en">Paper two: same text, seven models, seven numbers</span></h2>
+      <p><span class="zh">如果 AI 连"把文字变成数字"这一步都不稳定，那么再好的裁判也救不了上游。<span class="sup">[2]</span> 这篇论文拿了标普 500 公司的电话会议记录，用 7 个不同厂商的大模型、13 个常用指标（情绪、管理层清晰度、不确定性、气候与政治风险等）各打一遍分，然后看结果有多一致。</span>
+      <span class="en">If AI cannot even turn text into numbers reliably, no referee can save the upstream.<span class="sup">[2]</span> The authors scored S&amp;P 500 earnings-call transcripts with seven models from different providers across thirteen measures.</span></p>
+      <ul>
+        <li><span class="zh"><b>跨模型排序相关平均只有 0.52</b>——同一段文本，"谁更清晰""谁的风险更高"这样的排序，换一个模型就换一半。</span>
+          <span class="en"><b>Cross-model rank correlation averages 0.52</b> — swap the model and half the ranking changes.</span></li>
+        <li><span class="zh"><b>分歧不是"文本本身有歧义"</b>：与厂商无关的共同成分只解释了 <b>34%</b> 的分数方差，其余是模型特有的部分；而且这种分歧<b>并不能预测分析师或市场的后续分歧</b>。</span>
+          <span class="en"><b>The disagreement is not ambiguity in the text:</b> provider-common components explain only 34% of score variation, and the disagreement does not predict later analyst or market disagreement.</span></li>
+        <li><span class="zh"><b>下游结论会跟着变</b>：用不同模型生成的变量做回归，系数的<b>大小、符号、显著性</b>都会变。把多个模型平均能让排序更稳，但<b>分数水平仍然取决于你选了哪几个模型</b>。</span>
+          <span class="en"><b>Downstream inference follows:</b> coefficient magnitudes, signs and significance shift across models. Averaging stabilises rankings, but levels still depend on which models are in the ensemble.</span></li>
+      </ul>
+      <div class="callout co-infer">
+        <span class="lbl">推断 · Inference</span>
+        <p><span class="zh">这条结论对"AI 因子"的杀伤力比很多人以为的大：如果变量的值取决于模型选择，那么<b>基于它做的回测就不只是"策略风险"，还带着"测量风险"</b>。我的做法是把它写进流程——同一因子至少两个厂商的模型各跑一遍，只有都成立的结论才进入下一步。</span>
+        <span class="en">This bites harder than it looks: if a variable's value depends on model choice, its backtest carries measurement risk, not just strategy risk. My rule: run at least two providers and only advance conclusions that hold under both.</span></p>
+      </div>
+
+      <h2 id="s6"><span class="num">06</span><span class="zh">第三篇：自我进化没有稳定增益</span><span class="en">Paper three: self-evolution without consistent gain</span></h2>
+      <p><span class="zh">第三篇最难写进宣传语，但它可能是最有用的一篇。<span class="sup">[3]</span> 它问的是：让 agent 在长周期因子挖掘里"积累能力"（把研究反馈沉淀成可复用的技能、工具、规则），下一次会更好吗？</span>
+      <span class="en">The third paper is the hardest to turn into a slogan and possibly the most useful.<span class="sup">[3]</span> It asks whether accumulated research capabilities make the next round better.</span></p>
+      <ul>
+        <li><span class="zh"><b>18 条长周期轨迹</b>里，"能力自进化"版本<b>没有一致增益</b>。</span>
+          <span class="en">Across <b>18 long-horizon trajectories</b>, capability evolution produced no consistent gain.</span></li>
+        <li><span class="zh"><b>48 个续跑分支</b>（同一个历史状态、同一个因子组合，只换能力集）里，积累的能力同样<b>没有稳定胜出</b>。</span>
+          <span class="en">Across <b>48 continuation branches</b> from the same state, accumulated capability did not consistently outperform either.</span></li>
+        <li><span class="zh"><b>但调参仍然有用</b>：对已有因子结构做参数微调，反而能改善组合——<b>把旧东西调好，比幻想新能力更实在</b>。</span>
+          <span class="en">Yet parameter tuning of existing structures still improved the portfolio — improving what you have beats imagining new powers.</span></li>
+        <li><span class="zh"><b>候选的价值取决于状态</b>：有些当初被筛掉的候选，在原始状态下其实有正的边际价值；但把所有被筛掉的候选按顺序重新提交一遍，最终组合的 IC 反而略降。<b>顺序与状态比"单个候选好不好"更重要。</b></span>
+          <span class="en">Candidate value is state-dependent: some screened-out candidates had positive marginal value at the original state, yet resubmitting all of them sequentially slightly lowered final IC.</span></li>
+      </ul>
+
+      <h2 id="s7"><span class="num">07</span><span class="zh">三篇合起来：一张分工表</span><span class="en">Three papers, one division of labour</span></h2>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 2｜谁负责什么（三篇论文的并集）</span><span class="en">Table 2｜Who does what: the union of the three papers</span></caption>
+          <thead><tr>
+            <th><span class="zh">环节</span><span class="en">Stage</span></th>
+            <th><span class="zh">交给谁</span><span class="en">Owner</span></th>
+            <th><span class="zh">理由</span><span class="en">Why</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td><span class="zh">提候选、造工具</span><span class="en">Propose, build instruments</span></td>
+                <td><span class="zh">AI agent（可进化）</span><span class="en">The agent (evolvable)</span></td>
+                <td><span class="zh">语言模型样本外产出最高，还能自己写诊断探针</span><span class="en">It yields most and writes its own probes</span></td></tr>
+            <tr><td><span class="zh">判断（放行/淘汰）</span><span class="en">Judge: admit or retire</span></td>
+                <td class="hi"><span class="zh"><b>冻结裁判</b>（AI 不可触碰）</span><span class="en">A frozen referee outside the agent</span></td>
+                <td><span class="zh">同样的提案者，换裁判就是 5–11 倍差距</span><span class="en">Same proposer, 5–11× difference by referee</span></td></tr>
+            <tr><td><span class="zh">测量（文本→变量）</span><span class="en">Measurement: text to variables</span></td>
+                <td><span class="zh">多模型交叉 + 明示不确定性</span><span class="en">Multiple models, stated uncertainty</span></td>
+                <td><span class="zh">跨模型排序相关只有 0.52，单模型结论不可靠</span><span class="en">Cross-model rank correlation is only 0.52</span></td></tr>
+            <tr><td><span class="zh">留痕</span><span class="en">Record-keeping</span></td>
+                <td><span class="zh">流程，而不是人</span><span class="en">The process, not a person</span></td>
+                <td><span class="zh">提案总数是分母；没有分母的显著性没有意义</span><span class="en">The count of proposals is the denominator</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>五条可以今天就用的规则</h3>
+      <ol>
+        <li><span class="zh"><b>把裁判冻结起来</b>：不同的代码库、不同的进程、不同的人复核；裁判的代码在研究期内不可修改。</span>
+          <span class="en"><b>Freeze the referee:</b> separate codebase, separate process, separate reviewer; frozen for the duration of the study.</span></li>
+        <li><span class="zh"><b>用"随时有效"的检验</b>（e-value / 置信序列）替代"看到 p&lt;0.05 就宣布"——本文模拟里这一个替换就带来 5 倍差距。</span>
+          <span class="en"><b>Use anytime-valid evidence</b> (e-values, confidence sequences) instead of declaring on the first p&lt;0.05.</span></li>
+        <li><span class="zh"><b>记录提案总数</b>，把它当作分母写进报告：研究会议上看的是"提了多少个、放行几个、其中几个是真的"。</span>
+          <span class="en"><b>Record the number of proposals</b> and report it as the denominator.</span></li>
+        <li><span class="zh"><b>把认证时间写进预期</b>：如果一套流程承诺"两周出信号"，它要么门槛很松，要么在偷偷边看边停。</span>
+          <span class="en"><b>Budget the certification time.</b> A process promising signals within two weeks is either loose or peeking.</span></li>
+        <li><span class="zh"><b>文本变量跨厂商验证</b>，并把"模型选择"当成方法论的一部分披露，就像披露数据来源一样。</span>
+          <span class="en"><b>Cross-validate text variables</b> across providers and disclose model choice like a data source.</span></li>
+      </ol>
+
+      <h2 id="s8"><span class="num">08</span><span class="zh">局限与反方观点</span><span class="en">Limits and the other side</span></h2>
+      <ul>
+        <li><span class="zh"><b>我的世界是合成的。</b>独立同分布的正态收益、单一波动、没有制度切换、没有成本、没有拥挤度。它能说明"机制"，不能说明真实市场的量级。</span>
+          <span class="en"><b>My world is synthetic.</b> I.i.d. Gaussian returns, single volatility, no regimes, no costs, no crowding. It shows a mechanism, not a market magnitude.</span></li>
+        <li><span class="zh"><b>我的裁判是简化版。</b>我用 normal-mixture e-process 代替论文的投注方案；绝对数字会不同（它们报告 5–11 倍，我得到 5.2 倍，属于同一量级）。论文没有公开代码，所以我无法逐行对齐。</span>
+          <span class="en"><b>My referee is a simplification.</b> A normal-mixture e-process stands in for their betting scheme; absolute numbers differ (they report 5–11×, I get 5.2×).</span></li>
+        <li><span class="zh"><b>三篇都是 2026 年 9 月的预印本</b>，尚无第三方复现。我把"论文事实"与"我的复现"分开写，就是为了不让"新"变成"可信"的代名词。</span>
+          <span class="en"><b>All three are September 2026 preprints</b> with no third-party replication yet — which is why the two layers of evidence are kept apart.</span></li>
+        <li><span class="zh"><b>反方一：严格裁判会让你错过行情。</b>确实。等 58 个月的信号可能错过一个完整周期——这就是"认证组合夏普落后"的意思。所以裁判要<b>与资金的时间尺度匹配</b>，而不是越严越好。</span>
+          <span class="en"><b>Objection one: strict referees cost you the move.</b> Waiting 58 months can miss a cycle; certification must match the investor's horizon.</span></li>
+        <li><span class="zh"><b>反方二：先验可以替代统计。</b>如果候选来自明确的经济机制，门槛当然可以放宽——这不是反对统计纪律，而是说<b>纪律与先验是两种不同的证据</b>。</span>
+          <span class="en"><b>Objection two: priors can substitute for statistics.</b> Candidates grounded in a clear mechanism justify a looser bar; discipline and priors are different kinds of evidence.</span></li>
+      </ul>
+
+      <h2 id="s9"><span class="num">09</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
+      <div class="callout co-opinion">
+        <span class="lbl">观点 · Opinion</span>
+        <p><span class="zh">这三篇合起来，其实在描述一次"稀缺性的转移"：过去研究里最贵的是想法，现在想法便宜了——<b>贵的是"能证明一个想法不成立"的能力</b>。谁的流程能诚实地淘汰东西，谁的研究速度才有意义；否则你只是在以更快的速度积累错误。</span>
+        <span class="en">Together the papers describe a shift in scarcity: ideas used to be expensive; now the expensive thing is the ability to show an idea is wrong. A pipeline that can honestly retire things is what makes speed meaningful.</span></p>
+        <p><span class="zh">所以对我来说，操作含义只有一条：<b>把"谁来判断"写进流程，而不是留给自觉</b>——裁判冻结在提案者之外、提案数记在分母里、认证时间写进预期。这三件事不需要新模型，今天就能做。</span>
+        <span class="en">The operational takeaway is one line: write "who judges" into the process instead of leaving it to good intentions — a frozen referee, a recorded denominator, and a budgeted certification time.</span></p>
+      </div>
+
+      <h2 id="s10"><span class="num">10</span><span class="zh">来源（链接均于 2026-09-29 核查）</span><span class="en">Sources (links verified 2026-09-29)</span></h2>
+      <ol class="refs">
+        <li>Bo Qu, Mingguang Chen, Licheng Wang (2026-09-22). <i>Propose, Don't Judge: An Anytime-Valid Referee for LLM Agents That Mine Investment Factors</i>. arXiv.
+          <a href="https://arxiv.org/abs/2609.27051">arxiv.org/abs/2609.27051</a>
+          <span class="zh">（本文主论文；写作时未发现公开代码仓库）</span></li>
+        <li>Hamid Boustanifar, Sasan Mansouri (2026-09-25). <i>Same Text, Different Numbers: The Divergence of LLM-Based Measures</i>. arXiv.
+          <a href="https://arxiv.org/abs/2609.31013">arxiv.org/abs/2609.31013</a></li>
+        <li>Siyuan Li, Jiangfeng Zhang, Rui Yao, Weihua Qiu, Mingyang Xu, Zixuan Yuan (2026-09-27). <i>EverMine: Dissecting the Self-Evolution of Research Capabilities in Long-Horizon Alpha Research</i>. arXiv.
+          <a href="https://arxiv.org/abs/2609.33524">arxiv.org/abs/2609.33524</a></li>
+        <li>Aylon (2026-09-25). <i>因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</i>. Notes.
+          <a href="../factor-screening/">aayloo.github.io/notes/factor-screening/</a>
+          <span class="zh">（第 1 节提到的"上一篇"，也是"164 年"那笔账的出处）</span></li>
+        <li>本文实验代码：<code>tools/make_figs_referee.py</code>（固定种子 2026，可完全复现；模拟设定见开头的「口径」）。</li>
+      </ol>
+
+      <h2 id="share"><span class="num">11</span><span class="zh">分享版摘要</span><span class="en">Shareable summary</span></h2>
+      <div class="cite" id="shareText">
+        <span class="zh">可直接贴出去的版本：</span><span class="en">Ready to post:</span>
+        <pre>2026 年 9 月三篇论文撞上同一件事：AI 已经能跑完整个因子研究流程，但"判断"这一件必须收回来。主论文给的机制是"冻结裁判"——只看提交之后才出现的市场结果，用投注式证据累计，任何时刻停都有效。</pre>
+        <pre>我把机制复现了一遍：每 1,000 个提案，边看边停（看到 p&lt;0.05 就宣布）会错误放行约 205 个，冻结裁判只有 39 个——5.2 倍差距，正好在论文报告的 5–11 倍区间里。代价是时间：真因子年化夏普 1.0 时要等 58 个月，2.0 时也要 22 个月。</pre>
+        <pre>一句话：AI 让"想法"变便宜了，于是稀缺的东西变成了"能证明一个想法不成立"的能力。</pre>
+        <button class="chip" type="button" data-copy="#shareText" data-done-label="已复制 ✓">复制这段</button>
+      </div>
+
+      <h2 id="cite"><span class="num">12</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
+      <div class="cite">
+        <pre id="citeText">Aylon (2026). AI 挖因子，谁来当裁判. Notes, v1.0. https://aayloo.github.io/notes/ai-factor-referee/</pre>
+        <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
+      </div>
+
+      <h2 id="upd"><span class="num">13</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
+      <div class="tbl-wrap">
+        <table class="upd">
+          <thead><tr><th><span class="zh">版本</span><span class="en">Version</span></th><th><span class="zh">日期</span><span class="en">Date</span></th><th><span class="zh">改动</span><span class="en">Change</span></th></tr></thead>
+          <tbody>
+            <tr><td>v1.0</td><td>2026-09-29</td>
+              <td><span class="zh">初版：三篇 2026 年 9 月论文 + 自建裁判模拟（四张图、五条来源，链接已核查）。</span>
+                  <span class="en">First version: three September 2026 papers plus my own referee simulation (four figures, five sources, links verified).</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="pager" aria-label="pagination">
+        <a href="../cost-of-constraints/">
+          <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
+          <span class="v"><span class="zh">← 约束的代价</span><span class="en">← Every constraint has a price</span></span>
+        </a>
+        <a href="../jev-system-one-models/">
+          <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+          <span class="v"><span class="zh">Jev 与 System One Models →</span><span class="en">Jev and System One Models →</span></span>
+        </a>
+      </nav>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="tt">Contents</div>
+      <a href="#s1"><span class="zh">01 为什么写</span><span class="en">01 Why</span></a>
+      <a href="#s2"><span class="zh">02 提议权与判断权</span><span class="en">02 The split</span></a>
+      <a href="#s3"><span class="zh">03 我的复现</span><span class="en">03 Replication</span></a>
+      <a href="#s4"><span class="zh">04 时间是价格</span><span class="en">04 Waiting</span></a>
+      <a href="#s5"><span class="zh">05 测量也不稳</span><span class="en">05 Measurement</span></a>
+      <a href="#s6"><span class="zh">06 自我进化</span><span class="en">06 Self-evolution</span></a>
+      <a href="#s7"><span class="zh">07 分工表与规则</span><span class="en">07 Division of labour</span></a>
+      <a href="#s8"><span class="zh">08 局限与反方</span><span class="en">08 Limits</span></a>
+      <a href="#s9"><span class="zh">09 我的判断</span><span class="en">09 My take</span></a>
+      <a href="#s10"><span class="zh">10 来源</span><span class="en">10 Sources</span></a>
+      <a href="#share"><span class="zh">11 分享版摘要</span><span class="en">11 Shareable</span></a>
+      <a href="#upd"><span class="zh">13 更新日志</span><span class="en">13 Changelog</span></a>
+    </aside>
+  </div>
+
+  <footer>
+    <div class="footin">
+      <span>© 2026 Aylon · <span class="zh">本页文字为原创，引用请注明来源</span><span class="en">Original text; please cite if reused</span></span>
+      <span class="spacer"></span>
+      <a href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+</body>
+</html>

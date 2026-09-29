@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
+    <title>AI 挖因子，谁来当裁判</title>
+    <link>https://aayloo.github.io/notes/ai-factor-referee/</link>
+    <guid>https://aayloo.github.io/notes/ai-factor-referee/</guid>
+    <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
+    <description>2026 年 9 月三篇论文指向同一件事：提议可以交给 AI，裁判不能。含机制流程图与三张模拟图：边看边停每千提案错误放行 205 个，冻结裁判只有 39 个，代价是等待时间。</description>
+  </item>
+  <item>
     <title>约束的代价：多资产组合里，每个&quot;不许超&quot;都在收费</title>
     <link>https://aayloo.github.io/notes/cost-of-constraints/</link>
     <guid>https://aayloo.github.io/notes/cost-of-constraints/</guid>

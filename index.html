@@ -988,7 +988,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">6 篇 · 点标题展开，长文另开页</span><span class="en">6 notes · long reads open a page</span></span></div>
+          <span class="hint"><span class="zh">7 篇 · 点标题展开，长文另开页</span><span class="en">7 notes · long reads open a page</span></span></div>
         <div class="nlist2">
 
           <details class="nitem rv">
@@ -1041,6 +1041,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">The counter-intuitive half: with a 24-month window the 10th percentile is −0.02 unconstrained versus +0.18 constrained. A constraint is not free, but what it buys is insurance against your own estimation error.</span></p>
             </div>
           </details>
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">AI · 信号研究</span>
+              <h4><a href="notes/ai-factor-referee/"><span class="zh">AI 挖因子，谁来当裁判</span><span class="en">Let the agent propose; let the referee judge</span></a></h4>
+              <p class="nsum"><span class="zh">2026 年 9 月三篇论文指向同一件事：提议可以交给 AI，裁判必须留在外面。我自己复现了一遍机制。</span>
+              <span class="en">Three September 2026 papers, one conclusion: let the agent propose, keep the referee outside — replicated on my own simulation.</span></p>
+              <a class="go" href="notes/ai-factor-referee/"><span class="zh">读全文（4 张图 · 5 条来源）→</span><span class="en">Read the note (4 figures, 5 sources) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">语言模型 agent 已经能跑完整个因子研究流程：提因子、回测、筛选、淘汰。论文给的分工是"冻结裁判"——只看提交之后才出现的市场结果，用投注式证据逐月累计，任何时刻停都有效。我用简化版实现跑了一遍：每 1,000 个提案，边看边停（看到 p&lt;0.05 就宣布）错误放行约 <b>205</b> 个，冻结裁判只有 <b>39</b> 个——5.2 倍差距，与论文报告的 5–11 倍同一量级。</span>
+              <span class="en">Agents now run the whole factor pipeline. The proposed division of labour is a frozen referee scoring only on post-submission outcomes with betting evidence, valid at any stopping time. My simplified run: 205 wrongful admissions per 1,000 proposals for peeking versus 39 for the referee.</span></p>
+              <p class="take"><span class="zh">代价是时间：真因子年化夏普 1.0 时要等 58 个月，2.0 时约 22 个月。一句话结论——AI 让"想法"变便宜了，于是稀缺的东西变成了"能证明一个想法不成立"的能力。</span>
+              <span class="en">The price is time: 58 months at Sharpe 1.0, about 22 at 2.0. AI made ideas cheap; the scarce thing is now the ability to show an idea is wrong.</span></p>
+            </div>
+          </details>
+
 
 
           <details class="nitem rv">
