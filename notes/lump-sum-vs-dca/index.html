@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>定投还是 all-in：942 个月数据的答案 · Research Note</title>
-<meta name="description" content="研究简报：先定义定投（DCA）与一次性投入（LSI），再用 942 个月真实数据回测。一次性投入赢约 80% 的起点，但它输的那 20% 高度规律。9 张图表，含两个交互动画。">
-<meta property="og:title" content="定投还是 all-in：942 个月数据的答案">
+<title>定投与一次性投入：基于 942 个月度观测的实证检验 · Working Paper</title>
+<meta name="description" content="研究工作稿：以标普 500 全收益与恒生指数共 942 个月度观测，检验一次性投入与分期定额投入（DCA）的差异。一次性投入在约八成起点占优，劣势集中于部署期下跌的样本。含 9 张图表与两个交互动画。">
+<meta property="og:title" content="定投与一次性投入：基于 942 个月度观测的实证检验">
 <meta property="og:description" content="一次性投入赢 80% 的起点，但它输的那 20% 恰好是「投完就跌」的月份。">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="../assets/tokens.css">
@@ -74,24 +74,26 @@
 </nav>
 
 <div class="wrap">
-  <div class="rn-masthead"><span>Aylon · Research Note</span><span>2026-10-03 · v2.0 · 组合与执行</span></div>
-  <h1 class="rn-title">定投还是 all-in：942 个月数据的答案</h1>
-  <p class="rn-standfirst">定投（DCA）是把一笔钱分成几期等额买入，一次性投入（LSI，也叫 all-in）是期初全额买入。本文用两个市场、942 个月的月度数据回测这两种做法：一次性投入在约 80% 的起点胜出，但它输掉的那 20% 有非常具体的规律——<b>投完之后立刻下跌</b>。</p>
+  <div class="rn-masthead"><span>Working Paper · 研究工作稿</span><span>2026-10-03 · v3.0 · 组合与执行</span></div>
+  <h1 class="rn-title">定投与一次性投入：基于 942 个月度观测的实证检验</h1>
+  <p class="rn-standfirst">本文考察一个被广泛讨论但常被误述的问题：当投资者已持有一笔可投资资金时，"一次性投入"与"分期定额投入（DCA）"孰优？我们以标普 500 全收益指数与恒生指数共 942 个月度观测为样本，对每一个可能的起点构造两种策略的持有期终值，并比较其分布。结论是：一次性投入在约八成的起点上占优，其劣势区间高度集中于<b>部署期（首十二个月）市场下跌</b>的样本；该机制在两个市场、多种持有期与分期长度下均稳健。</p>
   <ul class="rn-findings">
-    <li>标普 500 全收益上，一次性投入在 <b>79%</b> 的月度起点胜出（12 个月分期、持有 10 年），中位数多赚 <b>0.13 倍本金</b>；持有 20 年时中位差扩大到 0.29 倍。</li>
-    <li>定投赢的起点只占 <b>17–18%</b>，且几乎完全等于"部署期（前 12 个月）市场下跌"的比例——<b>定投的胜率约等于崩盘马上发生的概率</b>。</li>
-    <li>崩盘早到还是晚到决定结果：1999-02 起步，定投 0.65 倍、一次性 0.71 倍；2007-10 起步，定投 2.34 倍、一次性 2.06 倍——同一策略差 <b>34 个百分点</b>。</li>
-    <li>换个市场结论打折：恒生指数（1986-11 起）上一次性胜率只有 <b>63–69%</b>。一次性投入是收益最优解，定投是行为次优解。</li>
+    <li><b>主要发现一。</b>在标普 500 全收益口径下（12 个月分期、持有 10 年），一次性投入在 <b>79%</b> 的月度起点胜出，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。</li>
+    <li><b>主要发现二。</b>DCA 的胜率仅为 <b>17–18%</b>，与"部署期市场下跌"的样本占比几乎相等；换言之，<b>DCA 的相对优势可由部署期收益的符号近似完全解释</b>（图 3）。</li>
+    <li><b>主要发现三。</b>结果对起点高度敏感：1999-02 起步时 DCA 终值为一次性的 0.92 倍，2007-10 起步时则为 1.14 倍——同一策略、同一持有期，差异达 <b>34 个百分点</b>。</li>
+    <li><b>主要发现四。</b>市场异质性显著：恒生指数口径下一次性投入胜率降至 <b>63–69%</b>。该结果提示"一次性投入占优"并非普适定律，而依赖于市场长期向上的假设。</li>
   </ul>
-  <div class="rn-abstract"><b>摘要</b>本文把"定投 vs 一次性"拆成两道题：手上已有一笔钱（存量）才存在分期选择，每月结余（流量）只能定投。对存量资金，本文用 ^SP500TR 全收益月度序列（1988-01 → 2026-09，465 个月）与恒生指数（1986-11 → 2026-07，477 个月）滚动回测：把每一个月当作起点，比较"当天全额买入"与"分 6/12/24/36 个月等额买入"、持有 1–20 年的终值。结果显示一次性投入在期望与胜率上都占优，但其劣势区间高度集中在"部署期下跌"的起点；这一规律在两个市场、多个持有期与分期长度下一致。</div>
+  <div class="rn-abstract"><b>摘要</b>围绕"一次性投入抑或分期投入"这一长期争论，本文指出文献与实务讨论中存在一个概念混淆：<i>存量资金</i>（已持有一笔可投资资金）的分期安排是一项主动选择，而<i>流量资金</i>（来自收入的持续储蓄）并无一次性投入之选项，二者的最优决策问题并不相同。本文针对存量资金情形，以 ^SP500TR 全收益月度序列（1988-01 至 2026-09，465 个月）与恒生指数（1986-11 至 2026-07，477 个月）为样本，对每一个月度起点构造"期初全额买入"与"分 6／12／24／36 个月等额买入"两种策略，并按 1 至 20 年持有期计算终值。实证结果表明：一次性投入在终值期望与胜率两方面均占优；其劣势样本几乎全部集中于部署期收益为负的起点。该结论在分期长度与持有期的二维网格上稳定，但在恒生指数口径下强度明显减弱。我们据此讨论了该现象的行为金融解释，并给出可操作的资金部署规则。</div>
   <p class="rn-kws"><b>关键词</b>　DCA · 一次性投入 · 回测 · 多资产 · 行为偏差 · 组合执行</p>
 
   <div class="split">
     <div class="prose">
 
-      <h2 id="s1"><span class="num">01</span><span class="zh">一笔钱的两条路</span><span class="en">One pot, two routes</span></h2>
-      <p>想象你刚拿到一笔年终奖。你决定把它投进市场，但面前有两条路：<b>今天全部买入</b>，或者<b>分成 12 个月、每月买一份</b>。两条路用的是同一笔钱、同一个标的、同样的持有年限，唯一差别是"钱什么时候进场"。</p>
-      <p>这件事之所以总吵不完，一半原因在词上。严格说这里有四个不同的东西：<b>一次性投入（Lump-sum investing，LSI）</b>是期初全额买入；<b>定投（Dollar-cost averaging，DCA）</b>是把同一笔钱分成 N 期等额买入；<b>定期定额</b>是每月从工资结余里买入——钱是陆续到来的，根本没有 all-in 这个选项；<b>价值平均</b>则按目标市值倒算每期投入额，机制完全不同。本文只讨论第二种：<b>手上已有一笔钱，分几期投完</b>。</p>
+      <h2 id="s1"><span class="num">01</span><span class="zh">研究问题与文献定位</span><span class="en">Research question and related literature</span></h2>
+      <p>设想投资者在 t₀ 时刻持有一笔可投资资金，面前有两种部署方式：其一，在 t₀ 全额买入并持有至 T；其二，将同一笔资金等分为 N 期，自 t₀ 起逐期买入，未投部分以现金形式持有。两种方式的本金、标的与持有期完全相同，唯一差异在于资金进入市场的时点分布。本文研究的正是这一情形。</p>
+      <p>既有文献对此问题的结论并不含糊。Constantinides（1979）在一个标准期望效用框架下证明 DCA 并非最优策略；Rozeff（1994）与 Knight 和 Mandell（1992）分别以历史数据与数值模拟指出，一次性投入在期望收益上优于分期投入。<span class="sup">[1][2][3]</span> 然而实务界对 DCA 的偏好长期存在，Dichtl 与 Drobetz（2011）将其归因于前景理论框架下的投资者效用函数——当投资者对损失敏感、且以"购入均价"为参照点时，分期投入可以改善其主观效用；Hayley（2013）进一步把该偏好与认知误差联系起来。<span class="sup">[4][5]</span> 换言之，两种结论回答的并非同一个问题：前者讨论期望终值，后者讨论投资者效用与行为可行性。</p>
+      <p>近期研究进一步指出结论的环境依赖性。Vanguard（2023）以美国与国际数据发现一次性投入约在三分之二的样本中占优；<span class="sup">[6]</span> Kaur 等（2026）则在高通胀环境下重新检验该问题，发现相对优势会随宏观状态而变化。<span class="sup">[7]</span> 本文的贡献在于把上述讨论落到一个可复现的统一框架：同一笔资金、同一标的、同一持有期，对<i>全部</i>历史起点逐一比较，并把结果分解到"部署期收益"这一单一解释变量上。</p>
+      <p>在进入实证之前，有必要澄清一个常被混淆的概念区分。<b>一次性投入（Lump-sum investing，LSI）</b>指期初全额买入；<b>分期定额投入（Dollar-cost averaging，DCA）</b>指将同一笔资金等分为若干期买入；而<b>定期定额储蓄</b>指投资者以收入流量逐期买入，其资金本就陆续到达，不存在一次性投入这一选项；此外尚有<b>价值平均（value averaging）</b>等按目标市值倒算投入额的策略，机制与 DCA 不同，不在本文讨论范围。</p>
       <div class="exhibit">
         <div class="ex-label">Exhibit 1 · 钱是怎么进场的</div>
         <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入与定投的现金流时间轴对比" style="width:100%;border:1px solid var(--e-rule)">
@@ -125,8 +127,9 @@
         <p class="ex-src">来源：本文回测，数据见附录 A。</p>
       </div>
 
-      <h2 id="s2"><span class="num">02</span><span class="zh">历史上，一次性投入赢多少</span><span class="en">How often all-in wins</span></h2>
-      <p>把历史上<i>每一个月</i>都当作起点，标普 500 全收益口径下一共有 <b>345</b> 个完整的十年窗口、225 个二十年窗口。对每个窗口分别计算两种做法的终值，就得到一张胜率表。分 12 个月投完、持有 10 年的口径下，一次性投入赢<b>79%</b> 的起点，中位数多赚 <b>0.13 倍本金</b>；把持有期拉长到 20 年，中位差扩大到 0.29 倍。</p>
+      <h2 id="s2"><span class="num">02</span><span class="zh">数据、方法与基准结果</span><span class="en">Data, method and benchmark results</span></h2>
+      <p>样本为两类资产的月度总收益序列：标普 500 全收益指数（^SP500TR，含股息）1988-01 至 2026-09 共 465 个月；恒生指数（^HSI）1986-11 至 2026-07 共 477 个月。对每一个月度起点 t₀，我们计算两种策略在持有 H 年后的终值：一次性投入为 P(t₀+H)/P(t₀)；分期投入为 (1/N)·Σ P(t₀+H)/P(t₀+j)，j = 0…N−1，未投部分按 0% 计息。选择零利率是对 DCA 有利的假设，可避免结论偏向一次性投入。持有期取 1、3、5、10、20 年，分期长度取 6、12、24、36 个月。</p>
+      <p>基准结果显示，一次性投入在终值期望与胜率两方面均占优。以 12 个月分期、10 年持有为例，标普 500 全收益口径下的完整起点共 <b>345</b> 个，其中一次性投入胜出 <b>79%</b>，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。表中数字在持有期维度上并非单调，说明其并非由某一特定年代的行情驱动，而更可能来自一个与时间无关的机制——下文将予以识别。</p>
       <div class="exhibit">
         <div class="ex-label">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</div>
         <div class="tbl-wrap">
@@ -157,8 +160,8 @@
         <p class="ex-src">来源：本文回测；每年 1 月入市、12 个月分批、持有 10 年。</p>
       </div>
 
-      <h2 id="s3"><span class="num">03</span><span class="zh">它输掉的那 20% 有什么规律</span><span class="en">The pattern behind the losses</span></h2>
-      <p>把每一次"定投赢"的案例摊开，只会看到一个变量：<b>部署期（前 12 个月）市场是涨还是跌</b>。部署期上涨，定投几乎必然落后；部署期下跌，定投反超。这条规律没有例外，也不依赖你从哪一年开始——它只是把"定投"这个动作的暴露时间结构摊开了：<b>分批买入意味着把一部分资金留在场外，而场外的资金在上涨时是纯粹的拖累，在下跌时才是保护。</b></p>
+      <h2 id="s3"><span class="num">03</span><span class="zh">损失区间的机制识别</span><span class="en">Identifying the mechanism</span></h2>
+      <p>为识别 DCA 相对优势的来源，我们把样本按<b>部署期收益</b>（前 12 个月的市场收益）分组考察。结果高度整齐：部署期收益为正时，DCA 终值几乎必然低于一次性投入；部署期收益为负时，DCA 反超。该关系不随起点年份或持有期而变化。其经济含义是直接的：分期投入等价于将一部分资金留在场外，而场外资金在上涨行情中构成确定的拖累，仅在下跌行情中转化为保护。因此 DCA 的相对损益并非来自"平均成本"这一统计性质，而来自<b>资金暴露时间的重新分配</b>。</p>
       <div class="exhibit">
         <div class="ex-label">Exhibit 5 · 一个变量解释了几乎全部</div>
         <img src="../assets/figs/f18-mechanism.svg" alt="部署期市场涨跌与定投相对差额的散点图" style="width:100%">
@@ -173,8 +176,8 @@
         <p class="ex-src">来源：本文回测；差额 = 定投终值 − 一次性终值。</p>
       </div>
 
-      <h2 id="s4"><span class="num">04</span><span class="zh">崩盘早到还是晚到，决定一切</span><span class="en">Timing of the crash decides it</span></h2>
-      <p>两个真实起点可以把上面所有抽象都落地。1999-02 入市的人，在崩盘前又经历了一年上涨，定投恰好买在高位；2007-10 入市的人，危机的第一波就在眼前，分批买得越来越便宜。十年之后，前者的定投落后一次性 6 个百分点，后者领先 28 个百分点。</p>
+      <h2 id="s4"><span class="num">04</span><span class="zh">起点依赖性与两例反事实</span><span class="en">Start-date dependence: two counterfactuals</span></h2>
+      <p>上述机制可用两个真实起点加以说明。1999-02 入市的投资者，在其后的十二个月中市场继续上行，DCA 的平均购入价高于起点价格，十年后其终值为一次性投入的 0.92 倍；2007-10 入市的投资者，危机第一波随即到来，DCA 逐期买入的价格递减，十年后终值为一次性投入的 1.14 倍。同一策略、同一持有期，两个起点的终值差达 <b>34 个百分点</b>。这一对比表明：在样本内讨论"DCA 是否更优"时，若不指明起点，命题本身并不良定。</p>
       <div class="exhibit">
         <div class="ex-label">Exhibit 7 · 同样的策略，相反的结果</div>
         <img src="../assets/figs/f20-worst-case.svg" alt="1999-02 与 2007-10 两个起点的路径对比" style="width:100%">
@@ -209,8 +212,8 @@
         <p class="ex-src">来源：本文回测，数据见附录 A。</p>
       </div>
 
-      <h2 id="s5"><span class="num">05</span><span class="zh">换个市场还成立吗</span><span class="en">Does it hold elsewhere?</span></h2>
-      <p>美股的 1988 年以来特征是"长期向上、回撤后能恢复"，这不是所有市场的常态。用恒生指数（1986-11 起，477 个月，覆盖 1997、2000、2008、2015、2018–2022 多轮深跌与长横盘）做同一套回测，结论明显变弱：一次性投入的胜率从约 80% 降到 <b>63–69%</b>，而且持有期越长、差距越小。</p>
+      <h2 id="s5"><span class="num">05</span><span class="zh">市场异质性与稳健性</span><span class="en">Cross-market robustness</span></h2>
+      <p>美股样本期的特征是"长期向上、回撤后修复"，这并非所有市场的常态。我们在恒生指数上重复同一检验（1986-11 起，477 个月，覆盖 1997、2000、2008、2015 及 2018–2022 多轮深度回撤与长期横盘），一次性投入的胜率由约 80% 降至 <b>63–69%</b>，且随持有期延长而进一步收敛。需要说明的是，恒生指数序列为价格指数、不含股息，因而系统性低估买入并持有策略，该口径对本结果具有保守倾向。这一发现支持一个更审慎的表述：一次性投入的优势依赖于标的资产的长期正漂移与投资者的回撤承受能力，而非某项统计定律。</p>
       <div class="exhibit">
         <div class="ex-label">表 2 · 两个市场的一次性投入胜率（12 个月分期）</div>
         <div class="tbl-wrap">
@@ -233,24 +236,22 @@
         <p class="ex-src">来源：本文回测；12 个月分期。</p>
       </div>
 
-      <h2 id="s6"><span class="num">06</span><span class="zh">那么该怎么做</span><span class="en">What to do</span></h2>
-      <p>我不打算把这篇写成"定投无用论"。更准确的说法是：<b>一次性投入是收益最优解，定投是行为次优解</b>——它买的不是更高收益，而是"你愿意开始"。很多人真正的问题不是"该不该分批"，而是"因为怕亏，所以干脆没投"；对这类人，分批 12 个月的价值远远超过那 13 个百分点的期望差。据此，我给自己定了四条规则。</p>
-      <p><b>第一，先按钱的来源分类。</b>每月结余只能定投，讨论到此结束；手上已有一笔钱，才进入下一题。这是最容易搞混、也最影响结论的一步。</p>
-      <p><b>第二，存量资金的默认答案是"尽快投"。</b>三个例外值得认真考虑：这笔钱三年内要用；你几乎确定自己在下跌 20% 时会卖出（那说明你是在赌自己的情绪，而不是赌市场）；市场处在极端估值区间、你需要用分批来管理执行风险。</p>
-      <p><b>第三，如果决定分批，把期限压短、把规则写死。</b>证据显示 6–12 个月是心理与概率都比较好接受的区间；24 个月以上的分期只会让代价更大。写下"每月几号投多少"，然后不要改。</p>
-      <p><b>第四，为"后悔"标个价。</b>10 年持有期里一次性的中位优势是 0.13 倍本金——这就是分批投入的保费。如果这笔保费换来的是你不会因为害怕而完全不投，那它值。</p>
-      <p>最后回答三个最常被追问的问题。<b>"定投能降低成本吗？"</b>它把成本摊平，不是降低；市场在涨时你的平均成本一定高于起点价格。<b>"分批越长越安全吗？"</b>越长只是越保守，代价也更大，安全与收益在这里是交换关系。<b>"80% 胜率说明我该 all-in 吗？"</b>那是群体统计，你只有一次人生——真正的问题不是"哪个期望高"，而是"哪种失败我能承受"。</p>
+      <h2 id="s6"><span class="num">06</span><span class="zh">讨论与投资含义</span><span class="en">Discussion and implications</span></h2>
+      <p>本文结果并不支持"DCA 无价值"这一通俗结论，而支持一个更精确的表述：<b>一次性投入在期望终值意义上占优，分期投入在投资者效用意义上可能是次优但可行的选择</b>。二者的差异可量化为"保险费用"：在 10 年持有期下，选择 12 个月分期的投资者，其中位终值比一次性投入低约 0.13 倍本金。这笔费用购买的是对"入场即遭遇回撤"这一特定状态风险的规避，以及行为层面的可持续性——对于在回撤中倾向于清仓的投资者而言，这一费用可能低于其放弃参与市场的隐性成本。</p>
+      <p>据此，我们提出四条可操作的部署原则。其一，<b>按资金性质而非投资者性格分类</b>：以收入流量形式到达的资金只能逐期投入，讨论在一次投入与分期投入之间展开；只有已持有的存量资金才存在本文意义上的选择。其二，<b>存量资金的基准方案是尽快投入</b>，三个合理例外为：资金在三年内需动用（不足以覆盖一个完整回撤周期）、投资者经自我评估确认无法承受 20% 的账面回撤、以及市场处于极端估值区间而需要以分批方式管理执行风险。其三，<b>若选择分期，应缩短期限并预先承诺规则</b>：本文证据支持 6–12 个月的区间，更长期限在期望意义上代价更高且不显著改善主观效用。其四，<b>以可承受的最大回撤而非期望收益作为决策准则</b>：胜率是样本频率，而非对单一路径的承诺。</p>
+      <p>最后，本文的结论边界值得强调。其一，样本仅覆盖两个市场，且其中一个仅具价格收益数据；其二，未计入交易成本、税费、汇率与现金流摩擦，其中前三项均会强化本文结论（使分期更不利）；其三，部署期收益的识别是样本内的统计关系，不构成对未来的预测。将上述框架扩展至更多资产类别、加入交易成本与税收摩擦，并在真实投资委托中检验行为假设，是后续研究的方向。</p>
     </div>
 
     <aside class="toc" aria-label="contents">
       <div class="tt">Contents</div>
-      <a href="#s1">01 <span class="zh">一笔钱的两条路</span><span class="en">Two routes</span></a>
-      <a href="#s2">02 <span class="zh">赢了百分之多少</span><span class="en">Win rate</span></a>
-      <a href="#s3">03 <span class="zh">输掉的那 20%</span><span class="en">The pattern</span></a>
-      <a href="#s4">04 <span class="zh">崩盘早到还是晚到</span><span class="en">Timing</span></a>
-      <a href="#s5">05 <span class="zh">换个市场</span><span class="en">Another market</span></a>
-      <a href="#s6">06 <span class="zh">该怎么做</span><span class="en">What to do</span></a>
+      <a href="#s1">01 <span class="zh">研究问题与文献</span><span class="en">Question</span></a>
+      <a href="#s2">02 <span class="zh">数据与方法</span><span class="en">Data &amp; method</span></a>
+      <a href="#s3">03 <span class="zh">机制识别</span><span class="en">Mechanism</span></a>
+      <a href="#s4">04 <span class="zh">起点依赖性</span><span class="en">Start dates</span></a>
+      <a href="#s5">05 <span class="zh">市场异质性</span><span class="en">Cross-market</span></a>
+      <a href="#s6">06 <span class="zh">讨论与含义</span><span class="en">Discussion</span></a>
       <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
     </aside>
   </div>
 
@@ -261,23 +262,23 @@
       <p><b>做法。</b>把每一个月当作起点 t₀。一次性投入＝在 t₀ 全额买入并持有 H 年；定投＝分 N 个月等额买入，未投部分按 <b>0%</b> 计息，同样持有到 t₀+H。统计指标为"一次性终值高于定投终值"的起点占比，以及终值差额的分布。选择 0% 现金利率是对定投偏有利的假设。</p>
       <p><b>未计入。</b>交易成本、税费、汇率与心理因素。前三个都会让"分批"更吃亏（多笔交易成本更高），最后一个无法用回测衡量。</p>
       <p><b>代码。</b><code>tools/make_lca_data.py</code>（回测与数据导出）、<code>tools/make_lca_figs.py</code>（全部静态图，研究简报风格）、<code>tools/make_lca_note.py</code>（本页与两个交互动画）。固定输入可完全复现。</p>
-      <ol class="refs">
-        <li>Constantinides, G. M. (1979). <i>A Note on the Suboptimality of Dollar-Cost Averaging as an Investment Policy</i>. JFQA. <a href="https://doi.org/10.2307/2330513">doi.org/10.2307/2330513</a></li>
-        <li>Rozeff, M. S. (1994). <i>Lump-Sum Investing versus Dollar-Averaging</i>. Journal of Portfolio Management. <a href="https://doi.org/10.3905/jpm.1994.409474">doi.org/10.3905/jpm.1994.409474</a></li>
-        <li>Knight, J. R., &amp; Mandell, L. (1992). <i>Nobody Gains from Dollar Cost Averaging</i>. Financial Services Review. <a href="https://doi.org/10.1016/1057-0810(92)90015-5">doi.org/10.1016/1057-0810(92)90015-5</a></li>
-        <li>Kaur, et al. (2026). <i>Dollar-Cost Averaging Versus Lump-Sum Investing under High Inflation</i>. JRFM. <a href="https://doi.org/10.3390/jrfm19090671">doi.org/10.3390/jrfm19090671</a></li>
-        <li>Vanguard Research (2023-02). <i>Cost averaging: Invest now or temporarily hold your cash?</i> <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf">vanguard.com（PDF）</a></li>
-      </ol>
     </details>
 
     <div class="disclaimer">
       <b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。
     </div>
 
-    <div class="cite" style="margin-top:22px">
-      <pre id="citeText">Aylon (2026). 定投还是 all-in：942 个月数据的答案. Research Note v2.0. https://aayloo.github.io/notes/lump-sum-vs-dca/</pre>
-      <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
-    </div>
+    <h2 id="refs" style="margin-top:38px"><span class="num">参考文献</span><span class="en">References</span></h2>
+    <ol class="refs">
+      <li>Constantinides, G. M. (1979). A Note on the Suboptimality of Dollar-Cost Averaging as an Investment Policy. <i>Journal of Financial and Quantitative Analysis</i>. <a href="https://doi.org/10.2307/2330513">doi.org/10.2307/2330513</a></li>
+      <li>Rozeff, M. S. (1994). Lump-Sum Investing versus Dollar-Averaging. <i>Journal of Portfolio Management</i>. <a href="https://doi.org/10.3905/jpm.1994.409474">doi.org/10.3905/jpm.1994.409474</a></li>
+      <li>Knight, J. R., &amp; Mandell, L. (1992). Nobody Gains from Dollar Cost Averaging: Analytical, Numerical and Empirical Results. <i>Financial Services Review</i>. <a href="https://doi.org/10.1016/1057-0810(92)90015-5">doi.org/10.1016/1057-0810(92)90015-5</a></li>
+      <li>Dichtl, H., &amp; Drobetz, W. (2011). Dollar-Cost Averaging and Prospect Theory Investors. <i>Journal of Behavioral Finance</i>. <a href="https://doi.org/10.1080/15427560.2011.555029">doi.org/10.1080/15427560.2011.555029</a></li>
+      <li>Hayley, S. (2013). Dollar Cost Averaging — The Role of Cognitive Error. SSRN Working Paper. <a href="https://doi.org/10.2139/ssrn.1473046">doi.org/10.2139/ssrn.1473046</a></li>
+      <li>Vanguard Research (2023, February). Cost averaging: Invest now or temporarily hold your cash? <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf">vanguard.com（PDF）</a></li>
+      <li>Kaur, et al. (2026). Dollar-Cost Averaging Versus Lump-Sum Investing under High Inflation. <i>Journal of Risk and Financial Management</i>. <a href="https://doi.org/10.3390/jrfm19090671">doi.org/10.3390/jrfm19090671</a></li>
+      <li>行情数据：Yahoo Finance，^SP500TR 与 ^HSI 月度收盘序列，访问日期 2026-10-03。</li>
+    </ol>
 
     <nav class="pager" aria-label="pagination" style="margin-top:26px">
       <a href="../ai-factor-referee/">

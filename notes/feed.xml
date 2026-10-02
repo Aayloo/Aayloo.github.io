@@ -5,11 +5,11 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
-    <title>定投还是 all-in：942 个月数据的答案</title>
+    <title>定投与一次性投入：基于 942 个月度观测的实证检验</title>
     <link>https://aayloo.github.io/notes/lump-sum-vs-dca/</link>
     <guid>https://aayloo.github.io/notes/lump-sum-vs-dca/</guid>
     <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-    <description>研究简报：先定义定投（DCA）与一次性投入（LSI），再用 942 个月真实数据回测。一次性赢约 80% 的起点，但它输的那 20% 高度规律。9 张图表（含 2 个可播放的交互动画），方法进附录。</description>
+    <description>研究工作稿：以标普 500 全收益与恒生指数共 942 个月度观测检验一次性投入与分期定额投入（DCA）。一次性投入在约八成起点占优，其劣势几乎全部集中于「部署期下跌」的样本；换到恒生指数，优势降至 63–69%。含 9 张图表与 2 个交互动画，文末附参考文献。</description>
   </item>
   <item>
     <title>AI 挖因子，谁来当裁判</title>
