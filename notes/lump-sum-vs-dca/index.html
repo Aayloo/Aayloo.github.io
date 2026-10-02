@@ -31,14 +31,6 @@
   color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
 .ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
 .ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
-.formulas{margin:18px 0 6px;border-top:1px solid var(--e-rule);border-bottom:1px solid var(--e-rule);
-  padding:10px 0 4px;background:var(--paper2);overflow-x:auto}
-.eq{display:flex;align-items:center;gap:14px;margin:8px 0}
-.eq img{height:auto;max-height:34px;max-width:100%;width:auto;object-fit:contain}
-.eqno{font-family:var(--mono);font-size:12.5px;color:#8A8172;min-width:34px}
-.eqcap{font-size:12.8px;line-height:1.7;color:#6B7280;margin:6px 0 0}
-.eqcap i{color:var(--e-ink);font-style:italic}
-@media (max-width:620px){.formulas{padding:10px 8px 4px}.eq{gap:8px}.eq img{max-height:24px}.eqno{min-width:26px;font-size:11px}}
 .vbox{background:var(--paper2);border:1px solid var(--e-rule);padding:16px 16px 10px;margin-top:8px}
 .ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
 .ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
@@ -82,7 +74,7 @@
 </nav>
 
 <div class="wrap">
-  <div class="rn-masthead"><span>Working Paper · 研究工作稿</span><span>2026-10-03 · v3.1 · 组合与执行</span></div>
+  <div class="rn-masthead"><span>Working Paper · 研究工作稿</span><span>2026-10-03 · v3.3 · 组合与执行</span></div>
   <h1 class="rn-title">定投与一次性投入：基于 942 个月度观测的实证检验</h1>
   <p class="rn-standfirst">本文考察一个被广泛讨论但常被误述的问题：当投资者已持有一笔可投资资金时，"一次性投入"与"分期定额投入（DCA）"孰优？我们以标普 500 全收益指数与恒生指数共 942 个月度观测为样本，对每一个可能的起点构造两种策略的持有期终值，并比较其分布。结论是：一次性投入在约八成的起点上占优，其劣势区间高度集中于<b>部署期（首十二个月）市场下跌</b>的样本；该机制在两个市场、多种持有期与分期长度下均稳健。</p>
   <ul class="rn-findings">
@@ -137,20 +129,7 @@
 
       <h2 id="s2"><span class="num">02</span><span class="zh">数据、方法与基准结果</span><span class="en">Data, method and benchmark results</span></h2>
       <p>样本为两类资产的月度总收益序列：标普 500 全收益指数（^SP500TR，含股息）1988-01 至 2026-09 共 465 个月；恒生指数（^HSI）1986-11 至 2026-07 共 477 个月。对每一个月度起点 t₀，我们计算两种策略在持有 H 年后的终值：一次性投入为 P(t₀+H)/P(t₀)；分期投入为 (1/N)·Σ P(t₀+H)/P(t₀+j)，j = 0…N−1，未投部分按 0% 计息。选择零利率是对 DCA 有利的假设，可避免结论偏向一次性投入。持有期取 1、3、5、10、20 年，分期长度取 6、12、24、36 个月。</p>
-      <p>形式化地，令 P(t) 为 t 时刻的指数水平（含股息），则两种策略在持有期 H、分期长度 N 下的终值分别为式 (1) 与式 (2)；本文的统计量为式 (3) 定义的胜率与式 (4) 定义的终值差额。</p>
-      <div class="formulas">
-        <div class="eq"><img src="../assets/figs/eq1.svg" alt="一次性投入终值公式"><span class="eqno">(1)</span></div>
-        <div class="eq"><img src="../assets/figs/eq2.svg" alt="分期投入终值公式"><span class="eqno">(2)</span></div>
-        <div class="eq"><img src="../assets/figs/eq3.svg" alt="胜率公式"><span class="eqno">(3)</span></div>
-        <div class="eq"><img src="../assets/figs/eq4.svg" alt="终值差额公式"><span class="eqno">(4)</span></div>
-      </div>
-      <p class="eqcap">符号：<i>P</i>(<i>t</i>)＝指数水平；<i>H</i>＝持有年数；<i>N</i>＝分期月数；𝒯＝全部可用月度起点集合；<b>1</b>{·}＝示性函数；Δ＝定投相对一次性的终值差（百分点）。</p>
-      <p>基准结果显示，一次性投入在终值期望与胜率两方面均占优。以 12 个月分期、10 年持有为例，标普 500 全收益口径下的完整起点共 <b>345</b> 个，其中一次性投入胜出 <b>79%</b>，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。表中数字在持有期维度上并非单调，说明其并非由某一特定年代的行情驱动，而更可能来自一个与时间无关的机制——下文将予以识别（式 (5) 与式 (6) 定义了该机制的两个变量）。</p>
-      <div class="formulas">
-        <div class="eq"><img src="../assets/figs/eq5.svg" alt="部署期收益公式"><span class="eqno">(5)</span></div>
-        <div class="eq"><img src="../assets/figs/eq6.svg" alt="机制关系式"><span class="eqno">(6)</span></div>
-      </div>
-      <p class="eqcap">式 (5) 定义<b>部署期收益</b> R<sup>dep</sup>，即前 N 个月的市场涨跌；式 (6) 是本文对机制的检验形式：终值差额应随部署期收益单调递减（β &lt; 0）。第 03 节将给出该关系的实证结果。</p>
+      <p>基准结果显示，一次性投入在终值期望与胜率两方面均占优。以 12 个月分期、10 年持有为例，标普 500 全收益口径下的完整起点共 <b>345</b> 个，其中一次性投入胜出 <b>79%</b>，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。表中数字在持有期维度上并非单调，说明其并非由某一特定年代的行情驱动，而更可能来自一个与时间无关的机制——下文将予以识别。</p>
       <div class="exhibit">
         <div class="ex-label">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</div>
         <div class="tbl-wrap">
@@ -171,13 +150,13 @@
       <div class="exhibit">
         <div class="ex-label">Exhibit 3 · 分期越长、持有越短，一次性投入胜率越高</div>
         <img src="../assets/figs/f19-winrate.svg" alt="一次性投入胜率矩阵" style="width:100%">
-        <p class="ex-note">横轴是"多久把钱投完"，纵轴是"持有多久"；每格给出一次性投入的胜率（式 (3)）与对应样本数 n。两个方向的规律都很稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。24 个月那一列甚至更高（84–85%），因为等待时间越长，"没吃到上涨"的代价越大。红框为本文主要口径（12 个月、10 年、n = 345）。</p>
+      <p class="ex-note">横轴是"多久把钱投完"，纵轴是"持有多久"；每格给出一次性投入的胜率与对应样本数 n。两个方向的规律都很稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。24 个月那一列甚至更高（84–85%），因为等待时间越长，"没吃到上涨"的代价越大。红框为本文主要口径（12 个月、10 年、n = 345）。</p>
         <p class="ex-src">来源：本文回测，数据与口径见附录。</p>
       </div>
       <div class="exhibit">
         <div class="ex-label">Exhibit 4 · 逐年差额：29 个起点年份，一年不落</div>
         <img src="../assets/figs/f24-year-gap.svg" alt="逐年终值差额柱状图" style="width:100%">
-        <p class="ex-note">为回应"是否挑选了有利年份"的质疑，我们把 1988–2016 年每一个 1 月起点逐一列出：柱高为定投减一次性的十年终值差（式 (4)）。<b>29 个年份中，一次性投入在 25 个年份占优；定投只在 4 个年份胜出</b>，且全部集中在 2000 年前后与 2007–2008 年——与式 (5) 所指的"部署期下跌"完全对应。灰柱为一次性占优的年份，蓝柱为定投占优的年份。</p>
+      <p class="ex-note">为回应"是否挑选了有利年份"的质疑，我们把 1988–2016 年每一个 1 月起点逐一列出：柱高为分期投入减一次性投入的十年终值差。<b>29 个年份中，一次性投入在 25 个年份占优；分期投入只在 4 个年份胜出</b>，且全部集中在 2000 年前后与 2007–2008 年——与部署期下跌的年份完全对应。</p>
         <p class="ex-src">来源：本文回测；每年 1 月入市、12 个月分批投完、持有 10 年。</p>
       </div>
 
@@ -315,7 +294,7 @@
 
   <footer>
     <div class="footin">
-      <span>Working Paper v3.1 · © 2026 Aylon · Hong Kong</span>
+      <span>Working Paper v3.3 · © 2026 Aylon · Hong Kong</span>
       <span class="spacer"></span>
       <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
       <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
