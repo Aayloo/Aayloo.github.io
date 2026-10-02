@@ -5,11 +5,11 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
-    <title>定投还是 all-in：一个被问错的题</title>
+    <title>定投还是 all-in：把三个词说清楚，再用 942 个月数据回答</title>
     <link>https://aayloo.github.io/notes/lump-sum-vs-dca/</link>
     <guid>https://aayloo.github.io/notes/lump-sum-vs-dca/</guid>
     <pubDate>Fri, 02 Oct 2026 00:00:00 +0000</pubDate>
-    <description>942 个月真实数据（美股 + 港股）：一次性投入赢约 80% 的起点，但它输的那 20% 恰好是「投完就跌」的月份。含两个可播放的交互动画（竞速条 + 事件标注赛跑）与两个市场对照。</description>
+    <description>先定义定投（DCA）、一次性投入（LSI）与定期定额，再用 942 个月真实数据回测：一次性赢约 80% 的起点，但它输的那 20% 恰好是「投完就跌」的月份。含 7 张图、2 个可播放的交互动画与两个市场对照。</description>
   </item>
   <item>
     <title>AI 挖因子，谁来当裁判</title>

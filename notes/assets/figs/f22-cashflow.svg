@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" width="1200" height="520" role="img"
+     aria-label="Lump-sum investing versus dollar-cost averaging: how the money enters the market">
+  <defs>
+    <marker id="ar22" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/>
+    </marker>
+    <marker id="ar22b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0072B2"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="520" fill="#FFFFFF"/>
+
+  <text x="40" y="50" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="22"
+        font-weight="650" fill="#111A28">三个词，两道题：钱是怎么进场的</text>
+  <text x="40" y="78" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="14" fill="#64748C">
+    Lump-sum investing (LSI) vs dollar-cost averaging (DCA) — same amount of money, different arrival pattern
+  </text>
+
+  <!-- 时间轴 -->
+  <line x1="120" y1="250" x2="1140" y2="250" stroke="#E2DCCE" stroke-width="2"/>
+  <g font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="11.5" fill="#8A8172">
+    <text x="118" y="272">第 0 月</text>
+    <text x="380" y="272">第 4 月</text>
+    <text x="650" y="272">第 8 月</text>
+    <text x="1090" y="272" text-anchor="end">第 12 月</text>
+  </g>
+  <g stroke="#E2DCCE" stroke-width="1">
+    <line x1="120" y1="244" x2="120" y2="256"/>
+    <line x1="455" y1="244" x2="455" y2="256"/>
+    <line x1="790" y1="244" x2="790" y2="256"/>
+    <line x1="1125" y1="244" x2="1125" y2="256"/>
+  </g>
+
+  <!-- 一次性投入 -->
+  <text x="40" y="150" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="16"
+        font-weight="650" fill="#D55E00">① 一次性投入（Lump-sum / all-in）</text>
+  <text x="40" y="176" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13" fill="#4A5A72">
+    手上的一笔钱，在第 0 个月全部买入，之后不动
+  </text>
+  <rect x="112" y="196" width="46" height="46" rx="8" fill="#D55E00"/>
+  <text x="135" y="225" text-anchor="middle" font-family="Consolas, monospace" font-size="15" fill="#fff">100%</text>
+  <line x1="140" y1="196" x2="140" y2="130" stroke="#D55E00" stroke-width="2" marker-end="url(#ar22)"/>
+  <text x="152" y="122" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#D55E00">
+    全部资金立刻暴露在市场里 —— 赢了赚满，跌了也跌满
+  </text>
+
+  <!-- 定投 -->
+  <text x="40" y="330" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="16"
+        font-weight="650" fill="#0072B2">② 定投（Dollar-cost averaging / DCA）</text>
+  <text x="40" y="356" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="13" fill="#4A5A72">
+    同一笔钱分成 12 份，每月买入一份；没投的那部分在等待期拿不到市场收益
+  </text>
+  <g fill="#0072B2">
+    <rect x="112" y="376" width="34" height="34" rx="6"/>
+    <rect x="196" y="376" width="34" height="34" rx="6"/>
+    <rect x="280" y="376" width="34" height="34" rx="6"/>
+    <rect x="364" y="376" width="34" height="34" rx="6"/>
+    <rect x="448" y="376" width="34" height="34" rx="6"/>
+    <rect x="532" y="376" width="34" height="34" rx="6"/>
+    <rect x="616" y="376" width="34" height="34" rx="6"/>
+    <rect x="700" y="376" width="34" height="34" rx="6"/>
+    <rect x="784" y="376" width="34" height="34" rx="6"/>
+    <rect x="868" y="376" width="34" height="34" rx="6"/>
+    <rect x="952" y="376" width="34" height="34" rx="6"/>
+    <rect x="1036" y="376" width="34" height="34" rx="6"/>
+  </g>
+  <g font-family="Consolas, monospace" font-size="11.5" fill="#fff" text-anchor="middle">
+    <text x="129" y="398">1/12</text><text x="213" y="398">1/12</text><text x="297" y="398">1/12</text>
+    <text x="381" y="398">1/12</text><text x="465" y="398">1/12</text><text x="549" y="398">1/12</text>
+    <text x="633" y="398">1/12</text><text x="717" y="398">1/12</text><text x="801" y="398">1/12</text>
+    <text x="885" y="398">1/12</text><text x="969" y="398">1/12</text><text x="1053" y="398">1/12</text>
+  </g>
+  <line x1="129" y1="376" x2="129" y2="310" stroke="#0072B2" stroke-width="2" marker-end="url(#ar22b)"/>
+  <text x="141" y="302" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#0072B2">
+    只有 1/12 立刻进场，其余在等待 —— 涨得慢，跌得也少
+  </text>
+  <text x="560" y="440" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12.5" fill="#8A8172">
+    等待期的现金在本笔记里按 0% 计息（对定投最有利的假设之一）
+  </text>
+
+  <!-- 两个补充定义 -->
+  <rect x="40" y="458" width="540" height="46" rx="10" fill="#FBF9F4" stroke="#E2DCCE"/>
+  <text x="58" y="480" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="13"
+        font-weight="650" fill="#111A28">③ 定期定额（来自每月收入）</text>
+  <text x="58" y="498" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12" fill="#4A5A72">
+    钱是陆续到来的，不是"分批投入同一笔钱"——它没有 all-in 这个选项
+  </text>
+  <rect x="620" y="458" width="540" height="46" rx="10" fill="#FBF9F4" stroke="#E2DCCE"/>
+  <text x="638" y="480" font-family="Aptos Display, Segoe UI, Noto Sans SC, sans-serif" font-size="13"
+        font-weight="650" fill="#111A28">④ 价值平均（Value averaging）</text>
+  <text x="638" y="498" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12" fill="#4A5A72">
+    另一个常被混进来的策略：按目标市值倒算投入额，本文不讨论
+  </text>
+
+  <text x="40" y="524" font-family="Aptos, Segoe UI, Noto Sans SC, sans-serif" font-size="12" fill="#64748C">
+    来源：本文自绘示意；术语沿用惯例英文缩写（LSI / DCA）。数据与回测见正文第 03 节与来源清单。
+  </text>
+</svg>

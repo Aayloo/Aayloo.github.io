@@ -3,31 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>定投还是 all-in：一个被问错的题 · Notes</title>
-<meta name="description" content="942 个月真实数据（美股 + 港股）回测定投与一次性投入：一次性胜率约 80%，但它输的那 20% 恰好是「投完就跌」的月份。含两个可播放的交互动画。">
-<meta property="og:title" content="定投还是 all-in：一个被问错的题">
-<meta property="og:description" content="942 个月真实数据：一次性投入赢 80% 的起点，但定投赢的那 20% 恰好是崩盘立刻发生的月份。">
+<title>定投还是 all-in：把三个词说清楚，再用 942 个月数据回答 · Notes</title>
+<meta name="description" content="先定义定投（DCA）与一次性投入（LSI），再用 942 个月真实数据回测：一次性胜率约 80%，但它输的那 20% 恰好是「投完就跌」的月份。含 7 张图、2 个交互动画。">
+<meta property="og:title" content="定投还是 all-in：把三个词说清楚，再用 942 个月数据回答">
+<meta property="og:description" content="定投、一次性投入、定期定额到底分别是什么？942 个月数据给出的答案是：一次性赢 80% 的起点，但它输的那 20% 有规律。">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/editorial.css">
 <style>
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:28px 0}
-.kpi div{background:var(--paper2);border:1px solid var(--e-rule);padding:16px 18px}
-.kpi b{display:block;font-size:30px;color:var(--e-accent);line-height:1.1}
-.kpi span{font-size:13.5px;color:#8A8172;line-height:1.6}
-.vbox{background:var(--paper2);border:1px solid var(--e-rule);padding:20px 20px 14px;margin:28px 0}
-.vbox h3{margin:0 0 4px;font-size:17px}
-.vbox .hintx{color:#8A8172;font-size:13.5px;margin:0 0 14px}
-.ctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:4px 0 14px;font-family:var(--f-body);font-size:14px}
-.ctrl button,.ctrl select{font:inherit;padding:7px 12px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0}
+.kpi div{background:var(--paper2);border:1px solid var(--e-rule);padding:14px 16px}
+.kpi b{display:block;font-size:27px;color:var(--e-accent);line-height:1.1}
+.kpi span{font-size:13px;color:#8A8172;line-height:1.6}
+.vbox{background:var(--paper2);border:1px solid var(--e-rule);padding:18px 18px 12px;margin:26px 0}
+.vbox h3{margin:0 0 4px;font-size:16.5px}
+.vbox .hintx{color:#8A8172;font-size:13px;margin:0 0 12px}
+.ctrl{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:4px 0 12px;font-family:var(--f-body);font-size:13.5px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 11px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
 .ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
-.ctrl input[type=range]{flex:1;min-width:140px}
+.ctrl input[type=range]{flex:1;min-width:130px}
 .vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
-.vstat{display:flex;gap:24px;flex-wrap:wrap;font-family:var(--f-body);font-size:14px;color:#5A5347;margin-top:12px}
-.vstat b{font-family:var(--mono);font-size:22px;color:var(--e-ink)}
-.vlegend{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13.5px;color:#5A5347;margin-top:8px}
-.vlegend i{display:inline-block;width:16px;height:4px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.vstat{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--f-body);font-size:13.5px;color:#5A5347;margin-top:10px}
+.vstat b{font-family:var(--mono);font-size:20px;color:var(--e-ink)}
+.vlegend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:8px}
+.vlegend i{display:inline-block;width:15px;height:4px;vertical-align:middle;margin-right:6px;border-radius:2px}
+.faq{border-top:1px solid var(--e-rule);padding-top:14px;margin-top:18px}
+.faq dt{font-weight:700;color:var(--e-ink);margin-top:14px}
+.faq dd{margin:6px 0 0;color:var(--e-body)}
 </style>
 </head>
 <body>
@@ -51,22 +54,22 @@
 <div class="wrap">
   <header class="nhero">
     <div class="eyebrow">Portfolio · 2026-10-02</div>
-    <h1><span class="zh">定投还是 all-in：一个被问错的题</span>
+    <h1><span class="zh">定投还是 all-in：把三个词说清楚，再用 942 个月数据回答</span>
         <span class="en">Lump sum or dollar-cost averaging?</span></h1>
     <div class="badges">
       <span class="badge badge-invest">投资决策</span>
       <span class="badge badge-method">回测实证</span>
       <span class="badge badge-data">942 个月真实数据</span>
-      <span class="badge badge-method">两个市场</span>
-      <span class="badge badge-read">约 10 分钟</span>
+      <span class="badge badge-method">7 图 + 2 动画</span>
+      <span class="badge badge-read">约 14 分钟</span>
     </div>
     <p class="lede">
-      <span class="zh">如果你手上已经有一笔钱，你会<b>一次投完</b>，还是<b>分 12 个月投完</b>？我用 942 个月的真实数据把两道都跑了：一次性投入在约 <b>80%</b> 的起点胜出；而它输的那 20% 有一个非常具体的规律——<b>投完就跌</b>。</span>
-      <span class="en">If you already hold the cash, do you invest it now or spread it over twelve months? Across 942 months of real data, going all-in won about 80% of the time — and the 20% it lost share one feature: the crash arrived immediately.</span>
+      <span class="zh">先回答最基础的问题：<b>定投（DCA）</b>是把一笔钱分成若干期等额买入，<b>一次性投入（LSI / all-in）</b>是期初全部买入并持有。至于哪个更好——942 个月的真实数据说：<b>一次性投入赢约 80% 的起点，但它输的那 20% 有非常具体的规律</b>。</span>
+      <span class="en">Dollar-cost averaging spreads one pot over several purchases; lump-sum investing buys it all at once. Across 942 months of real data, all-in won about 80% of the time — and the losses share one feature.</span>
     </p>
     <div class="kv">
       <div>发布 / Published</div><div>2026-10-02</div>
-      <div>版本 / Version</div><div>v1.1</div>
+      <div>版本 / Version</div><div>v1.2</div>
       <div>数据 / Data</div><div><span class="zh">标普 500 全收益 465 个月 + 恒生指数 477 个月</span><span class="en">S&amp;P 500 total return (465m) + Hang Seng (477m)</span></div>
       <div>标签 / Tags</div><div>组合 · 执行</div>
     </div>
@@ -77,7 +80,7 @@
 
       <div class="vbox">
         <h3>先看一个例子：100 元投进去，十年后有多少</h3>
-        <p class="hintx">点「播放」，看两条横条随时间增长；领先方会实时标出来。（可切换市场与起点）</p>
+        <p class="hintx">点「播放」，两条横条随时间增长，领先方实时标出。可切换市场与起点。</p>
         <div class="ctrl">
           <button class="primary" id="a-play">▶ 播放</button>
           <select id="a-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
@@ -102,47 +105,64 @@
       <div class="tldr">
         <h2>TL;DR</h2>
         <ol>
-          <li><span class="zh"><b>先分清两种钱。</b>手上已有的一笔钱（存量）才有"分几次投"的选择；每月结余（流量）本来就没有一次性投入这个选项——那时的"定投"不是策略，是唯一做法。</span>
-              <span class="en">Two kinds of money: a lump sum you already hold, versus monthly savings where there is no choice at all.</span></li>
-          <li><span class="zh"><b>一次性投入赢得更多、也更经常赢。</b>分 12 个月投完、持有 10 年：一次性在 <b>79%</b> 的月度起点胜出，中位数多赚 <b>0.13 倍本金</b>（持有 20 年：0.29 倍）。</span>
-              <span class="en">All-in wins 79% of starts at a 10-year horizon, median +0.13x of principal.</span></li>
-          <li><span class="zh"><b>定投只在"投完就跌"时赢。</b>它赢的起点恰好是部署期（前 12 个月）下跌的月份，占全部起点 <b>17–18%</b>——<b>定投的胜率 ≈ 崩盘马上发生的概率</b>。</span>
+          <li><span class="zh"><b>先分清三个词</b>：一次性投入（LSI）＝期初全买；定投（DCA）＝同一笔钱分几期等额买；定期定额＝每月从收入里买。前两个才是"选择题"，第三个根本没有 all-in 这个选项。</span>
+              <span class="en">Three terms first: LSI buys at once, DCA spreads one pot, and monthly saving from income is not a choice at all.</span></li>
+          <li><span class="zh"><b>结果一：一次性投入赢约 80%。</b>分 12 个月投完、持有 10 年，一次性在 <b>79%</b> 的月度起点胜出，中位数多赚 <b>0.13 倍本金</b>（持有 20 年：0.29 倍）。</span>
+              <span class="en">All-in wins 79% of starts at a ten-year horizon, median +0.13x of principal.</span></li>
+          <li><span class="zh"><b>结果二：它输的那 20% 有规律。</b>定投赢的起点恰好是部署期（前 12 个月）下跌的月份，占全部起点 <b>17–18%</b>——<b>定投的胜率 ≈ 崩盘马上发生的概率</b>。</span>
               <span class="en">DCA wins only when the deployment window falls — about 17–18% of starts.</span></li>
-          <li><span class="zh"><b>崩盘晚一年到，定投就完全失效。</b>1999-02 起步：一次性 0.71 倍、定投 0.65 倍；2007-10 起步：一次性 2.06 倍、定投 2.34 倍——差 34 个百分点。</span>
+          <li><span class="zh"><b>崩盘晚一年到，定投就完全失效。</b>1999-02 起步：一次性 0.71 倍、定投 0.65 倍；2007-10 起步：一次性 2.06 倍、定投 2.34 倍——同一策略差 34 个百分点。</span>
               <span class="en">Timing decides it: 1999-02 favours all-in, 2007-10 favours DCA by 28 points.</span></li>
-          <li><span class="zh"><b>换个市场要打折。</b>恒生指数上一次性胜率只有 <b>63–69%</b>：波动更大、横盘更久的市场里，"分批"的保险更值钱。</span>
+          <li><span class="zh"><b>换个市场要打折。</b>恒生指数上一次性胜率只有 <b>63–69%</b>：波动更大、横盘更久的市场里，"分批"这份保险更值钱。</span>
               <span class="en">In Hong Kong the all-in win rate falls to 63–69%.</span></li>
         </ol>
       </div>
 
-      <h2 id="s1"><span class="num">01</span><span class="zh">先把问题问对：两种钱</span><span class="en">Two kinds of money first</span></h2>
-      <p><span class="zh">这个问题之所以总吵不完，是因为大家在用同一个词说两件事。</span>
-      <span class="en">The argument never ends because one word covers two different situations.</span></p>
+      <h2 id="s1"><span class="num">01</span><span class="zh">术语：三个词，两道题</span><span class="en">Terms: three words, two questions</span></h2>
+      <p><span class="zh">这个话题之所以总是吵不清，一半原因在词上。先把四个常见说法分清楚，后面的结论才不会串味。</span>
+      <span class="en">Half of the confusion is terminological. Four terms, defined before any numbers.</span></p>
       <ul>
-        <li><span class="zh"><b>存量资金</b>：手上已经有一笔钱（年终奖、卖房、赎回理财、继承）。这时你面对的才是"现在投，还是分几个月投"。</span>
-          <span class="en"><b>A stock of money.</b> Only here is "now or spread out" a real question.</span></li>
-        <li><span class="zh"><b>流量资金</b>：每月工资结余。钱是陆续到来的，你本来就只能一段一段买——<b>对绝大多数人来说，"定投 vs all-in"是一道问错的题：你只能定投。</b></span>
-          <span class="en"><b>A flow of money.</b> Salary arrives monthly, so DCA is not a strategy but the only option.</span></li>
+        <li><span class="zh"><b>一次性投入（Lump-sum investing，LSI，也常叫 all-in）</b>：手上已经有一笔钱，在期初一次性全部买入，之后不再加仓。它的特征是<b>资金立刻、完全暴露在市场里</b>。</span>
+          <span class="en"><b>Lump-sum investing (LSI / all-in):</b> invest the whole pot at once; capital is fully exposed immediately.</span></li>
+        <li><span class="zh"><b>定投（Dollar-cost averaging，DCA）</b>：把<b>同一笔钱</b>分成 N 期、每期等额买入（本文用 6 / 12 / 24 / 36 个月）。严格定义是"固定金额、固定频率买入"，所以它同时被用来描述两种场景——后面会拆开。</span>
+          <span class="en"><b>Dollar-cost averaging (DCA):</b> split one pot into N equal purchases at fixed intervals.</span></li>
+        <li><span class="zh"><b>定期定额（来自每月收入）</b>：钱不是一开始就有的，而是每月工资结余。这跟"把一笔钱分批投"<b>不是同一道题</b>——你没有 all-in 这个选项，所以它也谈不上"哪个更好"。</span>
+          <span class="en"><b>Monthly saving out of income:</b> the money arrives over time, so there is no lump sum to choose.</span></li>
+        <li><span class="zh"><b>价值平均（Value averaging）</b>：按"目标市值"倒算每期该投多少（跌了多投、涨了少投甚至卖出）。它常被和 DCA 混为一谈，但机制完全不同，本文不讨论。</span>
+          <span class="en"><b>Value averaging:</b> invest whatever is needed to hit a target portfolio value — a different mechanism, out of scope here.</span></li>
       </ul>
-      <p><span class="zh">下面的一切都只讨论第一种情况：<b>同一笔钱，一次性投 vs 分 6/12/24/36 个月投完</b>。</span>
-      <span class="en">Everything below concerns the first case only.</span></p>
+      <figure>
+        <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入、定投、定期定额、价值平均的现金流时间轴对比">
+        <figcaption><b>图 1｜钱是怎么进场的</b>（来源：本文自绘示意）。
+        <span class="zh">上面一行是<b>一次性投入</b>：一个 100% 的方块，资金在第 0 个月全部进场。下面一行是<b>定投</b>：同一笔钱被切成 12 份，每月进场 1/12，没投的部分在等待期不承担市场风险，也拿不到市场收益。<b>这道题的全部内容就在这一张图里。</b></span>
+        <span class="en">Top row: the whole pot enters at month zero. Bottom row: the same pot is sliced into twelve monthly purchases; cash waits without market risk or return.</span></figcaption>
+      </figure>
+      <div class="callout co-fact">
+        <span class="lbl">本文的范围 · Scope</span>
+        <p><span class="zh">以下所有数字只回答一个问题：<b>同一笔钱，一次性投 vs 分 6/12/24/36 个月投完，哪个更好？</b>不涉及"每月工资怎么投"（那是流量问题），也不涉及价值平均、再平衡、择时。</span>
+          <span class="en">Everything below answers one question only: the same pot, all at once versus over 6/12/24/36 months.</span></p>
+      </div>
 
       <h2 id="s2"><span class="num">02</span><span class="zh">这个回测怎么做</span><span class="en">How the backtest works</span></h2>
-      <p><span class="zh">为了让结论经得起追问，我把方法写清楚，而不是只报一个胜率：</span>
-      <span class="en">The method, stated plainly rather than buried in a footnote.</span></p>
+      <p><span class="zh">这类结论最容易被"挑起点"污染，所以我把方法写清楚——你也可以照着复现。</span>
+      <span class="en">Results like these are easily polluted by cherry-picked start dates, so here is the full method.</span></p>
       <ul>
-        <li><span class="zh"><b>数据</b>：标普 500 <i>全收益</i>指数（^SP500TR，含股息）月度，1988-01 → 2026-09，共 465 个月；恒生指数（^HSI，价格）月度，1986-11 → 2026-07，共 477 个月。</span>
-          <span class="en"><b>Data:</b> S&amp;P 500 total return (465 monthly points) and Hang Seng (477 monthly points).</span></li>
-        <li><span class="zh"><b>做法</b>：把历史上<i>每一个月</i>都当作起点：一次性＝当天全额买入并持有 H 年；定投＝分 N 个月等额买入，未投部分按 <b>0%</b> 计息，持到 t0+H。然后统计一次性赢的比例和终值差额。</span>
-          <span class="en"><b>Method:</b> every month is a start date; all-in versus N equal purchases with 0% on uninvested cash.</span></li>
-        <li><span class="zh"><b>为什么现金按 0%</b>：这是对定投<b>最有利</b>的假设之一——如果把等待期的货币利率算进去，定投的劣势只会更小（对一次性不利）；反过来计入通胀则更糟。选 0% 是为了不把结论往一边推。</span>
-          <span class="en"><b>Why 0% on cash:</b> it is generous to DCA, which keeps the conclusion from being tilted.</span></li>
+        <li><span class="zh"><b>数据</b>：标普 500 <i>全收益</i>指数（^SP500TR，含股息，这很重要——只算价格会低估长期持有）月度，1988-01 → 2026-09，共 465 个月；恒生指数（^HSI，价格）月度，1986-11 → 2026-07，共 477 个月。</span>
+          <span class="en"><b>Data:</b> 465 months of S&amp;P 500 total return plus 477 months of the Hang Seng.</span></li>
+        <li><span class="zh"><b>起点</b>：把历史上<i>每一个月</i>都当作起点（不是挑几个"代表性年份"）。标普口径下，持有 10 年的完整起点有 <b>345</b> 个；持有 20 年的有 225 个。样本量足够支撑"胜率"这种说法。</span>
+          <span class="en"><b>Starts:</b> every month is a start date — 345 complete ten-year windows for the US series.</span></li>
+        <li><span class="zh"><b>两种做法</b>：一次性＝当天全额买入并持有 H 年；定投＝分 N 个月等额买入，<b>未投部分按 0% 计息</b>，同样持有到 t0+H。两种做法的起点、本金、持有期完全一致，唯一差别是"钱什么时候进场"。</span>
+          <span class="en"><b>Both strategies:</b> identical start, principal and horizon; only the arrival schedule differs.</span></li>
+        <li><span class="zh"><b>为什么现金按 0%</b>：这是对定投<b>偏有利</b>的假设。如果把等待期的货币市场利率算进去，定投的劣势只会更小；反过来把通胀算进去则更糟。选 0% 是为了不让结论往任何一边偏。</span>
+          <span class="en"><b>Why 0% on cash:</b> it is generous to DCA and keeps the comparison from tilting.</span></li>
+        <li><span class="zh"><b>没有计入的东西</b>：交易成本、税费、汇率、心理因素。前三个都会让"分批"更吃亏（多笔交易成本更高），最后一个则相反，但无法用回测衡量。</span>
+          <span class="en"><b>Not modelled:</b> costs, taxes, FX and psychology — the first three penalise spreading, the last one favours it.</span></li>
       </ul>
 
       <h2 id="s3"><span class="num">03</span><span class="zh">结果一：一次性投入赢多少</span><span class="en">Result one: how often all-in wins</span></h2>
       <div class="kpi">
         <div><b>79%</b><span>一次性胜率（美股，12 个月分期，持有 10 年）</span></div>
-        <div><b>+0.13x</b><span>10 年持有的中位差额（0.29x @ 20 年）</span></div>
+        <div><b>+0.13x</b><span>10 年持有的中位差额（20 年：0.29x）</span></div>
         <div><b>17%</b><span>起点中"投完就跌"的比例</span></div>
         <div><b>65%</b><span>同样的做法在恒生指数上的胜率</span></div>
       </div>
@@ -162,29 +182,53 @@
             <tr><td>20 年</td><td>74%</td><td>82%</td><td>85%</td><td>81%</td></tr>
           </tbody>
         </table>
-        <p class="tnote"><span class="zh">高亮单元 = 本文主要口径（12 个月分期、持有 10 年）。每个可能的月度起点各算一次。</span>
-        <span class="en">Highlighted cell: the headline case.</span></p>
+        <p class="tnote"><span class="zh">高亮单元 = 本文主要口径（12 个月分期、持有 10 年）；每一格都是"一次性终值高于定投终值"的起点比例。</span>
+        <span class="en">Highlighted cell: the headline case. Each cell is the share of starts where all-in ends higher.</span></p>
       </div>
       <figure>
         <img src="../assets/figs/f19-winrate.svg" alt="不同持有期与分期长度下一次性投入的胜率热力图">
-        <figcaption><b>图 1｜分期越长，一次性投入赢得越多</b>（来源：本文回测）。
-        <span class="zh">横轴是"多久把钱投完"，纵轴是"持有多久"，格子里的数字是<b>一次性投入赢的概率</b>。两个方向都很稳定：把投完时间拉长、或把持有期缩短，领先的都是一次性。</span>
-        <span class="en">Longer deployment and shorter holding both favour all-in; the grid is stable.</span></figcaption>
+        <figcaption><b>图 2｜分期越长，一次性投入赢得越多</b>（来源：本文回测）。
+        <span class="zh">横轴是"多久把钱投完"，纵轴是"持有多久"，格子里的数字是一次性投入赢的概率。两个方向都单调而稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。注意 24 个月分期那一列反而升到 84–85%——因为等待时间越长，"没吃到上涨"的代价越大。</span>
+        <span class="en">Slower deployment and shorter holding both favour all-in; the 24-month column is even higher because waiting costs more.</span></figcaption>
       </figure>
+      <p><span class="zh">怎么理解这个 79%？它是<b>历史上 345 个起点的比例</b>，不是"你下次投资的成功概率"。它回答的是"如果我随机选一个月份入市，哪种做法更可能更好"，而不是"我这次一定更好"。</span>
+      <span class="en">The 79% is a ratio across 345 historical starts — a statement about the distribution, not a promise about your own path.</span></p>
 
       <h2 id="s4"><span class="num">04</span><span class="zh">结果二：它输在哪里</span><span class="en">Result two: where all-in loses</span></h2>
-      <p><span class="zh">把每一次"定投赢"的案例摊开，只会看到一个变量：<b>前 12 个月市场是涨还是跌</b>。下图是 345 个起点的全部结果。</span>
+      <p><span class="zh">把每一次"定投赢"的案例摊开，只会看到一个变量：<b>前 12 个月市场是涨还是跌</b>。下图是 345 个起点的全部结果，不是挑选出来的例子。</span>
       <span class="en">Every DCA win shares one variable: whether the first twelve months rose or fell.</span></p>
       <figure>
         <img src="../assets/figs/f18-mechanism.svg" alt="部署期市场涨跌与定投相对差额的散点图">
-        <figcaption><b>图 2｜一个变量解释了几乎全部</b>（来源：本文回测）。横轴是前 12 个月的市场涨跌，纵轴是定投相对一次性的 10 年终值差（占本金百分点）。
-        <span class="zh"><b>部署期上涨 → 定投几乎必然落后；部署期下跌 → 定投反超。</b>所以定投的价值不是"摊平成本"，而是"躲开立刻发生的崩盘"。</span>
-        <span class="en">Rising window: DCA loses. Falling window: DCA wins.</span></figcaption>
+        <figcaption><b>图 3｜一个变量解释了几乎全部</b>（来源：本文回测）。
+        <span class="zh">横轴是前 12 个月的市场涨跌，纵轴是定投相对一次性的 10 年终值差（占本金百分点）：<b>点几乎全部落在一条斜线上</b>。部署期上涨 → 定投几乎必然落后；部署期下跌 → 定投反超。所以定投的价值不是"摊平成本"，而是<b>"躲开立刻发生的崩盘"</b>。</span>
+        <span class="en">Almost every point sits on one line: a rising window means DCA loses, a falling window means DCA wins.</span></figcaption>
+      </figure>
+      <p><span class="zh">这也解释了为什么"定投赢面只有 20% 左右"——不是定投特别差，而是<b>历史上"投完就跌"的窗口本来就只占 17–18%</b>。市场大部分时间在涨，所以大部分时候"更早到场"更划算。</span>
+      <span class="en">DCA's ~20% win rate simply mirrors the 17–18% of windows that fell. Most of the time, markets rose — so arriving earlier paid.</span></p>
+
+      <h2 id="s5"><span class="num">05</span><span class="zh">机制深化：分批的钱从哪来</span><span class="en">Where DCA's gains come from</span></h2>
+      <p><span class="zh">"分批买得更便宜"这句话需要一个证据：到底哪几期在起作用？我把 2007-10 起步的分 12 期拆开看。</span>
+      <span class="en">If spreading buys cheaper, which purchases actually pay? Here is every tranche of the 2007-10 start.</span></p>
+      <figure>
+        <img src="../assets/figs/f23-tranche-and-distribution.svg" alt="分批贡献分解与差额分布直方图">
+        <figcaption><b>图 4｜左：哪一期买得最值；右：定投赢的稀有程度</b>（来源：本文回测）。
+        <span class="zh">左图（2007-10 起步）：灰线是每一期买入时的指数位置，蓝柱是那一期最终值多少——<b>最后几期买在最低位，扛起了定投的大部分收益</b>。右图：全部 345 个起点的差额分布，中位数是 <b>−13.1pp</b>（即定投中位落后 13 个百分点），只有 <b>21%</b> 的起点落在零线右侧。分布的形状很关键：<b>右侧尾巴短而左侧尾巴长</b>——定投"赢一点点"的情况少，"输一截"的情况多。</span>
+        <span class="en">Left: the later tranches bought cheapest and did the heavy lifting. Right: the distribution of outcomes — median −13pp, only 21% of starts to the right of zero, with a short right tail and a long left tail.</span></figcaption>
       </figure>
 
-      <h2 id="s5"><span class="num">05</span><span class="zh">自己动手看</span><span class="en">See it move</span></h2>
-      <p><span class="zh">下面这张图可以直接播放：<b>领跑方用色带标出来</b>（橙＝一次性领先，蓝＝定投领先），历史大事标在时间轴上，下方是同步的差距条。换起点、换市场，你会看到同一个策略给出相反的结论。</span>
-      <span class="en">Press play: the ribbon between the lines shows who leads, events are marked, and a gap strip tracks the difference below.</span></p>
+      <h2 id="s6"><span class="num">06</span><span class="zh">全样本扫描：每个起点年份一格</span><span class="en">Every start year, one cell</span></h2>
+      <p><span class="zh">最常见的质疑是"你是不是挑了几个好年份"。下面这张图把 29 个起点年份全部摊开：每个格子里橙柱是一次性、蓝柱是定投，持有 10 年，背景色标出谁赢。</span>
+      <span class="en">The usual objection is cherry-picking. Here are all 29 January start years, each in its own cell.</span></p>
+      <figure>
+        <img src="../assets/figs/f24-small-multiples.svg" alt="29 个起点年份的小倍数矩阵，每个格子对比一次性与定投的终值">
+        <figcaption><b>图 5｜29 个起点年份，一格不落</b>（来源：本文回测）。
+        <span class="zh">29 个年份里，一次性赢 <b>25</b> 年、定投赢 <b>4</b> 年（14%）。定投赢的年份集中在<b>关键转折点附近</b>：2000 年前后（网络泡沫）与 2007–2008（金融危机）——也就是图 3 里那些"部署期正好在跌"的起点。除此之外，橙柱几乎总是更高。</span>
+        <span class="en">All-in wins 25 of 29 years; DCA's four wins cluster around 2000 and 2007–08 — exactly the falling deployment windows.</span></figcaption>
+      </figure>
+
+      <h2 id="s7"><span class="num">07</span><span class="zh">自己动手看</span><span class="en">See it move</span></h2>
+      <p><span class="zh">下面这张图可以播放：<b>领跑方用色带标出来</b>（橙＝一次性领先，蓝＝定投领先），历史大事标在时间轴上，下方是同步的差距条。切换起点或市场，你会看到同一策略给出相反结论。</span>
+      <span class="en">Press play: the ribbon shows who leads, events are marked, and a gap strip tracks the difference.</span></p>
       <div class="vbox">
         <div class="ctrl">
           <button class="primary" id="d-play">▶ 播放</button>
@@ -212,20 +256,22 @@
         </div>
       </div>
 
-      <h2 id="s6"><span class="num">06</span><span class="zh">两个真实起点：差 34 个百分点</span><span class="en">Two real start dates</span></h2>
+      <h2 id="s8"><span class="num">08</span><span class="zh">两个真实起点：差 34 个百分点</span><span class="en">Two real start dates</span></h2>
       <figure>
         <img src="../assets/figs/f20-worst-case.svg" alt="1999-02 与 2007-10 两个起点的路径对比">
-        <figcaption><b>图 3｜同样的策略，相反的结果</b>（来源：本文回测）。
-        <span class="zh">左：<b>1999-02</b> 起步——市场在崩盘前又多涨一年，定投买在高位，10 年后 0.65 倍 vs 一次性 0.71 倍。<br>右：<b>2007-10</b> 起步——危机第一波就在眼前，分批买得越来越便宜，10 年后 2.34 倍 vs 2.06 倍。</span>
+        <figcaption><b>图 6｜同样的策略，相反的结果</b>（来源：本文回测）。
+        <span class="zh">左：<b>1999-02</b> 起步——市场在崩盘前又多涨一年，定投买在高位，10 年后 0.65 倍 vs 一次性 0.71 倍。<br>右：<b>2007-10</b> 起步——危机第一波就在眼前，分批买得越来越便宜，10 年后 2.34 倍 vs 2.06 倍。<b>两个起点的差别不是"策略好坏"，而是"崩盘早到还是晚到"。</b></span>
         <span class="en">Left: the crash came a year late and DCA bought the rise. Right: the crash came at once.</span></figcaption>
       </figure>
       <div class="callout co-infer">
         <span class="lbl">推断 · Inference</span>
-        <p><span class="zh">这两条路径说明：<b>定投的收益不是"平均成本"，而是"运气订单"</b>。它在你最需要的时候（崩盘立刻发生）出现，在最尴尬的时候（崩盘晚一年）消失。所以听到"定投让我赚更多"，先问他从哪一年开始投。</span>
-          <span class="en">DCA is a lottery ticket on the timing of the crash, not an averaging machine.</span></p>
+        <p><span class="zh">所以定投的收益不是"平均成本"，而是<b>"运气订单"</b>：它在你最需要的时候（崩盘立刻发生）出现，在最尴尬的时候（崩盘晚一年）消失。听到"定投让我赚更多"时，先问他从哪一年开始投——这句话能过滤掉大部分幸存者叙事。</span>
+          <span class="en">DCA is a lottery ticket on the timing of the crash. Ask anyone who credits it which year they started.</span></p>
       </div>
 
-      <h2 id="s7"><span class="num">07</span><span class="zh">换个市场还成立吗</span><span class="en">Does it hold elsewhere?</span></h2>
+      <h2 id="s9"><span class="num">09</span><span class="zh">换个市场还成立吗</span><span class="en">Does it hold elsewhere?</span></h2>
+      <p><span class="zh">美股 1988 年以来的特征是"长期向上、回撤后能恢复"。这不是所有市场的常态，所以我用恒生指数做了同样的回测（1986-11 起，477 个月，覆盖 1997、2000、2008、2015、2018–2022 多轮深跌与长横盘）。</span>
+      <span class="en">The US series recovered from every drawdown. Hong Kong did not always — so the same test, run again.</span></p>
       <div class="tbl-wrap">
         <table class="tbl">
           <caption><span class="zh">表 2｜两个市场的一次性投入胜率（12 个月分期）</span><span class="en">Table 2｜All-in win rate by market</span></caption>
@@ -243,63 +289,96 @@
       </div>
       <figure>
         <img src="../assets/figs/f21-market-compare.svg" alt="标普 500 与恒生指数上一次性投入胜率的对比柱状图">
-        <figcaption><b>图 4｜同一个问题，换个市场，答案变弱</b>（来源：本文回测）。
-        <span class="zh">恒生指数上一次性只赢 <b>63–69%</b>，比美股低约 15 个百分点。原因不神秘：港股波动更大、横盘与深跌的时间更长。<b>所以"all-in 更好"不是普适定律，它建立在"市场长期向上、且你能承受回撤"这两个前提上。</b></span>
-        <span class="en">In Hong Kong all-in wins only 63–69%; the conclusion depends on the market.</span></figcaption>
+        <figcaption><b>图 7｜同一个问题，换个市场，答案变弱</b>（来源：本文回测）。
+        <span class="zh">恒生指数上一次性只赢 <b>63–69%</b>，比美股低约 15 个百分点，且持有期越长差距越小。原因不神秘：<b>港股波动更大、横盘和深跌的时间更长</b>，所以"等一等"的机会成本更低。结论：<b>"all-in 更好"不是普适定律，它建立在"市场长期向上、且你能承受回撤"这两个前提上。</b></span>
+        <span class="en">In Hong Kong all-in wins only 63–69%: higher volatility and longer flat stretches change the answer.</span></figcaption>
       </figure>
       <p class="tnote"><span class="zh">注：恒生指数为价格指数（不含股息），这会低估买入并持有，因此对"一次性投入"是偏保守的口径。</span>
         <span class="en">Note: the Hang Seng series is price-only, which understates buy-and-hold.</span></p>
 
-      <h2 id="s8"><span class="num">08</span><span class="zh">所以到底该怎么做</span><span class="en">What to actually do</span></h2>
+      <h2 id="s10"><span class="num">10</span><span class="zh">为什么这件事争论这么久</span><span class="en">Why the argument never ends</span></h2>
+      <p><span class="zh">如果数字这么清楚，为什么还有那么多人在争论？因为双方回答的其实不是同一个问题。</span>
+      <span class="en">If the numbers are this clear, why does the argument persist? Because the two sides answer different questions.</span></p>
+      <ul>
+        <li><span class="zh"><b>学术一侧问的是"期望效用"。</b>Constantinides（1979）证明在一个标准效用框架下，定投不是最优策略；Rozeff（1994）与 Knight &amp; Mandell（1992）用历史数据指出一次性投入的期望收益更高。他们的结论是对的——<b>在这些前提之下</b>。<span class="sup">[1][2][3]</span></span>
+          <span class="en"><b>The academic side asks about expected utility.</b> The classics show DCA is not optimal in expectation.<span class="sup">[1][2][3]</span></span></li>
+        <li><span class="zh"><b>实务一侧问的是"你会不会做"。</b>如果一次性投入之后立刻遇到 30% 回撤，很多人会卖在底部——那时的期望收益再高也没有意义。<b>定投买的不是收益，是"你愿意开始并坚持"。</b></span>
+          <span class="en"><b>The practitioner side asks whether you will actually do it.</b> DCA buys the willingness to start and stay.</span></li>
+        <li><span class="zh"><b>两个心理因素在起作用。</b>一是<b>损失厌恶</b>：同样的亏损带来的痛苦大于同等收益的快乐；二是<b>后悔厌恶</b>：all-in 之后跌，"我本可以分批"的自责特别强；而分批之后跌，你会觉得"至少我谨慎过"。<b>这两个偏差不会改变期望收益，但会改变你的行为——而行为决定你最终拿到的收益。</b></span>
+          <span class="en"><b>Two biases are at work:</b> loss aversion and regret aversion. They do not change expected return, but they change behaviour — and behaviour determines realised return.</span></li>
+        <li><span class="zh"><b>近年的讨论又多了一维：环境。</b>2026 年一篇针对高通胀环境的研究重新检查了这个问题，说明"哪个更好"依赖于通胀与利率所处的状态——这提示我们，上面的 80% 是<b>特定历史时期</b>的答案，而不是自然常数。<span class="sup">[4]</span></span>
+          <span class="en"><b>Recent work adds a regime dimension:</b> 2026 research on high-inflation environments shows the answer depends on the macro state.<span class="sup">[4]</span></span></li>
+      </ul>
+
+      <h2 id="s11"><span class="num">11</span><span class="zh">所以到底该怎么做</span><span class="en">What to actually do</span></h2>
       <ol>
-        <li><span class="zh"><b>先按"钱的来源"分类。</b>每月结余 → 只能定投，讨论结束；手上有一笔钱 → 进入下一题。</span>
+        <li><span class="zh"><b>先按"钱的来源"分类。</b>每月结余 → 只能定投，讨论结束；手上有一笔钱 → 进入第二题。</span>
           <span class="en"><b>Classify by the source of the money.</b></span></li>
-        <li><span class="zh"><b>存量资金的默认答案是"尽快投"，但有三个例外</b>：① 这笔钱三年内要用；② 你确定自己在下跌 20% 时会卖出（那说明你是在赌情绪）；③ 市场处于极端估值区间、你需要用分批来管执行风险。</span>
-          <span class="en"><b>Default: invest soon.</b> Three exceptions: money needed within three years; you would sell into a 20% drawdown; an extreme valuation regime.</span></li>
-        <li><span class="zh"><b>如果决定分批，把期限压短、把规则写死。</b>6–12 个月是心理与概率都比较好接受的区间；写下"每月几号投多少"，然后不改。</span>
-          <span class="en"><b>If you spread it, keep it short and pre-commit.</b></span></li>
-        <li><span class="zh"><b>为"后悔"标个价。</b>10 年持有期里一次性的中位优势是 <b>0.13 倍本金</b>——这就是分批投入的保费。<b>如果这笔保费换来的是你不会因为怕而完全不投，那它值。</b></span>
-          <span class="en"><b>Price the regret.</b> The 0.13x median advantage is the premium for staying invested at all.</span></li>
+        <li><span class="zh"><b>存量资金的默认答案是"尽快投"，但有三个例外</b>：① 这笔钱三年内要用（时间不够覆盖一次回撤）；② 你几乎确定自己在下跌 20% 时会卖出（那说明你是在赌情绪，不是在赌市场）；③ 市场处于极端估值区间、你需要用分批来管理执行风险。</span>
+          <span class="en"><b>Default: invest soon</b> — unless the money is needed within three years, you would sell into a drawdown, or you are managing execution risk in an extreme valuation regime.</span></li>
+        <li><span class="zh"><b>如果决定分批，把期限压短、把规则写死。</b>6–12 个月是心理与概率都比较好接受的区间；写下"每月几号投多少"，然后不改。回测显示 <b>24 个月以上的分期只会让代价更大</b>（胜率反而升到 84%）。</span>
+          <span class="en"><b>If you spread it, keep it short and pre-commit.</b> Six to twelve months; longer only costs more.</span></li>
+        <li><span class="zh"><b>为"后悔"标个价。</b>10 年持有期里一次性的中位优势是 <b>0.13 倍本金</b>（20 年 0.29 倍）——这就是分批投入的保费。<b>如果这笔保费换来的是你不会因为怕而完全不投，那它值。</b></span>
+          <span class="en"><b>Price the regret.</b> The median advantage is the premium for staying invested at all.</span></li>
+        <li><span class="zh"><b>不要用"我以为"来定分批长度。</b>写下来：钱多久要用、能承受多大回撤、分几期、每期几号、什么情况下加投或停投。<b>规则写下来之后，前面那些争论就不再影响你了。</b></span>
+          <span class="en"><b>Write the rule down</b> — horizon, drawdown tolerance, schedule — and the debate stops mattering.</span></li>
       </ol>
 
-      <h2 id="s9"><span class="num">09</span><span class="zh">四个常见误解</span><span class="en">Four misreadings</span></h2>
-      <ul>
-        <li><span class="zh"><b>"定投能降低成本。"</b>它把成本<i>摊平</i>，不是降低——期望成本约等于等待期的平均价格；市场在涨时，你的平均成本一定高于起点价格。</span>
-          <span class="en"><b>"DCA lowers cost."</b> It averages cost; in a rising market the average price is higher than the starting price.</span></li>
-        <li><span class="zh"><b>"回测说明定投没用。"</b>回测只说明<b>期望收益</b>落后，它没有衡量"你能不能拿住"——行为层面的价值算不出来，但真实存在。</span>
-          <span class="en"><b>"So DCA is useless."</b> It trails on expected return; it may still keep you invested.</span></li>
-        <li><span class="zh"><b>"分批时间越长越安全。"</b>越长只是越保守，代价也更大（24 个月分期下一次性胜率反而升到 84%）。安全与收益是交换关系。</span>
-          <span class="en"><b>"Longer spreading is safer."</b> Longer is more conservative and costs more.</span></li>
-        <li><span class="zh"><b>"80% 胜率说明我该 all-in。"</b>那是<b>群体统计</b>，你只有一次人生。真正的问题不是"哪个期望高"，而是<b>"哪种失败我能承受"</b>。</span>
-          <span class="en"><b>"80% means go all-in."</b> That is a population statistic; ask which failure you can live with.</span></li>
-      </ul>
+      <h2 id="s12"><span class="num">12</span><span class="zh">六个常见问题</span><span class="en">Six questions</span></h2>
+      <dl class="faq">
+        <dt><span class="zh">Q1：我每月只有工资结余，这篇对我有用吗？</span><span class="en">I only have monthly salary — does this apply?</span></dt>
+        <dd><span class="zh">那是流量问题：你没有 all-in 这个选项，所以"哪个更好"不成立。对你而言，真正的问题变成"投多少比例、投什么、跌了要不要加"。<b>唯一与本文相关的建议是：不要因为看到"一次性更优"就把结余攒成一笔再投——那等于主动承担更多等待成本。</b></span>
+          <span class="en">That is a flow problem: there is no lump sum to choose. Do not hoard savings in order to "invest it all at once" later.</span></dd>
 
-      <h2 id="s10"><span class="num">10</span><span class="zh">局限与反方观点</span><span class="en">Limits and the other side</span></h2>
+        <dt><span class="zh">Q2：定投是不是"更安全"？</span><span class="en">Is DCA safer?</span></dt>
+        <dd><span class="zh">它降低的是<b>"一开始就遇上崩盘"</b>这一种风险，代价是延长了暴露时间（钱在场外等），并且失去了大涨初期的一段收益。<b>风险没有被消除，而是被重新分配了。</b>如果"安全"的定义是"最小化后悔"，定投确实更安全；如果定义是"降低波动"，两者在 12 个月后几乎没有差别。</span>
+          <span class="en">It removes one risk (crash on day one) and adds another (time out of the market). Risk is redistributed, not removed.</span></dd>
+
+        <dt><span class="zh">Q3：那我应该分多久？</span><span class="en">How long should I spread it?</span></dt>
+        <dd><span class="zh">本文证据是：<b>6–12 个月</b>。比这更长（24、36 个月）在期望上更吃亏，在心理上并不会显著更安心；比这更短（比如 3 个月）则几乎等价于一次性投入。如果你的钱三年内要用，那问题不是"分多久"，而是"该不该进股市"。</span>
+          <span class="en">Six to twelve months. Longer costs more without buying much extra comfort.</span></dd>
+
+        <dt><span class="zh">Q4：ETF、基金、还是自己买股票？</span><span class="en">ETF, fund, or single stocks?</span></dt>
+        <dd><span class="zh">本文所有结论都在"同一个标的"上比较，所以标的选择是<b>另一层问题</b>，但优先级更高：费率差 0.5% 在 10 年里的影响，远大于"分批 vs 一次性"的中位差（13% 本金分摊到 10 年约等于每年 1.2%，两者量级接近，但费率是确定的）。</span>
+          <span class="en">Instrument choice is a separate, higher-priority decision — a 0.5% fee difference compounds for a decade.</span></dd>
+
+        <dt><span class="zh">Q5：如果现在估值很高呢？</span><span class="en">What if valuations are high?</span></dt>
+        <dd><span class="zh">"估值高"不等于"明年会跌"——本文的回测里包含了 1999、2007、2021 这些高估值起点，一次性投入在其中有些赢、有些输。<b>用估值来调整分批长度是"执行风险管理"，不是策略：它降低了最坏情况，也降低了期望收益。</b>如果你选择这么做，就把规则写下来。</span>
+          <span class="en">High valuations neither guarantee a fall nor a rise. Adjusting the schedule for valuation is execution risk management, not alpha — write the rule down.</span></dd>
+
+        <dt><span class="zh">Q6：我可以设"跌了就加投"吗？</span><span class="en">Can I add more if the market falls?</span></dt>
+        <dd><span class="zh">可以，但要清楚这是<b>择时</b>，需要额外证据支持（估值分位、信用利差、政策周期等），而本文的数据不支持"跌了就一定该加"。最简单的做法还是把规则固定下来：<b>时间固定、金额固定、期限固定。</b></span>
+          <span class="en">You can, but that is market timing and needs its own evidence. Fixed time, fixed amount, fixed horizon is the defensible default.</span></dd>
+      </dl>
+
+      <h2 id="s13"><span class="num">13</span><span class="zh">局限与反方观点</span><span class="en">Limits and the other side</span></h2>
       <ul>
-        <li><span class="zh"><b>只有两个市场、两个口径。</b>美股用全收益，港股只能用价格指数——后者低估买入并持有，因此港股的结论对一次性投入偏保守。</span>
+        <li><span class="zh"><b>只有两个市场、两个口径。</b>美股用全收益（含股息），港股只能用价格指数——后者低估买入并持有，因此港股的结论对一次性投入偏保守。要做更强的结论，需要更多市场的总收益序列。</span>
           <span class="en"><b>Two markets, two conventions.</b></span></li>
-        <li><span class="zh"><b>等待中现金按 0% 计息。</b>计入货币利率会让定投的劣势缩小；计入通胀则扩大。</span>
-          <span class="en"><b>Cash earns 0%.</b></span></li>
-        <li><span class="zh"><b>没有税费、申购费与汇率。</b>真实交易成本进一步不利于定投。</span>
-          <span class="en"><b>No taxes, fees or FX.</b></span></li>
-        <li><span class="zh"><b>反方：期望收益不是唯一目标。</b>经典文献（Constantinides 1979、Rozeff 1994、Knight &amp; Mandell 1992）都认为定投在期望收益上劣于一次性投入，但近年的讨论更强调<b>行为与通胀环境</b>——后者支持"分批"在某些场景下并非不理性。<span class="sup">[1][2][3][4]</span></span>
-          <span class="en"><b>The other side:</b> classics show DCA is suboptimal in expectation; recent work emphasises behaviour and inflation regimes.<span class="sup">[1][2][3][4]</span></span></li>
+        <li><span class="zh"><b>等待中的现金按 0% 计息。</b>计入货币市场利率会让定投的劣势缩小；计入通胀则扩大。这一条对结论的方向有真实影响。</span>
+          <span class="en"><b>Cash earns 0%.</b> Money-market yields would narrow DCA's disadvantage; inflation would widen it.</span></li>
+        <li><span class="zh"><b>没有税费、申购费与汇率，也没有考虑分批带来的多笔交易成本</b>——这些都进一步不利于定投。</span>
+          <span class="en"><b>No taxes, fees or FX</b> — all of which penalise spreading further.</span></li>
+        <li><span class="zh"><b>指数本身有幸存者偏差</b>：指数会剔除退市与破产的成份股，"买入并持有指数"的体验好于"买入并持有任意一只股票"。</span>
+          <span class="en"><b>Index survivorship</b> flatters buy-and-hold relative to picking stocks.</span></li>
+        <li><span class="zh"><b>反方观点：期望收益不是唯一目标。</b>经典文献指出定投在期望收益上劣于一次性投入，但并没有、也无法衡量"你会不会坚持"。<b>如果一个策略期望更高但你执行不了，它的期望对你是不可得的。</b><span class="sup">[1][2][3][4]</span></span>
+          <span class="en"><b>The other side:</b> expected return is not the only objective — an optimal strategy you cannot execute is not available to you.</span></li>
       </ul>
 
-      <h2 id="s11"><span class="num">11</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
+      <h2 id="s14"><span class="num">14</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
       <div class="callout co-opinion">
         <span class="lbl">观点 · Opinion</span>
         <p><span class="zh">我不想把这篇写成"定投无用论"。更准确的说法是：<b>一次性投入是收益最优解，定投是行为次优解</b>。它买的不是更高收益，而是"你愿意开始"。很多人真正的问题不是"该不该分批"，而是"因为怕亏，所以干脆没投"——对这类人，分批 12 个月的价值远远超过那 13% 的期望差。</span>
         <span class="en">All-in is return-optimal; DCA is behaviourally optimal. It buys the willingness to start.</span></p>
-        <p><span class="zh">我自己的规则：<b>能拿三年的钱，一次性投；不确定的钱，分 6–12 个月投并把时间写死；每月结余，照投不误。</b>至于"分批更安全"，我会把图 4 递给对方——安全感的代价，是可以被算出来的。</span>
-          <span class="en">My rule: money I can leave for three years goes in now; uncertain money over six to twelve pre-committed months; salary goes in monthly.</span></p>
+        <p><span class="zh">我自己的规则是：<b>能拿三年的钱，一次性投；不确定的钱，分 6–12 个月投并把时间写死；每月结余，照投不误。</b>如果有人说"分批更安全"，我会把图 7 递过去——安全感的代价，是可以被算出来的：大约 13 个百分点的本金，换一个"我一定会开始"的承诺。</span>
+          <span class="en">My rule: money I can leave for three years goes in now; uncertain money over six to twelve pre-committed months; salary goes in monthly — about 13 points of principal for the promise that you actually start.</span></p>
       </div>
 
-      <h2 id="s12"><span class="num">12</span><span class="zh">数据、方法与来源</span><span class="en">Data, method and sources</span></h2>
+      <h2 id="s15"><span class="num">15</span><span class="zh">数据、方法与来源</span><span class="en">Data, method and sources</span></h2>
       <ul>
         <li><span class="zh"><b>数据</b>：^SP500TR 月度收盘 1988-01 → 2026-09（465 个月，含股息）；^HSI 月度收盘 1986-11 → 2026-07（477 个月，价格）。来源 Yahoo Finance 公开行情接口，合计 942 个月。</span>
           <span class="en"><b>Data:</b> 942 monthly observations from Yahoo Finance.</span></li>
-        <li><span class="zh"><b>代码</b>：<code>tools/make_lca_data.py</code>（回测与静态图）、<code>tools/make_lca_note.py</code>（本页与两个交互动画）。固定输入可完全复现。</span>
+        <li><span class="zh"><b>代码</b>：<code>tools/make_lca_data.py</code>（回测与静态图）、<code>tools/make_lca_extra_figs.py</code>（分批分解、小倍数矩阵）、<code>tools/make_lca_note.py</code>（本页与两个交互动画）。固定输入可完全复现。</span>
           <span class="en"><b>Code:</b> included and reproducible.</span></li>
       </ul>
       <ol class="refs">
@@ -316,29 +395,31 @@
         <li>行情数据：<a href="https://finance.yahoo.com/quote/%5ESP500TR/">^SP500TR</a> · <a href="https://finance.yahoo.com/quote/%5EHSI/">^HSI</a>（访问日期 2026-10-02）。</li>
       </ol>
 
-      <h2 id="share"><span class="num">13</span><span class="zh">分享版摘要</span><span class="en">Shareable summary</span></h2>
+      <h2 id="share"><span class="num">16</span><span class="zh">分享版摘要</span><span class="en">Shareable summary</span></h2>
       <div class="cite" id="shareText">
         <span class="zh">可直接贴出去的版本：</span><span class="en">Ready to post:</span>
-        <pre>用 942 个月真实数据回测"定投 vs 一次性投入"：标普 500 全收益上，一次性投入在约 80% 的月度起点胜出，持有 10 年中位数多赚 0.13 倍本金。</pre>
-        <pre>但它输的那 20% 很有规律：恰好是"投完就跌"的月份。1999-02 起步，定投 0.65x 输给一次性 0.71x；2007-10 起步，定投 2.34x 赢过一次性 2.06x —— 差 34 个百分点。崩盘晚一年到，定投就完全失效。</pre>
-        <pre>换个市场结论就打折：恒生指数上一次性胜率只有 63–69%。结论：一次性投入是收益最优解，定投是行为次优解 —— 它买的不是更高收益，而是"你愿意开始"。</pre>
+        <pre>定投（DCA）＝把一笔钱分成几期等额买入；一次性投入（LSI/all-in）＝期初全买。两个词常被混用，但只有"手上已有一笔钱"时才存在这道选择题。</pre>
+        <pre>用 942 个月真实数据回测：标普 500 全收益上，一次性投入在约 80% 的月度起点胜出，持有 10 年中位数多赚 0.13 倍本金。但它输的那 20% 有规律：恰好是"投完就跌"的月份。1999-02 起步定投 0.65x 输给 0.71x；2007-10 起步定投 2.34x 赢过 2.06x —— 差 34 个百分点。</pre>
+        <pre>换个市场结论要打折：恒生指数上一次性胜率只有 63–69%。一句话：一次性投入是收益最优解，定投是行为次优解 —— 它买的不是更高收益，而是"你愿意开始"。</pre>
         <button class="chip" type="button" data-copy="#shareText" data-done-label="已复制 ✓">复制这段</button>
       </div>
 
-      <h2 id="cite"><span class="num">14</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
+      <h2 id="cite"><span class="num">17</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
       <div class="cite">
-        <pre id="citeText">Aylon (2026). 定投还是 all-in：一个被问错的题. Notes, v1.1. https://aayloo.github.io/notes/lump-sum-vs-dca/</pre>
+        <pre id="citeText">Aylon (2026). 定投还是 all-in：把三个词说清楚，再用 942 个月数据回答. Notes, v1.2. https://aayloo.github.io/notes/lump-sum-vs-dca/</pre>
         <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
       </div>
 
-      <h2 id="upd"><span class="num">15</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
+      <h2 id="upd"><span class="num">18</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
       <div class="tbl-wrap">
         <table class="upd">
           <thead><tr><th>版本</th><th>日期</th><th>改动</th></tr></thead>
           <tbody>
+            <tr><td>v1.2</td><td>2026-10-02</td>
+              <td><span class="zh">新增术语节（定投 / 一次性投入 / 定期定额 / 价值平均，含现金流时间轴图）；正文扩写约一倍（疑问澄清、机制深化、行为金融、六个常见问题）；新增 3 张图（分批分解与差额分布、全样本小倍数矩阵）；正文与表格字号调小、行距收紧。</span>
+                  <span class="en">Added a terminology section, roughly doubled the prose, added three figures, and reduced font sizes.</span></td></tr>
             <tr><td>v1.1</td><td>2026-10-02</td>
-              <td><span class="zh">重排框架（介绍 → 方法 → 结果 → 机制 → 交互 → 案例 → 稳健性 → 决策）；新增「竞速条」开场动画与「事件标注赛跑」交互动画。</span>
-                  <span class="en">Restructured the narrative; added two interactive charts (race bars and the annotated race).</span></td></tr>
+              <td><span class="zh">重排框架；新增竞速条与事件标注赛跑两个交互动画。</span><span class="en">Restructured; added two interactive charts.</span></td></tr>
             <tr><td>v1.0</td><td>2026-10-02</td>
               <td><span class="zh">初版：942 个月回测、四张静态图。</span><span class="en">First version.</span></td></tr>
           </tbody>
@@ -359,19 +440,21 @@
 
     <aside class="toc" aria-label="contents">
       <div class="tt">Contents</div>
-      <a href="#s1">01 <span class="zh">两种钱</span><span class="en">Two kinds of money</span></a>
+      <a href="#s1">01 <span class="zh">术语：三个词</span><span class="en">Terms</span></a>
       <a href="#s2">02 <span class="zh">回测怎么做</span><span class="en">Method</span></a>
       <a href="#s3">03 <span class="zh">一次性赢多少</span><span class="en">Win rate</span></a>
       <a href="#s4">04 <span class="zh">它输在哪里</span><span class="en">Where it loses</span></a>
-      <a href="#s5">05 <span class="zh">自己动手看</span><span class="en">See it move</span></a>
-      <a href="#s6">06 <span class="zh">两个真实起点</span><span class="en">Two start dates</span></a>
-      <a href="#s7">07 <span class="zh">换个市场</span><span class="en">Another market</span></a>
-      <a href="#s8">08 <span class="zh">该怎么做</span><span class="en">What to do</span></a>
-      <a href="#s9">09 <span class="zh">四个误解</span><span class="en">Misreadings</span></a>
-      <a href="#s10">10 <span class="zh">局限与反方</span><span class="en">Limits</span></a>
-      <a href="#s11">11 <span class="zh">我的判断</span><span class="en">My take</span></a>
-      <a href="#s12">12 <span class="zh">数据与来源</span><span class="en">Data</span></a>
-      <a href="#share">13 <span class="zh">分享版摘要</span><span class="en">Shareable</span></a>
+      <a href="#s5">05 <span class="zh">分批的钱从哪来</span><span class="en">Tranches</span></a>
+      <a href="#s6">06 <span class="zh">全样本扫描</span><span class="en">All years</span></a>
+      <a href="#s7">07 <span class="zh">自己动手看</span><span class="en">See it move</span></a>
+      <a href="#s8">08 <span class="zh">两个真实起点</span><span class="en">Two starts</span></a>
+      <a href="#s9">09 <span class="zh">换个市场</span><span class="en">Another market</span></a>
+      <a href="#s10">10 <span class="zh">为什么争论不休</span><span class="en">Why the debate</span></a>
+      <a href="#s11">11 <span class="zh">该怎么做</span><span class="en">What to do</span></a>
+      <a href="#s12">12 <span class="zh">六个常见问题</span><span class="en">FAQ</span></a>
+      <a href="#s13">13 <span class="zh">局限与反方</span><span class="en">Limits</span></a>
+      <a href="#s14">14 <span class="zh">我的判断</span><span class="en">My take</span></a>
+      <a href="#share">16 <span class="zh">分享版摘要</span><span class="en">Shareable</span></a>
     </aside>
   </div>
 
@@ -413,14 +496,14 @@ function aRender(){
   svg.appendChild(el('rect',{x:0,y:0,width:W,height:H,fill:'#fff'}));
   [['一次性投入 All-in','allin',C.allin],['定投 DCA（12 个月）','dca',C.dca]].forEach((row,idx)=>{
     const val=cur[row[1]], color=row[2], y=laneY[idx];
-    svg.appendChild(el('text',{x:18,y:y+bh/2+5,'font-size':14.5,fill:C.ink,'font-weight':600},row[0]));
+    svg.appendChild(el('text',{x:16,y:y+bh/2+5,'font-size':14,fill:C.ink,'font-weight':600},row[0]));
     svg.appendChild(el('rect',{x:x0,y:y,width:bw,height:bh,rx:6,fill:'#F2EEE5'}));
     svg.appendChild(el('rect',{x:x0,y:y,width:Math.max(3,scale(val)),height:bh,rx:6,fill:color,opacity:.93}));
-    svg.appendChild(el('text',{x:x0+Math.max(3,scale(val))+10,y:y+bh/2+6,'font-size':17,'font-family':'ui-monospace,monospace',fill:C.ink},
+    svg.appendChild(el('text',{x:x0+Math.max(3,scale(val))+10,y:y+bh/2+6,'font-size':16,'font-family':'ui-monospace,monospace',fill:C.ink},
       Math.round(val*100)+' 元'));
   });
   const gap=(cur.dca-cur.allin)*100;
-  svg.appendChild(el('text',{x:18,y:222,'font-size':12.5,fill:C.mute},'起点 '+SER[A.market].dates[A.i0]+' · 已过 '+cur.k+' 个月 · 本金 100 元'));
+  svg.appendChild(el('text',{x:16,y:222,'font-size':12,fill:C.mute},'起点 '+SER[A.market].dates[A.i0]+' · 已过 '+cur.k+' 个月 · 本金 100 元'));
   document.getElementById('a-vall').textContent=Math.round(cur.allin*100);
   document.getElementById('a-vdca').textContent=Math.round(cur.dca*100);
   document.getElementById('a-gap').textContent=(gap>=0?'+':'')+gap.toFixed(1)+'pp';

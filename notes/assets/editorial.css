@@ -21,8 +21,8 @@ body{
   background:var(--paper);
   color:var(--e-body);
   font-family:var(--e-serif);
-  font-size:19px;
-  line-height:1.9;
+  font-size:18px;
+  line-height:1.86;
   letter-spacing:.004em;
   text-wrap:pretty;
 }
@@ -47,11 +47,11 @@ body{
 .nhero{padding:74px 0 30px;border-bottom:0}
 .nhero .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;color:var(--e-accent);font-weight:600}
 .nhero h1{
-  font-family:var(--e-serif);font-size:clamp(34px,4.6vw,56px);line-height:1.1;
+  font-family:var(--e-serif);font-size:clamp(31px,4vw,48px);line-height:1.12;
   letter-spacing:-.02em;color:var(--e-ink);margin:20px 0 0;max-width:900px;
 }
 .nhero .lede{
-  font-size:20px;line-height:1.78;color:#5A5347;max-width:700px;margin-top:22px;
+  font-size:18.5px;line-height:1.76;color:#5A5347;max-width:720px;margin-top:20px;
 }
 .nhero .kv{
   display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:30px;padding:14px 0;
@@ -65,8 +65,8 @@ body{
 /* 注意：不要在这里写 grid-template-columns，否则会覆盖 site.css 在窄屏的单栏规则，
    把正文挤成一条细柱（踩过这个坑）。列宽交给 site.css 管理。 */
 .split{padding:44px 0 80px}
-.prose{max-width:700px;font-size:19px;line-height:1.92;color:var(--e-body)}
-.prose p{margin:1.28em 0}
+.prose{max-width:720px;font-size:17.6px;line-height:1.88;color:var(--e-body)}
+.prose p{margin:1.2em 0}
 .prose>p:first-of-type::first-letter{
   float:left;font-size:74px;line-height:.82;padding:8px 12px 0 0;color:var(--e-accent);font-weight:700;
 }
@@ -79,15 +79,15 @@ html[lang] .prose{font-variant-numeric:tabular-nums}
 
 /* ---------- 标题层级 ---------- */
 .prose h2{
-  font-family:var(--e-serif);font-size:clamp(27px,3.1vw,36px);line-height:1.22;
-  color:var(--e-ink);letter-spacing:-.012em;margin:76px 0 6px;padding-top:0;border-top:0;
+  font-family:var(--e-serif);font-size:clamp(24px,2.7vw,32px);line-height:1.24;
+  color:var(--e-ink);letter-spacing:-.012em;margin:64px 0 6px;padding-top:0;border-top:0;
 }
 .prose h2::after{content:"";display:block;width:66px;height:3px;background:var(--e-accent);margin-top:16px;opacity:.9}
 .prose h2 .num{
   display:block;font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--e-accent);
   margin:0 0 12px;font-weight:600;
 }
-.prose h3{font-size:22px;color:var(--e-ink);margin:40px 0 8px;letter-spacing:-.008em}
+.prose h3{font-size:19.5px;color:var(--e-ink);margin:34px 0 8px;letter-spacing:-.008em}
 .prose hr{border-top:1px solid var(--e-rule)}
 
 /* ---------- 摘要与提示卡 ---------- */
@@ -101,10 +101,10 @@ html[lang] .prose{font-variant-numeric:tabular-nums}
 }
 .tldr h2::after{display:none}
 .tldr ol{margin:0;padding-left:24px}
-.tldr li{margin:13px 0;font-size:18px;line-height:1.8}
+.tldr li{margin:11px 0;font-size:16.6px;line-height:1.78}
 .takeaway{
-  margin:32px 0;padding:8px 0 8px 22px;border-left:4px solid var(--e-accent);
-  background:none;border-radius:0;font-style:italic;font-size:20.5px;line-height:1.75;color:#3A342B;
+  margin:28px 0;padding:8px 0 8px 22px;border-left:4px solid var(--e-accent);
+  background:none;border-radius:0;font-style:italic;font-size:18.5px;line-height:1.72;color:#3A342B;
 }
 .callout{
   margin:32px 0;padding:22px 26px;background:var(--paper2);border:1px solid var(--e-rule);
@@ -137,7 +137,7 @@ html[lang] .prose{font-variant-numeric:tabular-nums}
 }
 
 /* ---------- 表格 ---------- */
-.tbl{font-family:var(--f-body);font-size:15.5px;margin:30px 0}
+.tbl{font-family:var(--f-body);font-size:14.8px;margin:26px 0}
 .tbl caption{font-family:var(--f-body);font-size:14px;color:#8A8172;padding-bottom:12px;text-align:left}
 .tbl th,.tbl td{padding:13px 14px;border-bottom:1px solid var(--e-rule);vertical-align:top}
 .tbl thead th{
@@ -178,8 +178,8 @@ footer{border-top:1px solid var(--e-rule);color:#8A8172}
 
 /* ---------- 移动端 ---------- */
 @media (max-width:900px){
-  body{font-size:18px;line-height:1.88}
-  .prose{font-size:18px}
+  body{font-size:17px;line-height:1.84}
+  .prose{font-size:16.8px}
   .nhero{padding-top:52px}
   .prose>p:first-of-type::first-letter{font-size:60px;padding:6px 10px 0 0}
   .prose h2{margin-top:60px}
