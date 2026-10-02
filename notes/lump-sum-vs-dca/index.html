@@ -3,34 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>定投还是 all-in：把三个词说清楚，再用 942 个月数据回答 · Notes</title>
-<meta name="description" content="先定义定投（DCA）与一次性投入（LSI），再用 942 个月真实数据回测：一次性胜率约 80%，但它输的那 20% 恰好是「投完就跌」的月份。含 7 张图、2 个交互动画。">
-<meta property="og:title" content="定投还是 all-in：把三个词说清楚，再用 942 个月数据回答">
-<meta property="og:description" content="定投、一次性投入、定期定额到底分别是什么？942 个月数据给出的答案是：一次性赢 80% 的起点，但它输的那 20% 有规律。">
+<title>定投还是 all-in：942 个月数据的答案 · Research Note</title>
+<meta name="description" content="研究简报：先定义定投（DCA）与一次性投入（LSI），再用 942 个月真实数据回测。一次性投入赢约 80% 的起点，但它输的那 20% 高度规律。9 张图表，含两个交互动画。">
+<meta property="og:title" content="定投还是 all-in：942 个月数据的答案">
+<meta property="og:description" content="一次性投入赢 80% 的起点，但它输的那 20% 恰好是「投完就跌」的月份。">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/editorial.css">
 <style>
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0}
-.kpi div{background:var(--paper2);border:1px solid var(--e-rule);padding:14px 16px}
-.kpi b{display:block;font-size:27px;color:var(--e-accent);line-height:1.1}
-.kpi span{font-size:13px;color:#8A8172;line-height:1.6}
-.vbox{background:var(--paper2);border:1px solid var(--e-rule);padding:18px 18px 12px;margin:26px 0}
-.vbox h3{margin:0 0 4px;font-size:16.5px}
-.vbox .hintx{color:#8A8172;font-size:13px;margin:0 0 12px}
-.ctrl{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:4px 0 12px;font-family:var(--f-body);font-size:13.5px}
-.ctrl button,.ctrl select{font:inherit;padding:6px 11px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:10px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:var(--paper2);border:1px solid var(--e-rule);padding:16px 16px 10px;margin-top:8px}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
 .ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
-.ctrl input[type=range]{flex:1;min-width:130px}
+.ctrl input[type=range]{flex:1;min-width:120px}
 .vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
-.vstat{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--f-body);font-size:13.5px;color:#5A5347;margin-top:10px}
-.vstat b{font-family:var(--mono);font-size:20px;color:var(--e-ink)}
-.vlegend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:8px}
-.vlegend i{display:inline-block;width:15px;height:4px;vertical-align:middle;margin-right:6px;border-radius:2px}
-.faq{border-top:1px solid var(--e-rule);padding-top:14px;margin-top:18px}
-.faq dt{font-weight:700;color:var(--e-ink);margin-top:14px}
-.faq dd{margin:6px 0 0;color:var(--e-body)}
+.vstat{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
 </style>
 </head>
 <body>
@@ -52,417 +74,228 @@
 </nav>
 
 <div class="wrap">
-  <header class="nhero">
-    <div class="eyebrow">Portfolio · 2026-10-02</div>
-    <h1><span class="zh">定投还是 all-in：把三个词说清楚，再用 942 个月数据回答</span>
-        <span class="en">Lump sum or dollar-cost averaging?</span></h1>
-    <div class="badges">
-      <span class="badge badge-invest">投资决策</span>
-      <span class="badge badge-method">回测实证</span>
-      <span class="badge badge-data">942 个月真实数据</span>
-      <span class="badge badge-method">7 图 + 2 动画</span>
-      <span class="badge badge-read">约 14 分钟</span>
-    </div>
-    <p class="lede">
-      <span class="zh">先回答最基础的问题：<b>定投（DCA）</b>是把一笔钱分成若干期等额买入，<b>一次性投入（LSI / all-in）</b>是期初全部买入并持有。至于哪个更好——942 个月的真实数据说：<b>一次性投入赢约 80% 的起点，但它输的那 20% 有非常具体的规律</b>。</span>
-      <span class="en">Dollar-cost averaging spreads one pot over several purchases; lump-sum investing buys it all at once. Across 942 months of real data, all-in won about 80% of the time — and the losses share one feature.</span>
-    </p>
-    <div class="kv">
-      <div>发布 / Published</div><div>2026-10-02</div>
-      <div>版本 / Version</div><div>v1.2</div>
-      <div>数据 / Data</div><div><span class="zh">标普 500 全收益 465 个月 + 恒生指数 477 个月</span><span class="en">S&amp;P 500 total return (465m) + Hang Seng (477m)</span></div>
-      <div>标签 / Tags</div><div>组合 · 执行</div>
-    </div>
-  </header>
+  <div class="rn-masthead"><span>Aylon · Research Note</span><span>2026-10-03 · v2.0 · 组合与执行</span></div>
+  <h1 class="rn-title">定投还是 all-in：942 个月数据的答案</h1>
+  <p class="rn-standfirst">定投（DCA）是把一笔钱分成几期等额买入，一次性投入（LSI，也叫 all-in）是期初全额买入。本文用两个市场、942 个月的月度数据回测这两种做法：一次性投入在约 80% 的起点胜出，但它输掉的那 20% 有非常具体的规律——<b>投完之后立刻下跌</b>。</p>
+  <ul class="rn-findings">
+    <li>标普 500 全收益上，一次性投入在 <b>79%</b> 的月度起点胜出（12 个月分期、持有 10 年），中位数多赚 <b>0.13 倍本金</b>；持有 20 年时中位差扩大到 0.29 倍。</li>
+    <li>定投赢的起点只占 <b>17–18%</b>，且几乎完全等于"部署期（前 12 个月）市场下跌"的比例——<b>定投的胜率约等于崩盘马上发生的概率</b>。</li>
+    <li>崩盘早到还是晚到决定结果：1999-02 起步，定投 0.65 倍、一次性 0.71 倍；2007-10 起步，定投 2.34 倍、一次性 2.06 倍——同一策略差 <b>34 个百分点</b>。</li>
+    <li>换个市场结论打折：恒生指数（1986-11 起）上一次性胜率只有 <b>63–69%</b>。一次性投入是收益最优解，定投是行为次优解。</li>
+  </ul>
+  <div class="rn-abstract"><b>摘要</b>本文把"定投 vs 一次性"拆成两道题：手上已有一笔钱（存量）才存在分期选择，每月结余（流量）只能定投。对存量资金，本文用 ^SP500TR 全收益月度序列（1988-01 → 2026-09，465 个月）与恒生指数（1986-11 → 2026-07，477 个月）滚动回测：把每一个月当作起点，比较"当天全额买入"与"分 6/12/24/36 个月等额买入"、持有 1–20 年的终值。结果显示一次性投入在期望与胜率上都占优，但其劣势区间高度集中在"部署期下跌"的起点；这一规律在两个市场、多个持有期与分期长度下一致。</div>
+  <p class="rn-kws"><b>关键词</b>　DCA · 一次性投入 · 回测 · 多资产 · 行为偏差 · 组合执行</p>
 
   <div class="split">
     <div class="prose">
 
-      <div class="vbox">
-        <h3>先看一个例子：100 元投进去，十年后有多少</h3>
-        <p class="hintx">点「播放」，两条横条随时间增长，领先方实时标出。可切换市场与起点。</p>
-        <div class="ctrl">
-          <button class="primary" id="a-play">▶ 播放</button>
-          <select id="a-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
-          <select id="a-start"><option value="1999-02">1999-02 · 崩盘前一年（部署期仍在涨）</option>
+      <h2 id="s1"><span class="num">01</span><span class="zh">一笔钱的两条路</span><span class="en">One pot, two routes</span></h2>
+      <p>想象你刚拿到一笔年终奖。你决定把它投进市场，但面前有两条路：<b>今天全部买入</b>，或者<b>分成 12 个月、每月买一份</b>。两条路用的是同一笔钱、同一个标的、同样的持有年限，唯一差别是"钱什么时候进场"。</p>
+      <p>这件事之所以总吵不完，一半原因在词上。严格说这里有四个不同的东西：<b>一次性投入（Lump-sum investing，LSI）</b>是期初全额买入；<b>定投（Dollar-cost averaging，DCA）</b>是把同一笔钱分成 N 期等额买入；<b>定期定额</b>是每月从工资结余里买入——钱是陆续到来的，根本没有 all-in 这个选项；<b>价值平均</b>则按目标市值倒算每期投入额，机制完全不同。本文只讨论第二种：<b>手上已有一笔钱，分几期投完</b>。</p>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 1 · 钱是怎么进场的</div>
+        <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入与定投的现金流时间轴对比" style="width:100%;border:1px solid var(--e-rule)">
+        <p class="ex-note">上面一行是一次性投入：资金在第 0 个月全部进场，立刻承担全部市场风险与收益。下面一行是定投：同一笔钱被切成 12 份，每月进场 1/12；没投的部分在等待期不承担市场风险，也拿不到市场收益。<b>这道题的全部内容就在这一张图里。</b></p>
+        <p class="ex-src">来源：本文自绘示意。术语沿用惯例英文缩写（LSI / DCA）。</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 2 · 100 元投进去，十年后有多少（可交互）</div>
+        <div class="vbox">
+          <div class="ctrl">
+            <button class="primary" id="a-play">▶ 播放</button>
+            <select id="a-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
+            <select id="a-start"><option value="1999-02">1999-02 · 崩盘前一年（部署期仍在涨）</option>
             <option value="2007-10">2007-10 · 危机当月（部署期暴跌）</option>
             <option value="2009-03">2009-03 · 危机底部（部署期暴涨）</option>
             <option value="2020-02">2020-02 · 疫情前高点</option>
             <option value="2021-12">2021-12 · 2022 熊市前</option>
             <option value="1990-08">1990-08 · 海湾战争前</option></select>
-          <input type="range" id="a-scrub" min="0" max="120" value="120">
-          <span id="a-month">第 120 个月</span>
+            <input type="range" id="a-scrub" min="0" max="120" value="120">
+            <span id="a-month">第 120 个月</span>
+          </div>
+          <svg id="a-svg" viewBox="0 0 900 250" role="img" aria-label="一次性投入与定投的金额对比横条"></svg>
+          <div class="vstat">
+            <span>一次性 <b id="a-vall">–</b> 元</span>
+            <span>定投 <b id="a-vdca">–</b> 元</span>
+            <span>差距 <b id="a-gap">–</b></span>
+            <span id="a-lead"></span>
+          </div>
         </div>
-        <svg id="a-svg" viewBox="0 0 900 250" role="img" aria-label="一次性投入与定投的金额对比横条"></svg>
-        <div class="vstat">
-          <span>一次性 <b id="a-vall">–</b> 元</span>
-          <span>定投 <b id="a-vdca">–</b> 元</span>
-          <span>差距 <b id="a-gap">–</b></span>
-          <span id="a-lead"></span>
-        </div>
+        <p class="ex-note">两条横条随时间增长，领先方实时标出。可以切换市场与起点：同一个起点在美股与港股的结果常常相反。</p>
+        <p class="ex-src">来源：本文回测，数据见附录 A。</p>
       </div>
 
-      <div class="tldr">
-        <h2>TL;DR</h2>
-        <ol>
-          <li><span class="zh"><b>先分清三个词</b>：一次性投入（LSI）＝期初全买；定投（DCA）＝同一笔钱分几期等额买；定期定额＝每月从收入里买。前两个才是"选择题"，第三个根本没有 all-in 这个选项。</span>
-              <span class="en">Three terms first: LSI buys at once, DCA spreads one pot, and monthly saving from income is not a choice at all.</span></li>
-          <li><span class="zh"><b>结果一：一次性投入赢约 80%。</b>分 12 个月投完、持有 10 年，一次性在 <b>79%</b> 的月度起点胜出，中位数多赚 <b>0.13 倍本金</b>（持有 20 年：0.29 倍）。</span>
-              <span class="en">All-in wins 79% of starts at a ten-year horizon, median +0.13x of principal.</span></li>
-          <li><span class="zh"><b>结果二：它输的那 20% 有规律。</b>定投赢的起点恰好是部署期（前 12 个月）下跌的月份，占全部起点 <b>17–18%</b>——<b>定投的胜率 ≈ 崩盘马上发生的概率</b>。</span>
-              <span class="en">DCA wins only when the deployment window falls — about 17–18% of starts.</span></li>
-          <li><span class="zh"><b>崩盘晚一年到，定投就完全失效。</b>1999-02 起步：一次性 0.71 倍、定投 0.65 倍；2007-10 起步：一次性 2.06 倍、定投 2.34 倍——同一策略差 34 个百分点。</span>
-              <span class="en">Timing decides it: 1999-02 favours all-in, 2007-10 favours DCA by 28 points.</span></li>
-          <li><span class="zh"><b>换个市场要打折。</b>恒生指数上一次性胜率只有 <b>63–69%</b>：波动更大、横盘更久的市场里，"分批"这份保险更值钱。</span>
-              <span class="en">In Hong Kong the all-in win rate falls to 63–69%.</span></li>
-        </ol>
-      </div>
-
-      <h2 id="s1"><span class="num">01</span><span class="zh">术语：三个词，两道题</span><span class="en">Terms: three words, two questions</span></h2>
-      <p><span class="zh">这个话题之所以总是吵不清，一半原因在词上。先把四个常见说法分清楚，后面的结论才不会串味。</span>
-      <span class="en">Half of the confusion is terminological. Four terms, defined before any numbers.</span></p>
-      <ul>
-        <li><span class="zh"><b>一次性投入（Lump-sum investing，LSI，也常叫 all-in）</b>：手上已经有一笔钱，在期初一次性全部买入，之后不再加仓。它的特征是<b>资金立刻、完全暴露在市场里</b>。</span>
-          <span class="en"><b>Lump-sum investing (LSI / all-in):</b> invest the whole pot at once; capital is fully exposed immediately.</span></li>
-        <li><span class="zh"><b>定投（Dollar-cost averaging，DCA）</b>：把<b>同一笔钱</b>分成 N 期、每期等额买入（本文用 6 / 12 / 24 / 36 个月）。严格定义是"固定金额、固定频率买入"，所以它同时被用来描述两种场景——后面会拆开。</span>
-          <span class="en"><b>Dollar-cost averaging (DCA):</b> split one pot into N equal purchases at fixed intervals.</span></li>
-        <li><span class="zh"><b>定期定额（来自每月收入）</b>：钱不是一开始就有的，而是每月工资结余。这跟"把一笔钱分批投"<b>不是同一道题</b>——你没有 all-in 这个选项，所以它也谈不上"哪个更好"。</span>
-          <span class="en"><b>Monthly saving out of income:</b> the money arrives over time, so there is no lump sum to choose.</span></li>
-        <li><span class="zh"><b>价值平均（Value averaging）</b>：按"目标市值"倒算每期该投多少（跌了多投、涨了少投甚至卖出）。它常被和 DCA 混为一谈，但机制完全不同，本文不讨论。</span>
-          <span class="en"><b>Value averaging:</b> invest whatever is needed to hit a target portfolio value — a different mechanism, out of scope here.</span></li>
-      </ul>
-      <figure>
-        <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入、定投、定期定额、价值平均的现金流时间轴对比">
-        <figcaption><b>图 1｜钱是怎么进场的</b>（来源：本文自绘示意）。
-        <span class="zh">上面一行是<b>一次性投入</b>：一个 100% 的方块，资金在第 0 个月全部进场。下面一行是<b>定投</b>：同一笔钱被切成 12 份，每月进场 1/12，没投的部分在等待期不承担市场风险，也拿不到市场收益。<b>这道题的全部内容就在这一张图里。</b></span>
-        <span class="en">Top row: the whole pot enters at month zero. Bottom row: the same pot is sliced into twelve monthly purchases; cash waits without market risk or return.</span></figcaption>
-      </figure>
-      <div class="callout co-fact">
-        <span class="lbl">本文的范围 · Scope</span>
-        <p><span class="zh">以下所有数字只回答一个问题：<b>同一笔钱，一次性投 vs 分 6/12/24/36 个月投完，哪个更好？</b>不涉及"每月工资怎么投"（那是流量问题），也不涉及价值平均、再平衡、择时。</span>
-          <span class="en">Everything below answers one question only: the same pot, all at once versus over 6/12/24/36 months.</span></p>
-      </div>
-
-      <h2 id="s2"><span class="num">02</span><span class="zh">这个回测怎么做</span><span class="en">How the backtest works</span></h2>
-      <p><span class="zh">这类结论最容易被"挑起点"污染，所以我把方法写清楚——你也可以照着复现。</span>
-      <span class="en">Results like these are easily polluted by cherry-picked start dates, so here is the full method.</span></p>
-      <ul>
-        <li><span class="zh"><b>数据</b>：标普 500 <i>全收益</i>指数（^SP500TR，含股息，这很重要——只算价格会低估长期持有）月度，1988-01 → 2026-09，共 465 个月；恒生指数（^HSI，价格）月度，1986-11 → 2026-07，共 477 个月。</span>
-          <span class="en"><b>Data:</b> 465 months of S&amp;P 500 total return plus 477 months of the Hang Seng.</span></li>
-        <li><span class="zh"><b>起点</b>：把历史上<i>每一个月</i>都当作起点（不是挑几个"代表性年份"）。标普口径下，持有 10 年的完整起点有 <b>345</b> 个；持有 20 年的有 225 个。样本量足够支撑"胜率"这种说法。</span>
-          <span class="en"><b>Starts:</b> every month is a start date — 345 complete ten-year windows for the US series.</span></li>
-        <li><span class="zh"><b>两种做法</b>：一次性＝当天全额买入并持有 H 年；定投＝分 N 个月等额买入，<b>未投部分按 0% 计息</b>，同样持有到 t0+H。两种做法的起点、本金、持有期完全一致，唯一差别是"钱什么时候进场"。</span>
-          <span class="en"><b>Both strategies:</b> identical start, principal and horizon; only the arrival schedule differs.</span></li>
-        <li><span class="zh"><b>为什么现金按 0%</b>：这是对定投<b>偏有利</b>的假设。如果把等待期的货币市场利率算进去，定投的劣势只会更小；反过来把通胀算进去则更糟。选 0% 是为了不让结论往任何一边偏。</span>
-          <span class="en"><b>Why 0% on cash:</b> it is generous to DCA and keeps the comparison from tilting.</span></li>
-        <li><span class="zh"><b>没有计入的东西</b>：交易成本、税费、汇率、心理因素。前三个都会让"分批"更吃亏（多笔交易成本更高），最后一个则相反，但无法用回测衡量。</span>
-          <span class="en"><b>Not modelled:</b> costs, taxes, FX and psychology — the first three penalise spreading, the last one favours it.</span></li>
-      </ul>
-
-      <h2 id="s3"><span class="num">03</span><span class="zh">结果一：一次性投入赢多少</span><span class="en">Result one: how often all-in wins</span></h2>
-      <div class="kpi">
-        <div><b>79%</b><span>一次性胜率（美股，12 个月分期，持有 10 年）</span></div>
-        <div><b>+0.13x</b><span>10 年持有的中位差额（20 年：0.29x）</span></div>
-        <div><b>17%</b><span>起点中"投完就跌"的比例</span></div>
-        <div><b>65%</b><span>同样的做法在恒生指数上的胜率</span></div>
-      </div>
-      <div class="tbl-wrap">
-        <table class="tbl">
-          <caption><span class="zh">表 1｜一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</span>
-          <span class="en">Table 1｜All-in win rate, S&amp;P 500 total return</span></caption>
-          <thead><tr>
-            <th><span class="zh">持有期</span><span class="en">Holding</span></th>
-            <th>6 个月分期</th><th>12 个月分期</th><th>24 个月分期</th><th>36 个月分期</th>
-          </tr></thead>
-          <tbody>
+      <h2 id="s2"><span class="num">02</span><span class="zh">历史上，一次性投入赢多少</span><span class="en">How often all-in wins</span></h2>
+      <p>把历史上<i>每一个月</i>都当作起点，标普 500 全收益口径下一共有 <b>345</b> 个完整的十年窗口、225 个二十年窗口。对每个窗口分别计算两种做法的终值，就得到一张胜率表。分 12 个月投完、持有 10 年的口径下，一次性投入赢<b>79%</b> 的起点，中位数多赚 <b>0.13 倍本金</b>；把持有期拉长到 20 年，中位差扩大到 0.29 倍。</p>
+      <div class="exhibit">
+        <div class="ex-label">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>持有期</th><th>6 个月分期</th><th>12 个月分期</th><th>24 个月分期</th><th>36 个月分期</th></tr></thead>
+            <tbody>
             <tr><td>1 年</td><td>74%</td><td>81%</td><td>85%</td><td>84%</td></tr>
             <tr><td>3 年</td><td>74%</td><td>80%</td><td>85%</td><td>84%</td></tr>
             <tr><td>5 年</td><td>75%</td><td>81%</td><td>85%</td><td>83%</td></tr>
             <tr><td>10 年</td><td>74%</td><td class="hi">79%</td><td>84%</td><td>81%</td></tr>
             <tr><td>20 年</td><td>74%</td><td>82%</td><td>85%</td><td>81%</td></tr>
-          </tbody>
-        </table>
-        <p class="tnote"><span class="zh">高亮单元 = 本文主要口径（12 个月分期、持有 10 年）；每一格都是"一次性终值高于定投终值"的起点比例。</span>
-        <span class="en">Highlighted cell: the headline case. Each cell is the share of starts where all-in ends higher.</span></p>
+            </tbody>
+          </table>
+        </div>
+        <p class="ex-note">每一格是"一次性终值高于定投终值"的月度起点占比。高亮单元为本文主要口径。数字不随持有期单调变化，说明它衡量的不是某个特定年代，而是"部署期市场涨跌"这一机制。</p>
+        <p class="ex-src">来源：本文回测；等待期现金按 0% 计息（对定投偏有利的假设）。</p>
       </div>
-      <figure>
-        <img src="../assets/figs/f19-winrate.svg" alt="不同持有期与分期长度下一次性投入的胜率热力图">
-        <figcaption><b>图 2｜分期越长，一次性投入赢得越多</b>（来源：本文回测）。
-        <span class="zh">横轴是"多久把钱投完"，纵轴是"持有多久"，格子里的数字是一次性投入赢的概率。两个方向都单调而稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。注意 24 个月分期那一列反而升到 84–85%——因为等待时间越长，"没吃到上涨"的代价越大。</span>
-        <span class="en">Slower deployment and shorter holding both favour all-in; the 24-month column is even higher because waiting costs more.</span></figcaption>
-      </figure>
-      <p><span class="zh">怎么理解这个 79%？它是<b>历史上 345 个起点的比例</b>，不是"你下次投资的成功概率"。它回答的是"如果我随机选一个月份入市，哪种做法更可能更好"，而不是"我这次一定更好"。</span>
-      <span class="en">The 79% is a ratio across 345 historical starts — a statement about the distribution, not a promise about your own path.</span></p>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 3 · 分期越长，一次性投入赢得越多</div>
+        <img src="../assets/figs/f19-winrate.svg" alt="一次性投入胜率矩阵" style="width:100%">
+        <p class="ex-note">横轴是"多久把钱投完"，纵轴是"持有多久"，格子里的数字是一次性投入赢的概率。两个方向的规律都很稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。24 个月那一列甚至更高（84–85%），因为等待时间越长，"没吃到上涨"的代价越大。</p>
+        <p class="ex-src">来源：本文回测；每格至少 24 个起点。</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 4 · 29 个起点年份，一格不落</div>
+        <img src="../assets/figs/f24-small-multiples.svg" alt="29 个起点年份的小倍数矩阵" style="width:100%">
+        <p class="ex-note">最常见的质疑是"你是不是挑了几个好年份"。这张图把 29 个起点年份全部摊开：每格橙柱是一次性、蓝柱是定投，持有 10 年，背景色标出谁赢。<b>一次性赢 25 年、定投赢 4 年</b>，而定投赢的那 4 年集中在 2000 与 2007–08——正好是部署期在跌的年份。</p>
+        <p class="ex-src">来源：本文回测；每年 1 月入市、12 个月分批、持有 10 年。</p>
+      </div>
 
-      <h2 id="s4"><span class="num">04</span><span class="zh">结果二：它输在哪里</span><span class="en">Result two: where all-in loses</span></h2>
-      <p><span class="zh">把每一次"定投赢"的案例摊开，只会看到一个变量：<b>前 12 个月市场是涨还是跌</b>。下图是 345 个起点的全部结果，不是挑选出来的例子。</span>
-      <span class="en">Every DCA win shares one variable: whether the first twelve months rose or fell.</span></p>
-      <figure>
-        <img src="../assets/figs/f18-mechanism.svg" alt="部署期市场涨跌与定投相对差额的散点图">
-        <figcaption><b>图 3｜一个变量解释了几乎全部</b>（来源：本文回测）。
-        <span class="zh">横轴是前 12 个月的市场涨跌，纵轴是定投相对一次性的 10 年终值差（占本金百分点）：<b>点几乎全部落在一条斜线上</b>。部署期上涨 → 定投几乎必然落后；部署期下跌 → 定投反超。所以定投的价值不是"摊平成本"，而是<b>"躲开立刻发生的崩盘"</b>。</span>
-        <span class="en">Almost every point sits on one line: a rising window means DCA loses, a falling window means DCA wins.</span></figcaption>
-      </figure>
-      <p><span class="zh">这也解释了为什么"定投赢面只有 20% 左右"——不是定投特别差，而是<b>历史上"投完就跌"的窗口本来就只占 17–18%</b>。市场大部分时间在涨，所以大部分时候"更早到场"更划算。</span>
-      <span class="en">DCA's ~20% win rate simply mirrors the 17–18% of windows that fell. Most of the time, markets rose — so arriving earlier paid.</span></p>
+      <h2 id="s3"><span class="num">03</span><span class="zh">它输掉的那 20% 有什么规律</span><span class="en">The pattern behind the losses</span></h2>
+      <p>把每一次"定投赢"的案例摊开，只会看到一个变量：<b>部署期（前 12 个月）市场是涨还是跌</b>。部署期上涨，定投几乎必然落后；部署期下跌，定投反超。这条规律没有例外，也不依赖你从哪一年开始——它只是把"定投"这个动作的暴露时间结构摊开了：<b>分批买入意味着把一部分资金留在场外，而场外的资金在上涨时是纯粹的拖累，在下跌时才是保护。</b></p>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 5 · 一个变量解释了几乎全部</div>
+        <img src="../assets/figs/f18-mechanism.svg" alt="部署期市场涨跌与定投相对差额的散点图" style="width:100%">
+        <p class="ex-note">横轴是前 12 个月的市场涨跌，纵轴是定投相对一次性的 10 年终值差（占本金百分点）：点几乎全部落在一条斜线上。<b>定投赢的起点只占 21%，且全部落在左侧浅蓝区域</b>——历史上"投完就跌"的窗口本来就只占两成。</p>
+        <p class="ex-src">来源：本文回测；345 个月度起点，12 个月分期、持有 10 年。</p>
+      </div>
+      <p>那么"分批买得更便宜"这件事到底值多少？把 2007-10 起步的 12 期拆开看，可以回答得更具体：<b>真正扛起收益的是最后几期——它们买在危机后的低位</b>；而 1999-02 起步的那一批，因为崩盘晚了一年，每一期都买得比起点更贵。这就是为什么"定投更便宜"这句话在方向上没错，却不能保证结果——它依赖崩盘何时到来。</p>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 6 · 哪一期在出力，以及这种机会有多稀有</div>
+        <img src="../assets/figs/f23-tranche-and-distribution.svg" alt="分批贡献分解与终值差额分布" style="width:100%">
+        <p class="ex-note">左图（2007-10 起步）：灰虚线是每期买入时的指数位置，蓝柱是该期最终值——<b>第 12 期贡献最大</b>。右图：全部 345 个起点的差额分布，中位数 <b>−13 个百分点</b>，只有 <b>21%</b> 落在零线右侧；分布形状是"右尾薄、左尾长"，即定投大幅赢的情况很少，输一截的情况不少。</p>
+        <p class="ex-src">来源：本文回测；差额 = 定投终值 − 一次性终值。</p>
+      </div>
 
-      <h2 id="s5"><span class="num">05</span><span class="zh">机制深化：分批的钱从哪来</span><span class="en">Where DCA's gains come from</span></h2>
-      <p><span class="zh">"分批买得更便宜"这句话需要一个证据：到底哪几期在起作用？我把 2007-10 起步的分 12 期拆开看。</span>
-      <span class="en">If spreading buys cheaper, which purchases actually pay? Here is every tranche of the 2007-10 start.</span></p>
-      <figure>
-        <img src="../assets/figs/f23-tranche-and-distribution.svg" alt="分批贡献分解与差额分布直方图">
-        <figcaption><b>图 4｜左：哪一期买得最值；右：定投赢的稀有程度</b>（来源：本文回测）。
-        <span class="zh">左图（2007-10 起步）：灰线是每一期买入时的指数位置，蓝柱是那一期最终值多少——<b>最后几期买在最低位，扛起了定投的大部分收益</b>。右图：全部 345 个起点的差额分布，中位数是 <b>−13.1pp</b>（即定投中位落后 13 个百分点），只有 <b>21%</b> 的起点落在零线右侧。分布的形状很关键：<b>右侧尾巴短而左侧尾巴长</b>——定投"赢一点点"的情况少，"输一截"的情况多。</span>
-        <span class="en">Left: the later tranches bought cheapest and did the heavy lifting. Right: the distribution of outcomes — median −13pp, only 21% of starts to the right of zero, with a short right tail and a long left tail.</span></figcaption>
-      </figure>
-
-      <h2 id="s6"><span class="num">06</span><span class="zh">全样本扫描：每个起点年份一格</span><span class="en">Every start year, one cell</span></h2>
-      <p><span class="zh">最常见的质疑是"你是不是挑了几个好年份"。下面这张图把 29 个起点年份全部摊开：每个格子里橙柱是一次性、蓝柱是定投，持有 10 年，背景色标出谁赢。</span>
-      <span class="en">The usual objection is cherry-picking. Here are all 29 January start years, each in its own cell.</span></p>
-      <figure>
-        <img src="../assets/figs/f24-small-multiples.svg" alt="29 个起点年份的小倍数矩阵，每个格子对比一次性与定投的终值">
-        <figcaption><b>图 5｜29 个起点年份，一格不落</b>（来源：本文回测）。
-        <span class="zh">29 个年份里，一次性赢 <b>25</b> 年、定投赢 <b>4</b> 年（14%）。定投赢的年份集中在<b>关键转折点附近</b>：2000 年前后（网络泡沫）与 2007–2008（金融危机）——也就是图 3 里那些"部署期正好在跌"的起点。除此之外，橙柱几乎总是更高。</span>
-        <span class="en">All-in wins 25 of 29 years; DCA's four wins cluster around 2000 and 2007–08 — exactly the falling deployment windows.</span></figcaption>
-      </figure>
-
-      <h2 id="s7"><span class="num">07</span><span class="zh">自己动手看</span><span class="en">See it move</span></h2>
-      <p><span class="zh">下面这张图可以播放：<b>领跑方用色带标出来</b>（橙＝一次性领先，蓝＝定投领先），历史大事标在时间轴上，下方是同步的差距条。切换起点或市场，你会看到同一策略给出相反结论。</span>
-      <span class="en">Press play: the ribbon shows who leads, events are marked, and a gap strip tracks the difference.</span></p>
-      <div class="vbox">
-        <div class="ctrl">
-          <button class="primary" id="d-play">▶ 播放</button>
-          <select id="d-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
-          <select id="d-start"><option value="1999-02">1999-02 · 崩盘前一年（部署期仍在涨）</option>
+      <h2 id="s4"><span class="num">04</span><span class="zh">崩盘早到还是晚到，决定一切</span><span class="en">Timing of the crash decides it</span></h2>
+      <p>两个真实起点可以把上面所有抽象都落地。1999-02 入市的人，在崩盘前又经历了一年上涨，定投恰好买在高位；2007-10 入市的人，危机的第一波就在眼前，分批买得越来越便宜。十年之后，前者的定投落后一次性 6 个百分点，后者领先 28 个百分点。</p>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 7 · 同样的策略，相反的结果</div>
+        <img src="../assets/figs/f20-worst-case.svg" alt="1999-02 与 2007-10 两个起点的路径对比" style="width:100%">
+        <p class="ex-note">左：1999-02 起步，定投 0.65 倍、一次性 0.71 倍。右：2007-10 起步，定投 2.34 倍、一次性 2.06 倍。<b>差别不在策略，而在崩盘来得早还是晚。</b></p>
+        <p class="ex-src">来源：本文回测；12 个月分批、持有 10 年，阴影为部署期。</p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 8 · 自己动手看（可交互）</div>
+        <div class="vbox">
+          <div class="ctrl">
+            <button class="primary" id="d-play">▶ 播放</button>
+            <select id="d-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
+            <select id="d-start"><option value="1999-02">1999-02 · 崩盘前一年（部署期仍在涨）</option>
             <option value="2007-10">2007-10 · 危机当月（部署期暴跌）</option>
             <option value="2009-03">2009-03 · 危机底部（部署期暴涨）</option>
             <option value="2020-02">2020-02 · 疫情前高点</option>
             <option value="2021-12">2021-12 · 2022 熊市前</option>
             <option value="1990-08">1990-08 · 海湾战争前</option></select>
-          <button id="d-rand">随机起点</button>
-          <input type="range" id="d-scrub" min="0" max="120" value="120">
-          <span id="d-month">第 120 个月</span>
+            <button id="d-rand">随机起点</button>
+            <input type="range" id="d-scrub" min="0" max="120" value="120">
+            <span id="d-month">第 120 个月</span>
+          </div>
+          <svg id="d-svg" viewBox="0 0 900 470" role="img" aria-label="一次性投入与定投的路径动画"></svg>
+          <div class="vstat">
+            <span>100 元 → 一次性 <b id="d-vall">–</b> 元</span>
+            <span>定投 <b id="d-vdca">–</b> 元</span>
+            <span>差距 <b id="d-gap">–</b></span>
+            <span id="d-lead"></span>
+          </div>
         </div>
-        <svg id="d-svg" viewBox="0 0 900 470" role="img" aria-label="一次性投入与定投的路径动画，含事件标注与差距条"></svg>
-        <div class="vlegend">
-          <span><i style="background:#D55E00"></i>一次性投入 All-in</span>
-          <span><i style="background:#0072B2"></i>定投 DCA（12 个月投完）</span>
-        </div>
-        <div class="vstat">
-          <span>100 元 → 一次性 <b id="d-vall">–</b> 元</span>
-          <span>定投 <b id="d-vdca">–</b> 元</span>
-          <span>差距 <b id="d-gap">–</b></span>
-          <span id="d-lead"></span>
-        </div>
+        <p class="ex-note">橙＝一次性投入、蓝＝定投；两线之间的色带标出当前领跑方，下方同步显示差距。历史事件（网络泡沫、金融危机、疫情、加息周期）标在时间轴上。换起点、换市场，结论会翻转。</p>
+        <p class="ex-src">来源：本文回测，数据见附录 A。</p>
       </div>
 
-      <h2 id="s8"><span class="num">08</span><span class="zh">两个真实起点：差 34 个百分点</span><span class="en">Two real start dates</span></h2>
-      <figure>
-        <img src="../assets/figs/f20-worst-case.svg" alt="1999-02 与 2007-10 两个起点的路径对比">
-        <figcaption><b>图 6｜同样的策略，相反的结果</b>（来源：本文回测）。
-        <span class="zh">左：<b>1999-02</b> 起步——市场在崩盘前又多涨一年，定投买在高位，10 年后 0.65 倍 vs 一次性 0.71 倍。<br>右：<b>2007-10</b> 起步——危机第一波就在眼前，分批买得越来越便宜，10 年后 2.34 倍 vs 2.06 倍。<b>两个起点的差别不是"策略好坏"，而是"崩盘早到还是晚到"。</b></span>
-        <span class="en">Left: the crash came a year late and DCA bought the rise. Right: the crash came at once.</span></figcaption>
-      </figure>
-      <div class="callout co-infer">
-        <span class="lbl">推断 · Inference</span>
-        <p><span class="zh">所以定投的收益不是"平均成本"，而是<b>"运气订单"</b>：它在你最需要的时候（崩盘立刻发生）出现，在最尴尬的时候（崩盘晚一年）消失。听到"定投让我赚更多"时，先问他从哪一年开始投——这句话能过滤掉大部分幸存者叙事。</span>
-          <span class="en">DCA is a lottery ticket on the timing of the crash. Ask anyone who credits it which year they started.</span></p>
-      </div>
-
-      <h2 id="s9"><span class="num">09</span><span class="zh">换个市场还成立吗</span><span class="en">Does it hold elsewhere?</span></h2>
-      <p><span class="zh">美股 1988 年以来的特征是"长期向上、回撤后能恢复"。这不是所有市场的常态，所以我用恒生指数做了同样的回测（1986-11 起，477 个月，覆盖 1997、2000、2008、2015、2018–2022 多轮深跌与长横盘）。</span>
-      <span class="en">The US series recovered from every drawdown. Hong Kong did not always — so the same test, run again.</span></p>
-      <div class="tbl-wrap">
-        <table class="tbl">
-          <caption><span class="zh">表 2｜两个市场的一次性投入胜率（12 个月分期）</span><span class="en">Table 2｜All-in win rate by market</span></caption>
-          <thead><tr>
-            <th><span class="zh">持有期</span><span class="en">Holding</span></th>
-            <th><span class="zh">标普 500 全收益（美）</span><span class="en">S&amp;P 500 total return</span></th>
-            <th><span class="zh">恒生指数（港）</span><span class="en">Hang Seng</span></th>
-          </tr></thead>
-          <tbody>
+      <h2 id="s5"><span class="num">05</span><span class="zh">换个市场还成立吗</span><span class="en">Does it hold elsewhere?</span></h2>
+      <p>美股的 1988 年以来特征是"长期向上、回撤后能恢复"，这不是所有市场的常态。用恒生指数（1986-11 起，477 个月，覆盖 1997、2000、2008、2015、2018–2022 多轮深跌与长横盘）做同一套回测，结论明显变弱：一次性投入的胜率从约 80% 降到 <b>63–69%</b>，而且持有期越长、差距越小。</p>
+      <div class="exhibit">
+        <div class="ex-label">表 2 · 两个市场的一次性投入胜率（12 个月分期）</div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>持有期</th><th>标普 500 全收益（美）</th><th>恒生指数（港）</th></tr></thead>
+            <tbody>
             <tr><td>5 年持有</td><td>81%</td><td>63%</td></tr>
             <tr><td>10 年持有</td><td>79%</td><td>66%</td></tr>
             <tr><td>20 年持有</td><td>82%</td><td>69%</td></tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+        <p class="ex-note">恒生指数序列为价格指数（不含股息），这会低估买入并持有，因此对"一次性投入"是偏保守的口径——真实的差距可能比表中更大。</p>
+        <p class="ex-src">来源：本文回测。</p>
       </div>
-      <figure>
-        <img src="../assets/figs/f21-market-compare.svg" alt="标普 500 与恒生指数上一次性投入胜率的对比柱状图">
-        <figcaption><b>图 7｜同一个问题，换个市场，答案变弱</b>（来源：本文回测）。
-        <span class="zh">恒生指数上一次性只赢 <b>63–69%</b>，比美股低约 15 个百分点，且持有期越长差距越小。原因不神秘：<b>港股波动更大、横盘和深跌的时间更长</b>，所以"等一等"的机会成本更低。结论：<b>"all-in 更好"不是普适定律，它建立在"市场长期向上、且你能承受回撤"这两个前提上。</b></span>
-        <span class="en">In Hong Kong all-in wins only 63–69%: higher volatility and longer flat stretches change the answer.</span></figcaption>
-      </figure>
-      <p class="tnote"><span class="zh">注：恒生指数为价格指数（不含股息），这会低估买入并持有，因此对"一次性投入"是偏保守的口径。</span>
-        <span class="en">Note: the Hang Seng series is price-only, which understates buy-and-hold.</span></p>
-
-      <h2 id="s10"><span class="num">10</span><span class="zh">为什么这件事争论这么久</span><span class="en">Why the argument never ends</span></h2>
-      <p><span class="zh">如果数字这么清楚，为什么还有那么多人在争论？因为双方回答的其实不是同一个问题。</span>
-      <span class="en">If the numbers are this clear, why does the argument persist? Because the two sides answer different questions.</span></p>
-      <ul>
-        <li><span class="zh"><b>学术一侧问的是"期望效用"。</b>Constantinides（1979）证明在一个标准效用框架下，定投不是最优策略；Rozeff（1994）与 Knight &amp; Mandell（1992）用历史数据指出一次性投入的期望收益更高。他们的结论是对的——<b>在这些前提之下</b>。<span class="sup">[1][2][3]</span></span>
-          <span class="en"><b>The academic side asks about expected utility.</b> The classics show DCA is not optimal in expectation.<span class="sup">[1][2][3]</span></span></li>
-        <li><span class="zh"><b>实务一侧问的是"你会不会做"。</b>如果一次性投入之后立刻遇到 30% 回撤，很多人会卖在底部——那时的期望收益再高也没有意义。<b>定投买的不是收益，是"你愿意开始并坚持"。</b></span>
-          <span class="en"><b>The practitioner side asks whether you will actually do it.</b> DCA buys the willingness to start and stay.</span></li>
-        <li><span class="zh"><b>两个心理因素在起作用。</b>一是<b>损失厌恶</b>：同样的亏损带来的痛苦大于同等收益的快乐；二是<b>后悔厌恶</b>：all-in 之后跌，"我本可以分批"的自责特别强；而分批之后跌，你会觉得"至少我谨慎过"。<b>这两个偏差不会改变期望收益，但会改变你的行为——而行为决定你最终拿到的收益。</b></span>
-          <span class="en"><b>Two biases are at work:</b> loss aversion and regret aversion. They do not change expected return, but they change behaviour — and behaviour determines realised return.</span></li>
-        <li><span class="zh"><b>近年的讨论又多了一维：环境。</b>2026 年一篇针对高通胀环境的研究重新检查了这个问题，说明"哪个更好"依赖于通胀与利率所处的状态——这提示我们，上面的 80% 是<b>特定历史时期</b>的答案，而不是自然常数。<span class="sup">[4]</span></span>
-          <span class="en"><b>Recent work adds a regime dimension:</b> 2026 research on high-inflation environments shows the answer depends on the macro state.<span class="sup">[4]</span></span></li>
-      </ul>
-
-      <h2 id="s11"><span class="num">11</span><span class="zh">所以到底该怎么做</span><span class="en">What to actually do</span></h2>
-      <ol>
-        <li><span class="zh"><b>先按"钱的来源"分类。</b>每月结余 → 只能定投，讨论结束；手上有一笔钱 → 进入第二题。</span>
-          <span class="en"><b>Classify by the source of the money.</b></span></li>
-        <li><span class="zh"><b>存量资金的默认答案是"尽快投"，但有三个例外</b>：① 这笔钱三年内要用（时间不够覆盖一次回撤）；② 你几乎确定自己在下跌 20% 时会卖出（那说明你是在赌情绪，不是在赌市场）；③ 市场处于极端估值区间、你需要用分批来管理执行风险。</span>
-          <span class="en"><b>Default: invest soon</b> — unless the money is needed within three years, you would sell into a drawdown, or you are managing execution risk in an extreme valuation regime.</span></li>
-        <li><span class="zh"><b>如果决定分批，把期限压短、把规则写死。</b>6–12 个月是心理与概率都比较好接受的区间；写下"每月几号投多少"，然后不改。回测显示 <b>24 个月以上的分期只会让代价更大</b>（胜率反而升到 84%）。</span>
-          <span class="en"><b>If you spread it, keep it short and pre-commit.</b> Six to twelve months; longer only costs more.</span></li>
-        <li><span class="zh"><b>为"后悔"标个价。</b>10 年持有期里一次性的中位优势是 <b>0.13 倍本金</b>（20 年 0.29 倍）——这就是分批投入的保费。<b>如果这笔保费换来的是你不会因为怕而完全不投，那它值。</b></span>
-          <span class="en"><b>Price the regret.</b> The median advantage is the premium for staying invested at all.</span></li>
-        <li><span class="zh"><b>不要用"我以为"来定分批长度。</b>写下来：钱多久要用、能承受多大回撤、分几期、每期几号、什么情况下加投或停投。<b>规则写下来之后，前面那些争论就不再影响你了。</b></span>
-          <span class="en"><b>Write the rule down</b> — horizon, drawdown tolerance, schedule — and the debate stops mattering.</span></li>
-      </ol>
-
-      <h2 id="s12"><span class="num">12</span><span class="zh">六个常见问题</span><span class="en">Six questions</span></h2>
-      <dl class="faq">
-        <dt><span class="zh">Q1：我每月只有工资结余，这篇对我有用吗？</span><span class="en">I only have monthly salary — does this apply?</span></dt>
-        <dd><span class="zh">那是流量问题：你没有 all-in 这个选项，所以"哪个更好"不成立。对你而言，真正的问题变成"投多少比例、投什么、跌了要不要加"。<b>唯一与本文相关的建议是：不要因为看到"一次性更优"就把结余攒成一笔再投——那等于主动承担更多等待成本。</b></span>
-          <span class="en">That is a flow problem: there is no lump sum to choose. Do not hoard savings in order to "invest it all at once" later.</span></dd>
-
-        <dt><span class="zh">Q2：定投是不是"更安全"？</span><span class="en">Is DCA safer?</span></dt>
-        <dd><span class="zh">它降低的是<b>"一开始就遇上崩盘"</b>这一种风险，代价是延长了暴露时间（钱在场外等），并且失去了大涨初期的一段收益。<b>风险没有被消除，而是被重新分配了。</b>如果"安全"的定义是"最小化后悔"，定投确实更安全；如果定义是"降低波动"，两者在 12 个月后几乎没有差别。</span>
-          <span class="en">It removes one risk (crash on day one) and adds another (time out of the market). Risk is redistributed, not removed.</span></dd>
-
-        <dt><span class="zh">Q3：那我应该分多久？</span><span class="en">How long should I spread it?</span></dt>
-        <dd><span class="zh">本文证据是：<b>6–12 个月</b>。比这更长（24、36 个月）在期望上更吃亏，在心理上并不会显著更安心；比这更短（比如 3 个月）则几乎等价于一次性投入。如果你的钱三年内要用，那问题不是"分多久"，而是"该不该进股市"。</span>
-          <span class="en">Six to twelve months. Longer costs more without buying much extra comfort.</span></dd>
-
-        <dt><span class="zh">Q4：ETF、基金、还是自己买股票？</span><span class="en">ETF, fund, or single stocks?</span></dt>
-        <dd><span class="zh">本文所有结论都在"同一个标的"上比较，所以标的选择是<b>另一层问题</b>，但优先级更高：费率差 0.5% 在 10 年里的影响，远大于"分批 vs 一次性"的中位差（13% 本金分摊到 10 年约等于每年 1.2%，两者量级接近，但费率是确定的）。</span>
-          <span class="en">Instrument choice is a separate, higher-priority decision — a 0.5% fee difference compounds for a decade.</span></dd>
-
-        <dt><span class="zh">Q5：如果现在估值很高呢？</span><span class="en">What if valuations are high?</span></dt>
-        <dd><span class="zh">"估值高"不等于"明年会跌"——本文的回测里包含了 1999、2007、2021 这些高估值起点，一次性投入在其中有些赢、有些输。<b>用估值来调整分批长度是"执行风险管理"，不是策略：它降低了最坏情况，也降低了期望收益。</b>如果你选择这么做，就把规则写下来。</span>
-          <span class="en">High valuations neither guarantee a fall nor a rise. Adjusting the schedule for valuation is execution risk management, not alpha — write the rule down.</span></dd>
-
-        <dt><span class="zh">Q6：我可以设"跌了就加投"吗？</span><span class="en">Can I add more if the market falls?</span></dt>
-        <dd><span class="zh">可以，但要清楚这是<b>择时</b>，需要额外证据支持（估值分位、信用利差、政策周期等），而本文的数据不支持"跌了就一定该加"。最简单的做法还是把规则固定下来：<b>时间固定、金额固定、期限固定。</b></span>
-          <span class="en">You can, but that is market timing and needs its own evidence. Fixed time, fixed amount, fixed horizon is the defensible default.</span></dd>
-      </dl>
-
-      <h2 id="s13"><span class="num">13</span><span class="zh">局限与反方观点</span><span class="en">Limits and the other side</span></h2>
-      <ul>
-        <li><span class="zh"><b>只有两个市场、两个口径。</b>美股用全收益（含股息），港股只能用价格指数——后者低估买入并持有，因此港股的结论对一次性投入偏保守。要做更强的结论，需要更多市场的总收益序列。</span>
-          <span class="en"><b>Two markets, two conventions.</b></span></li>
-        <li><span class="zh"><b>等待中的现金按 0% 计息。</b>计入货币市场利率会让定投的劣势缩小；计入通胀则扩大。这一条对结论的方向有真实影响。</span>
-          <span class="en"><b>Cash earns 0%.</b> Money-market yields would narrow DCA's disadvantage; inflation would widen it.</span></li>
-        <li><span class="zh"><b>没有税费、申购费与汇率，也没有考虑分批带来的多笔交易成本</b>——这些都进一步不利于定投。</span>
-          <span class="en"><b>No taxes, fees or FX</b> — all of which penalise spreading further.</span></li>
-        <li><span class="zh"><b>指数本身有幸存者偏差</b>：指数会剔除退市与破产的成份股，"买入并持有指数"的体验好于"买入并持有任意一只股票"。</span>
-          <span class="en"><b>Index survivorship</b> flatters buy-and-hold relative to picking stocks.</span></li>
-        <li><span class="zh"><b>反方观点：期望收益不是唯一目标。</b>经典文献指出定投在期望收益上劣于一次性投入，但并没有、也无法衡量"你会不会坚持"。<b>如果一个策略期望更高但你执行不了，它的期望对你是不可得的。</b><span class="sup">[1][2][3][4]</span></span>
-          <span class="en"><b>The other side:</b> expected return is not the only objective — an optimal strategy you cannot execute is not available to you.</span></li>
-      </ul>
-
-      <h2 id="s14"><span class="num">14</span><span class="zh">我的判断</span><span class="en">My take</span></h2>
-      <div class="callout co-opinion">
-        <span class="lbl">观点 · Opinion</span>
-        <p><span class="zh">我不想把这篇写成"定投无用论"。更准确的说法是：<b>一次性投入是收益最优解，定投是行为次优解</b>。它买的不是更高收益，而是"你愿意开始"。很多人真正的问题不是"该不该分批"，而是"因为怕亏，所以干脆没投"——对这类人，分批 12 个月的价值远远超过那 13% 的期望差。</span>
-        <span class="en">All-in is return-optimal; DCA is behaviourally optimal. It buys the willingness to start.</span></p>
-        <p><span class="zh">我自己的规则是：<b>能拿三年的钱，一次性投；不确定的钱，分 6–12 个月投并把时间写死；每月结余，照投不误。</b>如果有人说"分批更安全"，我会把图 7 递过去——安全感的代价，是可以被算出来的：大约 13 个百分点的本金，换一个"我一定会开始"的承诺。</span>
-          <span class="en">My rule: money I can leave for three years goes in now; uncertain money over six to twelve pre-committed months; salary goes in monthly — about 13 points of principal for the promise that you actually start.</span></p>
+      <div class="exhibit">
+        <div class="ex-label">Exhibit 9 · 同一个问题，换个市场，答案变弱</div>
+        <img src="../assets/figs/f21-market-compare.svg" alt="标普 500 与恒生指数的一次性投入胜率对比" style="width:100%">
+        <p class="ex-note">原因不神秘：<b>港股波动更大、横盘与深跌的时间更长</b>，"等一等"的机会成本因此更低。结论：<b>"all-in 更好"不是普适定律，它建立在"市场长期向上、且你能承受回撤"这两个前提上。</b></p>
+        <p class="ex-src">来源：本文回测；12 个月分期。</p>
       </div>
 
-      <h2 id="s15"><span class="num">15</span><span class="zh">数据、方法与来源</span><span class="en">Data, method and sources</span></h2>
-      <ul>
-        <li><span class="zh"><b>数据</b>：^SP500TR 月度收盘 1988-01 → 2026-09（465 个月，含股息）；^HSI 月度收盘 1986-11 → 2026-07（477 个月，价格）。来源 Yahoo Finance 公开行情接口，合计 942 个月。</span>
-          <span class="en"><b>Data:</b> 942 monthly observations from Yahoo Finance.</span></li>
-        <li><span class="zh"><b>代码</b>：<code>tools/make_lca_data.py</code>（回测与静态图）、<code>tools/make_lca_extra_figs.py</code>（分批分解、小倍数矩阵）、<code>tools/make_lca_note.py</code>（本页与两个交互动画）。固定输入可完全复现。</span>
-          <span class="en"><b>Code:</b> included and reproducible.</span></li>
-      </ul>
-      <ol class="refs">
-        <li>Constantinides, G. M. (1979). <i>A Note on the Suboptimality of Dollar-Cost Averaging as an Investment Policy</i>. JFQA.
-          <a href="https://doi.org/10.2307/2330513">doi.org/10.2307/2330513</a></li>
-        <li>Rozeff, M. S. (1994). <i>Lump-Sum Investing versus Dollar-Averaging</i>. Journal of Portfolio Management.
-          <a href="https://doi.org/10.3905/jpm.1994.409474">doi.org/10.3905/jpm.1994.409474</a></li>
-        <li>Knight, J. R., &amp; Mandell, L. (1992). <i>Nobody Gains from Dollar Cost Averaging</i>. Financial Services Review.
-          <a href="https://doi.org/10.1016/1057-0810(92)90015-5">doi.org/10.1016/1057-0810(92)90015-5</a></li>
-        <li>Kaur, et al. (2026). <i>Dollar-Cost Averaging Versus Lump-Sum Investing under High Inflation</i>. JRFM.
-          <a href="https://doi.org/10.3390/jrfm19090671">doi.org/10.3390/jrfm19090671</a></li>
-        <li>Vanguard Research. <i>Cost averaging: invest now or temporarily hold your cash?</i>
-          <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf">vanguard.com（PDF）</a></li>
-        <li>行情数据：<a href="https://finance.yahoo.com/quote/%5ESP500TR/">^SP500TR</a> · <a href="https://finance.yahoo.com/quote/%5EHSI/">^HSI</a>（访问日期 2026-10-02）。</li>
-      </ol>
-
-      <h2 id="share"><span class="num">16</span><span class="zh">分享版摘要</span><span class="en">Shareable summary</span></h2>
-      <div class="cite" id="shareText">
-        <span class="zh">可直接贴出去的版本：</span><span class="en">Ready to post:</span>
-        <pre>定投（DCA）＝把一笔钱分成几期等额买入；一次性投入（LSI/all-in）＝期初全买。两个词常被混用，但只有"手上已有一笔钱"时才存在这道选择题。</pre>
-        <pre>用 942 个月真实数据回测：标普 500 全收益上，一次性投入在约 80% 的月度起点胜出，持有 10 年中位数多赚 0.13 倍本金。但它输的那 20% 有规律：恰好是"投完就跌"的月份。1999-02 起步定投 0.65x 输给 0.71x；2007-10 起步定投 2.34x 赢过 2.06x —— 差 34 个百分点。</pre>
-        <pre>换个市场结论要打折：恒生指数上一次性胜率只有 63–69%。一句话：一次性投入是收益最优解，定投是行为次优解 —— 它买的不是更高收益，而是"你愿意开始"。</pre>
-        <button class="chip" type="button" data-copy="#shareText" data-done-label="已复制 ✓">复制这段</button>
-      </div>
-
-      <h2 id="cite"><span class="num">17</span><span class="zh">引用本文</span><span class="en">Cite this note</span></h2>
-      <div class="cite">
-        <pre id="citeText">Aylon (2026). 定投还是 all-in：把三个词说清楚，再用 942 个月数据回答. Notes, v1.2. https://aayloo.github.io/notes/lump-sum-vs-dca/</pre>
-        <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
-      </div>
-
-      <h2 id="upd"><span class="num">18</span><span class="zh">更新日志</span><span class="en">Changelog</span></h2>
-      <div class="tbl-wrap">
-        <table class="upd">
-          <thead><tr><th>版本</th><th>日期</th><th>改动</th></tr></thead>
-          <tbody>
-            <tr><td>v1.2</td><td>2026-10-02</td>
-              <td><span class="zh">新增术语节（定投 / 一次性投入 / 定期定额 / 价值平均，含现金流时间轴图）；正文扩写约一倍（疑问澄清、机制深化、行为金融、六个常见问题）；新增 3 张图（分批分解与差额分布、全样本小倍数矩阵）；正文与表格字号调小、行距收紧。</span>
-                  <span class="en">Added a terminology section, roughly doubled the prose, added three figures, and reduced font sizes.</span></td></tr>
-            <tr><td>v1.1</td><td>2026-10-02</td>
-              <td><span class="zh">重排框架；新增竞速条与事件标注赛跑两个交互动画。</span><span class="en">Restructured; added two interactive charts.</span></td></tr>
-            <tr><td>v1.0</td><td>2026-10-02</td>
-              <td><span class="zh">初版：942 个月回测、四张静态图。</span><span class="en">First version.</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <nav class="pager" aria-label="pagination">
-        <a href="../ai-factor-referee/">
-          <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
-          <span class="v"><span class="zh">← AI 挖因子，谁来当裁判</span><span class="en">← AI factor referee</span></span>
-        </a>
-        <a href="../cost-of-constraints/">
-          <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
-          <span class="v"><span class="zh">约束的代价 →</span><span class="en">Every constraint has a price →</span></span>
-        </a>
-      </nav>
+      <h2 id="s6"><span class="num">06</span><span class="zh">那么该怎么做</span><span class="en">What to do</span></h2>
+      <p>我不打算把这篇写成"定投无用论"。更准确的说法是：<b>一次性投入是收益最优解，定投是行为次优解</b>——它买的不是更高收益，而是"你愿意开始"。很多人真正的问题不是"该不该分批"，而是"因为怕亏，所以干脆没投"；对这类人，分批 12 个月的价值远远超过那 13 个百分点的期望差。据此，我给自己定了四条规则。</p>
+      <p><b>第一，先按钱的来源分类。</b>每月结余只能定投，讨论到此结束；手上已有一笔钱，才进入下一题。这是最容易搞混、也最影响结论的一步。</p>
+      <p><b>第二，存量资金的默认答案是"尽快投"。</b>三个例外值得认真考虑：这笔钱三年内要用；你几乎确定自己在下跌 20% 时会卖出（那说明你是在赌自己的情绪，而不是赌市场）；市场处在极端估值区间、你需要用分批来管理执行风险。</p>
+      <p><b>第三，如果决定分批，把期限压短、把规则写死。</b>证据显示 6–12 个月是心理与概率都比较好接受的区间；24 个月以上的分期只会让代价更大。写下"每月几号投多少"，然后不要改。</p>
+      <p><b>第四，为"后悔"标个价。</b>10 年持有期里一次性的中位优势是 0.13 倍本金——这就是分批投入的保费。如果这笔保费换来的是你不会因为害怕而完全不投，那它值。</p>
+      <p>最后回答三个最常被追问的问题。<b>"定投能降低成本吗？"</b>它把成本摊平，不是降低；市场在涨时你的平均成本一定高于起点价格。<b>"分批越长越安全吗？"</b>越长只是越保守，代价也更大，安全与收益在这里是交换关系。<b>"80% 胜率说明我该 all-in 吗？"</b>那是群体统计，你只有一次人生——真正的问题不是"哪个期望高"，而是"哪种失败我能承受"。</p>
     </div>
 
     <aside class="toc" aria-label="contents">
       <div class="tt">Contents</div>
-      <a href="#s1">01 <span class="zh">术语：三个词</span><span class="en">Terms</span></a>
-      <a href="#s2">02 <span class="zh">回测怎么做</span><span class="en">Method</span></a>
-      <a href="#s3">03 <span class="zh">一次性赢多少</span><span class="en">Win rate</span></a>
-      <a href="#s4">04 <span class="zh">它输在哪里</span><span class="en">Where it loses</span></a>
-      <a href="#s5">05 <span class="zh">分批的钱从哪来</span><span class="en">Tranches</span></a>
-      <a href="#s6">06 <span class="zh">全样本扫描</span><span class="en">All years</span></a>
-      <a href="#s7">07 <span class="zh">自己动手看</span><span class="en">See it move</span></a>
-      <a href="#s8">08 <span class="zh">两个真实起点</span><span class="en">Two starts</span></a>
-      <a href="#s9">09 <span class="zh">换个市场</span><span class="en">Another market</span></a>
-      <a href="#s10">10 <span class="zh">为什么争论不休</span><span class="en">Why the debate</span></a>
-      <a href="#s11">11 <span class="zh">该怎么做</span><span class="en">What to do</span></a>
-      <a href="#s12">12 <span class="zh">六个常见问题</span><span class="en">FAQ</span></a>
-      <a href="#s13">13 <span class="zh">局限与反方</span><span class="en">Limits</span></a>
-      <a href="#s14">14 <span class="zh">我的判断</span><span class="en">My take</span></a>
-      <a href="#share">16 <span class="zh">分享版摘要</span><span class="en">Shareable</span></a>
+      <a href="#s1">01 <span class="zh">一笔钱的两条路</span><span class="en">Two routes</span></a>
+      <a href="#s2">02 <span class="zh">赢了百分之多少</span><span class="en">Win rate</span></a>
+      <a href="#s3">03 <span class="zh">输掉的那 20%</span><span class="en">The pattern</span></a>
+      <a href="#s4">04 <span class="zh">崩盘早到还是晚到</span><span class="en">Timing</span></a>
+      <a href="#s5">05 <span class="zh">换个市场</span><span class="en">Another market</span></a>
+      <a href="#s6">06 <span class="zh">该怎么做</span><span class="en">What to do</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
     </aside>
+  </div>
+
+  <div class="prose">
+    <details class="appendix" id="apx">
+      <summary>附录 A · 数据、方法与来源</summary>
+      <p><b>数据。</b>标普 500 全收益指数（^SP500TR，含股息）月度收盘，1988-01 → 2026-09，共 465 个月；恒生指数（^HSI，价格）月度收盘，1986-11 → 2026-07，共 477 个月。来源为 Yahoo Finance 公开行情接口，访问日期 2026-10-03。</p>
+      <p><b>做法。</b>把每一个月当作起点 t₀。一次性投入＝在 t₀ 全额买入并持有 H 年；定投＝分 N 个月等额买入，未投部分按 <b>0%</b> 计息，同样持有到 t₀+H。统计指标为"一次性终值高于定投终值"的起点占比，以及终值差额的分布。选择 0% 现金利率是对定投偏有利的假设。</p>
+      <p><b>未计入。</b>交易成本、税费、汇率与心理因素。前三个都会让"分批"更吃亏（多笔交易成本更高），最后一个无法用回测衡量。</p>
+      <p><b>代码。</b><code>tools/make_lca_data.py</code>（回测与数据导出）、<code>tools/make_lca_figs.py</code>（全部静态图，研究简报风格）、<code>tools/make_lca_note.py</code>（本页与两个交互动画）。固定输入可完全复现。</p>
+      <ol class="refs">
+        <li>Constantinides, G. M. (1979). <i>A Note on the Suboptimality of Dollar-Cost Averaging as an Investment Policy</i>. JFQA. <a href="https://doi.org/10.2307/2330513">doi.org/10.2307/2330513</a></li>
+        <li>Rozeff, M. S. (1994). <i>Lump-Sum Investing versus Dollar-Averaging</i>. Journal of Portfolio Management. <a href="https://doi.org/10.3905/jpm.1994.409474">doi.org/10.3905/jpm.1994.409474</a></li>
+        <li>Knight, J. R., &amp; Mandell, L. (1992). <i>Nobody Gains from Dollar Cost Averaging</i>. Financial Services Review. <a href="https://doi.org/10.1016/1057-0810(92)90015-5">doi.org/10.1016/1057-0810(92)90015-5</a></li>
+        <li>Kaur, et al. (2026). <i>Dollar-Cost Averaging Versus Lump-Sum Investing under High Inflation</i>. JRFM. <a href="https://doi.org/10.3390/jrfm19090671">doi.org/10.3390/jrfm19090671</a></li>
+        <li>Vanguard Research (2023-02). <i>Cost averaging: Invest now or temporarily hold your cash?</i> <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf">vanguard.com（PDF）</a></li>
+      </ol>
+    </details>
+
+    <div class="disclaimer">
+      <b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。
+    </div>
+
+    <div class="cite" style="margin-top:22px">
+      <pre id="citeText">Aylon (2026). 定投还是 all-in：942 个月数据的答案. Research Note v2.0. https://aayloo.github.io/notes/lump-sum-vs-dca/</pre>
+      <button class="chip" type="button" data-copy="#citeText" data-done-label="已复制 ✓">复制引用</button>
+    </div>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../ai-factor-referee/">
+        <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
+        <span class="v"><span class="zh">← AI 挖因子，谁来当裁判</span><span class="en">← AI factor referee</span></span>
+      </a>
+      <a href="../cost-of-constraints/">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">约束的代价 →</span><span class="en">Every constraint has a price →</span></span>
+      </a>
+    </nav>
   </div>
 
   <footer>
     <div class="footin">
-      <span>© 2026 Aylon · <span class="zh">本页文字为原创，引用请注明来源</span><span class="en">Original text; please cite if reused</span></span>
+      <span>Research Note v2.0 · © 2026 Aylon · Hong Kong</span>
       <span class="spacer"></span>
-      <a href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
       <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
       <a href="https://github.com/Aayloo">GitHub</a>
     </div>
@@ -472,7 +305,7 @@
 <script>
 const DATA = {"dates": ["1988-01", "1988-02", "1988-03", "1988-04", "1988-05", "1988-06", "1988-07", "1988-08", "1988-09", "1988-10", "1988-11", "1988-12", "1989-01", "1989-02", "1989-03", "1989-04", "1989-05", "1989-06", "1989-07", "1989-08", "1989-09", "1989-10", "1989-11", "1989-12", "1990-01", "1990-02", "1990-03", "1990-04", "1990-05", "1990-06", "1990-07", "1990-08", "1990-09", "1990-10", "1990-11", "1990-12", "1991-01", "1991-02", "1991-03", "1991-04", "1991-05", "1991-06", "1991-07", "1991-08", "1991-09", "1991-10", "1991-11", "1991-12", "1992-01", "1992-02", "1992-03", "1992-04", "1992-05", "1992-06", "1992-07", "1992-08", "1992-09", "1992-10", "1992-11", "1992-12", "1993-01", "1993-02", "1993-03", "1993-04", "1993-05", "1993-06", "1993-07", "1993-08", "1993-09", "1993-10", "1993-11", "1993-12", "1994-01", "1994-02", "1994-03", "1994-04", "1994-05", "1994-06", "1994-07", "1994-08", "1994-09", "1994-10", "1994-11", "1994-12", "1995-01", "1995-02", "1995-03", "1995-04", "1995-05", "1995-06", "1995-07", "1995-08", "1995-09", "1995-10", "1995-11", "1995-12", "1996-01", "1996-02", "1996-03", "1996-04", "1996-05", "1996-06", "1996-07", "1996-08", "1996-09", "1996-10", "1996-11", "1996-12", "1997-01", "1997-02", "1997-03", "1997-04", "1997-05", "1997-06", "1997-07", "1997-08", "1997-09", "1997-10", "1997-11", "1997-12", "1998-01", "1998-02", "1998-03", "1998-04", "1998-05", "1998-06", "1998-07", "1998-08", "1998-09", "1998-10", "1998-11", "1998-12", "1999-01", "1999-02", "1999-03", "1999-04", "1999-05", "1999-06", "1999-07", "1999-08", "1999-09", "1999-10", "1999-11", "1999-12", "2000-01", "2000-02", "2000-03", "2000-04", "2000-05", "2000-06", "2000-07", "2000-08", "2000-09", "2000-10", "2000-11", "2000-12", "2001-01", "2001-02", "2001-03", "2001-04", "2001-05", "2001-06", "2001-07", "2001-08", "2001-09", "2001-10", "2001-11", "2001-12", "2002-01", "2002-02", "2002-03", "2002-04", "2002-05", "2002-06", "2002-07", "2002-08", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-04", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-03", "2004-04", "2004-05", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-02", "2005-03", "2005-04", "2005-05", "2005-06", "2005-07", "2005-08", "2005-09", "2005-10", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-06", "2006-07", "2006-08", "2006-09", "2006-10", "2006-11", "2006-12", "2007-01", "2007-02", "2007-03", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2007-10", "2007-11", "2007-12", "2008-01", "2008-02", "2008-03", "2008-04", "2008-05", "2008-06", "2008-07", "2008-08", "2008-09", "2008-10", "2008-11", "2008-12", "2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"], "price": [257.47, 269.48, 261.15, 264.04, 266.32, 278.54, 277.49, 268.07, 279.49, 287.27, 283.18, 288.12, 309.21, 301.51, 308.54, 324.56, 337.69, 335.78, 366.1, 373.25, 371.74, 363.11, 370.51, 379.41, 353.94, 358.5, 368.0, 358.82, 393.8, 391.14, 389.89, 354.65, 337.39, 335.95, 357.67, 367.63, 383.64, 411.08, 421.03, 422.03, 440.24, 420.07, 439.65, 450.06, 442.53, 448.48, 430.41, 479.63, 470.7, 476.79, 467.52, 481.25, 483.6, 476.41, 495.87, 485.72, 491.43, 493.13, 509.92, 516.18, 520.49, 527.59, 538.72, 525.7, 539.76, 541.34, 539.16, 559.62, 555.33, 566.82, 561.41, 568.2, 587.52, 571.57, 546.65, 553.66, 562.75, 548.96, 566.98, 590.23, 575.8, 588.73, 567.29, 575.71, 590.64, 613.65, 631.76, 650.36, 676.36, 692.07, 715.02, 716.82, 747.07, 744.4, 777.07, 792.04, 819.0, 826.59, 834.55, 846.85, 868.69, 872.01, 833.48, 851.06, 898.97, 923.76, 993.58, 973.9, 1034.74, 1042.85, 1000.0, 1059.7, 1124.22, 1174.59, 1268.05, 1197.01, 1262.5601, 1220.4, 1276.89, 1298.8199, 1313.1899, 1407.9, 1480.0, 1494.89, 1469.1899, 1528.87, 1512.59, 1293.9, 1376.79, 1488.78, 1579.02, 1670.01, 1739.84, 1685.77, 1753.21, 1821.11, 1778.1, 1876.78, 1818.1801, 1809.1899, 1759.59, 1870.9399, 1908.97, 2021.4, 1919.84, 1883.5, 2067.76, 2005.55, 1964.4, 2012.83, 1981.36, 2104.4299, 1993.33, 1984.91, 1828.42, 1837.37, 1902.55, 1729.08, 1619.54, 1745.39, 1757.09, 1714.3199, 1697.45, 1591.1801, 1462.6899, 1490.58, 1604.92, 1618.98, 1595.35, 1564.59, 1623.4301, 1525.0, 1513.77, 1405.9399, 1296.34, 1304.86, 1163.04, 1265.41, 1339.89, 1261.1801, 1228.14, 1209.71, 1221.46, 1322.0699, 1391.72, 1409.48, 1434.33, 1462.3, 1446.77, 1528.62, 1542.0699, 1622.9399, 1652.73, 1675.7, 1650.42, 1624.51, 1646.8, 1678.83, 1623.26, 1629.83, 1647.48, 1672.65, 1740.33, 1799.55, 1755.6801, 1792.63, 1760.89, 1727.49, 1782.46, 1784.99, 1851.37, 1834.48, 1849.33, 1818.5, 1887.28, 1887.9399, 1937.9301, 1943.1899, 1967.38, 1993.79, 1936.41, 1939.03, 1951.0, 1997.42, 2048.8899, 2115.6499, 2155.8899, 2186.1299, 2219.1899, 2175.78, 2200.1201, 2297.5801, 2377.75, 2338.25, 2265.75, 2299.71, 2385.72, 2423.6699, 2322.3401, 2306.23, 2167.8999, 2097.48, 2088.4199, 2190.1299, 2218.5, 2031.47, 2014.39, 2043.53, 1861.4399, 1548.8101, 1437.6801, 1452.98, 1330.51, 1188.84, 1292.98, 1416.73, 1495.97, 1498.9399, 1612.3101, 1670.52, 1732.86, 1700.67, 1802.6801, 1837.5, 1771.4, 1826.27, 1936.48, 1967.05, 1809.98, 1715.23, 1835.4, 1752.55, 1908.95, 1981.59, 1981.84, 2114.29, 2164.3999, 2238.55, 2239.4399, 2305.76, 2279.6599, 2241.6599, 2196.0801, 2076.78, 1930.79, 2141.8101, 2137.0801, 2158.9399, 2255.6899, 2353.23, 2430.6699, 2415.4199, 2270.25, 2363.79, 2396.6201, 2450.6001, 2513.9299, 2467.51, 2481.8201, 2504.4399, 2634.1599, 2669.9199, 2770.05, 2823.4199, 2889.46, 2850.6599, 2995.72, 2908.96, 3000.1799, 3138.0901, 3233.72, 3315.5901, 3200.95, 3347.3799, 3375.51, 3400.46, 3480.29, 3552.1799, 3503.1899, 3643.3301, 3592.25, 3679.99, 3778.96, 3769.4399, 3656.28, 3866.4199, 3805.27, 3841.78, 3891.1799, 3815.8501, 3895.8, 3660.75, 3570.1699, 3871.3301, 3882.8401, 3821.6001, 3631.96, 3627.0601, 3873.1101, 3888.1299, 3957.95, 3968.21, 4114.5098, 4120.29, 4121.0601, 4045.8899, 4195.73, 4278.6602, 4359.8101, 4532.9302, 4538.21, 4584.8198, 4649.3398, 4678.3599, 4774.5601, 4789.1802, 4887.9702, 5002.0298, 5155.4399, 5212.7598, 5511.21, 5308.0898, 5173.1899, 5193.04, 5318.1001, 5350.8301, 5549.96, 5730.7998, 5763.4199, 5369.4902, 5478.9102, 4984.2202, 5383.6299, 5556.4902, 5664.46, 5893.8101, 5519.27, 5908.25, 5993.1699, 5898.23, 6008.5898, 6138.73, 6361.5601, 6553.5698, 6551.0, 6011.73, 5269.2002, 5944.6802, 6227.8101, 6351.6699, 6709.8101, 7192.1099, 6918.8301, 6734.8398, 7472.0601, 7759.3501, 7681.0098, 7892.8101, 8238.4805, 8678.1602, 8738.7695, 8942.7803, 9155.21, 9433.5801, 8994.8301, 9625.0195, 9558.3301, 9986.7002, 9469.9199, 9186.3701, 9527.46, 8696.6504, 8712.5996, 7993.4302, 8730.46, 8374.4199, 7603.1401, 8218.7002, 8678.0, 8178.02, 8691.8799, 8479.7998, 8791.1299, 8928.3496, 8967.1602, 9559.6699, 9866.7695, 9709.6797, 9246.7402, 9052.3096, 9879.0195, 10327.8301, 10501.3799, 11062.1104, 11418.0303, 10951.6602, 11494.7002, 11907.1504, 12052.0898, 12344.4297, 12608.0703, 12493.7402, 13227.1299, 12911.8203, 13271.3799, 13098.2197, 12360.21, 12276.3896, 13049.1299, 13712.71, 14020.46, 14304.6797, 14826.7998, 15173.9502, 15211.1396, 15220.4502, 15441.1504, 15323.7998, 14560.75, 16088.5596, 16935.3496, 16774.0703, 16763.4199, 17219.9395, 17160.4102], "dates_hk": ["1986-11", "1986-12", "1987-01", "1987-02", "1987-03", "1987-04", "1987-05", "1987-06", "1987-07", "1987-08", "1987-09", "1987-10", "1987-11", "1987-12", "1988-01", "1988-02", "1988-03", "1988-04", "1988-05", "1988-06", "1988-07", "1988-08", "1988-09", "1988-10", "1988-11", "1988-12", "1989-01", "1989-02", "1989-03", "1989-04", "1989-05", "1989-06", "1989-07", "1989-08", "1989-09", "1989-10", "1989-11", "1989-12", "1990-01", "1990-02", "1990-03", "1990-04", "1990-05", "1990-06", "1990-07", "1990-08", "1990-09", "1990-10", "1990-11", "1990-12", "1991-01", "1991-02", "1991-03", "1991-04", "1991-05", "1991-06", "1991-07", "1991-08", "1991-09", "1991-10", "1991-11", "1991-12", "1992-01", "1992-02", "1992-03", "1992-04", "1992-05", "1992-06", "1992-07", "1992-08", "1992-09", "1992-10", "1992-11", "1992-12", "1993-01", "1993-02", "1993-03", "1993-04", "1993-05", "1993-06", "1993-07", "1993-08", "1993-09", "1993-10", "1993-11", "1993-12", "1994-01", "1994-02", "1994-03", "1994-04", "1994-05", "1994-06", "1994-07", "1994-08", "1994-09", "1994-10", "1994-11", "1994-12", "1995-01", "1995-02", "1995-03", "1995-04", "1995-05", "1995-06", "1995-07", "1995-08", "1995-09", "1995-10", "1995-11", "1995-12", "1996-01", "1996-02", "1996-03", "1996-04", "1996-05", "1996-06", "1996-07", "1996-08", "1996-09", "1996-10", "1996-11", "1996-12", "1997-01", "1997-02", "1997-03", "1997-04", "1997-05", "1997-06", "1997-07", "1997-08", "1997-09", "1997-10", "1997-11", "1997-12", "1998-01", "1998-02", "1998-03", "1998-04", "1998-05", "1998-06", "1998-07", "1998-08", "1998-09", "1998-10", "1998-11", "1998-12", "1999-01", "1999-02", "1999-03", "1999-04", "1999-05", "1999-06", "1999-07", "1999-08", "1999-09", "1999-10", "1999-11", "1999-12", "2000-01", "2000-02", "2000-03", "2000-04", "2000-05", "2000-06", "2000-07", "2000-08", "2000-09", "2000-10", "2000-11", "2000-12", "2001-01", "2001-02", "2001-03", "2001-04", "2001-05", "2001-06", "2001-07", "2001-08", "2001-09", "2001-10", "2001-11", "2001-12", "2002-01", "2002-02", "2002-03", "2002-04", "2002-05", "2002-06", "2002-07", "2002-08", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-04", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-03", "2004-04", "2004-05", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-02", "2005-03", "2005-04", "2005-05", "2005-06", "2005-07", "2005-08", "2005-09", "2005-10", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-06", "2006-07", "2006-08", "2006-09", "2006-10", "2006-11", "2006-12", "2007-01", "2007-02", "2007-03", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2007-10", "2007-11", "2007-12", "2008-01", "2008-02", "2008-03", "2008-04", "2008-05", "2008-06", "2008-07", "2008-08", "2008-09", "2008-10", "2008-11", "2008-12", "2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07"], "price_hk": [2568.3, 2553.3, 2877.8999, 2713.8, 2659.8999, 2950.8, 3178.2, 3479.2, 3611.7, 3943.6001, 2204.5, 2138.3999, 2302.8, 2409.7, 2418.1001, 2544.0, 2602.8999, 2496.7, 2671.5, 2678.8999, 2443.8, 2441.0, 2627.3999, 2659.3, 2687.3999, 3072.8999, 3012.7, 3005.0, 3116.0, 2743.8999, 2273.8999, 2571.1001, 2508.6001, 2758.2, 2725.3, 2748.3999, 2836.6001, 2751.6001, 2952.0, 2997.0, 2951.0, 3132.0, 3278.0, 3438.0, 3087.0, 2760.0, 2990.0, 2965.0, 3024.0, 3243.0, 3552.0, 3745.0, 3588.0, 3707.0, 3668.0, 4009.0, 3998.0, 3956.7, 4038.7, 4149.7998, 4297.2998, 4601.7998, 4929.1001, 4938.2998, 5369.6001, 6080.2002, 6103.8999, 5881.1001, 5628.6001, 5505.3999, 6190.7002, 5810.6001, 5512.3999, 5751.3999, 6352.0, 6388.8999, 6830.5, 7372.2002, 7099.2998, 6989.0, 7549.7002, 7676.2002, 9329.0996, 9125.2002, 11888.4004, 11487.0, 10410.2002, 9029.9004, 8966.0996, 9553.5996, 8758.4004, 9482.7998, 9929.4004, 9521.2002, 9646.2998, 8466.2998, 8191.0, 7342.7002, 8327.5, 8587.7002, 8361.0, 9407.4004, 9206.5, 9453.4004, 9179.9004, 9646.2998, 9782.4004, 9813.2998, 10073.4004, 11359.7002, 11125.7002, 10957.2002, 10964.5, 11264.7002, 11020.9004, 10681.4004, 11159.0, 11902.4004, 12477.5996, 13393.9004, 13451.5, 13321.7998, 13398.7002, 12534.2998, 12903.2998, 14757.7998, 15196.7998, 16365.7002, 14135.2002, 15049.2998, 10623.7998, 10526.9004, 10722.7998, 9252.4004, 11480.7002, 11518.7002, 10383.6797, 8934.5596, 8543.0996, 7936.2002, 7275.04, 7883.46, 10154.9404, 10402.3203, 10048.5801, 9506.9004, 9858.4902, 10942.2002, 13333.2002, 12147.1201, 13532.1396, 13186.8604, 13482.7695, 12733.2402, 13256.9502, 15377.1904, 16962.0996, 15532.3398, 17169.4395, 17406.5391, 15519.2998, 14713.8604, 16155.7803, 16840.9805, 17097.5098, 15648.9805, 14895.3398, 13984.3896, 15095.5303, 16102.3496, 14787.8701, 12760.6396, 13386.04, 13174.4102, 13042.5303, 12316.6904, 11090.4805, 9950.7002, 10073.9697, 11279.25, 11397.21, 10725.2998, 10482.5498, 11032.9199, 11497.5801, 11301.9404, 10598.5498, 10267.3604, 10043.8701, 9072.21, 9441.25, 10069.8701, 9321.29, 9258.9502, 9122.6602, 8634.4502, 8717.2197, 9487.3799, 9577.1201, 10134.8301, 10908.9902, 11229.8701, 12190.0996, 12317.4697, 12575.9404, 13289.3701, 13907.0303, 12681.6699, 11942.96, 12198.2402, 12285.75, 12238.0303, 12850.2803, 13120.0303, 13054.6602, 14060.0498, 14230.1396, 13721.6904, 14195.3496, 13516.8799, 13908.9697, 13867.0703, 14201.0596, 14880.9805, 14903.5498, 15428.5195, 14386.3701, 14937.1396, 14876.4297, 15753.1396, 15918.4805, 15805.04, 16661.3008, 15857.8896, 16267.6201, 16971.3398, 17392.2695, 17543.0508, 18324.3496, 18960.4805, 19964.7207, 20106.4199, 19651.5098, 19800.9297, 20318.9805, 20634.4707, 21772.7305, 23184.9395, 23984.1406, 27142.4707, 31352.5801, 28643.6094, 27812.6504, 23455.7402, 24331.6699, 22849.1992, 25755.3496, 24533.1191, 22102.0098, 22731.0996, 21261.8906, 18016.2109, 13968.6699, 13888.2402, 14387.4805, 13278.21, 12811.5703, 13576.0195, 15520.9902, 18171.0, 18378.7305, 20573.3301, 19724.1895, 20955.25, 21752.8691, 21821.5, 21872.5, 20121.9902, 20608.6992, 21239.3496, 21108.5898, 19765.1895, 20128.9902, 21029.8105, 20536.4902, 22358.1699, 23096.3203, 23007.9902, 23035.4492, 23447.3398, 23338.0195, 23527.5195, 23720.8105, 23684.1309, 22398.0996, 22440.25, 20534.8496, 17592.4102, 19864.8691, 17989.3496, 18434.3906, 20390.4902, 21680.0801, 20555.5801, 21094.2109, 18629.5195, 19441.4609, 19796.8105, 19482.5703, 20840.3809, 21641.8203, 22030.3906, 22656.9199, 23729.5293, 23020.2695, 22299.6309, 22737.0098, 22392.1602, 20803.2891, 21883.6602, 21731.3691, 22859.8594, 23206.3691, 23881.2891, 23306.3906, 22035.4199, 22836.9609, 22151.0605, 22133.9707, 23081.6504, 23190.7207, 24756.8496, 24742.0605, 22932.9805, 23998.0605, 23987.4492, 23605.0391, 24507.0508, 24823.2891, 24900.8906, 28133.0, 27424.1895, 26250.0293, 24636.2793, 21670.5801, 20846.3008, 22640.0391, 21996.4199, 21914.4004, 19683.1094, 19111.9297, 20776.6992, 21067.0508, 20815.0898, 20794.3691, 21891.3691, 22976.8809, 23297.1504, 22934.5391, 22789.7695, 22000.5605, 23360.7793, 23740.7305, 24111.5898, 24615.1309, 25660.6504, 25764.5801, 27323.9902, 27970.3008, 27554.3008, 28245.5391, 29177.3496, 29919.1504, 32887.2695, 30844.7207, 30093.3809, 30808.4492, 30468.5605, 28955.1094, 28583.0098, 27888.5508, 27788.5195, 24979.6895, 26506.75, 25845.6992, 27942.4707, 28633.1797, 29051.3594, 29699.1094, 26901.0898, 28542.6191, 27777.75, 25724.7305, 26092.2695, 26906.7207, 26346.4902, 28189.75, 26312.6309, 26129.9297, 23603.4805, 24643.5898, 22961.4707, 24427.1895, 24595.3496, 25177.0508, 23459.0508, 24107.4199, 26341.4902, 27231.1309, 28283.7109, 28980.2109, 28378.3496, 28724.8809, 29151.8008, 28827.9492, 25961.0293, 25878.9902, 24575.6406, 25377.2402, 23475.2598, 23397.6699, 23802.2598, 22713.0195, 21996.8496, 21089.3906, 21415.1992, 21859.7891, 20156.5098, 19954.3906, 17222.8301, 14687.0195, 18597.2305, 19781.4102, 21842.3301, 19785.9395, 20400.1094, 19894.5703, 18234.2695, 18916.4297, 20078.9395, 18382.0605, 17809.6602, 17112.4805, 17042.8809, 17047.3906, 15485.0703, 16511.4395, 16541.4199, 17763.0293, 18079.6094, 17718.6094, 17344.5996, 17989.0703, 21133.6797, 20317.3301, 19423.6094, 20059.9492, 20225.1094, 22941.3203, 23119.5801, 22119.4102, 23289.7695, 24072.2793, 24773.3301, 25077.6191]};
 const SER = {us:{dates:DATA.dates,price:DATA.price}, hk:{dates:DATA.dates_hk,price:DATA.price_hk}};
-const C = {allin:'#D55E00', dca:'#0072B2', rule:'#E2DCCE', mute:'#8A8172', ink:'#1B1A17'};
+const C = {allin:'#B23A1C', dca:'#1F4E79', rule:'#E2DCCE', mute:'#8A8172', ink:'#1B1A17'};
 const NS = 'http://www.w3.org/2000/svg';
 const N_DEPLOY = 12;
 const EVENTS = [['2000-03','网络泡沫顶'],['2008-09','金融危机'],['2020-02','疫情'],['2022-01','加息周期']];
@@ -480,30 +313,24 @@ function el(tag, attrs, text){const e=document.createElementNS(NS,tag);for(const
 function nearest(market,label){const d=SER[market].dates;const i=d.indexOf(label);if(i>=0)return i;for(let k=0;k<d.length;k++)if(d[k]>=label)return k;return 0;}
 function path(market,i0,months){const p=SER[market].price;const n=Math.min(months,p.length-i0-1);const out=[];for(let k=0;k<=n;k++){const pk=p[i0+k];let v=0;for(let j=0;j<=Math.min(k,N_DEPLOY-1);j++)v+=(1/N_DEPLOY)*pk/p[i0+j];v+=Math.max(0,N_DEPLOY-1-k)/N_DEPLOY;out.push({k,allin:pk/p[i0],dca:v});}return out;}
 
-/* ---------- A 竞速条 ---------- */
 const A={month:120,playing:false,timer:null,market:'us',i0:0,P:[]};
-function aReset(i0,month){
-  A.i0=i0; A.P=path(A.market,A.i0,120);
-  A.month=Math.min(month===undefined?A.P.length-1:month,A.P.length-1);
-  aRender();
-}
+function aReset(i0,month){A.i0=i0;A.P=path(A.market,A.i0,120);A.month=Math.min(month===undefined?A.P.length-1:month,A.P.length-1);aRender();}
 function aRender(){
   const svg=document.getElementById('a-svg'); svg.innerHTML='';
-  const W=900,H=250,x0=170,bw=W-x0-140,bh=36,laneY=[62,150];
+  const W=900,H=250,x0=170,bw=W-x0-140,bh=34,laneY=[62,150];
   const maxV=Math.max(2.6,...A.P.map(d=>Math.max(d.allin,d.dca)));
   const cur=A.P[Math.min(A.month,A.P.length-1)];
   const scale=v=>(v/maxV)*bw;
   svg.appendChild(el('rect',{x:0,y:0,width:W,height:H,fill:'#fff'}));
   [['一次性投入 All-in','allin',C.allin],['定投 DCA（12 个月）','dca',C.dca]].forEach((row,idx)=>{
     const val=cur[row[1]], color=row[2], y=laneY[idx];
-    svg.appendChild(el('text',{x:16,y:y+bh/2+5,'font-size':14,fill:C.ink,'font-weight':600},row[0]));
-    svg.appendChild(el('rect',{x:x0,y:y,width:bw,height:bh,rx:6,fill:'#F2EEE5'}));
-    svg.appendChild(el('rect',{x:x0,y:y,width:Math.max(3,scale(val)),height:bh,rx:6,fill:color,opacity:.93}));
-    svg.appendChild(el('text',{x:x0+Math.max(3,scale(val))+10,y:y+bh/2+6,'font-size':16,'font-family':'ui-monospace,monospace',fill:C.ink},
-      Math.round(val*100)+' 元'));
+    svg.appendChild(el('text',{x:14,y:y+bh/2+5,'font-size':14,fill:C.ink,'font-weight':600},row[0]));
+    svg.appendChild(el('rect',{x:x0,y:y,width:bw,height:bh,rx:5,fill:'#F1F3F6'}));
+    svg.appendChild(el('rect',{x:x0,y:y,width:Math.max(3,scale(val)),height:bh,rx:5,fill:color,opacity:.94}));
+    svg.appendChild(el('text',{x:x0+Math.max(3,scale(val))+10,y:y+bh/2+6,'font-size':16,'font-family':'ui-monospace,monospace',fill:C.ink},Math.round(val*100)+' 元'));
   });
   const gap=(cur.dca-cur.allin)*100;
-  svg.appendChild(el('text',{x:16,y:222,'font-size':12,fill:C.mute},'起点 '+SER[A.market].dates[A.i0]+' · 已过 '+cur.k+' 个月 · 本金 100 元'));
+  svg.appendChild(el('text',{x:14,y:222,'font-size':12,fill:C.mute},'起点 '+SER[A.market].dates[A.i0]+' · 已过 '+cur.k+' 个月 · 本金 100 元'));
   document.getElementById('a-vall').textContent=Math.round(cur.allin*100);
   document.getElementById('a-vdca').textContent=Math.round(cur.dca*100);
   document.getElementById('a-gap').textContent=(gap>=0?'+':'')+gap.toFixed(1)+'pp';
@@ -518,22 +345,14 @@ document.getElementById('a-play').addEventListener('click',()=>{
   if(A.playing){clearInterval(A.timer);A.playing=false;btn.textContent='▶ 播放';return;}
   A.playing=true;btn.textContent='⏸ 暂停';
   if(A.month>=A.P.length-1)A.month=0;
-  A.timer=setInterval(()=>{
-    if(A.month>=A.P.length-1){clearInterval(A.timer);A.playing=false;btn.textContent='▶ 播放';return;}
-    A.month++;aRender();
-  },40);
+  A.timer=setInterval(()=>{if(A.month>=A.P.length-1){clearInterval(A.timer);A.playing=false;btn.textContent='▶ 播放';return;}A.month++;aRender();},40);
 });
 document.getElementById('a-market').addEventListener('change',e=>{A.market=e.target.value;aReset(nearest(A.market,document.getElementById('a-start').value),120);});
 document.getElementById('a-start').addEventListener('change',e=>aReset(nearest(A.market,e.target.value),120));
 document.getElementById('a-scrub').addEventListener('input',e=>{A.month=parseInt(e.target.value,10);aRender();});
 
-/* ---------- D 事件标注赛跑 ---------- */
 const D={month:120,playing:false,timer:null,market:'us',i0:0,P:[]};
-function dReset(i0,month){
-  D.i0=i0; D.P=path(D.market,D.i0,120);
-  D.month=Math.min(month===undefined?D.P.length-1:month,D.P.length-1);
-  dRender();
-}
+function dReset(i0,month){D.i0=i0;D.P=path(D.market,D.i0,120);D.month=Math.min(month===undefined?D.P.length-1:month,D.P.length-1);dRender();}
 function dRender(){
   const svg=document.getElementById('d-svg'); svg.innerHTML='';
   const W=900,H=470,pad={l:56,r:20,t:20,b:96};
@@ -544,34 +363,28 @@ function dRender(){
   const cur=D.P[Math.min(D.month,D.P.length-1)];
   svg.appendChild(el('rect',{x:0,y:0,width:W,height:H,fill:'#fff'}));
   for(let i=0;i<=5;i++){const v=maxV*i/5;
-    svg.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:Y(v),y2:Y(v),stroke:C.rule,'stroke-width':1}));
+    svg.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:Y(v),y2:Y(v),stroke:'#EDEFF3','stroke-width':1,'stroke-dasharray':'3 3'}));
     svg.appendChild(el('text',{x:pad.l-8,y:Y(v)+4,'font-size':11,fill:C.mute,'text-anchor':'end'},v.toFixed(1)+'x'));}
-  for(let k=0;k<=D.P.length-1;k+=12){
-    svg.appendChild(el('text',{x:X(k),y:H-pad.b+16,'font-size':11,fill:C.mute,'text-anchor':'middle'},k+'月'));}
+  for(let k=0;k<=D.P.length-1;k+=12){svg.appendChild(el('text',{x:X(k),y:H-pad.b+16,'font-size':11,fill:C.mute,'text-anchor':'middle'},k+'月'));}
   D.P.slice(0,cur.k+1).forEach((d,k)=>{
     const y1=Y(d.allin), y2=Y(d.dca);
-    svg.appendChild(el('line',{x1:X(k),x2:X(k),y1:Math.min(y1,y2),y2:Math.max(y1,y2),
-      stroke:d.dca>d.allin?C.dca:C.allin,'stroke-width':3,opacity:.16}));
+    svg.appendChild(el('line',{x1:X(k),x2:X(k),y1:Math.min(y1,y2),y2:Math.max(y1,y2),stroke:d.dca>d.allin?C.dca:C.allin,'stroke-width':3,opacity:.15}));
   });
   svg.appendChild(el('polyline',{points:D.P.slice(0,cur.k+1).map(d=>X(d.k)+','+Y(d.allin)).join(' '),fill:'none',stroke:C.allin,'stroke-width':2.4}));
   svg.appendChild(el('polyline',{points:D.P.slice(0,cur.k+1).map(d=>X(d.k)+','+Y(d.dca)).join(' '),fill:'none',stroke:C.dca,'stroke-width':2.4}));
   svg.appendChild(el('circle',{cx:X(cur.k),cy:Y(cur.allin),r:5,fill:C.allin}));
   svg.appendChild(el('circle',{cx:X(cur.k),cy:Y(cur.dca),r:5,fill:C.dca}));
   EVENTS.forEach(([label,txt])=>{
-    const idx=nearest(D.market,label)-D.i0;
-    if(idx<0||idx>D.P.length-1) return;
+    const idx=nearest(D.market,label)-D.i0; if(idx<0||idx>D.P.length-1) return;
     const xx=X(idx);
-    svg.appendChild(el('line',{x1:xx,x2:xx,y1:pad.t,y2:H-pad.b,stroke:C.mute,'stroke-width':1,'stroke-dasharray':'3 4',opacity:.6}));
+    svg.appendChild(el('line',{x1:xx,x2:xx,y1:pad.t,y2:H-pad.b,stroke:C.mute,'stroke-width':1,'stroke-dasharray':'3 4',opacity:.55}));
     svg.appendChild(el('text',{x:xx+4,y:pad.t+12,'font-size':11,fill:C.mute},txt));
   });
   const mx=Math.max(...D.P.map(d=>Math.abs(d.dca-d.allin)))*1.4+0.01;
   const GY=v=>gapTop+gapH/2-(v/mx)*(gapH/2);
-  svg.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:GY(0),y2:GY(0),stroke:C.rule}));
-  D.P.slice(0,cur.k+1).forEach((d,k)=>{
-    const gap=d.dca-d.allin;
-    svg.appendChild(el('rect',{x:X(k)-1.5,y:gap>0?GY(gap):GY(0),width:3,height:Math.abs(GY(gap)-GY(0)),
-      fill:gap>0?C.dca:C.allin,opacity:.85}));
-  });
+  svg.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:GY(0),y2:GY(0),stroke:'#D8DCE3'}));
+  D.P.slice(0,cur.k+1).forEach((d,k)=>{const gap=d.dca-d.allin;
+    svg.appendChild(el('rect',{x:X(k)-1.5,y:gap>0?GY(gap):GY(0),width:3,height:Math.abs(GY(gap)-GY(0)),fill:gap>0?C.dca:C.allin,opacity:.85}));});
   svg.appendChild(el('text',{x:pad.l,y:gapTop-8,'font-size':11,fill:C.mute},'差距（蓝＝定投领先，橙＝一次性领先）'));
   const gapPp=(cur.dca-cur.allin)*100;
   document.getElementById('d-vall').textContent=Math.round(cur.allin*100);
@@ -588,15 +401,11 @@ document.getElementById('d-play').addEventListener('click',()=>{
   if(D.playing){clearInterval(D.timer);D.playing=false;btn.textContent='▶ 播放';return;}
   D.playing=true;btn.textContent='⏸ 暂停';
   if(D.month>=D.P.length-1)D.month=0;
-  D.timer=setInterval(()=>{
-    if(D.month>=D.P.length-1){clearInterval(D.timer);D.playing=false;btn.textContent='▶ 播放';return;}
-    D.month++;dRender();
-  },38);
+  D.timer=setInterval(()=>{if(D.month>=D.P.length-1){clearInterval(D.timer);D.playing=false;btn.textContent='▶ 播放';return;}D.month++;dRender();},38);
 });
 document.getElementById('d-market').addEventListener('change',e=>{D.market=e.target.value;dReset(nearest(D.market,document.getElementById('d-start').value),120);});
 document.getElementById('d-start').addEventListener('change',e=>dReset(nearest(D.market,e.target.value),120));
-document.getElementById('d-rand').addEventListener('click',()=>{
-  const max=SER[D.market].price.length-121; dReset(Math.max(0,Math.floor(Math.random()*max)),120);});
+document.getElementById('d-rand').addEventListener('click',()=>{const max=SER[D.market].price.length-121;dReset(Math.max(0,Math.floor(Math.random()*max)),120);});
 document.getElementById('d-scrub').addEventListener('input',e=>{D.month=parseInt(e.target.value,10);dRender();});
 
 aReset(nearest('us','2007-10'),120);
