@@ -45,6 +45,11 @@
 .ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
 .vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
 .exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽；
+   表格改成自己横向滚动，而不是撑破版心 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
 /* 行内数学：STIX 渲染的 SVG，按 em 设高 + 基线对齐（度量由
    tools/make_inline_math.py 精确计算，勿手改数值） */
 .imath{display:inline-block;width:auto;max-width:100%;vertical-align:baseline}
@@ -92,21 +97,28 @@
 </nav>
 
 <div class="wrap">
-<div class="rn-masthead"><span>Working Paper · 研究工作稿</span><span>2026-10-03 · v1.0 · 风险与情绪</span></div>
-  <h1 class="rn-title">VIX 冲上 30 的时候，该贪婪吗？</h1>
-  <p class="rn-standfirst">「别人恐惧我贪婪」是这个市场里流传最广的一句话，落到指标上就变成一条可执行的规则：<i>VIX 高的时候买入</i>。本文用 1990-02 至 2026-09 共 440 个月的月度数据检验这句话。<b>在收益层面它站得住</b>——VIX ≥ 30 之后的 12 个月，标普 500 全收益的中位数是 21.8%，明显高于低波动区间的 13.6%；<b>但代价在样本上</b>：36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次（2001–2003）买入后两年仍在亏损。我们的结论是：VIX 是一个有用的<b>风险定价读数</b>，不是一个可执行的<b>入场信号</b>。</p>
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-03 · v1.0 · 风险与情绪</span><span class="en">2026-10-03 · v1.0 · Risk &amp; sentiment</span></span></div>
+  <h1 class="rn-title"><span class="zh">VIX 冲上 30 的时候，该贪婪吗？</span><span class="en">When VIX tops 30, should you be greedy?</span></h1>
+  <p class="rn-standfirst"><span class="zh">「别人恐惧我贪婪」是这个市场里流传最广的一句话，落到指标上就变成一条可执行的规则：<i>VIX 高的时候买入</i>。本文用 1990-02 至 2026-09 共 440 个月的月度数据检验这句话。<b>在收益层面它站得住</b>——VIX ≥ 30 之后的 12 个月，标普 500 全收益的中位数是 21.8%，明显高于低波动区间的 13.6%；<b>但代价在样本上</b>：36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次（2001–2003）买入后两年仍在亏损。我们的结论是：VIX 是一个有用的<b>风险定价读数</b>，不是一个可执行的<b>入场信号</b>。</span>
+  <span class="en">"Be greedy when others are fearful" is one of the most repeated lines in investing; reduced to a rule it becomes <i>buy when VIX is high</i>. We test it on 440 monthly observations from February 1990 to September 2026. <b>It holds on returns</b> — the median 12-month return after VIX ≥ 30 is 21.8%, against 13.6% after the calmest periods. <b>The cost is in the sample</b>: 36 years produced only seven non-overlapping episodes, one of which (2001–2003) was still losing money two years later. Our conclusion: VIX is a useful <b>risk-pricing gauge</b>, not an executable <b>entry signal</b>.</span></p>
 
   <ul class="rn-findings">
-    <li>VIX ≥ 30 之后的 12 个月，标普 500 中位收益 <b>21.8%</b>，高于 VIX &lt; 15 之后的 13.6%——这句话在收益层面成立。</li>
-    <li>33 个「高 VIX 月份」合并后只剩 <b>7 个市场阶段</b>：真正独立的机会是 7 次，不是 33 次，更不是 440 次。</li>
-    <li>7 次里有 <b>1 次是亏的</b>：2001-09 → 2003-01，其间任一月末入场，一年后的中位收益是 −8.1%。</li>
-    <li>把风险放回分母，结论就反转：事前口径下 VIX &lt; 15 区间的单位波动收益最高（1.05），VIX ≥ 30 只有 0.63。</li>
+    <li><span class="zh">VIX ≥ 30 之后的 12 个月，标普 500 中位收益 <b>21.8%</b>，高于 VIX &lt; 15 之后的 13.6%——这句话在收益层面成立。</span>
+        <span class="en">The median 12-month return after VIX ≥ 30 is <b>21.8%</b>, against 13.6% after VIX &lt; 15 — the maxim holds on returns.</span></li>
+    <li><span class="zh">33 个「高 VIX 月份」合并后只剩 <b>7 个市场阶段</b>：真正独立的机会是 7 次，不是 33 次，更不是 440 次。</span>
+        <span class="en">The 33 "high-VIX months" collapse into <b>seven market episodes</b>: seven independent chances, not 33, and certainly not 440.</span></li>
+    <li><span class="zh">7 次里有 <b>1 次是亏的</b>：2001-09 → 2003-01，其间任一月末入场，一年后的中位收益是 −8.1%。</span>
+        <span class="en">One of the seven lost money: September 2001 to January 2003, where the median outcome twelve months later was <b>−8.1%</b>.</span></li>
+    <li><span class="zh">把风险放回分母，结论就反转：事前口径下 VIX &lt; 15 区间的单位波动收益最高（1.05），VIX ≥ 30 只有 0.63。</span>
+        <span class="en">Put risk back in the denominator and it reverses: per unit of risk the calmest bucket earns 1.05, the VIX ≥ 30 bucket only 0.63.</span></li>
   </ul>
 
-  <div class="rn-abstract"><b>摘要</b>本文检验一个在实务中被广泛接受的命题：当波动率指数（VIX）处于高位时买入股票，长期回报是否更优。我们以 ^VIX 月末水平与标普 500 全收益指数（^SP500TR）1990-02 至 2026-09 共 440 个月度观测为样本，按 VIX 水平分桶统计其后 1、3、6、12 个月的总收益，并对「VIX ≥ 30」的观测做样本结构分析与事件研究。结果显示：高 VIX 之后的中位收益确实更高，且随 VIX 上升而单调性减弱；但 33 个高 VIX 观测只来自 7 个互不重叠的市场阶段，其中互联网泡沫那一阶段的后续收益为负。按事前口径（收益 ÷ 当期 VIX）做风险调整后，低波动区间的性价比反而最好；把「VIX ≥ 30 满仓、≤ 20 空仓」写成规则回测，年化收益 4.1%，显著低于买入持有的 11.2%。我们据此区分 VIX 的两种用途：作为<b>风险定价读数</b>可用于仓位与风险预算，作为<b>方向信号</b>则不可用。</div>
-  <p class="rn-kws"><b>关键词</b>　VIX · 隐含波动率 · 方差风险溢价 · 择时 · 多资产配置 · 行为偏差</p>
+  <div class="rn-abstract"><span class="zh"><b>摘要</b>本文检验一个在实务中被广泛接受的命题：当波动率指数（VIX）处于高位时买入股票，长期回报是否更优。我们以 ^VIX 月末水平与标普 500 全收益指数（^SP500TR）1990-02 至 2026-09 共 440 个月度观测为样本，按 VIX 水平分桶统计其后 1、3、6、12 个月的总收益，并对「VIX ≥ 30」的观测做样本结构分析与事件研究。结果显示：高 VIX 之后的中位收益确实更高；但 33 个高 VIX 观测只来自 7 个互不重叠的市场阶段，其中互联网泡沫那一阶段的后续收益为负。按事前口径（收益 ÷ 当期 VIX）做风险调整后，低波动区间的性价比反而最好；把「VIX ≥ 30 满仓、≤ 20 空仓」写成规则回测，年化收益 4.1%，显著低于买入持有的 11.2%。我们据此区分 VIX 的两种用途：作为<b>风险定价读数</b>可用于仓位与风险预算，作为<b>方向信号</b>则不可用。</span>
+  <span class="en"><b>Abstract</b>This note examines a widely held practitioner claim: that buying equities when the volatility index (VIX) is elevated produces superior long-run returns. Using month-end ^VIX and the S&amp;P 500 total return index from February 1990 to September 2026 (440 monthly observations), we sort observations by VIX level and measure forward 1-, 3-, 6- and 12-month returns, then examine the sample structure of the "VIX ≥ 30" subset with an event study. Median forward returns are indeed higher after high VIX, but the 33 high-VIX observations come from only seven non-overlapping market episodes, one of which — the dot-com bust — was followed by negative returns. Risk-adjusted using only information available at the decision date, the low-volatility bucket earns the most per unit of risk; written as a mechanical rule ("fully invested above 30, in cash below 20") the strategy returns 4.1% annualised against 11.2% for buy-and-hold. We conclude that VIX is usable as a <b>risk-pricing reading</b> for position sizing and risk budgeting, but not as a <b>directional signal</b>.</span></div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　VIX · 隐含波动率 · 方差风险溢价 · 择时 · 多资产配置 · 行为偏差</span><span class="en"><b>Keywords</b>　VIX · implied volatility · variance risk premium · market timing · multi-asset allocation · behavioural bias</span></p>
 
-  <div class="prose">
+  <div class="split">
+    <div class="prose">
 
     <h2 id="s1"><span class="num">01</span><span class="zh">这句话是从哪来的</span><span class="en">Where the maxim comes from</span></h2>
     <p class="zh">把「别人恐惧我贪婪」翻译成可检验的语言，需要先找到「恐惧」的度量。1993 年 Cboe 推出 VIX 之后，Whaley（2000）把它称作<i>投资者恐惧指标</i>（investor fear gauge），这个绰号流传至今，也把「VIX 高」与「该贪婪」在直觉上绑在了一起。但这两件事在逻辑上并不等价：VIX 高只说明市场为波动率保险付了更高的价格，它并不直接说明股票接下来会涨。</p>
@@ -117,7 +129,7 @@
       <img src="../assets/figs/vix-timeline.svg" alt="VIX 1990-2026 时间线与 7 个高波动阶段">
       <p class="ex-note zh">阴影是 VIX ≥ 30 的月份合并后的结果，一共 7 段。它们不是均匀出现的：1997–2003 有 3 段，2008–2011 有 2 段，2020 与 2022 各 1 段。也就是说，<b>这不是一个每年都会给你机会的规则，而是一个十年才出现两三次的事件</b>。这个形状本身就预示了后面所有统计问题。</p>
       <p class="ex-note en">The shaded bands are the seven episodes where VIX stayed at or above 30. They are not evenly spaced: three fall between 1997 and 2003, two between 2008 and 2011, and one each in 2020 and 2022.</p>
-      <p class="ex-src">来源：Yahoo Finance，^VIX 月末收盘。</p>
+      <p class="ex-src"><span class="zh">来源：Yahoo Finance，^VIX 月末收盘。</span><span class="en">Source: Yahoo Finance, month-end ^VIX close.</span></p>
     </div>
 
     <h2 id="s2"><span class="num">02</span><span class="zh">VIX 到底是什么</span><span class="en">What VIX actually measures</span></h2>
@@ -132,22 +144,23 @@
       <img src="../assets/figs/vix-buckets.svg" alt="按 VIX 分桶的未来 12 个月收益与胜率">
       <p class="ex-note zh">上图左右两根柱分别是均值与中位数，灰虚线是全体样本的中位数 14.3%。两个读数讲的是不同的故事：<b>均值随 VIX 上升的幅度远大于中位数</b>——VIX ≥ 40 那一组的均值被少数几次极端反弹拉高。下图的"为正的比例"则显示，高 VIX 并不等于更稳：胜率最高的是最平静的那一档。</p>
       <p class="ex-note en">Bars compare mean and median 12-month forward returns by VIX bucket. The mean rises much faster than the median, which is what a handful of extreme rebounds would do to a small sample.</p>
-      <p class="ex-src">来源：本文计算，数据见附录 A。</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
     </div>
     <div class="exhibit">
-      <div class="ex-label">表 1 · 未来 12 个月收益的中位数（%）</div>
+      <div class="ex-label"><span class="zh">表 1 · 未来 12 个月收益的中位数（%）</span><span class="en">Table 1 · median forward returns (%)</span></div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>持有窗口</th><th>VIX &lt;15</th><th>15–20</th><th>20–25</th><th>25–30</th><th>30–40</th><th>≥40</th></tr></thead>
+          <thead><tr><th><span class="zh">持有窗口</span><span class="en">Horizon</span></th><th>VIX &lt;15</th><th>15–20</th><th>20–25</th><th>25–30</th><th>30–40</th><th>≥40</th></tr></thead>
           <tbody>
-            <tr><td>未来 1 个月</td><td>1.2</td><td>1.4</td><td>1.4</td><td>1.0</td><td class="hi">4.7</td><td>6.4</td></tr>
-            <tr><td>未来 3 个月</td><td>3.0</td><td>3.5</td><td>3.3</td><td>5.6</td><td class="hi">7.6</td><td>11.8</td></tr>
-            <tr><td>未来 6 个月</td><td>6.2</td><td>6.0</td><td>5.3</td><td>9.0</td><td class="hi">13.3</td><td>25.9</td></tr>
-            <tr><td>未来 12 个月</td><td>13.6</td><td>14.1</td><td>13.8</td><td>13.8</td><td class="hi">21.8</td><td>31.3</td></tr>
+            <tr><td><span class="zh">未来 1 个月</span><span class="en">1 months</span></td><td>1.2</td><td>1.4</td><td>1.4</td><td>1.0</td><td class="hi">4.7</td><td>6.4</td></tr>
+            <tr><td><span class="zh">未来 3 个月</span><span class="en">3 months</span></td><td>3.0</td><td>3.5</td><td>3.3</td><td>5.6</td><td class="hi">7.6</td><td>11.8</td></tr>
+            <tr><td><span class="zh">未来 6 个月</span><span class="en">6 months</span></td><td>6.2</td><td>6.0</td><td>5.3</td><td>9.0</td><td class="hi">13.3</td><td>25.9</td></tr>
+            <tr><td><span class="zh">未来 12 个月</span><span class="en">12 months</span></td><td>13.6</td><td>14.1</td><td>13.8</td><td>13.8</td><td class="hi">21.8</td><td>31.3</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="ex-note">数值为中位数，单位 %。加粗列为 VIX ≥ 30 的两档。最值得注意的是<b>非单调</b>：20–25 这一档的中位数不但不高于低波动档，反而是整张表里偏低的一行——"半恐慌"既没有高赔率，也没有低波动。</p>
+      <p class="ex-note zh">数值为中位数，单位 %。加粗列为 VIX ≥ 30 的两档。最值得注意的是<b>非单调</b>：20–25 这一档的中位数不但不高于低波动档，反而是整张表里偏低的一行——"半恐慌"既没有高赔率，也没有低波动。</p>
+      <p class="ex-note en">Medians in per cent. The bolded column is VIX ≥ 30. The striking feature is the lack of monotonicity: the 20–25 bucket is one of the weakest rows in the table.</p>
     </div>
 
     <h2 id="s4"><span class="num">04</span><span class="zh">第二层检验：你其实只有七次机会</span><span class="en">Second test: how many chances did you get</span></h2>
@@ -157,20 +170,20 @@
       <img src="../assets/figs/vix-funnel.svg" alt="样本量从 440 个月收缩到 7 个市场阶段">
       <p class="ex-note zh">横轴为对数刻度。这一步不是在"剔除数据"，而是在纠正一个统计假设：把重叠窗口当成独立观测，会系统性地夸大显著性。<b>任何声称"VIX 择时被验证过 33 次"的说法，实际证据强度只相当于 7 次</b>。</p>
       <p class="ex-note en">The x-axis is logarithmic. This is not data trimming but a correction of the independence assumption: overlapping windows are not separate draws.</p>
-      <p class="ex-src">来源：本文计算。</p>
+      <p class="ex-src"><span class="zh">来源：本文计算。</span><span class="en">Source: author's calculations.</span></p>
     </div>
     <div class="exhibit">
       <div class="ex-label"><span class="zh">Exhibit 4 · 七次机会，七种结局</span><span class="en">Exhibit 4 · seven chances, seven outcomes</span></div>
       <img src="../assets/figs/vix-episodes.svg" alt="七个高 VIX 阶段各自的未来 12 个月收益分布">
       <p class="ex-note zh">每一行是一个阶段，圆点是该阶段的 12 个月收益中位数，横线是该阶段最好与最差。<b>2001-09 → 2003-01 是唯一整体亏损的阶段</b>：在那 7 个月里的任何月末入场，一年后的中位收益是 −8.1%。如果你在 2001 年秋天看到 VIX 突破 30 而加仓，接下来两年你会同时承受浮亏和"这个规则很灵"的信念崩塌。</p>
       <p class="ex-note en">One row per episode; the dot is the median 12-month outcome for start dates inside that episode, the line spans best to worst. The dot-com episode is the only one whose median is negative.</p>
-      <p class="ex-src">来源：本文计算。</p>
+      <p class="ex-src"><span class="zh">来源：本文计算。</span><span class="en">Source: author's calculations.</span></p>
     </div>
     <div class="exhibit">
-      <div class="ex-label">表 2 · 七个 VIX ≥ 30 的市场阶段</div>
+      <div class="ex-label"><span class="zh">表 2 · 七个 VIX ≥ 30 的市场阶段</span><span class="en">Table 2 · the seven VIX ≥ 30 episodes</span></div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>阶段</th><th>月数</th><th>峰值 VIX</th><th>峰值所在月</th><th>期间入场后 12 个月中位收益（%）</th></tr></thead>
+          <thead><tr><th><span class="zh">阶段</span><span class="en">Episode</span></th><th><span class="zh">月数</span><span class="en">Months</span></th><th><span class="zh">峰值 VIX</span><span class="en">Peak VIX</span></th><th><span class="zh">峰值所在月</span><span class="en">Peak month</span></th><th><span class="zh">期间入场后 12 个月中位收益（%）</span><span class="en">Median 12-month outcome (%)</span></th></tr></thead>
           <tbody>
             <tr><td>1990-10 → 1990-10</td><td>1</td><td>30.0</td><td>1990-10</td><td>33.5</td></tr>
             <tr><td>1997-10 → 1998-09</td><td>3</td><td>44.3</td><td>1997-10</td><td>22.4</td></tr>
@@ -182,7 +195,8 @@
           </tbody>
         </table>
       </div>
-      <p class="ex-note">"月数"为该阶段内 VIX ≥ 30 的月份数，标红的一行是唯一的负数——它同时说明峰值 VIX 与后续收益之间没有稳定关系：峰值最高的 2008-10（59.9）之后是此后两年里最好的一段，峰值最低的 1990-10 之后也不错，而峰值中等、由衰退驱动的 2001–2003 反而是唯一的亏损案例。</p>
+      <p class="ex-note zh">"月数"为该阶段内 VIX ≥ 30 的月份数，标红的一行是唯一的负数——它同时说明峰值 VIX 与后续收益之间没有稳定关系：峰值最高的 2008-10（59.9）之后是此后两年里最好的一段，峰值最低的 1990-10 之后也不错，而峰值中等、由衰退驱动的 2001–2003 反而是唯一的亏损案例。</p>
+      <p class="ex-note en">"Months" counts the months inside each episode with VIX ≥ 30. The highlighted row is the only negative one — and it shows there is no stable link between how high VIX peaked and what followed.</p>
     </div>
 
     <h2 id="s5"><span class="num">05</span><span class="zh">第三层检验：把风险放回分母</span><span class="en">Third test: put risk back in the denominator</span></h2>
@@ -192,7 +206,7 @@
       <img src="../assets/figs/vix-risk-adj.svg" alt="事前与事后两种风险调整口径下的单位波动收益">
       <p class="ex-note zh"><b>事前口径</b>（蓝）只用决策时点已知的 VIX：低波动区间的单位波动收益最高（1.05），高 VIX 区间只有 0.63，中间地带最差。含义是——当你为波动率支付的保险费变贵时，你并没有得到相称的补偿。<b>事后口径</b>（橙）用未来实际发生的波动：两端接近（1.73 与 1.64），中间地带最差（0.89–1.02）。两个口径唯一的共识是：<b>最差的从来不是高 VIX，而是"中等恐慌"</b>。</p>
       <p class="ex-note en">Blue uses only information known at the decision date (VIX itself); orange uses the volatility that actually followed. Only the middle buckets look bad under both.</p>
-      <p class="ex-src">来源：本文计算。单位波动收益 = 未来 12 个月收益 ÷ 风险度量，未扣无风险利率。</p>
+      <p class="ex-src"><span class="zh">来源：本文计算。单位波动收益 = 未来 12 个月收益 ÷ 风险度量，未扣无风险利率。</span><span class="en">Source: author's calculations. Return per unit of risk = 12-month forward return ÷ risk measure, before any risk-free adjustment.</span></p>
     </div>
 
     <h2 id="s6"><span class="num">06</span><span class="zh">把它写成规则，然后跑一遍</span><span class="en">Write it as a rule and run it</span></h2>
@@ -202,16 +216,16 @@
       <img src="../assets/figs/vix-strategy.svg" alt="VIX 择时规则与买入持有的累计净值对比">
       <p class="ex-note zh">上图是对数刻度净值，下图是持仓状态。规则的累计净值只有买入持有的一小部分：<b>年化 4.1% vs 11.2%</b>，单位波动收益 0.42 vs 0.76。原因在下面那张图里一目了然——它只在 22.7% 的月份里持仓。这条规则没有亏钱，它只是把绝大部分上涨让了出去；而它避开的下跌，并不足以抵消被错过的时间。</p>
       <p class="ex-note en">Annualised return 4.1% versus 11.2% for buy-and-hold; return per unit of volatility 0.42 versus 0.76. The lower panel shows why: the rule is invested only 22.7% of the time.</p>
-      <p class="ex-src">来源：本文回测，不扣交易成本与税费。等待期按 0% 计息，这对择时策略偏有利。</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，不扣交易成本与税费。等待期按 0% 计息，这对择时策略偏有利。</span><span class="en">Source: author's backtest, before costs and taxes. Cash earns 0% while out of the market, which flatters the timing rule.</span></p>
     </div>
     <div class="exhibit">
       <div class="ex-label"><span class="zh">Exhibit 7 · 自己动手：换个阈值会怎样（可交互）</span><span class="en">Exhibit 7 · change the threshold yourself (interactive)</span></div>
       <div class="vbox">
         <div class="ctrl">
-          <span style="font-weight:600">VIX 阈值</span>
+          <span style="font-weight:600"><span class="zh">VIX 阈值</span><span class="en">VIX threshold</span></span>
           <input type="range" id="v-th" min="14" max="45" value="30" step="1">
           <b id="v-thlab" style="font-family:var(--mono)">30</b>
-          <button type="button" id="v-reset">回到 30</button>
+          <button type="button" id="v-reset"><span class="zh">回到 30</span><span class="en">Reset to 30</span></button>
         </div>
         <svg id="v-svg" viewBox="0 0 900 300" role="img" aria-label="不同 VIX 阈值下的触发点与后续收益"></svg>
         <div class="vstat">
@@ -223,7 +237,7 @@
       </div>
       <p class="ex-note zh">拖动滑块改变阈值。上图的竖线是触发点落在价格曲线上的位置，下图的柱是每次触发之后 12 个月的收益。有三个值得亲手试的位置：把阈值降到 20，触发月数从 33 涨到 <b>161</b>，但独立阶段只从 7 增到 <b>8</b>——多出来的样本几乎全是同一轮行情的重复计数；升到 40，只剩 4 个阶段和 11 个月，中位收益漂亮到 31.3%，但那个数字已经没有统计意义；留在 30，得到的是本文正文用的那一组。这就是这类规则最难说清的地方：<b>你想让结论更好看，只需要把阈值往上推。</b></p>
       <p class="ex-note en">Drag the threshold. Lower values trigger far more often but thicken the left tail of outcomes; higher values leave too few observations to support any conclusion.</p>
-      <p class="ex-src">来源：本文计算，数据见附录 A。</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
     </div>
 
     <h2 id="s7"><span class="num">07</span><span class="zh">机制：VIX 回归的是波动率，不是价格</span><span class="en">Mechanism: VIX mean-reverts, prices need not</span></h2>
@@ -233,7 +247,7 @@
       <img src="../assets/figs/vix-path.svg" alt="VIX 高位入场后 12 个月的累计收益路径：平均、中位与最差">
       <p class="ex-note zh">平均与中位路径都稳定向上，最终落在 24.2% 与 25.9%——与前面分桶统计一致。但虚线（最差的一次）显示，<b>前六个月可以跌掉三分之一</b>，而且它在第 12 个月仍未回到正收益。这就是这个策略的真实体验：平均意义上它有效，但在七次机会里，有相当概率你会经历一次长达两年的等待。VIX 从 37.7 回到 21.4 是<b>波动率的均值回归</b>，它不等于价格的均值回归。</p>
       <p class="ex-note en">Mean and median paths climb steadily to roughly 24–26%. The worst single path loses a third of its value within six months and is still underwater at month twelve. VIX reverting from 37.7 to 21.4 is volatility mean reversion, not price mean reversion.</p>
-      <p class="ex-src">来源：本文计算，对齐 33 个 VIX ≥ 30 的入场点（来自 7 个市场阶段）。</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，对齐 33 个 VIX ≥ 30 的入场点（来自 7 个市场阶段）。</span><span class="en">Source: author's calculations, aligning 33 entry points with VIX ≥ 30 drawn from seven episodes.</span></p>
     </div>
 
     <h2 id="s8"><span class="num">08</span><span class="zh">结论：VIX 是读数，不是信号</span><span class="en">Conclusion: a gauge, not a signal</span></h2>
@@ -255,7 +269,8 @@
     <a href="#s8">08 <span class="zh">结论</span><span class="en">Conclusion</span></a>
     <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
     <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
-  </aside>
+    </aside>
+  </div>
 
   <div class="prose">
 
@@ -271,26 +286,35 @@
     </section>
 
     <details class="appendix" id="apx">
-      <summary>附录 A · 数据、方法与来源</summary>
+      <summary><span class="zh">附录 A · 数据、方法与来源</span><span class="en">Appendix A · data, method and sources</span></summary>
       <p class="zh"><b>数据。</b>^VIX 月末收盘（1990-02 → 2026-09，440 个月）与标普 500 全收益指数 ^SP500TR 月末收盘，均来自 Yahoo Finance 公开行情接口，访问日期 2026-10-03。VIX 序列取月末收盘值，而非月内最高或月均，以保证决策时点不使用未来信息。</p>
       <p class="zh"><b>做法。</b>对每一个月末 t 记录 VIX_t，并计算未来 h ∈ {1,3,6,12,24} 个月的总收益 P(t+h)/P(t) − 1。按 VIX 水平分为 6 档统计中位数、均值、分位数与为正比例。「独立阶段」的定义是：先把 VIX ≥ 30 的连续月份合并成段，再把相邻间隔不足 12 个月的段落视为同一阶段。</p>
       <p class="zh"><b>两个风险口径。</b>事前口径的分母是决策时点已知的 VIX_t；事后口径的分母是该窗口内实现波动率的年化值（月度收益标准差 × √12）。两者都不是严格的夏普比率：未扣无风险利率，也没有考虑仓位可调整。</p>
       <p class="zh"><b>未计入。</b>交易成本、税费、股息再投资的时间差，以及择时策略在空仓期的现金收益（本文按 0% 计，这对择时策略偏有利）。</p>
       <p class="zh"><b>代码。</b><code>tools/fetch_vix_raw.py</code>（取数）、<code>tools/make_vix_data.py</code>（全部统计）、<code>tools/make_vix_figs.py</code>（八张图）、<code>tools/make_vix_note.py</code>（本页与交互图）。固定输入可完全复现。</p>
+      <p class="en"><b>Data.</b> Month-end ^VIX closes (Feb 1990 → Sep 2026, 440 months) and month-end ^SP500TR closes, both from the Yahoo Finance public chart endpoint, accessed 3 October 2026. The month-end close is used rather than the intra-month high or the monthly average, so that no decision point uses future information.</p>
+      <p class="en"><b>Method.</b> For every month-end t we record VIX_t and compute the forward h-month total return P(t+h)/P(t) − 1 for h ∈ {1,3,6,12,24}. Observations are sorted into six VIX buckets and we report medians, means, percentiles and the share of positive outcomes. An "episode" is defined by first merging consecutive months with VIX ≥ 30 into runs, then treating runs less than twelve months apart as the same episode.</p>
+      <p class="en"><b>Two risk measures.</b> The ex-ante denominator is VIX_t, known at the decision date; the ex-post denominator is the annualised realised volatility inside the window (standard deviation of monthly returns × √12). Neither is a strict Sharpe ratio: no risk-free rate is subtracted and no position sizing is modelled.</p>
+      <p class="en"><b>Not included.</b> Transaction costs, taxes, the timing difference on dividend reinvestment, and the interest earned on cash while out of the market (assumed 0%, which flatters the timing rule).</p>
+      <p class="en"><b>Code.</b> <code>tools/fetch_vix_raw.py</code> (download), <code>tools/make_vix_data.py</code> (all statistics), <code>tools/make_vix_figs.py</code> (eight figures), <code>tools/make_vix_note.py</code> (this page and the interactive chart). The same inputs reproduce the same output.</p>
     </details>
 
     <details class="appendix">
-      <summary>附录 B · 三个容易被忽略的口径问题</summary>
+      <summary><span class="zh">附录 B · 三个容易被忽略的口径问题</span><span class="en">Appendix B · three measurement problems worth stating</span></summary>
       <p class="zh"><b>一、窗口重叠。</b>滚动 12 个月的窗口里，相邻两个观测共享 11 个月的数据。这会让统计量的有效样本量远小于观测个数，也让"显著性"变得不可信。本文用"合并市场阶段"的方式给出一个保守的下界。</p>
       <p class="zh"><b>二、月末取样。</b>VIX 在月内的波动可能远大于月末水平。用月末值是为了避免前视偏差，代价是漏掉了月内的极端情形——1987 年 10 月、2010 年闪崩这类事件在月频数据里几乎看不到。</p>
       <p class="zh"><b>三、单一市场与单一时代。</b>样本只有标普 500，且 1990 年以后的利率下行环境可能系统性地压低了 VIX 中枢。把同样的规则放到日经或欧洲股指上，结论未必一致；这一点本文没有做，是明确的局限。</p>
+      <p class="en"><b>One: overlapping windows.</b> Adjacent observations in a rolling twelve-month window share eleven months of data, so the effective sample is far smaller than the observation count and "statistical significance" is not trustworthy. Merging episodes gives a deliberately conservative lower bound.</p>
+      <p class="en"><b>Two: month-end sampling.</b> Intra-month VIX can move far more than the month-end level. Using month-end values avoids look-ahead bias but misses intra-month extremes — October 1987 or the 2010 flash crash are almost invisible in monthly data.</p>
+      <p class="en"><b>Three: one market, one era.</b> The sample is the S&amp;P 500 only, and the falling-rate environment after 1990 may have systematically suppressed the level of VIX. The same rule applied to the Nikkei or European equities need not agree; we do not test that, and it is a clear limitation.</p>
     </details>
 
     <div class="disclaimer">
-      <b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public market data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. The academic papers cited are references only and do not represent the views of their authors' institutions. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
     </div>
 
-    <h2 id="refs" style="margin-top:38px"><span class="num">参考文献</span><span class="en">References</span></h2>
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
     <ol class="refs">
       <li>Whaley, R. E. (2000). The Investor Fear Gauge. <i>Journal of Portfolio Management</i>, 26(3), 12–17. <a href="https://doi.org/10.3905/jpm.2000.319728">doi.org/10.3905/jpm.2000.319728</a></li>
       <li>Whaley, R. E. (1993). Derivatives on Market Volatility: Hedging Tools Long Overdue. <i>Journal of Derivatives</i>, 1(1), 71–84. <a href="https://doi.org/10.3905/jod.1993.407868">doi.org/10.3905/jod.1993.407868</a></li>
@@ -299,7 +323,7 @@
       <li>Bollerslev, T., Todorov, V., &amp; Xu, L. (2015). Tail Risk Premia and Return Predictability. <i>Journal of Financial Economics</i>, 118(1), 113–134. <a href="https://doi.org/10.1016/j.jfineco.2015.02.010">doi.org/10.1016/j.jfineco.2015.02.010</a></li>
       <li>Coval, J. D., &amp; Shumway, T. (2001). Expected Option Returns. <i>Journal of Finance</i>, 56(3), 983–1009. <a href="https://doi.org/10.1111/0022-1082.00352">doi.org/10.1111/0022-1082.00352</a></li>
       <li>Simon, D. P., &amp; Wiggins, R. A. (2001). S&amp;P Futures Returns and Contrary Sentiment Indicators. <i>Journal of Futures Markets</i>, 21(5), 447–462. <a href="https://doi.org/10.1002/fut.4">doi.org/10.1002/fut.4</a></li>
-      <li>行情数据：Yahoo Finance，^VIX 与 ^SP500TR 月末收盘序列，访问日期 2026-10-03。</li>
+      <li><span class="zh">行情数据：Yahoo Finance，^VIX 与 ^SP500TR 月末收盘序列，访问日期 2026-10-03。</span><span class="en">Market data: Yahoo Finance, month-end ^VIX and ^SP500TR series, accessed 3 October 2026.</span></li>
     </ol>
 
     <nav class="pager" aria-label="pagination" style="margin-top:26px">
@@ -339,6 +363,11 @@ function el(tag, attrs, text){
   return e;
 }
 const W = 900, H = 300, LP = 58, RP = 14;
+// 交互图里的文字要跟着语言切换：site.js 只改 html[data-lang]，
+// 所以这里读它，并用 MutationObserver 在切换时重画。
+function T(zh, en){
+  return (document.documentElement.getAttribute('data-lang') === 'en') ? en : zh;
+}
 const price = DATA.price, vix = DATA.vix, grid = DATA.grid, N = price.length;
 const TOP = {y: 16, h: 118};
 const BOT = {y: 178, h: 106};
@@ -366,7 +395,8 @@ function draw(th){
     svg.appendChild(el('circle', {cx: X(i), cy: YP(price[i]), r: 2.6, fill: C.hot, opacity: .85}));
   });
   svg.appendChild(el('text', {x: LP, y: TOP.y - 2, 'font-size': 11, fill: C.mute},
-                     '标普 500 全收益（对数刻度）与触发点'));
+                     T('标普 500 全收益（对数刻度）与触发点',
+                       'S&P 500 total return (log scale) and trigger points')));
 
   // ---- 下：触发后 12 个月收益 ----
   svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: YR(0), y2: YR(0), stroke: C.rule}));
@@ -377,7 +407,8 @@ function draw(th){
       fill: r >= 0 ? C.up : C.down, opacity: .9}));
   });
   svg.appendChild(el('text', {x: LP, y: BOT.y - 4, 'font-size': 11, fill: C.mute},
-                     '每次触发之后 12 个月的收益（%）'));
+                     T('每次触发之后 12 个月的收益（%）',
+                       '12-month return after each trigger (%)')));
   [50, 0, -50].forEach(v => {
     svg.appendChild(el('text', {x: LP - 8, y: YR(v) + 4, 'font-size': 10, fill: C.mute,
                                 'text-anchor': 'end'}, (v > 0 ? '+' : '') + v));
@@ -390,8 +421,8 @@ function draw(th){
                                 fill: C.mute, 'text-anchor': 'middle'}, yr));
   });
 
-  document.getElementById('v-n').textContent = g.n + ' 个月';
-  document.getElementById('v-cl').textContent = g.clusters + ' 段';
+  document.getElementById('v-n').textContent = g.n + T(' 个月', ' months');
+  document.getElementById('v-cl').textContent = g.clusters + T(' 段', ' runs');
   document.getElementById('v-med').textContent = g.median === null ? '–' : g.median + '%';
   document.getElementById('v-win').textContent = g.win === null ? '–' : g.win + '%';
   document.getElementById('v-thlab').textContent = th;
@@ -403,4 +434,6 @@ document.getElementById('v-reset').addEventListener('click', () => {
   slider.value = 30; draw(30);
 });
 draw(30);
+new MutationObserver(() => draw(parseInt(slider.value, 10)))
+  .observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
 </script>

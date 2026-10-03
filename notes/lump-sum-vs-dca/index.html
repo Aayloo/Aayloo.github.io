@@ -45,6 +45,11 @@
 .ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
 .vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
 .exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽；
+   表格改成自己横向滚动，而不是撑破版心 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
 /* 行内数学：STIX 渲染的 SVG，按 em 设高 + 基线对齐（度量由
    tools/make_lca_inline_math.py 精确计算，勿手改数值） */
 .imath{display:inline-block;width:auto;max-width:100%;vertical-align:baseline}
@@ -96,17 +101,17 @@
 </nav>
 
 <div class="wrap">
-<div class="rn-masthead"><span>Working Paper · 研究工作稿</span><span>2026-10-03 · v3.9 · 组合与执行</span></div>
-  <h1 class="rn-title">定投与一次性投入：基于 942 个月度观测的实证检验</h1>
-  <p class="rn-standfirst">本文考察一个被广泛讨论但常被误述的问题：当投资者已持有一笔可投资资金时，"一次性投入"与"分期定额投入（DCA）"孰优？我们以标普 500 全收益指数与恒生指数共 942 个月度观测为样本，对每一个可能的起点构造两种策略的持有期终值，并比较其分布。结论是：一次性投入在约八成的起点上占优，其劣势区间高度集中于<b>部署期（首十二个月）市场下跌</b>的样本；该机制在两个市场、多种持有期与分期长度下均稳健。</p>
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-03 · v3.9 · 组合与执行</span><span class="en">2026-10-03 · v3.9 · Portfolio &amp; execution</span></span></div>
+  <h1 class="rn-title"><span class="zh">定投与一次性投入：基于 942 个月度观测的实证检验</span><span class="en">Dollar-cost averaging versus lump sum: evidence from 942 monthly observations</span></h1>
+  <p class="rn-standfirst"><span class="zh">本文考察一个被广泛讨论但常被误述的问题：当投资者已持有一笔可投资资金时，"一次性投入"与"分期定额投入（DCA）"孰优？我们以标普 500 全收益指数与恒生指数共 942 个月度观测为样本，对每一个可能的起点构造两种策略的持有期终值，并比较其分布。结论是：一次性投入在约八成的起点上占优，其劣势区间高度集中于<b>部署期（首十二个月）市场下跌</b>的样本；该机制在两个市场、多种持有期与分期长度下均稳健。</span><span class="en">This paper examines a widely discussed but often misstated question: when an investor already holds investable capital, is it better to invest it immediately or to spread it out? Using the S&amp;P 500 total return index and the Hang Seng Index — 942 monthly observations in total — we build both strategies from every possible start date and compare the distribution of terminal values. The lump sum wins at about four starts in five, and its losses concentrate almost entirely in starts where the deployment window itself fell. The mechanism holds across two markets, several holding periods and several deployment lengths.</span></p>
   <ul class="rn-findings">
-    <li><b>主要发现一。</b>在标普 500 全收益口径下（12 个月分期、持有 10 年），一次性投入在 <b>79%</b> 的月度起点胜出，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。</li>
-    <li><b>主要发现二。</b>DCA 的胜率仅为 <b>17–18%</b>，与"部署期市场下跌"的样本占比几乎相等；换言之，<b>DCA 的相对优势可由部署期收益的符号近似完全解释</b>（图 3）。</li>
-    <li><b>主要发现三。</b>结果对起点高度敏感：1999-02 起步时 DCA 终值为一次性的 0.92 倍，2007-10 起步时则为 1.14 倍——同一策略、同一持有期，差异达 <b>34 个百分点</b>。</li>
-    <li><b>主要发现四。</b>市场异质性显著：恒生指数口径下一次性投入胜率降至 <b>63–69%</b>。该结果提示"一次性投入占优"并非普适定律，而依赖于市场长期向上的假设。</li>
+    <li><span class="zh"><b>主要发现一。</b>在标普 500 全收益口径下（12 个月分期、持有 10 年），一次性投入在 <b>79%</b> 的月度起点胜出，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。</span><span class="en">On the S&amp;P 500 total return index (12-month deployment, 10-year holding period) the lump sum wins in <b>79%</b> of monthly start dates and ends <b>0.13 times principal</b> higher at the median; at a 20-year horizon the median gap widens to 0.29 times.</span></li>
+    <li><span class="zh"><b>主要发现二。</b>DCA 的胜率仅为 <b>17–18%</b>，与"部署期市场下跌"的样本占比几乎相等；换言之，<b>DCA 的相对优势可由部署期收益的符号近似完全解释</b>（图 3）。</span><span class="en">DCA wins only <b>17–18%</b> of the time, almost exactly the share of starts in which the market fell during deployment. In other words, DCA's edge is <b>almost fully explained by the sign of the deployment-window return</b> (Exhibit 3).</span></li>
+    <li><span class="zh"><b>主要发现三。</b>结果对起点高度敏感：1999-02 起步时 DCA 终值为一次性的 0.92 倍，2007-10 起步时则为 1.14 倍——同一策略、同一持有期，差异达 <b>34 个百分点</b>。</span><span class="en">Results depend heavily on the start date: DCA ends at 0.92 times the lump sum from February 1999 and at 1.14 times from October 2007 — the same strategy and holding period differing by <b>34 percentage points</b>.</span></li>
+    <li><span class="zh"><b>主要发现四。</b>市场异质性显著：恒生指数口径下一次性投入胜率降至 <b>63–69%</b>。该结果提示"一次性投入占优"并非普适定律，而依赖于市场长期向上的假设。</span><span class="en">Market heterogeneity matters: on the Hang Seng Index the lump-sum win rate falls to <b>63–69%</b>, which suggests the result is not a universal law but depends on the market's long-run upward drift.</span></li>
   </ul>
-  <div class="rn-abstract"><b>摘要</b>围绕"一次性投入抑或分期投入"这一长期争论，本文指出文献与实务讨论中存在一个概念混淆：<i>存量资金</i>（已持有一笔可投资资金）的分期安排是一项主动选择，而<i>流量资金</i>（来自收入的持续储蓄）并无一次性投入之选项，二者的最优决策问题并不相同。本文针对存量资金情形，以 ^SP500TR 全收益月度序列（1988-01 至 2026-09，465 个月）与恒生指数（1986-11 至 2026-07，477 个月）为样本，对每一个月度起点构造"期初全额买入"与"分 6／12／24／36 个月等额买入"两种策略，并按 1 至 20 年持有期计算终值。实证结果表明：一次性投入在终值期望与胜率两方面均占优；其劣势样本几乎全部集中于部署期收益为负的起点。该结论在分期长度与持有期的二维网格上稳定，但在恒生指数口径下强度明显减弱。我们据此讨论了该现象的行为金融解释，并给出可操作的资金部署规则。</div>
-  <p class="rn-kws"><b>关键词</b>　DCA · 一次性投入 · 回测 · 多资产 · 行为偏差 · 组合执行</p>
+  <div class="rn-abstract"><span class="zh"><b>摘要</b>围绕"一次性投入抑或分期投入"这一长期争论，本文指出文献与实务讨论中存在一个概念混淆：<i>存量资金</i>（已持有一笔可投资资金）的分期安排是一项主动选择，而<i>流量资金</i>（来自收入的持续储蓄）并无一次性投入之选项，二者的最优决策问题并不相同。本文针对存量资金情形，以 ^SP500TR 全收益月度序列（1988-01 至 2026-09，465 个月）与恒生指数（1986-11 至 2026-07，477 个月）为样本，对每一个月度起点构造"期初全额买入"与"分 6／12／24／36 个月等额买入"两种策略，并按 1 至 20 年持有期计算终值。实证结果表明：一次性投入在终值期望与胜率两方面均占优；其劣势样本几乎全部集中于部署期收益为负的起点。该结论在分期长度与持有期的二维网格上稳定，但在恒生指数口径下强度明显减弱。我们据此讨论了该现象的行为金融解释，并给出可操作的资金部署规则。</span><span class="en"><b>Abstract</b>This paper takes up the long-running "lump sum versus dollar-cost averaging" debate and argues that the literature and practitioner discussion conflate two problems. For <i>stock</i> capital (money already in hand), staging the investment is an active choice; for <i>flow</i> capital (savings arriving from income), a lump sum is not an option at all, so the two optimisation problems differ. We study the stock-capital case using the ^SP500TR total return series (Jan 1988 – Sep 2026, 465 months) and the Hang Seng Index (Nov 1986 – Jul 2026, 477 months). For every monthly start date we construct an immediate purchase and equal purchases over 6, 12, 24 or 36 months, and compute terminal values over holding periods of 1 to 20 years. The lump sum dominates on both expected terminal value and win rate, and its losses are almost entirely concentrated in starts where the deployment window was negative. The result is stable across the deployment-length × holding-period grid but materially weaker on the Hang Seng. We discuss the behavioural interpretation and give an operational rule for deploying capital.</span></div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　DCA · 一次性投入 · 回测 · 多资产 · 行为偏差 · 组合执行</span><span class="en"><b>Keywords</b>　DCA · lump-sum investing · backtesting · multi-asset · behavioural bias · portfolio execution</span></p>
 
   <div class="split">
     <div class="prose">
@@ -121,69 +126,70 @@
         <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入与定投的现金流时间轴对比">
         <p class="ex-note zh">上图（a）：一次性投入在第 0 个月把 100% 本金投入，分期投入则每月投入 1/12。下图（b）：把两者的资本暴露度画成曲线——一次性投入自始至终为 100%；分期投入在第 12 个月才达到 100%。<b>两条曲线之间的面积，就是"留在场外"的资金：它在上涨行情中是纯粹的拖累，在下跌行情中才是保护。</b>本文后续所有结果，都可以由这张图的差异解释。</p>
         <p class="ex-note en">Panel (a): a lump sum invests 100% of the capital at month 0, while DCA invests one twelfth each month. Panel (b) plots capital exposure: the lump sum is 100% throughout, whereas DCA only reaches 100% in month 12. The area between the two lines is the capital left outside the market — a drag when prices rise, protection when they fall.</p>
-        <p class="ex-src">来源：本文自绘示意；同一笔本金、同一标的、同一持有期，等待期现金按 0% 计息。</p>
+        <p class="ex-src"><span class="zh">来源：本文自绘示意；同一笔本金、同一标的、同一持有期，等待期现金按 0% 计息。</span><span class="en">Source: author's schematic; same principal, same asset and same holding period, with waiting cash at 0%.</span></p>
       </div>
       <div class="exhibit">
         <div class="ex-label"><span class="zh">Exhibit 2 · 100 元投进去，十年后有多少（可交互）</span><span class="en">Exhibit 2 · 100 units invested, ten years later (interactive)</span></div>
         <div class="vbox">
           <div class="ctrl">
             <button class="primary" id="a-play">▶ 播放</button>
-            <select id="a-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
-            <select id="a-start"><option value="1999-02">1999-02 · 崩盘前一年（部署期仍在涨）</option>
-            <option value="2007-10">2007-10 · 危机当月（部署期暴跌）</option>
-            <option value="2009-03">2009-03 · 危机底部（部署期暴涨）</option>
-            <option value="2020-02">2020-02 · 疫情前高点</option>
-            <option value="2021-12">2021-12 · 2022 熊市前</option>
-            <option value="1990-08">1990-08 · 海湾战争前</option></select>
+            <select id="a-market"><option value="us" data-zh="标普 500 全收益（美）" data-en="S&amp;P 500 total return (US)">标普 500 全收益（美）</option><option value="hk" data-zh="恒生指数（港）" data-en="Hang Seng Index (HK)">恒生指数（港）</option></select>
+            <select id="a-start"><option value="1999-02" data-zh="1999-02 · 崩盘前一年（部署期仍在涨）" data-en="1999-02 · one year before the crash (deployment still rising)">1999-02 · 崩盘前一年（部署期仍在涨）</option>
+            <option value="2007-10" data-zh="2007-10 · 危机当月（部署期暴跌）" data-en="2007-10 · the crisis month (deployment crashes)">2007-10 · 危机当月（部署期暴跌）</option>
+            <option value="2009-03" data-zh="2009-03 · 危机底部（部署期暴涨）" data-en="2009-03 · the bottom (deployment rallies hard)">2009-03 · 危机底部（部署期暴涨）</option>
+            <option value="2020-02" data-zh="2020-02 · 疫情前高点" data-en="2020-02 · pre-COVID peak">2020-02 · 疫情前高点</option>
+            <option value="2021-12" data-zh="2021-12 · 2022 熊市前" data-en="2021-12 · before the 2022 bear market">2021-12 · 2022 熊市前</option>
+            <option value="1990-08" data-zh="1990-08 · 海湾战争前" data-en="1990-08 · before the Gulf War">1990-08 · 海湾战争前</option></select>
             <input type="range" id="a-scrub" min="0" max="120" value="120">
             <span id="a-month">第 120 个月</span>
           </div>
           <svg id="a-svg" viewBox="0 0 900 250" role="img" aria-label="一次性投入与定投的金额对比横条"></svg>
           <div class="vstat">
-            <span>一次性 <b id="a-vall">–</b> 元</span>
-            <span>定投 <b id="a-vdca">–</b> 元</span>
-            <span>差距 <b id="a-gap">–</b></span>
+            <span><span class="zh">一次性</span><span class="en">Lump sum</span> <b id="a-vall">–</b> <span class="zh">元</span><span class="en">units</span></span>
+            <span><span class="zh">定投</span><span class="en">DCA</span> <b id="a-vdca">–</b> <span class="zh">元</span><span class="en">units</span></span>
+            <span><span class="zh">差距</span><span class="en">Gap</span> <b id="a-gap">–</b></span>
             <span id="a-lead"></span>
           </div>
         </div>
         <p class="ex-note zh">两条横条随时间增长，领先方实时标出。可以切换市场与起点：同一个起点在美股与港股的结果常常相反。</p>
         <p class="ex-note en">Both bars grow month by month and the leader is labelled live; switch market or start date and the ranking often flips.</p>
-        <p class="ex-src">来源：本文回测，数据见附录 A。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测，数据见附录 A。</span><span class="en">Source: author's backtest; data in Appendix A.</span></p>
       </div>
 
       <h2 id="s2"><span class="num">02</span><span class="zh">数据、方法与基准结果</span><span class="en">Data, method and benchmark results</span></h2>
       <p class="zh">样本为两类资产的月度总收益序列：标普 500 全收益指数（^SP500TR，含股息）1988-01 至 2026-09 共 465 个月；恒生指数（^HSI）1986-11 至 2026-07 共 477 个月。对每一个月度起点 <img class="imath math-t0" src="../assets/figs/math-t0.svg" alt="t0">，我们计算两种策略在持有 <img class="imath math-h" src="../assets/figs/math-h.svg" alt="H"> 年后的终值：一次性投入的终值为 <img class="imath math-vls" src="../assets/figs/math-vls.svg" alt="P(t0+H)/P(t0)">；分期投入则是把同一本金等分到 <img class="imath math-n" src="../assets/figs/math-n.svg" alt="N"> 个月买入，其终值为 <img class="imath math-vdca" src="../assets/figs/math-vdca.svg" alt="(1/N)Σ_j P(t0+H)/P(t0+j)">，其中期次 <img class="imath math-j" src="../assets/figs/math-j.svg" alt="j=0,...,N-1">。未投部分按 0% 计息——选择零利率是对 DCA 有利的假设，可避免结论偏向一次性投入。持有期取 1、3、5、10、20 年，分期长度取 6、12、24、36 个月。</p>
       <p class="zh">基准结果显示，一次性投入在终值期望与胜率两方面均占优。以 12 个月分期、10 年持有为例，标普 500 全收益口径下的完整起点共 <b>345</b> 个，其中一次性投入胜出 <b>79%</b>，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。表中数字在持有期维度上并非单调，说明其并非由某一特定年代的行情驱动，而更可能来自一个与时间无关的机制——下文将予以识别。</p>
       <div class="exhibit">
-        <div class="ex-label">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</div>
+        <div class="ex-label"><span class="zh">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</span><span class="en">Table 1 · lump-sum win rate (S&amp;P 500 total return, Jan 1988 → Sep 2026)</span></div>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th>持有期</th><th>6 个月分期</th><th>12 个月分期</th><th>24 个月分期</th><th>36 个月分期</th></tr></thead>
+            <thead><tr><th><span class="zh">持有期</span><span class="en">Holding</span></th><th><span class="zh">6 个月分期</span><span class="en">6-month</span></th><th><span class="zh">12 个月分期</span><span class="en">12-month</span></th><th><span class="zh">24 个月分期</span><span class="en">24-month</span></th><th><span class="zh">36 个月分期</span><span class="en">36-month</span></th></tr></thead>
             <tbody>
-            <tr><td>1 年</td><td>74%</td><td>81%</td><td>85%</td><td>84%</td></tr>
-            <tr><td>3 年</td><td>74%</td><td>80%</td><td>85%</td><td>84%</td></tr>
-            <tr><td>5 年</td><td>75%</td><td>81%</td><td>85%</td><td>83%</td></tr>
-            <tr><td>10 年</td><td>74%</td><td class="hi">79%</td><td>84%</td><td>81%</td></tr>
-            <tr><td>20 年</td><td>74%</td><td>82%</td><td>85%</td><td>81%</td></tr>
+            <tr><td><span class="zh">1 年</span><span class="en">1 year</span></td><td>74%</td><td>81%</td><td>85%</td><td>84%</td></tr>
+            <tr><td><span class="zh">3 年</span><span class="en">3 years</span></td><td>74%</td><td>80%</td><td>85%</td><td>84%</td></tr>
+            <tr><td><span class="zh">5 年</span><span class="en">5 years</span></td><td>75%</td><td>81%</td><td>85%</td><td>83%</td></tr>
+            <tr><td><span class="zh">10 年</span><span class="en">10 years</span></td><td>74%</td><td class="hi">79%</td><td>84%</td><td>81%</td></tr>
+            <tr><td><span class="zh">20 年</span><span class="en">20 years</span></td><td>74%</td><td>82%</td><td>85%</td><td>81%</td></tr>
             </tbody>
           </table>
         </div>
         <p class="ex-note zh">每一格是"一次性终值高于定投终值"的月度起点占比。高亮单元为本文主要口径。数字不随持有期单调变化，说明它衡量的不是某个特定年代，而是"部署期市场涨跌"这一机制。</p>
-        <p class="ex-src">来源：本文回测；等待期现金按 0% 计息（对定投偏有利的假设）。</p>
+        <p class="ex-note en">Each cell is the share of monthly start dates on which the lump sum ended higher. The highlighted cell is the headline case. The figures are not monotone in the holding period, which is the point: what is being measured is the deployment window, not a particular decade.</p>
+        <p class="ex-src"><span class="zh">来源：本文回测；等待期现金按 0% 计息（对定投偏有利的假设）。</span><span class="en">Source: author's backtest; waiting cash earns 0%, which flatters DCA.</span></p>
       </div>
       <div class="exhibit">
         <div class="ex-label"><span class="zh">Exhibit 3 · 胜率随分期长度的变化</span><span class="en">Exhibit 3 · win rate against deployment length</span></div>
         <img src="../assets/figs/f25-winrate-lines.svg" alt="一次性投入胜率随分期长度的变化">
       <p class="ex-note zh">横轴是"多久把钱投完"，纵轴是"持有多久"；每格给出一次性投入的胜率与对应样本数 n。两个方向的规律都很稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。24 个月那一列甚至更高（84–85%），因为等待时间越长，"没吃到上涨"的代价越大。红框为本文主要口径（12 个月、10 年、n = 345）。</p>
         <p class="ex-note en">Cells report the share of monthly start dates where the lump sum ends higher, together with the sample size n. The pattern is monotone in both directions: the longer the deployment and the shorter the holding period, the more often the lump sum wins. The 24-month column is highest because the cost of waiting grows with the deployment window.</p>
-        <p class="ex-src">来源：本文回测，数据与口径见附录。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测，数据与口径见附录。</span><span class="en">Source: author's backtest; data and definitions in the appendix.</span></p>
       </div>
       <div class="exhibit">
         <div class="ex-label"><span class="zh">Exhibit 4 · 逐年差额：29 个起点年份，一年不落</span><span class="en">Exhibit 4 · year by year: all 29 start years</span></div>
         <img src="../assets/figs/f24-year-gap.svg" alt="逐年终值差额柱状图" style="width:100%">
       <p class="ex-note zh">为回应"是否挑选了有利年份"的质疑，我们把 1988–2016 年每一个 1 月起点逐一列出：柱高为分期投入减一次性投入的十年终值差。<b>29 个年份中，一次性投入在 25 个年份占优；分期投入只在 4 个年份胜出</b>，且全部集中在 2000 年前后与 2007–2008 年——与部署期下跌的年份完全对应。</p>
         <p class="ex-note en">To address the concern that favourable years were selected, every January start from 1988 to 2016 is shown. Bars are the ten-year terminal-value gap (DCA minus lump sum). The lump sum wins in 25 of 29 years; DCA wins only in four, all clustered around 2000 and 2007–08 — precisely the falling deployment windows.</p>
-        <p class="ex-src">来源：本文回测；每年 1 月入市、12 个月分批投完、持有 10 年。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测；每年 1 月入市、12 个月分批投完、持有 10 年。</span><span class="en">Source: author's backtest; entry each January, deployed over 12 months, held 10 years.</span></p>
       </div>
 
       <h2 id="s3"><span class="num">03</span><span class="zh">损失区间的机制识别</span><span class="en">Identifying the mechanism</span></h2>
@@ -193,7 +199,7 @@
         <img src="../assets/figs/f18-mechanism.svg" alt="部署期市场涨跌与定投相对差额的散点图" style="width:100%">
         <p class="ex-note zh">横轴是前 12 个月的市场涨跌，纵轴是定投相对一次性的 10 年终值差（占本金百分点）：点几乎全部落在一条斜线上。<b>定投赢的起点只占 21%，且全部落在左侧浅蓝区域</b>——历史上"投完就跌"的窗口本来就只占两成。</p>
         <p class="ex-note en">Horizontal axis: market return over the first twelve months. Vertical axis: ten-year terminal-value gap (DCA minus lump sum), in percentage points. Points fall almost exactly on a line: DCA wins in 21% of starts, and all of them sit on the left, where the deployment window was negative.</p>
-        <p class="ex-src">来源：本文回测；345 个月度起点，12 个月分期、持有 10 年。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测；345 个月度起点，12 个月分期、持有 10 年。</span><span class="en">Source: author's backtest; 345 monthly start dates, 12-month deployment, 10-year hold.</span></p>
       </div>
       <p class="zh">那么"分批买得更便宜"这件事到底值多少？把 2007-10 起步的 12 期拆开看，可以回答得更具体：<b>真正扛起收益的是最后几期——它们买在危机后的低位</b>；而 1999-02 起步的那一批，因为崩盘晚了一年，每一期都买得比起点更贵。这就是为什么"定投更便宜"这句话在方向上没错，却不能保证结果——它依赖崩盘何时到来。</p>
       <div class="exhibit">
@@ -201,7 +207,7 @@
         <img src="../assets/figs/f23-tranche-and-distribution.svg" alt="分批贡献分解与终值差额分布" style="width:100%">
         <p class="ex-note zh">左图（2007-10 起步）：灰虚线是每期买入时的指数位置，蓝柱是该期最终值——<b>第 12 期贡献最大</b>。右图：全部 345 个起点的差额分布，中位数 <b>−13 个百分点</b>，只有 <b>21%</b> 落在零线右侧；分布形状是"右尾薄、左尾长"，即定投大幅赢的情况很少，输一截的情况不少。</p>
         <p class="ex-note en">Left panel: for a 2007-10 start, the dashed line is the index level when each tranche was bought and the bars are each tranche's value after ten years; the later tranches did most of the work. Right panel: across all 345 starts the median gap is −13pp and only 21% sit right of zero — a thin right tail and a long left tail.</p>
-        <p class="ex-src">来源：本文回测；差额 = 定投终值 − 一次性终值。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测；差额 = 定投终值 − 一次性终值。</span><span class="en">Source: author's backtest; gap = DCA terminal value − lump-sum terminal value.</span></p>
       </div>
 
       <h2 id="s4"><span class="num">04</span><span class="zh">起点依赖性与两例反事实</span><span class="en">Start-date dependence: two counterfactuals</span></h2>
@@ -211,61 +217,62 @@
         <img src="../assets/figs/f20-worst-case.svg" alt="1999-02 与 2007-10 两个起点的路径对比" style="width:100%">
         <p class="ex-note zh">左：1999-02 起步，定投 0.65 倍、一次性 0.71 倍。右：2007-10 起步，定投 2.34 倍、一次性 2.06 倍。<b>差别不在策略，而在崩盘来得早还是晚。</b></p>
         <p class="ex-note en">Left: starting in 1999-02, DCA ends at 0.65x versus 0.71x for the lump sum. Right: starting in 2007-10, DCA ends at 2.34x versus 2.06x. The difference is not the strategy but whether the crash arrived immediately or a year later.</p>
-        <p class="ex-src">来源：本文回测；12 个月分批、持有 10 年，阴影为部署期。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测；12 个月分批、持有 10 年，阴影为部署期。</span><span class="en">Source: author's backtest; 12-month deployment, 10-year hold, shaded area is the deployment window.</span></p>
       </div>
       <div class="exhibit">
         <div class="ex-label"><span class="zh">Exhibit 8 · 自己动手看（可交互）</span><span class="en">Exhibit 8 · try it yourself (interactive)</span></div>
         <div class="vbox">
           <div class="ctrl">
             <button class="primary" id="d-play">▶ 播放</button>
-            <select id="d-market"><option value="us">标普 500 全收益（美）</option><option value="hk">恒生指数（港）</option></select>
-            <select id="d-start"><option value="1999-02">1999-02 · 崩盘前一年（部署期仍在涨）</option>
-            <option value="2007-10">2007-10 · 危机当月（部署期暴跌）</option>
-            <option value="2009-03">2009-03 · 危机底部（部署期暴涨）</option>
-            <option value="2020-02">2020-02 · 疫情前高点</option>
-            <option value="2021-12">2021-12 · 2022 熊市前</option>
-            <option value="1990-08">1990-08 · 海湾战争前</option></select>
-            <button id="d-rand">随机起点</button>
+            <select id="d-market"><option value="us" data-zh="标普 500 全收益（美）" data-en="S&amp;P 500 total return (US)">标普 500 全收益（美）</option><option value="hk" data-zh="恒生指数（港）" data-en="Hang Seng Index (HK)">恒生指数（港）</option></select>
+            <select id="d-start"><option value="1999-02" data-zh="1999-02 · 崩盘前一年（部署期仍在涨）" data-en="1999-02 · one year before the crash (deployment still rising)">1999-02 · 崩盘前一年（部署期仍在涨）</option>
+            <option value="2007-10" data-zh="2007-10 · 危机当月（部署期暴跌）" data-en="2007-10 · the crisis month (deployment crashes)">2007-10 · 危机当月（部署期暴跌）</option>
+            <option value="2009-03" data-zh="2009-03 · 危机底部（部署期暴涨）" data-en="2009-03 · the bottom (deployment rallies hard)">2009-03 · 危机底部（部署期暴涨）</option>
+            <option value="2020-02" data-zh="2020-02 · 疫情前高点" data-en="2020-02 · pre-COVID peak">2020-02 · 疫情前高点</option>
+            <option value="2021-12" data-zh="2021-12 · 2022 熊市前" data-en="2021-12 · before the 2022 bear market">2021-12 · 2022 熊市前</option>
+            <option value="1990-08" data-zh="1990-08 · 海湾战争前" data-en="1990-08 · before the Gulf War">1990-08 · 海湾战争前</option></select>
+            <button id="d-rand"><span class="zh">随机起点</span><span class="en">Random start</span></button>
             <input type="range" id="d-scrub" min="0" max="120" value="120">
             <span id="d-month">第 120 个月</span>
           </div>
           <svg id="d-svg" viewBox="0 0 900 470" role="img" aria-label="一次性投入与定投的路径动画"></svg>
           <div class="vstat">
-            <span>100 元 → 一次性 <b id="d-vall">–</b> 元</span>
-            <span>定投 <b id="d-vdca">–</b> 元</span>
-            <span>差距 <b id="d-gap">–</b></span>
+            <span><span class="zh">100 元 → 一次性</span><span class="en">100 units → lump sum</span> <b id="d-vall">–</b> <span class="zh">元</span><span class="en">units</span></span>
+            <span><span class="zh">定投</span><span class="en">DCA</span> <b id="d-vdca">–</b> <span class="zh">元</span><span class="en">units</span></span>
+            <span><span class="zh">差距</span><span class="en">Gap</span> <b id="d-gap">–</b></span>
             <span id="d-lead"></span>
           </div>
         </div>
         <p class="ex-note zh">橙＝一次性投入、蓝＝定投；两线之间的色带标出当前领跑方，下方同步显示差距。历史事件（网络泡沫、金融危机、疫情、加息周期）标在时间轴上。换起点、换市场，结论会翻转。</p>
         <p class="ex-note en">Orange is the lump sum, blue is DCA; the band between the lines marks who is ahead, and the strip below tracks the gap. Historical events (dot-com, GFC, COVID, rate cycle) are marked on the time axis. Change the start date or the market and the conclusion flips.</p>
-        <p class="ex-src">来源：本文回测，数据见附录 A。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测，数据见附录 A。</span><span class="en">Source: author's backtest; data in Appendix A.</span></p>
       </div>
 
       <h2 id="s5"><span class="num">05</span><span class="zh">市场异质性与稳健性</span><span class="en">Cross-market robustness</span></h2>
       <p class="zh">美股样本期的特征是"长期向上、回撤后修复"，这并非所有市场的常态。我们在恒生指数上重复同一检验（1986-11 起，477 个月，覆盖 1997、2000、2008、2015 及 2018–2022 多轮深度回撤与长期横盘），一次性投入的胜率由约 80% 降至 <b>63–69%</b>，且随持有期延长而进一步收敛。需要说明的是，恒生指数序列为价格指数、不含股息，因而系统性低估买入并持有策略，该口径对本结果具有保守倾向。这一发现支持一个更审慎的表述：一次性投入的优势依赖于标的资产的长期正漂移与投资者的回撤承受能力，而非某项统计定律。</p>
         <p class="ex-note en">The Hang Seng series is a price index excluding dividends, which understates buy-and-hold; the true gap is therefore likely wider than shown.</p>
       <div class="exhibit">
-        <div class="ex-label">表 2 · 两个市场的一次性投入胜率（12 个月分期）</div>
+        <div class="ex-label"><span class="zh">表 2 · 两个市场的一次性投入胜率（12 个月分期）</span><span class="en">Table 2 · lump-sum win rate across two markets (12-month deployment)</span></div>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th>持有期</th><th>标普 500 全收益（美）</th><th>恒生指数（港）</th></tr></thead>
+            <thead><tr><th><span class="zh">持有期</span><span class="en">Holding</span></th><th><span class="zh">标普 500 全收益（美）</span><span class="en">S&amp;P 500 TR (US)</span></th><th><span class="zh">恒生指数（港）</span><span class="en">Hang Seng (HK)</span></th></tr></thead>
             <tbody>
-            <tr><td>5 年持有</td><td>81%</td><td>63%</td></tr>
-            <tr><td>10 年持有</td><td>79%</td><td>66%</td></tr>
-            <tr><td>20 年持有</td><td>82%</td><td>69%</td></tr>
+            <tr><td><span class="zh">5 年持有</span><span class="en">5-year</span></td><td>81%</td><td>63%</td></tr>
+            <tr><td><span class="zh">10 年持有</span><span class="en">10-year</span></td><td>79%</td><td>66%</td></tr>
+            <tr><td><span class="zh">20 年持有</span><span class="en">20-year</span></td><td>82%</td><td>69%</td></tr>
             </tbody>
           </table>
         </div>
         <p class="ex-note zh">恒生指数序列为价格指数（不含股息），这会低估买入并持有，因此对"一次性投入"是偏保守的口径——真实的差距可能比表中更大。</p>
-        <p class="ex-src">来源：本文回测。</p>
+        <p class="ex-note en">The Hang Seng series is a price index excluding dividends, which understates buy-and-hold and therefore makes the lump-sum column conservative; the true gap is likely wider than shown.</p>
+        <p class="ex-src"><span class="zh">来源：本文回测。</span><span class="en">Source: author's backtest.</span></p>
       </div>
       <div class="exhibit">
         <div class="ex-label"><span class="zh">Exhibit 9 · 同一个问题，换个市场，答案变弱</span><span class="en">Exhibit 9 · same question, another market, weaker answer</span></div>
         <img src="../assets/figs/f21-market-compare.svg" alt="标普 500 与恒生指数的一次性投入胜率对比" style="width:100%">
         <p class="ex-note zh">原因不神秘：<b>港股波动更大、横盘与深跌的时间更长</b>，"等一等"的机会成本因此更低。结论：<b>"all-in 更好"不是普适定律，它建立在"市场长期向上、且你能承受回撤"这两个前提上。</b></p>
         <p class="ex-note en">Hong Kong equities are more volatile and spend longer flat or deeply drawn down, so waiting costs less. The advantage of investing immediately is conditional on a market that trends up and on an investor who can hold through drawdowns.</p>
-        <p class="ex-src">来源：本文回测；12 个月分期。</p>
+        <p class="ex-src"><span class="zh">来源：本文回测；12 个月分期。</span><span class="en">Source: author's backtest; 12-month deployment.</span></p>
       </div>
 
       <h2 id="s6"><span class="num">06</span><span class="zh">讨论与投资含义</span><span class="en">Discussion and implications</span></h2>
@@ -302,18 +309,23 @@
     </section>
 
     <details class="appendix" id="apx">
-      <summary>附录 A · 数据、方法与来源</summary>
+      <summary><span class="zh">附录 A · 数据、方法与来源</span><span class="en">Appendix A · data, method and sources</span></summary>
       <p class="zh"><b>数据。</b>标普 500 全收益指数（^SP500TR，含股息）月度收盘，1988-01 → 2026-09，共 465 个月；恒生指数（^HSI，价格）月度收盘，1986-11 → 2026-07，共 477 个月。来源为 Yahoo Finance 公开行情接口，访问日期 2026-10-03。</p>
       <p class="zh"><b>做法。</b>把每一个月当作起点 t₀。一次性投入＝在 t₀ 全额买入并持有 H 年；定投＝分 N 个月等额买入，未投部分按 <b>0%</b> 计息，同样持有到 t₀+H。统计指标为"一次性终值高于定投终值"的起点占比，以及终值差额的分布。选择 0% 现金利率是对定投偏有利的假设。</p>
+      <p class="en"><b>Data.</b> S&amp;P 500 total return (^SP500TR, dividends included), monthly closes, January 1988 to September 2026 (465 months); Hang Seng Index (^HSI, price only), monthly closes, November 1986 to July 2026 (477 months). Both from the Yahoo Finance public chart endpoint, accessed 3 October 2026.</p>
+      <p class="en"><b>Method.</b> Every month is treated as a start date t₀. The lump sum buys in full at t₀ and holds for H years; DCA buys in N equal monthly instalments with the uninvested balance earning <b>0%</b>, also held to t₀+H. The statistics are the share of starts on which the lump-sum terminal value exceeded the DCA terminal value, and the distribution of the difference. A 0% cash rate is deliberately generous to DCA.</p>
+      <p class="en"><b>Not included.</b> Transaction costs, taxes, FX and behaviour. The first three penalise staging (more trades, more cost); the last cannot be measured by a backtest.</p>
       <p class="zh"><b>未计入。</b>交易成本、税费、汇率与心理因素。前三个都会让"分批"更吃亏（多笔交易成本更高），最后一个无法用回测衡量。</p>
       <p class="zh"><b>代码。</b><code>tools/make_lca_data.py</code>（回测与数据导出）、<code>tools/make_lca_figs.py</code>（全部静态图，研究简报风格）、<code>tools/make_lca_note.py</code>（本页与两个交互动画）。固定输入可完全复现。</p>
+      <p class="en"><b>Code.</b> <code>tools/make_lca_data.py</code> (backtest and data export), <code>tools/make_lca_figs.py</code> (all static figures), <code>tools/make_lca_note.py</code> (this page and the two interactive charts). The same inputs reproduce the same output.</p>
     </details>
 
     <div class="disclaimer">
-      <b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public market data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. The academic papers cited are references only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span></div>
     </div>
 
-    <h2 id="refs" style="margin-top:38px"><span class="num">参考文献</span><span class="en">References</span></h2>
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
     <ol class="refs">
       <li>Constantinides, G. M. (1979). A Note on the Suboptimality of Dollar-Cost Averaging as an Investment Policy. <i>Journal of Financial and Quantitative Analysis</i>. <a href="https://doi.org/10.2307/2330513">doi.org/10.2307/2330513</a></li>
       <li>Rozeff, M. S. (1994). Lump-Sum Investing versus Dollar-Averaging. <i>Journal of Portfolio Management</i>. <a href="https://doi.org/10.3905/jpm.1994.409474">doi.org/10.3905/jpm.1994.409474</a></li>
@@ -322,7 +334,7 @@
       <li>Hayley, S. (2013). Dollar Cost Averaging — The Role of Cognitive Error. SSRN Working Paper. <a href="https://doi.org/10.2139/ssrn.1473046">doi.org/10.2139/ssrn.1473046</a></li>
       <li>Vanguard Research (2023, February). Cost averaging: Invest now or temporarily hold your cash? <a href="https://corporate.vanguard.com/content/dam/corp/research/pdf/cost_averaging_invest_now_or_temporarily_hold_your_cash.pdf">vanguard.com（PDF）</a></li>
       <li>Kaur, et al. (2026). Dollar-Cost Averaging Versus Lump-Sum Investing under High Inflation. <i>Journal of Risk and Financial Management</i>. <a href="https://doi.org/10.3390/jrfm19090671">doi.org/10.3390/jrfm19090671</a></li>
-      <li>行情数据：Yahoo Finance，^SP500TR 与 ^HSI 月度收盘序列，访问日期 2026-10-03。</li>
+      <li><span class="zh">行情数据：Yahoo Finance，^SP500TR 与 ^HSI 月度收盘序列，访问日期 2026-10-03。</span><span class="en">Market data: Yahoo Finance, month-end ^SP500TR and ^HSI series, accessed 3 October 2026.</span></li>
     </ol>
 
     <nav class="pager" aria-label="pagination" style="margin-top:26px">
@@ -355,8 +367,10 @@ const DATA = {"dates": ["1988-01", "1988-02", "1988-03", "1988-04", "1988-05", "
 const SER = {us:{dates:DATA.dates,price:DATA.price}, hk:{dates:DATA.dates_hk,price:DATA.price_hk}};
 const C = {allin:'#B23A1C', dca:'#1F4E79', rule:'#E2DCCE', mute:'#8A8172', ink:'#1B1A17'};
 const NS = 'http://www.w3.org/2000/svg';
+// 图内文字跟随语言：site.js 只改 html[data-lang]，这里读它并在切换时重绘
+function T(zh, en){ return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh; }
 const N_DEPLOY = 12;
-const EVENTS = [['2000-03','网络泡沫顶'],['2008-09','金融危机'],['2020-02','疫情'],['2022-01','加息周期']];
+const EVENTS = [['2000-03','网络泡沫顶','Dot-com peak'],['2008-09','金融危机','GFC'],['2020-02','疫情','COVID'],['2022-01','加息周期','Rate cycle']];
 function el(tag, attrs, text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!==undefined)e.textContent=text;return e;}
 function nearest(market,label){const d=SER[market].dates;const i=d.indexOf(label);if(i>=0)return i;for(let k=0;k<d.length;k++)if(d[k]>=label)return k;return 0;}
 function path(market,i0,months){const p=SER[market].price;const n=Math.min(months,p.length-i0-1);const out=[];for(let k=0;k<=n;k++){const pk=p[i0+k];let v=0;for(let j=0;j<=Math.min(k,N_DEPLOY-1);j++)v+=(1/N_DEPLOY)*pk/p[i0+j];v+=Math.max(0,N_DEPLOY-1-k)/N_DEPLOY;out.push({k,allin:pk/p[i0],dca:v});}return out;}
@@ -370,30 +384,30 @@ function aRender(){
   const cur=A.P[Math.min(A.month,A.P.length-1)];
   const scale=v=>(v/maxV)*bw;
   svg.appendChild(el('rect',{x:0,y:0,width:W,height:H,fill:'#fff'}));
-  [['一次性投入 All-in','allin',C.allin],['定投 DCA（12 个月）','dca',C.dca]].forEach((row,idx)=>{
+  [[T('一次性投入 All-in','Lump sum (all-in)'),'allin',C.allin],[T('定投 DCA（12 个月）','DCA (12 months)'),'dca',C.dca]].forEach((row,idx)=>{
     const val=cur[row[1]], color=row[2], y=laneY[idx];
     svg.appendChild(el('text',{x:14,y:y+bh/2+5,'font-size':14,fill:C.ink,'font-weight':600},row[0]));
     svg.appendChild(el('rect',{x:x0,y:y,width:bw,height:bh,rx:5,fill:'#F1F3F6'}));
     svg.appendChild(el('rect',{x:x0,y:y,width:Math.max(3,scale(val)),height:bh,rx:5,fill:color,opacity:.94}));
-    svg.appendChild(el('text',{x:x0+Math.max(3,scale(val))+10,y:y+bh/2+6,'font-size':16,'font-family':'ui-monospace,monospace',fill:C.ink},Math.round(val*100)+' 元'));
+    svg.appendChild(el('text',{x:x0+Math.max(3,scale(val))+10,y:y+bh/2+6,'font-size':16,'font-family':'ui-monospace,monospace',fill:C.ink},Math.round(val*100)+T(' 元',' units')));
   });
   const gap=(cur.dca-cur.allin)*100;
-  svg.appendChild(el('text',{x:14,y:222,'font-size':12,fill:C.mute},'起点 '+SER[A.market].dates[A.i0]+' · 已过 '+cur.k+' 个月 · 本金 100 元'));
+  svg.appendChild(el('text',{x:14,y:222,'font-size':12,fill:C.mute},T('起点 '+SER[A.market].dates[A.i0]+' · 已过 '+cur.k+' 个月 · 本金 100 元','start '+SER[A.market].dates[A.i0]+' · '+cur.k+' months in · 100 units of principal')));
   document.getElementById('a-vall').textContent=Math.round(cur.allin*100);
   document.getElementById('a-vdca').textContent=Math.round(cur.dca*100);
   document.getElementById('a-gap').textContent=(gap>=0?'+':'')+gap.toFixed(1)+'pp';
   const lead=document.getElementById('a-lead');
-  lead.textContent=cur.k<N_DEPLOY?'（尚未投完）':(gap>0?'定投领先':'一次性领先');
+  lead.textContent=cur.k<N_DEPLOY?T('（尚未投完）','(still deploying)'):(gap>0?T('定投领先','DCA ahead'):T('一次性领先','Lump sum ahead'));
   lead.style.color=gap>0?C.dca:C.allin; lead.style.fontWeight='700';
-  document.getElementById('a-month').textContent='第 '+cur.k+' 个月';
+  document.getElementById('a-month').textContent=T('第 '+cur.k+' 个月','month '+cur.k);
   document.getElementById('a-scrub').value=cur.k;
 }
 document.getElementById('a-play').addEventListener('click',()=>{
   const btn=document.getElementById('a-play');
-  if(A.playing){clearInterval(A.timer);A.playing=false;btn.textContent='▶ 播放';return;}
-  A.playing=true;btn.textContent='⏸ 暂停';
+  if(A.playing){clearInterval(A.timer);A.playing=false;btn.textContent=T('▶ 播放','▶ Play');return;}
+  A.playing=true;btn.textContent=T('⏸ 暂停','⏸ Pause');
   if(A.month>=A.P.length-1)A.month=0;
-  A.timer=setInterval(()=>{if(A.month>=A.P.length-1){clearInterval(A.timer);A.playing=false;btn.textContent='▶ 播放';return;}A.month++;aRender();},40);
+  A.timer=setInterval(()=>{if(A.month>=A.P.length-1){clearInterval(A.timer);A.playing=false;btn.textContent=T('▶ 播放','▶ Play');return;}A.month++;aRender();},40);
 });
 document.getElementById('a-market').addEventListener('change',e=>{A.market=e.target.value;aReset(nearest(A.market,document.getElementById('a-start').value),120);});
 document.getElementById('a-start').addEventListener('change',e=>aReset(nearest(A.market,e.target.value),120));
@@ -413,7 +427,7 @@ function dRender(){
   for(let i=0;i<=5;i++){const v=maxV*i/5;
     svg.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:Y(v),y2:Y(v),stroke:'#EDEFF3','stroke-width':1,'stroke-dasharray':'3 3'}));
     svg.appendChild(el('text',{x:pad.l-8,y:Y(v)+4,'font-size':11,fill:C.mute,'text-anchor':'end'},v.toFixed(1)+'x'));}
-  for(let k=0;k<=D.P.length-1;k+=12){svg.appendChild(el('text',{x:X(k),y:H-pad.b+16,'font-size':11,fill:C.mute,'text-anchor':'middle'},k+'月'));}
+  for(let k=0;k<=D.P.length-1;k+=12){svg.appendChild(el('text',{x:X(k),y:H-pad.b+16,'font-size':11,fill:C.mute,'text-anchor':'middle'},T(k+'月', k+'m')));}
   D.P.slice(0,cur.k+1).forEach((d,k)=>{
     const y1=Y(d.allin), y2=Y(d.dca);
     svg.appendChild(el('line',{x1:X(k),x2:X(k),y1:Math.min(y1,y2),y2:Math.max(y1,y2),stroke:d.dca>d.allin?C.dca:C.allin,'stroke-width':3,opacity:.15}));
@@ -422,42 +436,56 @@ function dRender(){
   svg.appendChild(el('polyline',{points:D.P.slice(0,cur.k+1).map(d=>X(d.k)+','+Y(d.dca)).join(' '),fill:'none',stroke:C.dca,'stroke-width':2.4}));
   svg.appendChild(el('circle',{cx:X(cur.k),cy:Y(cur.allin),r:5,fill:C.allin}));
   svg.appendChild(el('circle',{cx:X(cur.k),cy:Y(cur.dca),r:5,fill:C.dca}));
-  EVENTS.forEach(([label,txt])=>{
+  EVENTS.forEach(([label,zh,en])=>{
     const idx=nearest(D.market,label)-D.i0; if(idx<0||idx>D.P.length-1) return;
     const xx=X(idx);
     svg.appendChild(el('line',{x1:xx,x2:xx,y1:pad.t,y2:H-pad.b,stroke:C.mute,'stroke-width':1,'stroke-dasharray':'3 4',opacity:.55}));
-    svg.appendChild(el('text',{x:xx+4,y:pad.t+12,'font-size':11,fill:C.mute},txt));
+    svg.appendChild(el('text',{x:xx+4,y:pad.t+12,'font-size':11,fill:C.mute},T(zh,en)));
   });
   const mx=Math.max(...D.P.map(d=>Math.abs(d.dca-d.allin)))*1.4+0.01;
   const GY=v=>gapTop+gapH/2-(v/mx)*(gapH/2);
   svg.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:GY(0),y2:GY(0),stroke:'#D8DCE3'}));
   D.P.slice(0,cur.k+1).forEach((d,k)=>{const gap=d.dca-d.allin;
     svg.appendChild(el('rect',{x:X(k)-1.5,y:gap>0?GY(gap):GY(0),width:3,height:Math.abs(GY(gap)-GY(0)),fill:gap>0?C.dca:C.allin,opacity:.85}));});
-  svg.appendChild(el('text',{x:pad.l,y:gapTop-8,'font-size':11,fill:C.mute},'差距（蓝＝定投领先，橙＝一次性领先）'));
+  svg.appendChild(el('text',{x:pad.l,y:gapTop-8,'font-size':11,fill:C.mute},T('差距（蓝＝定投领先，橙＝一次性领先）','Gap (blue = DCA ahead, orange = lump sum ahead)')));
   const gapPp=(cur.dca-cur.allin)*100;
   document.getElementById('d-vall').textContent=Math.round(cur.allin*100);
   document.getElementById('d-vdca').textContent=Math.round(cur.dca*100);
   document.getElementById('d-gap').textContent=(gapPp>=0?'+':'')+gapPp.toFixed(1)+'pp';
   const lead=document.getElementById('d-lead');
-  lead.textContent=cur.k<N_DEPLOY?'（尚未投完）':(gapPp>0?'定投领先':'一次性领先');
+  lead.textContent=cur.k<N_DEPLOY?T('（尚未投完）','(still deploying)'):(gapPp>0?T('定投领先','DCA ahead'):T('一次性领先','Lump sum ahead'));
   lead.style.color=gapPp>0?C.dca:C.allin; lead.style.fontWeight='700';
-  document.getElementById('d-month').textContent='第 '+cur.k+' 个月';
+  document.getElementById('d-month').textContent=T('第 '+cur.k+' 个月','month '+cur.k);
   document.getElementById('d-scrub').value=cur.k;
 }
 document.getElementById('d-play').addEventListener('click',()=>{
   const btn=document.getElementById('d-play');
-  if(D.playing){clearInterval(D.timer);D.playing=false;btn.textContent='▶ 播放';return;}
-  D.playing=true;btn.textContent='⏸ 暂停';
+  if(D.playing){clearInterval(D.timer);D.playing=false;btn.textContent=T('▶ 播放','▶ Play');return;}
+  D.playing=true;btn.textContent=T('⏸ 暂停','⏸ Pause');
   if(D.month>=D.P.length-1)D.month=0;
-  D.timer=setInterval(()=>{if(D.month>=D.P.length-1){clearInterval(D.timer);D.playing=false;btn.textContent='▶ 播放';return;}D.month++;dRender();},38);
+  D.timer=setInterval(()=>{if(D.month>=D.P.length-1){clearInterval(D.timer);D.playing=false;btn.textContent=T('▶ 播放','▶ Play');return;}D.month++;dRender();},38);
 });
 document.getElementById('d-market').addEventListener('change',e=>{D.market=e.target.value;dReset(nearest(D.market,document.getElementById('d-start').value),120);});
 document.getElementById('d-start').addEventListener('change',e=>dReset(nearest(D.market,e.target.value),120));
 document.getElementById('d-rand').addEventListener('click',()=>{const max=SER[D.market].price.length-121;dReset(Math.max(0,Math.floor(Math.random()*max)),120);});
 document.getElementById('d-scrub').addEventListener('input',e=>{D.month=parseInt(e.target.value,10);dRender();});
 
+function applyLang(){
+  document.querySelectorAll('option[data-zh]').forEach(function(o){
+    o.textContent = o.dataset[document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'zh'];
+  });
+  var pa = document.getElementById('a-play');
+  if (pa) pa.textContent = A.playing ? T('⏸ 暂停','⏸ Pause') : T('▶ 播放','▶ Play');
+  var pd = document.getElementById('d-play');
+  if (pd) pd.textContent = D.playing ? T('⏸ 暂停','⏸ Pause') : T('▶ 播放','▶ Play');
+  aRender(); dRender();
+}
+
 aReset(nearest('us','2007-10'),120);
 dReset(nearest('us','2007-10'),120);
+applyLang();
+new MutationObserver(applyLang)
+  .observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
 </script>
 </body>
 </html>
