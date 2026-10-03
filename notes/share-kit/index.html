@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分享封面 · Share cards</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--paper:#FBF9F4;--paper2:#FFFDF8;--ink:#1B1A17;--body:#3F3A32;--rule:#E2DCCE;
+  --accent:#A8341C;--muted:#8A8172;--blue:#2B3A67;
+  --serif:Georgia,"Songti SC","Noto Serif SC","Source Han Serif SC",SimSun,serif;
+  --sans:"Noto Sans SC","Microsoft YaHei",-apple-system,system-ui,sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);font-family:var(--sans);
+  font-size:16px;line-height:1.78}
+.wrap{max-width:1080px;margin:0 auto;padding:52px 22px 90px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  border-bottom:2px solid var(--ink);padding-bottom:8px}
+h1{font-family:var(--serif);font-size:clamp(26px,3.4vw,38px);line-height:1.2;color:var(--ink);margin:18px 0 10px}
+.lead{font-size:17px;max-width:780px;color:#4A453C}
+.lead b{color:var(--ink)}
+.how{background:var(--paper2);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  padding:16px 20px;margin:26px 0 36px;font-size:15px}
+.how ol{margin:8px 0 0;padding-left:20px}
+.how li{margin:5px 0}
+.how a{color:var(--blue)}
+code{font-family:var(--mono);font-size:.88em;background:#F2EFE8;padding:1px 5px;border-radius:3px}
+.card{margin:0 0 42px;border-top:1px solid var(--rule);padding-top:20px;
+  display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:30px;align-items:start}
+.shot{display:block;border:1px solid var(--rule);background:#fff;padding:8px}
+.shot img{display:block;width:100%;height:auto}
+.card h3{font-family:var(--serif);font-size:20px;color:var(--ink);margin:0 0 4px}
+.card p{margin:9px 0 0;font-size:14.6px}
+.dim{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.note{color:var(--muted);font-size:13.4px}
+.dl{display:inline-block;margin-top:15px;font-size:14px;font-weight:700;color:var(--accent);
+  border:1px solid var(--rule);padding:7px 14px;text-decoration:none;background:#fff}
+.dl:hover{border-color:var(--accent)}
+footer{border-top:1px solid var(--rule);margin-top:22px;padding-top:14px;
+  font-size:13px;color:var(--muted)}
+footer a{color:var(--blue)}
+@media (max-width:760px){.card{grid-template-columns:1fr;gap:16px}}
+</style>
+</head>
+<body><div class="wrap">
+  <div class="kicker">Notes · 分享素材</div>
+  <h1>分享封面 · Share cards</h1>
+  <p class="lead">这三张图<b>不会出现在笔记页面上</b>——它们是链接被贴到 LinkedIn / X / 微信 时，
+  <b>平台自动展开的那张卡</b>。别人还没点进来，先看到的就是它。</p>
+
+  <div class="how">
+    <b>怎么用</b>
+    <ol>
+      <li>直接发图：用 LinkedIn 竖版那张；配文第一句就写结论。</li>
+      <li>发链接：贴 <code>https://aayloo.github.io/notes/lump-sum-vs-dca/</code>，平台自动抓 og:image。</li>
+      <li>平台有缓存，换过封面后要重新抓一次：
+        <a href="https://www.linkedin.com/post-inspector/" target="_blank" rel="noopener">LinkedIn Post Inspector</a> ·
+        <a href="https://cards-dev.twitter.com/validator" target="_blank" rel="noopener">X Card Validator</a></li>
+      <li>自检：页面 <code>&lt;head&gt;</code> 里的 <code>og:image</code> 必须是绝对地址。</li>
+    </ol>
+  </div>
+
+    <figure class="card">
+      <a class="shot" href="../assets/share/og-lca.png" target="_blank" rel="noopener">
+        <img src="../assets/share/og-lca.png" alt="笔记分享卡 · og:image">
+      </a>
+      <figcaption>
+        <h3>笔记分享卡 · og:image</h3>
+        <p class="dim">2400×1260（1200×630 的 2 倍图）</p>
+        <p>《定投还是 all-in》的链接卡。贴链接到 LinkedIn / X / 微信，平台自动抓的就是这张。</p>
+        <p class="note">对应页面 head 里的 og:image：https://aayloo.github.io/notes/lump-sum-vs-dca/</p>
+        <a class="dl" href="../assets/share/og-lca.png" download>下载 PNG</a>
+      </figcaption>
+    </figure>
+
+    <figure class="card">
+      <a class="shot" href="../assets/share/linkedin-lca.png" target="_blank" rel="noopener">
+        <img src="../assets/share/linkedin-lca.png" alt="LinkedIn 竖版 · 4:5">
+      </a>
+      <figcaption>
+        <h3>LinkedIn 竖版 · 4:5</h3>
+        <p class="dim">2160×2700（1080×1350 的 2 倍图）</p>
+        <p>直接发图用。不点链接也能看懂：四条结论 + 底部胜率曲线。</p>
+        <p class="note">配文建议：第一句就写结论，例如「一次性投入赢 79% 的起点，输的那 20% 恰好是投完就跌」。</p>
+        <a class="dl" href="../assets/share/linkedin-lca.png" download>下载 PNG</a>
+      </figcaption>
+    </figure>
+
+    <figure class="card">
+      <a class="shot" href="../assets/share/og-site.png" target="_blank" rel="noopener">
+        <img src="../assets/share/og-site.png" alt="个人站首页卡 · og:image">
+      </a>
+      <figcaption>
+        <h3>个人站首页卡 · og:image</h3>
+        <p class="dim">2400×1260（1200×630 的 2 倍图）</p>
+        <p>分享个人站首页（不是某一篇）时用的卡，列出四篇笔记标题。</p>
+        <p class="note">对应 https://aayloo.github.io/ 的 og:image。</p>
+        <a class="dl" href="../assets/share/og-site.png" download>下载 PNG</a>
+      </figcaption>
+    </figure>
+  <footer>
+    生成方式：<code>python tools/make_share_cards.py</code> → <code>node tools/shoot_share.js</code>；
+    改文案或图表后重跑这两步。
+    <a href="../lump-sum-vs-dca/">← 回到《定投还是 all-in》</a>
+  </footer>
+</div></body></html>
