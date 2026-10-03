@@ -33,12 +33,15 @@
 .ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
 .vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
 .exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
-.eqblock{margin:20px 0 8px;border-top:1px solid var(--e-rule);border-bottom:1px solid var(--e-rule);
-  background:#FAFAF8;padding:6px 0}
-.eq{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0;padding:0 12px}
-.eq img{height:44px;width:auto;max-width:100%;object-fit:contain}
-.eqno{font-family:var(--mono);font-size:12.5px;color:#8A8172;flex:0 0 44px;text-align:right}
-@media (max-width:620px){.eq img{height:30px}.eqno{flex-basis:30px;font-size:11px}}
+/* 行内数学：STIX 渲染的 SVG，按 em 设高 + 基线对齐（度量由
+   tools/make_lca_inline_math.py 精确计算，勿手改数值） */
+.imath{display:inline-block;width:auto;max-width:100%;vertical-align:baseline}
+.imath.math-t0{height:1.100em;vertical-align:-0.255em}
+.imath.math-h{height:0.827em;vertical-align:-0.073em}
+.imath.math-n{height:0.918em;vertical-align:-0.118em}
+.imath.math-vls{height:1.191em;vertical-align:-0.255em}
+.imath.math-vdca{height:1.464em;vertical-align:-0.391em}
+.imath.math-j{height:1.282em;vertical-align:-0.300em}
 .ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
 .ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
 .ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
@@ -137,15 +140,7 @@
       </div>
 
       <h2 id="s2"><span class="num">02</span><span class="zh">数据、方法与基准结果</span><span class="en">Data, method and benchmark results</span></h2>
-      <p class="zh">样本为两类资产的月度总收益序列：标普 500 全收益指数（^SP500TR，含股息）1988-01 至 2026-09 共 465 个月；恒生指数（^HSI）1986-11 至 2026-07 共 477 个月。对每一个月度起点 t₀，我们计算两种策略在持有 H 年后的终值：一次性投入为 P(t₀+H)/P(t₀)；分期投入为 (1/N)·Σ P(t₀+H)/P(t₀+j)，j = 0…N−1，未投部分按 0% 计息。选择零利率是对 DCA 有利的假设，可避免结论偏向一次性投入。持有期取 1、3、5、10、20 年，分期长度取 6、12、24、36 个月。</p>
-      <div class="eqblock">
-        <div class="eq"><img src="../assets/figs/eq1.svg" alt="一次性投入终值"><span class="eqno">(1)</span></div>
-        <div class="eq"><img src="../assets/figs/eq2.svg" alt="分期投入终值"><span class="eqno">(2)</span></div>
-        <div class="eq"><img src="../assets/figs/eq3.svg" alt="胜率定义"><span class="eqno">(3)</span></div>
-        <div class="eq"><img src="../assets/figs/eq4.svg" alt="终值差额定义"><span class="eqno">(4)</span></div>
-        <div class="eq"><img src="../assets/figs/eq5.svg" alt="部署期收益定义"><span class="eqno">(5)</span></div>
-        <div class="eq"><img src="../assets/figs/eq6.svg" alt="机制检验式"><span class="eqno">(6)</span></div>
-      </div>
+      <p class="zh">样本为两类资产的月度总收益序列：标普 500 全收益指数（^SP500TR，含股息）1988-01 至 2026-09 共 465 个月；恒生指数（^HSI）1986-11 至 2026-07 共 477 个月。对每一个月度起点 <img class="imath math-t0" src="../assets/figs/math-t0.svg" alt="t0">，我们计算两种策略在持有 <img class="imath math-h" src="../assets/figs/math-h.svg" alt="H"> 年后的终值：一次性投入的终值为 <img class="imath math-vls" src="../assets/figs/math-vls.svg" alt="P(t0+H)/P(t0)">；分期投入则是把同一本金等分到 <img class="imath math-n" src="../assets/figs/math-n.svg" alt="N"> 个月买入，其终值为 <img class="imath math-vdca" src="../assets/figs/math-vdca.svg" alt="(1/N)Σ_j P(t0+H)/P(t0+j)">，其中期次 <img class="imath math-j" src="../assets/figs/math-j.svg" alt="j=0,...,N-1">。未投部分按 0% 计息——选择零利率是对 DCA 有利的假设，可避免结论偏向一次性投入。持有期取 1、3、5、10、20 年，分期长度取 6、12、24、36 个月。</p>
       <p class="zh">基准结果显示，一次性投入在终值期望与胜率两方面均占优。以 12 个月分期、10 年持有为例，标普 500 全收益口径下的完整起点共 <b>345</b> 个，其中一次性投入胜出 <b>79%</b>，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。表中数字在持有期维度上并非单调，说明其并非由某一特定年代的行情驱动，而更可能来自一个与时间无关的机制——下文将予以识别。</p>
       <div class="exhibit">
         <div class="ex-label">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</div>
@@ -285,7 +280,7 @@
     <section class="en" id="en-version" style="margin-top:40px">
       <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
       <p><b>Question.</b> An investor holds a lump sum and can either invest it immediately (lump-sum investing, LSI) or spread the same amount over N equal monthly purchases (dollar-cost averaging, DCA). Both use the same principal, the same asset and the same holding period; only the timing of cash differs. A separate question — investing monthly out of salary — is not the same problem, because there is no lump sum to deploy.</p>
-      <p><b>Data and method.</b> S&amp;P 500 total return (^SP500TR, dividends included), monthly, January 1988 to September 2026 (465 months), and the Hang Seng Index (^HSI), monthly, November 1986 to July 2026 (477 months). Every month is treated as a start date. For each start we compute the terminal value of an immediate purchase and of 6, 12, 24 or 36 equal monthly purchases, with uninvested cash earning 0%, over holding periods of 1 to 20 years.</p>
+      <p><b>Data and method.</b> S&amp;P 500 total return (^SP500TR, dividends included), monthly, January 1988 to September 2026 (465 months), and the Hang Seng Index (^HSI), monthly, November 1986 to July 2026 (477 months). Every month is treated as a start date. From a start <img class="imath math-t0" src="../assets/figs/math-t0.svg" alt="t0">, the lump sum ends at <img class="imath math-vls" src="../assets/figs/math-vls.svg" alt="P(t0+H)/P(t0)"> after <img class="imath math-h" src="../assets/figs/math-h.svg" alt="H"> years; DCA splits the same principal into <img class="imath math-n" src="../assets/figs/math-n.svg" alt="N"> equal monthly purchases and ends at <img class="imath math-vdca" src="../assets/figs/math-vdca.svg" alt="(1/N)Sigma_j P(t0+H)/P(t0+j)">, with <img class="imath math-j" src="../assets/figs/math-j.svg" alt="j=0,...,N-1">. Uninvested cash earns 0%, which favours DCA, over holding periods of 1 to 20 years.</p>
       <p><b>Result 1 — the lump sum usually wins.</b> With a 12-month deployment and a 10-year holding period, the lump sum ends higher in 79% of the 345 start months, with a median advantage of 0.13 times principal (0.29 times at a 20-year horizon).</p>
       <p><b>Result 2 — the losses have a pattern.</b> DCA wins in only 17–18% of starts, and those starts are almost exactly the ones in which the deployment window (the first twelve months) fell. DCA's win rate is therefore close to the probability of an immediate drawdown: it buys protection, not return.</p>
       <p><b>Result 3 — timing, not conviction.</b> Starting in February 1999, DCA ends at 0.65x against 0.71x for the lump sum, because the crash arrived a year late. Starting in October 2007, DCA ends at 2.34x against 2.06x, because the crash arrived immediately. A 34-percentage-point swing from the same rule.</p>
