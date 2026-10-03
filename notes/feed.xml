@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
+    <title>VIX 冲上 30 的时候，该贪婪吗？</title>
+    <link>https://aayloo.github.io/notes/vix-buy-the-fear/</link>
+    <guid>https://aayloo.github.io/notes/vix-buy-the-fear/</guid>
+    <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+    <description>「别人恐惧我贪婪」在收益层面站得住：VIX ≥ 30 之后 12 个月的中位收益是 21.8%。但 36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次买入后两年仍在亏损。含 8 张图表与 1 个可拖阈值的交互动画。</description>
+  </item>
+  <item>
     <title>定投与一次性投入：基于 942 个月度观测的实证检验</title>
     <link>https://aayloo.github.io/notes/lump-sum-vs-dca/</link>
     <guid>https://aayloo.github.io/notes/lump-sum-vs-dca/</guid>
