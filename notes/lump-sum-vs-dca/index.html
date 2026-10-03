@@ -31,7 +31,14 @@
   color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
 .ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
 .ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
-.vbox{background:var(--paper2);border:1px solid var(--e-rule);padding:16px 16px 10px;margin-top:8px}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+.eqblock{margin:20px 0 8px;border-top:1px solid var(--e-rule);border-bottom:1px solid var(--e-rule);
+  background:#FAFAF8;padding:6px 0}
+.eq{display:flex;align-items:center;justify-content:center;gap:16px;margin:10px 0;padding:0 12px}
+.eq img{height:44px;width:auto;max-width:100%;object-fit:contain}
+.eqno{font-family:var(--mono);font-size:12.5px;color:#8A8172;flex:0 0 44px;text-align:right}
+@media (max-width:620px){.eq img{height:30px}.eqno{flex-basis:30px;font-size:11px}}
 .ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
 .ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
 .ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
@@ -96,7 +103,7 @@
       <p class="zh">在进入实证之前，有必要澄清一个常被混淆的概念区分。<b>一次性投入（Lump-sum investing，LSI）</b>指期初全额买入；<b>分期定额投入（Dollar-cost averaging，DCA）</b>指将同一笔资金等分为若干期买入；而<b>定期定额储蓄</b>指投资者以收入流量逐期买入，其资金本就陆续到达，不存在一次性投入这一选项；此外尚有<b>价值平均（value averaging）</b>等按目标市值倒算投入额的策略，机制与 DCA 不同，不在本文讨论范围。</p>
       <div class="exhibit">
         <div class="ex-label"><span class="zh">Exhibit 1 · 两种策略的全部差别</span><span class="en">Exhibit 1 · the entire difference between the two strategies</span></div>
-        <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入与定投的现金流时间轴对比" style="width:100%;border:1px solid var(--e-rule)">
+        <img src="../assets/figs/f22-cashflow.svg" alt="一次性投入与定投的现金流时间轴对比">
         <p class="ex-note zh">上图（a）：一次性投入在第 0 个月把 100% 本金投入，分期投入则每月投入 1/12。下图（b）：把两者的资本暴露度画成曲线——一次性投入自始至终为 100%；分期投入在第 12 个月才达到 100%。<b>两条曲线之间的面积，就是"留在场外"的资金：它在上涨行情中是纯粹的拖累，在下跌行情中才是保护。</b>本文后续所有结果，都可以由这张图的差异解释。</p>
         <p class="ex-note en">Panel (a): a lump sum invests 100% of the capital at month 0, while DCA invests one twelfth each month. Panel (b) plots capital exposure: the lump sum is 100% throughout, whereas DCA only reaches 100% in month 12. The area between the two lines is the capital left outside the market — a drag when prices rise, protection when they fall.</p>
         <p class="ex-src">来源：本文自绘示意；同一笔本金、同一标的、同一持有期，等待期现金按 0% 计息。</p>
@@ -131,6 +138,14 @@
 
       <h2 id="s2"><span class="num">02</span><span class="zh">数据、方法与基准结果</span><span class="en">Data, method and benchmark results</span></h2>
       <p class="zh">样本为两类资产的月度总收益序列：标普 500 全收益指数（^SP500TR，含股息）1988-01 至 2026-09 共 465 个月；恒生指数（^HSI）1986-11 至 2026-07 共 477 个月。对每一个月度起点 t₀，我们计算两种策略在持有 H 年后的终值：一次性投入为 P(t₀+H)/P(t₀)；分期投入为 (1/N)·Σ P(t₀+H)/P(t₀+j)，j = 0…N−1，未投部分按 0% 计息。选择零利率是对 DCA 有利的假设，可避免结论偏向一次性投入。持有期取 1、3、5、10、20 年，分期长度取 6、12、24、36 个月。</p>
+      <div class="eqblock">
+        <div class="eq"><img src="../assets/figs/eq1.svg" alt="一次性投入终值"><span class="eqno">(1)</span></div>
+        <div class="eq"><img src="../assets/figs/eq2.svg" alt="分期投入终值"><span class="eqno">(2)</span></div>
+        <div class="eq"><img src="../assets/figs/eq3.svg" alt="胜率定义"><span class="eqno">(3)</span></div>
+        <div class="eq"><img src="../assets/figs/eq4.svg" alt="终值差额定义"><span class="eqno">(4)</span></div>
+        <div class="eq"><img src="../assets/figs/eq5.svg" alt="部署期收益定义"><span class="eqno">(5)</span></div>
+        <div class="eq"><img src="../assets/figs/eq6.svg" alt="机制检验式"><span class="eqno">(6)</span></div>
+      </div>
       <p class="zh">基准结果显示，一次性投入在终值期望与胜率两方面均占优。以 12 个月分期、10 年持有为例，标普 500 全收益口径下的完整起点共 <b>345</b> 个，其中一次性投入胜出 <b>79%</b>，终值中位数高出 <b>0.13 倍本金</b>；持有期延长至 20 年，中位差扩大至 0.29 倍。表中数字在持有期维度上并非单调，说明其并非由某一特定年代的行情驱动，而更可能来自一个与时间无关的机制——下文将予以识别。</p>
       <div class="exhibit">
         <div class="ex-label">表 1 · 一次性投入的胜率（标普 500 全收益，1988-01 → 2026-09）</div>
@@ -150,8 +165,8 @@
         <p class="ex-src">来源：本文回测；等待期现金按 0% 计息（对定投偏有利的假设）。</p>
       </div>
       <div class="exhibit">
-        <div class="ex-label"><span class="zh">Exhibit 3 · 分期越长、持有越短，一次性投入胜率越高</span><span class="en">Exhibit 3 · longer deployment, shorter holding: lump sum wins more often</span></div>
-        <img src="../assets/figs/f19-winrate.svg" alt="一次性投入胜率矩阵" style="width:100%">
+        <div class="ex-label"><span class="zh">Exhibit 3 · 胜率随分期长度的变化</span><span class="en">Exhibit 3 · win rate against deployment length</span></div>
+        <img src="../assets/figs/f25-winrate-lines.svg" alt="一次性投入胜率随分期长度的变化">
       <p class="ex-note zh">横轴是"多久把钱投完"，纵轴是"持有多久"；每格给出一次性投入的胜率与对应样本数 n。两个方向的规律都很稳定：<b>投完得越慢、持有得越短，一次性投入的优势越大</b>。24 个月那一列甚至更高（84–85%），因为等待时间越长，"没吃到上涨"的代价越大。红框为本文主要口径（12 个月、10 年、n = 345）。</p>
         <p class="ex-note en">Cells report the share of monthly start dates where the lump sum ends higher, together with the sample size n. The pattern is monotone in both directions: the longer the deployment and the shorter the holding period, the more often the lump sum wins. The 24-month column is highest because the cost of waiting grows with the deployment window.</p>
         <p class="ex-src">来源：本文回测，数据与口径见附录。</p>
@@ -317,7 +332,7 @@
 
   <footer>
     <div class="footin">
-      <span>Working Paper v3.5 · © 2026 Aylon · Hong Kong</span>
+<span>Working Paper v3.6 · © 2026 Aylon · Hong Kong</span>
       <span class="spacer"></span>
       <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
       <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
