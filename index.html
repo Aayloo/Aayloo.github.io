@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aylon · Data Scientist &amp; AI Engineer</title>
-<meta name="description" content="Aylon — data scientist and AI engineer in Hong Kong. Research interests: systematic alpha, portfolio construction and risk, applied machine learning, LLM and alternative data.">
+<title>Aylon · Data Scientist &amp; Applied AI Engineer</title>
+<meta name="description" content="Aylon — data scientist and applied AI engineer in Hong Kong. Research interests: systematic alpha, portfolio construction and risk, applied machine learning, LLM and alternative data.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aylon">
 <meta property="og:locale" content="zh_Hans">
 <meta property="og:url" content="https://aayloo.github.io/">
-<meta property="og:title" content="Aylon · Data Scientist &amp; AI Engineer">
+<meta property="og:title" content="Aylon · Data Scientist &amp; Applied AI Engineer">
 <meta property="og:description" content="量化研究笔记：系统性 alpha、组合构建与风险、应用机器学习。">
 <meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-site.png">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1260">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Aylon · Data Scientist &amp; AI Engineer">
+<meta name="twitter:title" content="Aylon · Data Scientist &amp; Applied AI Engineer">
 <meta name="twitter:description" content="量化研究笔记：系统性 alpha、组合构建与风险、应用机器学习。">
 <meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-site.png">
 <link rel="icon" href="assets/psyduck.png">
@@ -315,6 +315,13 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nitem h4 a:hover{color:var(--teal)}
 .nitem .go{display:inline-block;margin-top:7px;font-size:12.5px;font-weight:800;color:var(--teal);text-decoration:none}
 .nitem .go:hover{text-decoration:underline}
+.librow{border:1px dashed var(--line2);border-radius:14px;padding:18px 20px;background:var(--card2);
+  display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.librow .libtxt{max-width:62ch}
+.librow .libtxt b{display:block;font-family:var(--f-head);font-size:16px;color:var(--ink);margin-bottom:4px}
+.librow .libtxt span{display:block;font-size:13.4px;line-height:1.7;color:var(--mute)}
+.librow .go{font-size:13.5px;font-weight:800;color:var(--teal);text-decoration:none;white-space:nowrap}
+.librow .go:hover{text-decoration:underline}
 .nbody{padding:16px 22px 20px;border-top:1px solid var(--line)}
 .nbody p{margin:0 0 11px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
 .nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
@@ -356,10 +363,10 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 @keyframes blink{50%{opacity:0}}
 /* 首屏打字：身份行循环、招呼行打一次后光标淡出 */
 .hero .role{min-height:1.62em;white-space:nowrap}
-.hero .intro .caret.done{animation:blink 1.05s steps(2,start) infinite,fadeOut .5s ease 2.4s forwards}
+.hero .caret.done{animation:blink 1.05s steps(2,start) infinite,fadeOut .5s ease 2.4s forwards}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 @media (max-width:760px){.hero .role{font-size:16px}}
-@media (prefers-reduced-motion:reduce){.hero .role .caret,.hero .intro .caret,.hero .intro .caret.done{animation:none}}
+@media (prefers-reduced-motion:reduce){.hero .caret,.hero .caret.done{animation:none}}
 
 /* 2 · section head: mask reveal + rail fill */
 .sh{position:relative;padding-left:18px}
@@ -618,8 +625,8 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <div class="herotext">
             <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
             <h1 data-split>Aylon</h1>
-            <p class="role"><span class="tw" data-delay="400" data-words-zh="数据科学家|量化策略师|应用 AI 工程师|多资产配置研究" data-words-en="Data Scientist|Quantitative Strategist|Applied AI Engineer|Multi-asset Research">数据科学家</span><span class="caret" aria-hidden="true"></span></p>
-            <p class="intro"><span class="tw" data-delay="1200" data-once="1" data-words-zh="嗨，我是 Aylon。项目和研究笔记都在这里。" data-words-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="role"><span class="tw" data-mode="build" data-delay="350" data-sep=" · " data-words-zh="数据科学家|量化策略师|应用 AI 工程师" data-words-en="Data Scientist|Quantitative Strategist|Applied AI Engineer">数据科学家 · 量化策略师 · 应用 AI 工程师</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="intro"><span class="tw" data-delay="1700" data-once="1" data-words-zh="嗨，我是 Aylon。项目和研究笔记都在这里。" data-words-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
             <div class="heroacts">
               <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View Projects</span></a>
               <a class="hbtn ghost" href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
@@ -642,16 +649,16 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             <span class="en">Turning messy data into a dataset that just works.</span></p>
             <span class="pl2"><span class="zh">研究方向</span><span class="en">Research interests</span></span>
             <ul class="pints">
-              <li><a class="pint" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
-                <b><span class="zh">数据与特征</span><span class="en">Data &amp; Features</span></b>
-                <em><span class="zh">清洗 · 对齐 · 特征构造</span><span class="en">Cleaning · Aligning · Feature Construction</span> <i><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></i></em></a></li>
-              <li><a class="pint" href="#p-ml">
-                <b><span class="zh">模型与验证</span><span class="en">Models &amp; Validation</span></b>
-                <em><span class="zh">基线对比 · 滚动验证</span><span class="en">Baselines · Walk-Forward</span> <i><span class="zh">机器学习 ↗</span><span class="en">Machine Learning ↗</span></i></em></a></li>
-              <li><a class="pint" href="#p-stat">
-                <b><span class="zh">统计与时间序列</span><span class="en">Statistics &amp; Time Series</span></b>
-                <em><span class="zh">估计 · 平稳性 · 预测</span><span class="en">Estimation · Stationarity · Forecasting</span> <i><span class="zh">知识库 01 ↗</span><span class="en">Module 01 ↗</span></i></em></a></li>
-            </ul>
+            <li><a class="pint" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+              <b><span class="zh">数据与特征</span><span class="en">Data &amp; Features</span></b>
+              <em><span class="zh">清洗 · 对齐 · 特征构造</span><span class="en">Cleaning · Aligning · Feature Construction</span> <i><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></i></em></a></li>
+            <li><a class="pint" href="#p-stat">
+              <b><span class="zh">统计与检验</span><span class="en">Statistics &amp; Testing</span></b>
+              <em><span class="zh">估计 · 平稳性 · 多重检验</span><span class="en">Estimation · Stationarity · Multiple Testing</span> <i><span class="zh">知识库 01 ↗</span><span class="en">Module 01 ↗</span></i></em></a></li>
+            <li><a class="pint" href="#p-ml">
+              <b><span class="zh">模型与验证</span><span class="en">Models &amp; Validation</span></b>
+              <em><span class="zh">基线对比 · 滚动验证 · 深度学习</span><span class="en">Baselines · Walk-Forward · Deep Learning</span> <i><span class="zh">知识库 02 ↗</span><span class="en">Module 02 ↗</span></i></em></a></li>
+          </ul>
           </article>
 
           <article class="pillar">
@@ -678,22 +685,22 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <article class="pillar">
             <div class="ph">
               <div class="glyph" style="background:var(--amber2)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#D9821A" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="2.8"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.2 6.2l2.8 2.8M15 15l2.8 2.8M17.8 6.2L15 9M9 15l-2.8 2.8"/></svg></div>
-              <h4><span class="zh">AI 工程师</span><span class="en">AI Engineer</span></h4>
+              <h4><span class="zh">应用 AI 工程师</span><span class="en">Applied AI Engineer</span></h4>
             </div>
             <p class="psum"><span class="zh">把模型和文本做成可复现、可交接的流程。</span>
             <span class="en">Turning models and text into pipelines that others can run.</span></p>
             <span class="pl2"><span class="zh">研究方向</span><span class="en">Research interests</span></span>
             <ul class="pints">
-              <li><a class="pint" href="#p-llm">
-                <b><span class="zh">文本与语言</span><span class="en">Text &amp; Language</span></b>
-                <em><span class="zh">抽取 · 情绪 · 嵌入</span><span class="en">Extraction · Sentiment · Embeddings</span> <i><span class="zh">知识库 04 ↗</span><span class="en">Module 04 ↗</span></i></em></a></li>
-              <li><a class="pint" href="#p-dl">
-                <b><span class="zh">深度学习与时序</span><span class="en">Deep Learning &amp; Time Series</span></b>
-                <em><span class="zh">序列模型 · 训练与验证</span><span class="en">Sequence Models · Training &amp; Validation</span> <i><span class="zh">知识库 03 ↗</span><span class="en">Module 03 ↗</span></i></em></a></li>
-              <li><a class="pint" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
-                <b><span class="zh">可复现工程</span><span class="en">Reproducible Engineering</span></b>
-                <em><span class="zh">版本化 · 自动化 · 文档</span><span class="en">Versioning · Automation · Docs</span> <i><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></i></em></a></li>
-            </ul>
+            <li><a class="pint" href="#p-llm">
+              <b><span class="zh">文本与语言</span><span class="en">Text &amp; Language</span></b>
+              <em><span class="zh">抽取 · 情绪 · 嵌入</span><span class="en">Extraction · Sentiment · Embeddings</span> <i><span class="zh">知识库 04 ↗</span><span class="en">Module 04 ↗</span></i></em></a></li>
+            <li><a class="pint" href="https://github.com/Aayloo/insurance-am-agent" target="_blank" rel="noopener">
+              <b><span class="zh">Agent 与评测</span><span class="en">Agents &amp; Evaluation</span></b>
+              <em><span class="zh">多步编排 · 关卡 · 评测集</span><span class="en">Orchestration · Gates · Eval Sets</span> <i><span class="zh">开源框架 ↗</span><span class="en">Open Framework ↗</span></i></em></a></li>
+            <li><a class="pint" href="https://github.com/Aayloo/quant-research-hub" target="_blank" rel="noopener">
+              <b><span class="zh">可复现工程</span><span class="en">Reproducible Engineering</span></b>
+              <em><span class="zh">版本化 · 自动化 · 文档</span><span class="en">Versioning · Automation · Docs</span> <i><span class="zh">仓库 ↗</span><span class="en">Repo ↗</span></i></em></a></li>
+          </ul>
           </article>
         </div>
 
@@ -1010,25 +1017,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <span class="hint"><span class="zh">8 篇 · 点标题展开，长文另开页</span><span class="en">8 notes · long reads open a page</span></span></div>
         <div class="nlist2">
 
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">FRONTIER · 前沿解析</span>
-              <h4><a href="notes/jev-system-one-models/"><span class="zh">Jev 与 System One Models：把 AI 变成代码里的一个判断</span><span class="en">Jev and System One Models: turning AI into a decision inside your code</span></a></h4>
-              <p class="nsum"><span class="zh">它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。</span>
-              <span class="en">Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out.</span></p>
-              <a class="go" href="notes/jev-system-one-models/"><span class="zh">读全文（6 张图 · 对比表）→</span><span class="en">Read the full note (6 figures, comparison tables) →</span></a>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">2026-09-15 发布、早期访问。它放弃生成字符串，换来的是延迟、成本与类型安全三件事同时改善；文章拆开它的定义、机制、能落地的位置，以及哪些话目前只能算官方口径。</span>
-              <span class="en">Released 2026-09-15 in early access. It gives up string generation and buys lower latency, lower cost and type safety at once. The note covers the definition, the mechanism, where it fits, and which claims are vendor-only.</span></p>
-              <p class="take"><span class="zh">结论先行：Jev 不是分类算法 —— 分类只是它能做的五种形状之一；真正的区别是输出空间事前定义，且每个答案都带校准概率。</span>
-              <span class="en">The short version: Jev is not a classification algorithm — classification is one of five shapes. The real difference is a predefined output space plus a calibrated probability on every answer.</span></p>
-              <p><a href="notes/jev-system-one-models/"><span class="zh">打开全文（含 6 张流程图与对比表）→</span><span class="en">Open the full note (6 figures and comparison tables) →</span></a></p>
-            </div>
-          </details>
-
-          <details class="nitem rv">
+                    <details class="nitem rv">
             <summary>
               <span class="ntag">SIGNAL · 信号研究</span>
               <h4><a href="notes/factor-screening/"><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span><span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></a></h4>
@@ -1060,23 +1049,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">The counter-intuitive half: with a 24-month window the 10th percentile is −0.02 unconstrained versus +0.18 constrained. A constraint is not free, but what it buys is insurance against your own estimation error.</span></p>
             </div>
           </details>
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">AI · 信号研究</span>
-              <h4><a href="notes/ai-factor-referee/"><span class="zh">AI 挖因子，谁来当裁判</span><span class="en">Let the agent propose; let the referee judge</span></a></h4>
-              <p class="nsum"><span class="zh">2026 年 9 月三篇论文指向同一件事：提议可以交给 AI，裁判必须留在外面。我自己复现了一遍机制。</span>
-              <span class="en">Three September 2026 papers, one conclusion: let the agent propose, keep the referee outside — replicated on my own simulation.</span></p>
-              <a class="go" href="notes/ai-factor-referee/"><span class="zh">读全文（4 张图 · 5 条来源）→</span><span class="en">Read the note (4 figures, 5 sources) →</span></a>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">语言模型 agent 已经能跑完整个因子研究流程：提因子、回测、筛选、淘汰。论文给的分工是"冻结裁判"——只看提交之后才出现的市场结果，用投注式证据逐月累计，任何时刻停都有效。我用简化版实现跑了一遍：每 1,000 个提案，边看边停（看到 p&lt;0.05 就宣布）错误放行约 <b>205</b> 个，冻结裁判只有 <b>39</b> 个——5.2 倍差距，与论文报告的 5–11 倍同一量级。</span>
-              <span class="en">Agents now run the whole factor pipeline. The proposed division of labour is a frozen referee scoring only on post-submission outcomes with betting evidence, valid at any stopping time. My simplified run: 205 wrongful admissions per 1,000 proposals for peeking versus 39 for the referee.</span></p>
-              <p class="take"><span class="zh">代价是时间：真因子年化夏普 1.0 时要等 58 个月，2.0 时约 22 个月。一句话结论——AI 让"想法"变便宜了，于是稀缺的东西变成了"能证明一个想法不成立"的能力。</span>
-              <span class="en">The price is time: 58 months at Sharpe 1.0, about 22 at 2.0. AI made ideas cheap; the scarce thing is now the ability to show an idea is wrong.</span></p>
-            </div>
-          </details>
-          <details class="nitem rv">
+                    <details class="nitem rv">
             <summary>
               <span class="ntag">PORTFOLIO · 组合与执行</span>
               <h4><a href="notes/missing-best-days/"><span class="zh">错过最好的十天：一句被误用的统计</span><span class="en">The ten best days: a statistic used the wrong way</span></a></h4>
@@ -1141,86 +1114,19 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             </div>
           </details>
 
-
-
-
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">VALIDATION</span>
-              <h4><span class="zh">为什么单次留出切分会说谎</span><span class="en">Why a single hold-out split lies</span></h4>
-              <p class="nsum"><span class="zh">同一份数据换一个切分点，结论就能反转 —— 所以验证设计要放在看收益之前。</span>
-              <span class="en">Move the split point and the conclusion flips — so validation design comes before looking at returns.</span></p>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">最常见的做法是把数据切成「训练段 + 测试段」跑一次，测试段表现不错就收工。问题在于测试段只有一段，它的结果强烈依赖你切在哪里；换一个起点，同一组因子可以从有效变成无效。</span>
-              <span class="en">The usual approach: cut the data into a train block and a test block, run it once, and stop when the test block looks good. But there is only one test block, and its result depends entirely on where you cut. Move the start date and the same factors can go from working to not working.</span></p>
-              <ol>
-                <li><span class="zh"><b>切分点数量与重训成本</b>：用滚动窗口（walk-forward）跑多个不重叠的测试窗，看的指标是「多数窗口是否同向」，而不是某一个窗口的峰值。数量越多结论越稳，但重训成本线性上升 —— 我的起步设置是 5 个窗口。</span>
-                <span class="en"><b>Number of folds vs retraining cost.</b> Run non-overlapping test windows and read the majority direction, not the best window. More windows means a steadier conclusion and linearly rising retraining cost — five is my starting point.</span></li>
-                <li><span class="zh"><b>窗口长度与制度漂移</b>：窗口越长越稳，但会把旧制度混进来；越短越贴近当下，噪声越大。折中做法是固定测试窗长度（例如 6 个月），把训练窗做成扩张窗口，让早期数据自然退出权重。</span>
-                <span class="en"><b>Window length vs regime drift.</b> Longer windows are steadier but mix in old regimes; shorter windows are noisier but closer to today. A workable compromise: fix the test window (say six months) and let the training window expand so old data fades out naturally.</span></li>
-                <li><span class="zh"><b>多重检验</b>：试过 20 个变体再挑出最好的那个，等于在测试集上做了 20 次选择，最好看的那个大概率是运气。要么事先固定假设，要么按变体数量做一次保守修正（例如 Bonferroni），并把这个过程写进记录。</span>
-                <span class="en"><b>Multiple testing.</b> Trying twenty variants and keeping the best one means making twenty choices on the test set — the winner is probably luck. Either pre-register the hypothesis or apply a conservative correction (Bonferroni, for instance), and record that you did.</span></li>
-              </ol>
-              <p class="take"><span class="zh">判断标准很简单：换个切分点结论就翻，这条信号就还没资格进组合。</span>
-              <span class="en">The test is simple: if the conclusion flips when you move the split point, the signal is not ready for a portfolio.</span></p>
+          <div class="librow rv">
+            <div class="libtxt">
+              <b><span class="zh">资料库</span><span class="en">Library</span></b>
+              <span><span class="zh">另外两篇长文与三则短记已收进资料库——它们都能正常阅读，只是先不占首页主线；等写成完整一篇再加回目录。</span>
+              <span class="en">Two more articles and three short notes have moved to the library. They remain readable; they come back onto this list once they earn a full entry.</span></span>
             </div>
-          </details>
+            <a class="go" href="https://aayloo.github.io/notes/library/"><span class="zh">打开资料库（2 篇长文 + 3 则短记）→</span><span class="en">Open the library (2 articles + 3 short notes) →</span></a>
+          </div>
 
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">COSTS</span>
-              <h4><span class="zh">交易成本假设如何悄悄改写夏普</span><span class="en">How cost assumptions quietly rewrite Sharpe</span></h4>
-              <p class="nsum"><span class="zh">同一组信号，换一套成本假设，夏普可以从 1.2 掉到 0.4 —— 成本不是最后扣的一项，是设计的一部分。</span>
-              <span class="en">The same signals can go from a Sharpe of 1.2 to 0.4 on different cost assumptions — costs are a design input, not a final deduction.</span></p>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">很多人把成本当成最后减掉的一个数。实际上换手率、点差和冲击成本各自都能单独把一条信号判死刑，而且它们互相不替代。</span>
-              <span class="en">Costs are often treated as a single number subtracted at the end. In practice turnover, spread and market impact can each kill a signal on their own, and none of them substitutes for the others.</span></p>
-              <ul>
-                <li><span class="zh"><b>先看换手，再看收益</b>：先算月均单边换手。如果换手超出资金容量能承受的范围，再漂亮的 IC 也没有意义。</span>
-                <span class="en"><b>Turnover first, returns second.</b> Compute average one-way monthly turnover before looking at performance. If turnover exceeds what the capacity can absorb, a beautiful IC means nothing.</span></li>
-                <li><span class="zh"><b>分层建模，别用一个常数</b>：显性成本（佣金、税费）+ 点差（按流动性分档，流动性差的标的给更宽的假设）+ 冲击成本（用成交量占比的平方根近似）。三层分开写，任何一层换成更准的模型都不用推翻整体。</span>
-                <span class="en"><b>Model in layers, not as one constant.</b> Explicit costs + spread (tiered by liquidity) + impact (roughly the square root of participation rate). Keeping the layers separate means you can replace any one of them without rebuilding everything.</span></li>
-                <li><span class="zh"><b>把成本做成区间而不是点估计</b>：给 5–15 bps 这样的区间，看结论在两端是否都成立。只有低成本端成立，就说明这是成本敏感型信号 —— 出路是降换手或换标池，而不是把假设调低。</span>
-                <span class="en"><b>Use a range, not a point estimate.</b> Test 5–15 bps and check whether the conclusion holds at both ends. If it only survives at the low end, the signal is cost-sensitive: the fix is lower turnover or a different universe, not a friendlier assumption.</span></li>
-                <li><span class="zh"><b>在组合层面评估成本</b>：同一批信号，等权、风险平价、带约束的优化，换手差别很大。成本要放在权重方案这一层比较，而不是只看单条信号的换手。</span>
-                <span class="en"><b>Evaluate at portfolio level.</b> Equal weight, risk parity and constrained optimisation produce very different turnover from the same signals. Compare costs where the weights are decided, not per signal.</span></li>
-              </ul>
-              <p class="take"><span class="zh">一个能通过的检查：把成本假设翻倍，结论是否仍然成立。如果不成立，那条信号卖的是低成本假设，不是预测能力。</span>
-              <span class="en">One check worth running: double the cost assumption. If the conclusion does not survive, the signal is selling a cheap-cost assumption rather than predictive power.</span></p>
-            </div>
-          </details>
 
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">ALT DATA</span>
-              <h4><span class="zh">把文本变成事件因子</span><span class="en">Turning text into event factors</span></h4>
-              <p class="nsum"><span class="zh">文本因子的难点不在抽取，而在回答「它比现有信息多出了什么」。</span>
-              <span class="en">The hard part of a text factor is not extraction — it is answering what it adds beyond what you already have.</span></p>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">从新闻、公告或社交文本到「事件因子」，链条通常只有四步：抽取、打分、因子化、回测。真正让结果失真的，几乎都在最后一步的比较基准上。</span>
-              <span class="en">From news, filings or social text to an event factor is usually four steps: extract, score, build the factor, backtest. Most of what goes wrong sits in the comparison you make at the last step.</span></p>
-              <ul>
-                <li><span class="zh"><b>时间戳是第一个坑</b>：文本的发布时间不等于数据可得时间。用收盘后才出现的新闻去解释当天收益，是最经典的未来函数。做法是把所有时间戳对齐到「下一个可交易时点」。</span>
-                <span class="en"><b>Timestamps come first.</b> Publication time is not availability time. Explaining today's return with news that appeared after the close is the classic look-ahead error. Align every timestamp to the next tradable point.</span></li>
-                <li><span class="zh"><b>情绪分数本身不是因子</b>：一个 -1 到 +1 的分数不带横截面区分度。要先做中性化（去掉市场、行业、规模成分），再看剩下的部分还有没有信息。</span>
-                <span class="en"><b>A sentiment score is not a factor.</b> A number between -1 and +1 carries no cross-sectional discrimination until you neutralise market, sector and size, then look at what is left.</span></li>
-                <li><span class="zh"><b>只认增量</b>：把动量、波动、规模等已有因子回归掉，看残差的 IC 还剩多少。增量接近零，说明这条文本因子只是已有因子的代理，不构成新信息。</span>
-                <span class="en"><b>Only incremental value counts.</b> Regress out momentum, volatility and size, then look at the residual IC. If the increment is near zero, the text factor is a proxy for something you already had.</span></li>
-                <li><span class="zh"><b>留一段完全不碰的样本外</b>：语言分布会漂移，模型在旧语料上学到的词、在新话题上会系统性失准。留最近 6 个月完全不参与调参，是检验它「还在不在工作」的最低成本方式。</span>
-                <span class="en"><b>Keep a truly untouched sample.</b> Language drifts: a model trained on older text misreads new topics in a systematic way. Holding out the most recent six months from all tuning is the cheapest way to see whether it still works.</span></li>
-              </ul>
-              <p class="take"><span class="zh">结论：文本因子值得做，但它的价值来自「已有数据没有的信息」，而不是把新闻变成数字。</span>
-              <span class="en">The takeaway: text factors are worth building, but their value comes from information you did not already have — not from turning news into numbers.</span></p>
-            </div>
-          </details>
 
-        </div>
+
+                                      </div>
       </section>
 
       <!-- contact -->
@@ -1293,24 +1199,54 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     twEls.forEach(function(el){
       var words = twList(el);
       if(!words.length) return;
-      var once = el.getAttribute("data-once") === "1";
-      var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
       var caret = el.parentNode.querySelector(".caret");
-      var idx = 0;
+      var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
+      var sep = el.getAttribute("data-sep") || " · ";
+      var build = el.getAttribute("data-mode") === "build";
+      var once = el.getAttribute("data-once") === "1";
       if(caret) caret.classList.remove("done");
+
+      /* build 模式：逐个身份打出来，最后停在「A · B · C」的静态样式 */
+      if(build){
+        var steps = [], acc = "";
+        words.forEach(function(w, k){ acc = k === 0 ? w : acc + sep + w; steps.push(acc); });
+        var finalText = steps[steps.length - 1];
+        if(RM){ el.textContent = finalText; if(caret) caret.classList.add("done"); return; }
+        el.textContent = "";
+        var si = 0, ci = 0;
+        function typeStep(){
+          var step = steps[si];
+          ci = el.textContent.length;
+          (function ch(){
+            if(ci < step.length){
+              ci++; el.textContent = step.slice(0, ci);
+              twTimers.push(setTimeout(ch, isEn() ? 26 : 42));
+            } else {
+              si++;
+              if(si < steps.length){ twTimers.push(setTimeout(typeStep, 220)); }
+              else if(caret){ caret.classList.add("done"); }
+            }
+          })();
+        }
+        twTimers.push(setTimeout(typeStep, delay));
+        return;
+      }
+
+      var text0 = words[0];
       if(RM){
-        el.textContent = words[0];
+        el.textContent = text0;
         if(once && caret) caret.classList.add("done");
         return;
       }
       el.textContent = "";
+      var idx = 0;
       function cycle(){
         var text = words[idx % words.length];
         var i = 0, phase = "type";
         (function step(){
           if(phase === "type"){
             i++; el.textContent = text.slice(0, i);
-            if(i < text.length){ twTimers.push(setTimeout(step, isEn() ? 42 : 78)); }
+            if(i < text.length){ twTimers.push(setTimeout(step, isEn() ? 34 : 62)); }
             else if(once){ if(caret) caret.classList.add("done"); }
             else { phase = "hold"; twTimers.push(setTimeout(step, 1750)); }
             return;

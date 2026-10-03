@@ -33,13 +33,6 @@
     <description>研究工作稿：以标普 500 全收益与恒生指数共 942 个月度观测检验一次性投入与分期定额投入（DCA）。一次性投入在约八成起点占优，其劣势几乎全部集中于「部署期下跌」的样本；换到恒生指数，优势降至 63–69%。含 9 张图表与 2 个交互动画，文末附参考文献。</description>
   </item>
   <item>
-    <title>AI 挖因子，谁来当裁判</title>
-    <link>https://aayloo.github.io/notes/ai-factor-referee/</link>
-    <guid>https://aayloo.github.io/notes/ai-factor-referee/</guid>
-    <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
-    <description>2026 年 9 月三篇论文指向同一件事：提议可以交给 AI，裁判不能。含机制流程图与三张模拟图：边看边停每千提案错误放行 205 个，冻结裁判只有 39 个，代价是等待时间。</description>
-  </item>
-  <item>
     <title>约束的代价：多资产组合里，每个&quot;不许超&quot;都在收费</title>
     <link>https://aayloo.github.io/notes/cost-of-constraints/</link>
     <guid>https://aayloo.github.io/notes/cost-of-constraints/</guid>
@@ -52,13 +45,6 @@
     <guid>https://aayloo.github.io/notes/factor-screening/</guid>
     <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
     <description>同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。</description>
-  </item>
-  <item>
-    <title>Jev 与 System One Models：把 AI 变成代码里的一个判断</title>
-    <link>https://aayloo.github.io/notes/jev-system-one-models/</link>
-    <guid>https://aayloo.github.io/notes/jev-system-one-models/</guid>
-    <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
-    <description>它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。</description>
   </item>
   <item>
     <title>术语表：System One · RLCD · 校准 · 类型安全</title>

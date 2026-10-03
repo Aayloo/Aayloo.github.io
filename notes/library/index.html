@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>资料库 · Library</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+.wrap{max-width:820px}
+.libhead{border-bottom:2px solid var(--e-ink);padding:26px 0 10px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+h1{font-family:var(--e-serif);font-size:clamp(26px,3.4vw,36px);line-height:1.2;color:var(--e-ink);margin:18px 0 10px}
+.lede{font-size:16.4px;line-height:1.78;color:#4A453C;margin:0 0 8px}
+.sec{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--e-accent);margin:34px 0 12px;border-top:1px solid var(--e-rule);padding-top:10px}
+.lib{display:block;border:1px solid var(--e-rule);background:var(--paper2);padding:16px 18px;margin:0 0 12px;text-decoration:none;color:inherit}
+.lib:hover{border-color:var(--e-accent)}
+.lib .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A8172;margin-bottom:6px}
+.lib b{display:block;font-family:var(--e-serif);font-size:19px;color:var(--e-ink);margin-bottom:6px}
+.lib .s{display:block;font-size:13.6px;line-height:1.7;color:#5A5347}
+.appendix p.sum{font-size:14.6px;color:#5A5347;margin:6px 0 14px}
+.appendix .take{border-left:3px solid var(--e-accent);padding:10px 14px;background:var(--paper2);font-size:14.6px}
+.appendix ol,.appendix ul{padding-left:20px}
+.appendix li{margin:10px 0;font-size:15px;line-height:1.75}
+.foot{margin-top:36px;border-top:1px solid var(--e-rule);padding-top:14px;font-size:13px;color:#8A8172}
+.foot a{color:var(--e-blue)}
+</style>
+</head>
+<body><div class="wrap">
+  <div class="libhead">Notes · 资料库</div>
+  <h1><span class="zh">资料库</span><span class="en">Library</span></h1>
+  <p class="lede"><span class="zh">这里放的是暂时不在首页主线里的内容：两篇写好的长文，和三则只存在于首页卡片里的短记。它们都能正常阅读，只是先不占首页的位置——等需要的时候再单独成篇、加回目录。</span>
+  <span class="en">Work that sits outside the homepage's main thread for now: two finished articles and three short notes that previously lived only inside homepage cards. All of it is readable here; it simply does not take up space on the front page until it earns a proper entry.</span></p>
+
+  <div class="sec">长文 · Articles</div>
+      <a class="lib" href="../ai-factor-referee/">
+        <span class="k">2026-09-29 · signal/models</span>
+        <b><span class="zh">AI 挖因子，谁来当裁判</span><span class="en">Let the agent propose; let the referee judge</span></b>
+        <span class="s"><span class="zh">2026 年 9 月三篇论文指向同一件事：提议可以交给 AI，裁判不能。含机制流程图与三张模拟图：边看边停每千提案错误放行 205 个，冻结裁判只有 39 个，代价是等待时间。</span><span class="en">Three September 2026 papers point at one division of labour: let the agent propose, keep the referee outside. 205 vs 39 wrongful admissions per 1,000 proposals — the difference is who judges.</span></span>
+      </a>
+      <a class="lib" href="../jev-system-one-models/">
+        <span class="k">2026-09-25 · models</span>
+        <b><span class="zh">Jev 与 System One Models：把 AI 变成代码里的一个判断</span><span class="en">Jev and System One Models: turning AI into a decision inside your code</span></b>
+        <span class="s"><span class="zh">它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。</span><span class="en">Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out.</span></span>
+      </a>
+
+  <div class="sec">短记三则 · Short notes</div>
+    <details class="appendix">
+      <summary>VALIDATION · 为什么单次留出切分会说谎Why a single hold-out split lies</summary>
+      <p class="sum"><span class="zh">同一份数据换一个切分点，结论就能反转 —— 所以验证设计要放在看收益之前。</span>
+              <span class="en">Move the split point and the conclusion flips — so validation design comes before looking at returns.</span></p>
+      <p><span class="zh">最常见的做法是把数据切成「训练段 + 测试段」跑一次，测试段表现不错就收工。问题在于测试段只有一段，它的结果强烈依赖你切在哪里；换一个起点，同一组因子可以从有效变成无效。</span>
+              <span class="en">The usual approach: cut the data into a train block and a test block, run it once, and stop when the test block looks good. But there is only one test block, and its result depends entirely on where you cut. Move the start date and the same factors can go from working to not working.</span></p>
+              <ol>
+                <li><span class="zh"><b>切分点数量与重训成本</b>：用滚动窗口（walk-forward）跑多个不重叠的测试窗，看的指标是「多数窗口是否同向」，而不是某一个窗口的峰值。数量越多结论越稳，但重训成本线性上升 —— 我的起步设置是 5 个窗口。</span>
+                <span class="en"><b>Number of folds vs retraining cost.</b> Run non-overlapping test windows and read the majority direction, not the best window. More windows means a steadier conclusion and linearly rising retraining cost — five is my starting point.</span></li>
+                <li><span class="zh"><b>窗口长度与制度漂移</b>：窗口越长越稳，但会把旧制度混进来；越短越贴近当下，噪声越大。折中做法是固定测试窗长度（例如 6 个月），把训练窗做成扩张窗口，让早期数据自然退出权重。</span>
+                <span class="en"><b>Window length vs regime drift.</b> Longer windows are steadier but mix in old regimes; shorter windows are noisier but closer to today. A workable compromise: fix the test window (say six months) and let the training window expand so old data fades out naturally.</span></li>
+                <li><span class="zh"><b>多重检验</b>：试过 20 个变体再挑出最好的那个，等于在测试集上做了 20 次选择，最好看的那个大概率是运气。要么事先固定假设，要么按变体数量做一次保守修正（例如 Bonferroni），并把这个过程写进记录。</span>
+                <span class="en"><b>Multiple testing.</b> Trying twenty variants and keeping the best one means making twenty choices on the test set — the winner is probably luck. Either pre-register the hypothesis or apply a conservative correction (Bonferroni, for instance), and record that you did.</span></li>
+              </ol>
+              <p class="take"><span class="zh">判断标准很简单：换个切分点结论就翻，这条信号就还没资格进组合。</span>
+              <span class="en">The test is simple: if the conclusion flips when you move the split point, the signal is not ready for a portfolio.</span></p>
+    </details>
+    <details class="appendix">
+      <summary>COSTS · 交易成本假设如何悄悄改写夏普How cost assumptions quietly rewrite Sharpe</summary>
+      <p class="sum"><span class="zh">同一组信号，换一套成本假设，夏普可以从 1.2 掉到 0.4 —— 成本不是最后扣的一项，是设计的一部分。</span>
+              <span class="en">The same signals can go from a Sharpe of 1.2 to 0.4 on different cost assumptions — costs are a design input, not a final deduction.</span></p>
+      <p><span class="zh">很多人把成本当成最后减掉的一个数。实际上换手率、点差和冲击成本各自都能单独把一条信号判死刑，而且它们互相不替代。</span>
+              <span class="en">Costs are often treated as a single number subtracted at the end. In practice turnover, spread and market impact can each kill a signal on their own, and none of them substitutes for the others.</span></p>
+              <ul>
+                <li><span class="zh"><b>先看换手，再看收益</b>：先算月均单边换手。如果换手超出资金容量能承受的范围，再漂亮的 IC 也没有意义。</span>
+                <span class="en"><b>Turnover first, returns second.</b> Compute average one-way monthly turnover before looking at performance. If turnover exceeds what the capacity can absorb, a beautiful IC means nothing.</span></li>
+                <li><span class="zh"><b>分层建模，别用一个常数</b>：显性成本（佣金、税费）+ 点差（按流动性分档，流动性差的标的给更宽的假设）+ 冲击成本（用成交量占比的平方根近似）。三层分开写，任何一层换成更准的模型都不用推翻整体。</span>
+                <span class="en"><b>Model in layers, not as one constant.</b> Explicit costs + spread (tiered by liquidity) + impact (roughly the square root of participation rate). Keeping the layers separate means you can replace any one of them without rebuilding everything.</span></li>
+                <li><span class="zh"><b>把成本做成区间而不是点估计</b>：给 5–15 bps 这样的区间，看结论在两端是否都成立。只有低成本端成立，就说明这是成本敏感型信号 —— 出路是降换手或换标池，而不是把假设调低。</span>
+                <span class="en"><b>Use a range, not a point estimate.</b> Test 5–15 bps and check whether the conclusion holds at both ends. If it only survives at the low end, the signal is cost-sensitive: the fix is lower turnover or a different universe, not a friendlier assumption.</span></li>
+                <li><span class="zh"><b>在组合层面评估成本</b>：同一批信号，等权、风险平价、带约束的优化，换手差别很大。成本要放在权重方案这一层比较，而不是只看单条信号的换手。</span>
+                <span class="en"><b>Evaluate at portfolio level.</b> Equal weight, risk parity and constrained optimisation produce very different turnover from the same signals. Compare costs where the weights are decided, not per signal.</span></li>
+              </ul>
+              <p class="take"><span class="zh">一个能通过的检查：把成本假设翻倍，结论是否仍然成立。如果不成立，那条信号卖的是低成本假设，不是预测能力。</span>
+              <span class="en">One check worth running: double the cost assumption. If the conclusion does not survive, the signal is selling a cheap-cost assumption rather than predictive power.</span></p>
+    </details>
+    <details class="appendix">
+      <summary>ALT DATA · 把文本变成事件因子Turning text into event factors</summary>
+      <p class="sum"><span class="zh">文本因子的难点不在抽取，而在回答「它比现有信息多出了什么」。</span>
+              <span class="en">The hard part of a text factor is not extraction — it is answering what it adds beyond what you already have.</span></p>
+      <p><span class="zh">从新闻、公告或社交文本到「事件因子」，链条通常只有四步：抽取、打分、因子化、回测。真正让结果失真的，几乎都在最后一步的比较基准上。</span>
+              <span class="en">From news, filings or social text to an event factor is usually four steps: extract, score, build the factor, backtest. Most of what goes wrong sits in the comparison you make at the last step.</span></p>
+              <ul>
+                <li><span class="zh"><b>时间戳是第一个坑</b>：文本的发布时间不等于数据可得时间。用收盘后才出现的新闻去解释当天收益，是最经典的未来函数。做法是把所有时间戳对齐到「下一个可交易时点」。</span>
+                <span class="en"><b>Timestamps come first.</b> Publication time is not availability time. Explaining today's return with news that appeared after the close is the classic look-ahead error. Align every timestamp to the next tradable point.</span></li>
+                <li><span class="zh"><b>情绪分数本身不是因子</b>：一个 -1 到 +1 的分数不带横截面区分度。要先做中性化（去掉市场、行业、规模成分），再看剩下的部分还有没有信息。</span>
+                <span class="en"><b>A sentiment score is not a factor.</b> A number between -1 and +1 carries no cross-sectional discrimination until you neutralise market, sector and size, then look at what is left.</span></li>
+                <li><span class="zh"><b>只认增量</b>：把动量、波动、规模等已有因子回归掉，看残差的 IC 还剩多少。增量接近零，说明这条文本因子只是已有因子的代理，不构成新信息。</span>
+                <span class="en"><b>Only incremental value counts.</b> Regress out momentum, volatility and size, then look at the residual IC. If the increment is near zero, the text factor is a proxy for something you already had.</span></li>
+                <li><span class="zh"><b>留一段完全不碰的样本外</b>：语言分布会漂移，模型在旧语料上学到的词、在新话题上会系统性失准。留最近 6 个月完全不参与调参，是检验它「还在不在工作」的最低成本方式。</span>
+                <span class="en"><b>Keep a truly untouched sample.</b> Language drifts: a model trained on older text misreads new topics in a systematic way. Holding out the most recent six months from all tuning is the cheapest way to see whether it still works.</span></li>
+              </ul>
+              <p class="take"><span class="zh">结论：文本因子值得做，但它的价值来自「已有数据没有的信息」，而不是把新闻变成数字。</span>
+              <span class="en">The takeaway: text factors are worth building, but their value comes from information you did not already have — not from turning news into numbers.</span></p>
+    </details>
+
+  <div class="foot">
+    <a href="../"><span class="zh">← 返回笔记目录</span><span class="en">← Back to notes</span></a>
+  </div>
+</div></body></html>
