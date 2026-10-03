@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
+    <title>黄金：抗通胀，还是抗波动？</title>
+    <link>https://aayloo.github.io/notes/gold-inflation-hedge/</link>
+    <guid>https://aayloo.github.io/notes/gold-inflation-hedge/</guid>
+    <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+    <description>以 1968-01 至 2026-08 共 703 个月的伦敦金价与美国 CPI 检验「黄金抗通胀」。58 年看它确实跑赢（实际购买力 12.5 倍），但 1980 年买在高点要等 45 年才回本，持有十年有四成窗口是亏的。它真正对冲的是组合波动：与股票相关性 −0.08，加入 10% 可把最大回撤从 28.4% 降到 24.6%。含 7 张图表与 1 个可拖权重的交互动画。</description>
+  </item>
+  <item>
     <title>VIX 冲上 30 的时候，该贪婪吗？</title>
     <link>https://aayloo.github.io/notes/vix-buy-the-fear/</link>
     <guid>https://aayloo.github.io/notes/vix-buy-the-fear/</guid>
