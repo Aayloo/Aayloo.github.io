@@ -354,6 +354,12 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding-top:16px;
 .hero .intro .caret{display:inline-block;width:7px;height:15px;background:var(--teal);vertical-align:-2px;
   margin-left:3px;animation:blink 1.05s steps(2,start) infinite}
 @keyframes blink{50%{opacity:0}}
+/* 首屏打字：身份行循环、招呼行打一次后光标淡出 */
+.hero .role{min-height:1.62em;white-space:nowrap}
+.hero .intro .caret.done{animation:blink 1.05s steps(2,start) infinite,fadeOut .5s ease 2.4s forwards}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+@media (max-width:760px){.hero .role{font-size:16px}}
+@media (prefers-reduced-motion:reduce){.hero .role .caret,.hero .intro .caret,.hero .intro .caret.done{animation:none}}
 
 /* 2 · section head: mask reveal + rail fill */
 .sh{position:relative;padding-left:18px}
@@ -612,8 +618,8 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <div class="herotext">
             <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
             <h1 data-split>Aylon</h1>
-            <p class="role"><span><span class="zh">数据科学家</span><span class="en">Data Scientist</span></span><i>·</i><span><span class="zh">量化策略师</span><span class="en">Quantitative Strategist</span></span><i>·</i><span><span class="zh">AI 工程师</span><span class="en">AI Engineer</span></span></p>
-            <p class="intro"><span class="tw" data-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="role"><span class="tw" data-delay="400" data-words-zh="数据科学家|量化策略师|应用 AI 工程师|多资产配置研究" data-words-en="Data Scientist|Quantitative Strategist|Applied AI Engineer|Multi-asset Research">数据科学家</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="intro"><span class="tw" data-delay="1200" data-once="1" data-words-zh="嗨，我是 Aylon。项目和研究笔记都在这里。" data-words-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
             <div class="heroacts">
               <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View Projects</span></a>
               <a class="hbtn ghost" href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
@@ -1270,31 +1276,60 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     });
   })();
 
-  /* hero: typed keyword line */
-  var twEl = document.querySelector(".hero .intro .tw");
-  var twZh = twEl ? twEl.textContent.replace(/\s+/g," ").trim() : "";
-  var twEn = twEl ? (twEl.getAttribute("data-en") || "") : "";
-  var twTimer = null;
-  function typeInto(el, text){
-    if(twTimer){ clearTimeout(twTimer); twTimer = null; }
-    if(!el) return;
-    if(RM){ el.textContent = text; return; }
-    el.textContent = "";
-    var i = 0;
-    (function step(){
-      i++;
-      el.textContent = text.slice(0, i);
-      twTimer = i < text.length ? setTimeout(step, 34) : null;
-    })();
-  }
+  /* hero: 两行打字 —— 身份循环、招呼打一次（方案 D） */
+  var twEls = [].slice.call(document.querySelectorAll(".hero .tw"));
+  var twTimers = [];
   function isEn(){ return document.documentElement.getAttribute("data-lang") === "en"; }
   var langHooks = [];
+
+  function twList(el){
+    var raw = el.getAttribute(isEn() ? "data-words-en" : "data-words-zh") || "";
+    if(!raw) raw = el.textContent;
+    return raw.split("|").filter(Boolean);
+  }
+  function twStop(){ twTimers.forEach(clearTimeout); twTimers = []; }
+  function twRun(){
+    twStop();
+    twEls.forEach(function(el){
+      var words = twList(el);
+      if(!words.length) return;
+      var once = el.getAttribute("data-once") === "1";
+      var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
+      var caret = el.parentNode.querySelector(".caret");
+      var idx = 0;
+      if(caret) caret.classList.remove("done");
+      if(RM){
+        el.textContent = words[0];
+        if(once && caret) caret.classList.add("done");
+        return;
+      }
+      el.textContent = "";
+      function cycle(){
+        var text = words[idx % words.length];
+        var i = 0, phase = "type";
+        (function step(){
+          if(phase === "type"){
+            i++; el.textContent = text.slice(0, i);
+            if(i < text.length){ twTimers.push(setTimeout(step, isEn() ? 42 : 78)); }
+            else if(once){ if(caret) caret.classList.add("done"); }
+            else { phase = "hold"; twTimers.push(setTimeout(step, 1750)); }
+            return;
+          }
+          if(phase === "hold"){ phase = "del"; i = text.length; step(); return; }
+          i -= 2;
+          if(i > 0){ el.textContent = text.slice(0, i); twTimers.push(setTimeout(step, 34)); }
+          else { el.textContent = ""; idx++; twTimers.push(setTimeout(cycle, 320)); }
+        })();
+      }
+      if(delay){ twTimers.push(setTimeout(cycle, delay)); } else { cycle(); }
+    });
+  }
+
   function syncLang(){
-    typeInto(twEl, isEn() ? twEn : twZh);
+    twRun();
     langStagger();
     langHooks.forEach(function(f){ try{ f(); }catch(e){} });
   }
-
   /* language */
   function read(){ try{ return localStorage.getItem("site.lang")==="en"?"en":"zh"; }catch(e){ return "zh"; } }
   function apply(v){
