@@ -127,11 +127,19 @@
 
     <h2 id="s2"><span class="num">02</span><span class="zh">它只引用了对自己有利的一半</span><span class="en">It quotes only half the evidence</span></h2>
     <p class="zh">既然「剔除最好的日子会变差」，那就应该同样问一句：「剔除最差的日子会怎样？」把这同一件事做两遍，答案会让人重新理解这句话。</p>
+    <p class="zh">下面两张图讲同一件事：第一张把两个方向的年化收益画在一起，第二张直接画出三条净值曲线——<b>买入持有、错过最好的 10 天、躲过最差的 10 天</b>。</p>
     <div class="exhibit">
       <div class="ex-label"><span class="zh">Exhibit 1 · 两条曲线几乎关于全仓对称</span><span class="en">Exhibit 1 · two nearly symmetric curves</span></div>
       <img src="../assets/figs/days-tradeoff.svg" alt="剔除最好与最差各 N 天后的年化收益">
       <p class="ex-note zh">剔除最好的 10 天，年化从 8.10% 降到 <b>6.52%</b>（−1.58 个百分点）；剔除最差的 10 天，升到 <b>10.12%</b>（+2.02 个百分点）。<b>两边幅度相当，甚至后者略大</b>——因为最差的日子比最好的日子更极端（平均 −8.1% vs +7.2%）。所以这张图真正在说的事情是：<b>如果你能精确择时，收益会非常可观</b>；它并没有说明择时是否可行。把"错过最好"单独拿出来讲，是把一个对称的事实讲成了单边的恐吓。</p>
       <p class="ex-note en">Removing the ten best cuts the annualised return to 6.52% (−1.58 points); removing the ten worst lifts it to 10.12% (+2.02 points). The two sides are comparable, and the second is larger, because the worst days are more extreme than the best (−8.1% versus +7.2% on average).</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 错过、不错过与躲过：三条净值曲线</span><span class="en">Exhibit 2 · miss, hold, avoid: three paths</span></div>
+      <img src="../assets/figs/days-paths.svg" alt="全仓、错过最好十天、躲过最差十天的净值曲线对比">
+      <p class="ex-note zh">把三种做法画成净值曲线（1970-01 = 1，对数刻度）：<b>全仓 79 倍、躲过最差 10 天 214 倍、错过最好 10 天 35 倍</b>。三条线在前二十年几乎重合，差别是在一次次危机里累积出来的——右图的年化收益条形把同一件事说清楚：<b>躲过最差的收益（10.12%）比错过最好的代价（6.52%）更大</b>。这张图通常只画三条线里的两条，而选择画哪两条，决定了你读完会得出什么结论。</p>
+      <p class="ex-note en">Three paths on a log scale from January 1970: holding everything ends at 79x, avoiding the ten worst days at 214x, missing the ten best at 35x. The gap accumulates through successive crises rather than gradually — and the bar panel shows the same fact: the gain from avoiding the worst (10.12%) exceeds the cost of missing the best (6.52%).</p>
       <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
     </div>
     <div class="exhibit">
@@ -154,7 +162,7 @@
     <h2 id="s3"><span class="num">03</span><span class="zh">但它也不是典型结果</span><span class="en">It is not the typical outcome</span></h2>
     <p class="zh">第二个问题更根本：<b>"错过最好的 10 天"是一个有多大可能发生的事件？</b>如果它不是常态，把它当作决策依据就不成立。做法是随机构造对照——从 14,309 个交易日里随机剔除 10 天，重复 4,000 次。</p>
     <div class="exhibit">
-      <div class="ex-label"><span class="zh">Exhibit 2 · 随机剔除 10 天的结果分布</span><span class="en">Exhibit 2 · distribution of removing ten random days</span></div>
+      <div class="ex-label"><span class="zh">Exhibit 3 · 随机剔除 10 天的结果分布</span><span class="en">Exhibit 3 · distribution of removing ten random days</span></div>
       <img src="../assets/figs/days-montecarlo.svg" alt="随机剔除十个交易日后的年化收益分布">
       <p class="ex-note zh">随机剔除 10 天，年化收益的中位数是 <b>8.09%</b>——和全仓的 8.10% 几乎没有区别，5% 分位也有 7.99%。而"精确错过最好的 10 天"（6.52%）落在整个分布的<b>第 0.0 百分位</b>。<b>换句话说，随机的择时错误几乎无害；只有"精确地在最好的日子离场"才有害，而那不是随机错误，是一种能力——一种反向的能力。</b>用这个极端值去吓唬一个随机犯错的投资者，是拿错了标尺。</p>
       <p class="ex-note en">Removing ten random days leaves the median at 8.09%, essentially unchanged, with a 5th percentile of 7.99%. Missing exactly the ten best lands at the <b>0.0th percentile</b>. Random timing mistakes are close to harmless; only precise avoidance of the best days hurts, and that is not a random error.</p>
@@ -164,21 +172,21 @@
     <h2 id="s4"><span class="num">04</span><span class="zh">真正的论证是另一件事</span><span class="en">The real argument is a different one</span></h2>
     <p class="zh">那么"不要择时"到底该怎么论证？答案不在"错过最好"，而在<b>波动聚集</b>：大幅波动会扎堆出现，最好的日子和最差的日子属于同一段行情。先看这些日子长什么样。</p>
     <div class="exhibit">
-      <div class="ex-label"><span class="zh">Exhibit 3 · 最好与最差的日子处在同一环境</span><span class="en">Exhibit 3 · the best and worst days share one environment</span></div>
+      <div class="ex-label"><span class="zh">Exhibit 4 · 最好与最差的日子处在同一环境</span><span class="en">Exhibit 4 · the best and worst days share one environment</span></div>
       <img src="../assets/figs/days-state.svg" alt="最好的日子、最差的日子与其余交易日的状态对比">
       <p class="ex-note zh">最好的 20 天：平均当日涨幅 7.2%，但入场时的年化波动率高达 <b>66%</b>，平均处在距历史高点 <b>−33%</b> 的位置。最差的 20 天：波动 52%、距高点 −29%。其余一万多个交易日：波动只有 <b>14%</b>、距高点 −11%。<b>好日子和坏日子住在同一栋楼里——都在熊市深处、都在高波动期。</b>这也解释了为什么"极端日"虽只占全部交易日的 2%，却贡献了 36% 的方差。</p>
       <p class="ex-note en">The twenty best days averaged +7.2% but arrived with realised volatility of <b>66%</b> and 33% below the prior peak; the twenty worst came with 52% and −29%. The other 14,000-plus days ran at 14% volatility and −11%. Extremes make up 2% of days and 36% of variance.</p>
       <p class="ex-src"><span class="zh">来源：本文计算；波动率为前 20 个交易日的年化标准差。</span><span class="en">Source: author's calculations; volatility is the annualised standard deviation of the prior 20 trading days.</span></p>
     </div>
     <div class="exhibit">
-      <div class="ex-label"><span class="zh">Exhibit 4 · 好日子离坏日子有多近</span><span class="en">Exhibit 4 · how close the best days sit to the worst</span></div>
+      <div class="ex-label"><span class="zh">Exhibit 5 · 好日子离坏日子有多近</span><span class="en">Exhibit 5 · how close the best days sit to the worst</span></div>
       <img src="../assets/figs/days-proximity.svg" alt="最好的十个交易日到最近的差日子之间的距离">
       <p class="ex-note zh">把最好的 10 天逐一拿出来，测量它到最近的"最差 10 天"的交易日距离：<b>有 8 天在 15 个交易日以内，其中 3 天只隔了 1–2 天</b>。只有 2 天离得很远（76 天和 1274 天）。这就是"不可分性"的直接证据：<b>你没有能力只躲开坏的那一半</b>——当你判断该离场时，最好的日子通常就在附近。</p>
       <p class="ex-note en">Measured one by one, <b>eight of the ten best days fall within fifteen trading days of one of the ten worst</b>, and three are just one or two days away. Only two are far apart.</p>
       <p class="ex-src"><span class="zh">来源：本文计算。</span><span class="en">Source: author's calculations.</span></p>
     </div>
     <div class="exhibit">
-      <div class="ex-label"><span class="zh">Exhibit 5 · 2020 年春天就是活标本</span><span class="en">Exhibit 5 · spring 2020 as a live specimen</span></div>
+      <div class="ex-label"><span class="zh">Exhibit 6 · 2020 年春天就是活标本</span><span class="en">Exhibit 6 · spring 2020 as a live specimen</span></div>
       <img src="../assets/figs/days-y2020.svg" alt="2020 年 2 月至 6 月的日收益，标注最好与最差的交易日">
       <p class="ex-note zh">把 2020 年 2–6 月的日收益画出来：红色是全样本里最好的 20 天，蓝色是最差的 20 天。它们交替出现，中间只隔几天。<b>3 月 12 日跌 9.5%，3 月 13 日涨 9.3%，3 月 16 日又跌 12%</b>——任何在这段时间"先离场、等稳了再回来"的判断，都要面对这几天是同一周的集合。</p>
       <p class="ex-note en">Daily returns from February to June 2020: red marks the twenty best days in the whole sample, blue the twenty worst. They alternate within days of each other — 12 March fell 9.5%, 13 March rose 9.3%, 16 March fell 12%.</p>
@@ -188,7 +196,7 @@
     <h2 id="s5"><span class="num">05</span><span class="zh">这个数字本身还很不稳定</span><span class="en">The number itself is unstable</span></h2>
     <p class="zh">还有一层：被反复引用的"错过最好 10 天的代价"，本身不是一个稳定的统计量。把 56 年切成六个十年，各自计算。</p>
     <div class="exhibit">
-      <div class="ex-label"><span class="zh">Exhibit 6 · 分十年看这个代价</span><span class="en">Exhibit 6 · the cost by decade</span></div>
+      <div class="ex-label"><span class="zh">Exhibit 7 · 分十年看这个代价</span><span class="en">Exhibit 7 · the cost by decade</span></div>
       <img src="../assets/figs/days-decade.svg" alt="每个十年里错过最好十个交易日的代价">
       <p class="ex-note zh">1970 年代：<b>3.8 个百分点</b>；1980 年代 4.9；1990 年代 4.3；2000 年代 6.5；2010 年代 4.4；2020 年代 <b>10.4</b>。<b>最高与最低差了三倍</b>。差异的来源是显而易见的：2020 年 3 月那段极端波动里，最好的几天涨得特别猛，剔除它们自然代价巨大；而 1990 年代那种慢牛行情里，最好的几天也没那么突出。所以引用这句话时给出的具体数字，很大程度上是<b>所选窗口的产物</b>。</p>
       <p class="ex-note en">By decade the cost runs 3.8, 4.9, 4.3, 6.5, 4.4 and 10.4 points — a three-fold spread. The 2020s figure is high because March 2020 produced unusually violent up days; in the slow 1990s the best days were less exceptional. The quoted number is largely an artefact of the window chosen.</p>
@@ -197,7 +205,7 @@
 
     <h2 id="s6"><span class="num">06</span><span class="zh">自己动手：把两个方向一起看</span><span class="en">See both directions at once</span></h2>
     <div class="exhibit">
-      <div class="ex-label"><span class="zh">Exhibit 7 · 拖动滑块改变剔除的天数（可交互）</span><span class="en">Exhibit 7 · drag to change how many days you remove</span></div>
+      <div class="ex-label"><span class="zh">Exhibit 8 · 拖动滑块改变剔除的天数（可交互）</span><span class="en">Exhibit 8 · drag to change how many days you remove</span></div>
       <div class="vbox">
         <div class="ctrl">
           <span style="font-weight:600"><span class="zh">剔除天数</span><span class="en">Days removed</span></span>
