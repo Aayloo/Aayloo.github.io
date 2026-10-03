@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
+    <title>错过最好的十天：一句被误用的统计</title>
+    <link>https://aayloo.github.io/notes/missing-best-days/</link>
+    <guid>https://aayloo.github.io/notes/missing-best-days/</guid>
+    <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+    <description>用标普 500 从 1970 年至今 14,309 个交易日检验「错过最好的 10 天，收益腰斩」。全仓年化 8.10%，错过最好 10 天降到 6.52%——但躲过最差 10 天升到 10.12%，幅度还更大。随机剔除 10 天则几乎没影响，而最好的日子与最差的日子只隔几天。含 6 张图表与 1 个可拖天数的交互动画。</description>
+  </item>
+  <item>
     <title>黄金：抗通胀，还是抗波动？</title>
     <link>https://aayloo.github.io/notes/gold-inflation-hedge/</link>
     <guid>https://aayloo.github.io/notes/gold-inflation-hedge/</guid>

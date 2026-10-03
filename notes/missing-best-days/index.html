@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>错过最好的十天：一句被误用的统计 · Working Paper</title>
+<meta name="description" content="研究笔记：用标普 500 从 1970 年至今 14,309 个交易日检验「错过最好的 10 天，收益腰斩」。这句话只引用了一半证据——躲过最差 10 天的幅度还更大；而随机错过 10 天，年化几乎不变。含 6 张图表与一个交互动画。">
+<meta property="og:title" content="错过最好的十天：一句被误用的统计">
+<meta property="og:description" content="这句话只引用了对自己有利的一半：躲过最差 10 天的收益，比错过最好 10 天的代价还大。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/missing-best-days/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-days.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="错过最好的十天——这句被广泛引用的统计只用了一半证据">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="错过最好的十天：一句被误用的统计">
+<meta name="twitter:description" content="躲过最差 10 天的收益（+2.02pp）比错过最好 10 天的代价（−1.58pp）还大。">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-days.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/missing-best-days/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:10px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽；
+   表格改成自己横向滚动，而不是撑破版心 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+/* 行内数学：STIX 渲染的 SVG，按 em 设高 + 基线对齐（度量由
+   tools/make_inline_math.py 精确计算，勿手改数值） */
+.imath{display:inline-block;width:auto;max-width:100%;vertical-align:baseline}
+.imath.math-t{height:0.827em;vertical-align:-0.118em}
+.imath.math-vix-sr{height:1.191em;vertical-align:-0.255em}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
+.ctrl input[type=range]{flex:1;min-width:120px}
+.vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
+.vstat{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-03 · v1.0 · 组合与执行</span><span class="en">2026-10-03 · v1.0 · Portfolio &amp; execution</span></span></div>
+  <h1 class="rn-title"><span class="zh">错过最好的十天：一句被误用的统计</span><span class="en">The ten best days: a statistic used the wrong way</span></h1>
+  <p class="rn-standfirst"><span class="zh">「错过涨幅最大的 10 天，长期收益会腰斩」被用来劝人不要择时。数字本身没错——用标普 500 从 1970 年至今 14,309 个交易日计算，全仓年化 8.10%，剔除最好的 10 天降到 6.52%。<b>但这句话只引用了对自己有利的一半</b>：剔除最差的 10 天，年化升到 10.12%，幅度几乎相同。它真正证明的是「精确择时非常值钱」，而不是「择时不可能」。<b>真正的论证是另一件事</b>：随机剔除任意 10 个交易日，年化几乎不变（8.09%）；而最好的日子和最差的日子出现在同一个地方——最好的 10 天里有 8 天，离某个「最差 10 天」不超过 15 个交易日。</span>
+  <span class="en">"Miss the ten best days and your long-run return halves" is used to argue against market timing. The arithmetic is fine — on 14,309 trading days of the S&amp;P 500 since 1970, buy-and-hold compounds at 8.10% a year and dropping the best ten days cuts it to 6.52%. <b>But the argument quotes only the half that suits it</b>: dropping the ten worst days lifts the return to 10.12%, almost the same distance. What it actually proves is that precise timing is valuable, not that timing is impossible. <b>The real argument is different</b>: dropping ten <i>random</i> days changes almost nothing (8.09%), and the best days cluster where the worst days are — eight of the ten best days sit within fifteen trading days of one of the ten worst.</span></p>
+
+  <ul class="rn-findings">
+    <li><span class="zh">数字本身不假：全仓年化 8.10%，错过最好 10 天降到 6.52%。</span>
+        <span class="en">The number is real: 8.10% a year holding everything, 6.52% missing the ten best days.</span></li>
+    <li><span class="zh">但它只算了一半：躲过最差 10 天升到 <b>10.12%</b>，幅度还略大（+2.02 vs −1.58 个百分点）。</span>
+        <span class="en">It only counts one side: avoiding the ten worst lifts the return to <b>10.12%</b> — a slightly larger move (+2.02 vs −1.58 points).</span></li>
+    <li><span class="zh">随机剔除 10 天，年化从 8.10% 只降到 <b>8.09%</b>；「错过最好 10 天」位于随机分布的<b>第 0 百分位</b>。</span>
+        <span class="en">Remove ten <i>random</i> days and the return goes from 8.10% to <b>8.09%</b>; "miss the ten best" sits at the <b>0th percentile</b> of that distribution.</span></li>
+    <li><span class="zh">最好的 20 天里，平均年化波动 <b>66%</b>、平均距高点 <b>−33%</b>——它们几乎全部出现在熊市深处。</span>
+        <span class="en">The twenty best days had average realised volatility of <b>66%</b> and sat <b>33%</b> below the prior peak: they live inside bear markets.</span></li>
+  </ul>
+
+  <div class="rn-abstract"><span class="zh"><b>摘要</b>本文检验一句被广泛引用的统计：错过涨幅最大的若干交易日，会显著降低长期收益。以标普 500 价格指数 1970-01-02 至 2026-10-02 共 14,309 个交易日为样本，我们分别计算剔除最好与最差各 N 个交易日后的年化收益，并用 4,000 次随机剔除模拟构造对照分布。<b>第一层</b>：该统计在算术上成立，但双侧幅度近似——剔除最好 10 天使年化由 8.10% 降至 6.52%，剔除最差 10 天使之升至 10.12%，后者幅度更大，因此原命题的证据是不对称选取的。<b>第二层</b>：随机剔除 10 个交易日的年化中位数为 8.09%，「精确错过最好 10 天」位于该分布的 0.0 百分位，属于极端尾部而非常态。<b>第三层</b>：最好的 20 个交易日平均实现波动率 66%、平均低于前高 33%，与最差的 20 天（52%、−29%）处于同一环境；最好的 10 天中有 8 天距离某个「最差 10 天」不超过 15 个交易日。此外，该统计本身极不稳定：分十年计算，「错过最好 10 天的代价」在 1970 年代为 3.8 个百分点，2020 年代为 10.4 个百分点。结论：这句话的<b>教训是对的</b>（不应择时），但它的<b>推理是错的</b>；正确的论据是波动聚集导致的不可分性，而不是"错过最好"的损失。</span>
+  <span class="en"><b>Abstract</b>This note examines a widely cited statistic: that missing the best few trading days materially reduces long-run returns. Using the S&amp;P 500 price index over 14,309 trading days from 2 January 1970 to 2 October 2026, we compute annualised returns after removing the N best and the N worst days, and build a control distribution from 4,000 random removals. <b>First</b>: the arithmetic holds, but the two sides are close in magnitude — removing the ten best days cuts the annualised return from 8.10% to 6.52%, while removing the ten worst lifts it to 10.12%, a larger move. The original claim therefore quotes one side asymmetrically. <b>Second</b>: removing ten random days leaves the median at 8.09%, and "missing exactly the ten best" sits at the 0.0th percentile — an extreme tail, not the typical case. <b>Third</b>: the twenty best days carried average realised volatility of 66% and sat 33% below the prior peak, the same environment as the twenty worst (52%, −29%); eight of the ten best days fall within fifteen trading days of one of the ten worst. The statistic is also unstable: by decade, the cost of missing the ten best ranges from 3.8 points in the 1970s to 10.4 points in the 2020s. The lesson is right — do not time the market — but the reasoning is wrong.</span></div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　择时 · 波动聚集 · 极端日 · 蒙特卡洛 · 行为偏差 · 组合执行</span><span class="en"><b>Keywords</b>　market timing · volatility clustering · extreme days · Monte Carlo · behavioural bias · portfolio execution</span></p>
+
+  <div class="split">
+    <div class="prose">
+
+    <h2 id="s1"><span class="num">01</span><span class="zh">这句话从哪来</span><span class="en">Where the claim comes from</span></h2>
+    <p class="zh">「错过最好的 N 天」是财富管理行业最常被引用的一张图。它的形态几乎固定：一条是买入持有，另一条是错过涨幅最大的 10 天，两者的终值差距悬殊。这张图想说的道理很正当——<b>不要在错误的时点离场</b>——但它被用来支持的那个推论，比它实际能支持的要多。</p>
+    <p class="zh">先把数字复核一遍。样本是标普 500 价格指数，1970-01-02 至 2026-10-02 共 <b>14,309 个交易日</b>（56.7 年）。口径是：把某一天的收益从复利序列里剔除，等价于假设那天不在场、当天的收益为 0。</p>
+    <p class="zh">结论确认了原命题：全仓年化 <b>8.10%</b>，剔除最好的 10 天降到 <b>6.52%</b>。所以这句话的算术没有问题。问题出在下一步。</p>
+
+    <h2 id="s2"><span class="num">02</span><span class="zh">它只引用了对自己有利的一半</span><span class="en">It quotes only half the evidence</span></h2>
+    <p class="zh">既然「剔除最好的日子会变差」，那就应该同样问一句：「剔除最差的日子会怎样？」把这同一件事做两遍，答案会让人重新理解这句话。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 1 · 两条曲线几乎关于全仓对称</span><span class="en">Exhibit 1 · two nearly symmetric curves</span></div>
+      <img src="../assets/figs/days-tradeoff.svg" alt="剔除最好与最差各 N 天后的年化收益">
+      <p class="ex-note zh">剔除最好的 10 天，年化从 8.10% 降到 <b>6.52%</b>（−1.58 个百分点）；剔除最差的 10 天，升到 <b>10.12%</b>（+2.02 个百分点）。<b>两边幅度相当，甚至后者略大</b>——因为最差的日子比最好的日子更极端（平均 −8.1% vs +7.2%）。所以这张图真正在说的事情是：<b>如果你能精确择时，收益会非常可观</b>；它并没有说明择时是否可行。把"错过最好"单独拿出来讲，是把一个对称的事实讲成了单边的恐吓。</p>
+      <p class="ex-note en">Removing the ten best cuts the annualised return to 6.52% (−1.58 points); removing the ten worst lifts it to 10.12% (+2.02 points). The two sides are comparable, and the second is larger, because the worst days are more extreme than the best (−8.1% versus +7.2% on average).</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">表 1 · 两个方向上的年化收益</span><span class="en">Table 1 · annualised return in both directions</span></div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th><span class="zh">剔除天数</span><span class="en">Days removed</span></th><th><span class="zh">剔除最好的 N 天</span><span class="en">Best N removed</span></th><th><span class="zh">剔除最差的 N 天</span><span class="en">Worst N removed</span></th><th><span class="zh">差</span><span class="en">Gap</span></th></tr></thead>
+          <tbody><tr><td>1</td><td>7.89%</td><td>8.54%</td><td>+0.65pp</td></tr>
+            <tr><td>5</td><td>7.19%</td><td>9.33%</td><td>+2.14pp</td></tr>
+            <tr><td>10</td><td>6.52%</td><td>10.12%</td><td class="hi">+3.60pp</td></tr>
+            <tr><td>20</td><td>5.48%</td><td>11.39%</td><td>+5.91pp</td></tr>
+            <tr><td>50</td><td>3.04%</td><td>14.26%</td><td>+11.22pp</td></tr>
+            <tr><td>100</td><td>-0.11%</td><td>17.97%</td><td>+18.08pp</td></tr></tbody>
+        </table>
+      </div>
+      <p class="ex-note zh">单位 %。"差"是躲过最差的收益减去错过最好的代价；为正说明<b>精确择时的诱惑比"错过最好"的恐吓更大</b>。</p>
+      <p class="ex-note en">In per cent. A positive gap means avoiding the worst days is worth more than missing the best days costs.</p>
+    </div>
+
+    <h2 id="s3"><span class="num">03</span><span class="zh">但它也不是典型结果</span><span class="en">It is not the typical outcome</span></h2>
+    <p class="zh">第二个问题更根本：<b>"错过最好的 10 天"是一个有多大可能发生的事件？</b>如果它不是常态，把它当作决策依据就不成立。做法是随机构造对照——从 14,309 个交易日里随机剔除 10 天，重复 4,000 次。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 随机剔除 10 天的结果分布</span><span class="en">Exhibit 2 · distribution of removing ten random days</span></div>
+      <img src="../assets/figs/days-montecarlo.svg" alt="随机剔除十个交易日后的年化收益分布">
+      <p class="ex-note zh">随机剔除 10 天，年化收益的中位数是 <b>8.09%</b>——和全仓的 8.10% 几乎没有区别，5% 分位也有 7.99%。而"精确错过最好的 10 天"（6.52%）落在整个分布的<b>第 0.0 百分位</b>。<b>换句话说，随机的择时错误几乎无害；只有"精确地在最好的日子离场"才有害，而那不是随机错误，是一种能力——一种反向的能力。</b>用这个极端值去吓唬一个随机犯错的投资者，是拿错了标尺。</p>
+      <p class="ex-note en">Removing ten random days leaves the median at 8.09%, essentially unchanged, with a 5th percentile of 7.99%. Missing exactly the ten best lands at the <b>0.0th percentile</b>. Random timing mistakes are close to harmless; only precise avoidance of the best days hurts, and that is not a random error.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，4,000 次随机模拟。</span><span class="en">Source: author's calculations, 4,000 simulations.</span></p>
+    </div>
+
+    <h2 id="s4"><span class="num">04</span><span class="zh">真正的论证是另一件事</span><span class="en">The real argument is a different one</span></h2>
+    <p class="zh">那么"不要择时"到底该怎么论证？答案不在"错过最好"，而在<b>波动聚集</b>：大幅波动会扎堆出现，最好的日子和最差的日子属于同一段行情。先看这些日子长什么样。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 3 · 最好与最差的日子处在同一环境</span><span class="en">Exhibit 3 · the best and worst days share one environment</span></div>
+      <img src="../assets/figs/days-state.svg" alt="最好的日子、最差的日子与其余交易日的状态对比">
+      <p class="ex-note zh">最好的 20 天：平均当日涨幅 7.2%，但入场时的年化波动率高达 <b>66%</b>，平均处在距历史高点 <b>−33%</b> 的位置。最差的 20 天：波动 52%、距高点 −29%。其余一万多个交易日：波动只有 <b>14%</b>、距高点 −11%。<b>好日子和坏日子住在同一栋楼里——都在熊市深处、都在高波动期。</b>这也解释了为什么"极端日"虽只占全部交易日的 2%，却贡献了 36% 的方差。</p>
+      <p class="ex-note en">The twenty best days averaged +7.2% but arrived with realised volatility of <b>66%</b> and 33% below the prior peak; the twenty worst came with 52% and −29%. The other 14,000-plus days ran at 14% volatility and −11%. Extremes make up 2% of days and 36% of variance.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算；波动率为前 20 个交易日的年化标准差。</span><span class="en">Source: author's calculations; volatility is the annualised standard deviation of the prior 20 trading days.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 4 · 好日子离坏日子有多近</span><span class="en">Exhibit 4 · how close the best days sit to the worst</span></div>
+      <img src="../assets/figs/days-proximity.svg" alt="最好的十个交易日到最近的差日子之间的距离">
+      <p class="ex-note zh">把最好的 10 天逐一拿出来，测量它到最近的"最差 10 天"的交易日距离：<b>有 8 天在 15 个交易日以内，其中 3 天只隔了 1–2 天</b>。只有 2 天离得很远（76 天和 1274 天）。这就是"不可分性"的直接证据：<b>你没有能力只躲开坏的那一半</b>——当你判断该离场时，最好的日子通常就在附近。</p>
+      <p class="ex-note en">Measured one by one, <b>eight of the ten best days fall within fifteen trading days of one of the ten worst</b>, and three are just one or two days away. Only two are far apart.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算。</span><span class="en">Source: author's calculations.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 5 · 2020 年春天就是活标本</span><span class="en">Exhibit 5 · spring 2020 as a live specimen</span></div>
+      <img src="../assets/figs/days-y2020.svg" alt="2020 年 2 月至 6 月的日收益，标注最好与最差的交易日">
+      <p class="ex-note zh">把 2020 年 2–6 月的日收益画出来：红色是全样本里最好的 20 天，蓝色是最差的 20 天。它们交替出现，中间只隔几天。<b>3 月 12 日跌 9.5%，3 月 13 日涨 9.3%，3 月 16 日又跌 12%</b>——任何在这段时间"先离场、等稳了再回来"的判断，都要面对这几天是同一周的集合。</p>
+      <p class="ex-note en">Daily returns from February to June 2020: red marks the twenty best days in the whole sample, blue the twenty worst. They alternate within days of each other — 12 March fell 9.5%, 13 March rose 9.3%, 16 March fell 12%.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算。</span><span class="en">Source: author's calculations.</span></p>
+    </div>
+
+    <h2 id="s5"><span class="num">05</span><span class="zh">这个数字本身还很不稳定</span><span class="en">The number itself is unstable</span></h2>
+    <p class="zh">还有一层：被反复引用的"错过最好 10 天的代价"，本身不是一个稳定的统计量。把 56 年切成六个十年，各自计算。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 6 · 分十年看这个代价</span><span class="en">Exhibit 6 · the cost by decade</span></div>
+      <img src="../assets/figs/days-decade.svg" alt="每个十年里错过最好十个交易日的代价">
+      <p class="ex-note zh">1970 年代：<b>3.8 个百分点</b>；1980 年代 4.9；1990 年代 4.3；2000 年代 6.5；2010 年代 4.4；2020 年代 <b>10.4</b>。<b>最高与最低差了三倍</b>。差异的来源是显而易见的：2020 年 3 月那段极端波动里，最好的几天涨得特别猛，剔除它们自然代价巨大；而 1990 年代那种慢牛行情里，最好的几天也没那么突出。所以引用这句话时给出的具体数字，很大程度上是<b>所选窗口的产物</b>。</p>
+      <p class="ex-note en">By decade the cost runs 3.8, 4.9, 4.3, 6.5, 4.4 and 10.4 points — a three-fold spread. The 2020s figure is high because March 2020 produced unusually violent up days; in the slow 1990s the best days were less exceptional. The quoted number is largely an artefact of the window chosen.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，每个十年单独计算。</span><span class="en">Source: author's calculations, each decade computed separately.</span></p>
+    </div>
+
+    <h2 id="s6"><span class="num">06</span><span class="zh">自己动手：把两个方向一起看</span><span class="en">See both directions at once</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 7 · 拖动滑块改变剔除的天数（可交互）</span><span class="en">Exhibit 7 · drag to change how many days you remove</span></div>
+      <div class="vbox">
+        <div class="ctrl">
+          <span style="font-weight:600"><span class="zh">剔除天数</span><span class="en">Days removed</span></span>
+          <input type="range" id="d-n" min="0" max="100" value="10" step="1">
+          <b id="d-nlab" style="font-family:var(--mono)">10</b>
+          <button type="button" id="d-reset"><span class="zh">回到 10 天</span><span class="en">Reset to 10</span></button>
+        </div>
+        <svg id="d-svg" viewBox="0 0 900 320" role="img" aria-label="剔除最好与最差各 N 天后的年化收益"></svg>
+        <div class="vstat">
+          <span><span class="zh">全仓</span><span class="en">Buy &amp; hold</span> <b id="d-base">–</b></span>
+          <span><span class="zh">错过最好</span><span class="en">Miss best</span> <b id="d-miss">–</b></span>
+          <span><span class="zh">躲过最差</span><span class="en">Avoid worst</span> <b id="d-avoid">–</b></span>
+          <span><span class="zh">代价</span><span class="en">Cost</span> <b id="d-cost">–</b></span>
+          <span><span class="zh">收益</span><span class="en">Gain</span> <b id="d-gain">–</b></span>
+        </div>
+      </div>
+      <p class="ex-note zh">拖动滑块，灰虚线是全仓 8.10%，两条曲线分别是"错过最好的 N 天"和"躲过最差的 N 天"。<b>值得在 10 天和 50 天两个位置各停一下</b>：10 天时两侧分别是 −1.58 和 +2.02；50 天时是 −5.06 和 +6.16，都变成了年化几个百分点的量级，而这对曲线始终开口向上。它讲的是同一个事实：<b>把日子选对的价值，等于把日子选错的代价。</b></p>
+      <p class="ex-note en">Drag the slider. The dashed line is buy-and-hold at 8.10%. Pause at 10 and at 50 days: the two sides move by −1.58/+2.02 and −5.06/+6.16 points respectively, staying symmetric throughout.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
+    </div>
+
+    <h2 id="s7"><span class="num">07</span><span class="zh">结论：教训对，推理错</span><span class="en">Conclusion: right lesson, wrong reasoning</span></h2>
+    <p class="zh">这篇文章要拆的不是结论，是论证。<b>「不要择时」这个结论是对的</b>，但"错过最好的 10 天"支持不了它，原因有三层：这句话只引用了一个方向（另一方向的幅度还更大）；它描述的极端情形落在随机分布的第 0 百分位（随机犯错几乎无害）；它给出的具体数字随窗口变化三倍。真正的论证要建立在<b>不可分性</b>上：最好的日子和最差的日子高度相邻（10 天里有 8 天相隔不超过 15 个交易日），而且都出现在高波动、深度回撤的环境里——你没有能力只躲开坏的那一半。</p>
+      <p class="zh">这条区分不只是文字游戏，它有实际含义。<b>如果有人给你一个"能躲过最差的日子"的方案，上面那张对称图就是检验它的标尺</b>：一个真实的择时能力必须表现为不对称——躲过最差的效果显著大于错过最好的代价，而且这个不对称要能在一个以上的十年里重复出现。否则它不是能力，是噪音。Sharpe（1975）在五十年前问过同一个问题的另一面：择时者要准确到什么程度才值得做；而对个人投资者的实证记录（Barber &amp; Odean, 2000；Frazzini &amp; Lamont, 2008）显示，真实世界里的择时错误不是随机的，而是系统性的——钱往往在高点涌入、低点撤出。<span class="sup">[1][2][3]</span> 波动聚集这一事实本身，是这条链上最稳的一环。<span class="sup">[4]</span></p>
+    <p class="zh">最后是边界。本文用价格指数而非全收益指数（股息会略微抬高全仓基准，但不改变两侧的对称性）；剔除某日收益等价于假设当天完全不在场，现实中无法做到如此干净；十年的分段样本量偏小，2020 年代的 10.4 个百分点由个别几天主导。这些都不影响主结论，但值得写在明处。</p>
+    <p class="ex-note en" style="margin-top:14px">Full English version below.</p>
+  </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">这句话从哪来</span><span class="en">Origin</span></a>
+      <a href="#s2">02 <span class="zh">只引用了另一半</span><span class="en">Half the evidence</span></a>
+      <a href="#s3">03 <span class="zh">不是典型结果</span><span class="en">Not typical</span></a>
+      <a href="#s4">04 <span class="zh">真正的论证</span><span class="en">The real argument</span></a>
+      <a href="#s5">05 <span class="zh">数字并不稳定</span><span class="en">An unstable number</span></a>
+      <a href="#s6">06 <span class="zh">自己动手看</span><span class="en">Try it yourself</span></a>
+      <a href="#s7">07 <span class="zh">结论</span><span class="en">Conclusion</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
+    </aside>
+  </div>
+
+  <div class="prose">
+
+    <section class="en" id="en-version" style="margin-top:40px">
+      <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
+      <p><b>Question.</b> "Miss the best ten days and your return halves" is one of the most reused charts in the industry. We test what it proves and what it does not, on 14,309 trading days of the S&amp;P 500 price index from January 1970 to October 2026.</p>
+      <p><b>Result 1 — the arithmetic is fine.</b> Buy-and-hold compounds at 8.10% a year; removing the ten best days cuts that to 6.52%.</p>
+      <p><b>Result 2 — but only half the evidence is quoted.</b> Removing the ten worst days lifts the return to 10.12%, a move of +2.02 points against the −1.58 points of the quoted side. The worst days are more extreme than the best (−8.1% versus +7.2% on average), so the side that is left out is the larger one. What the chart actually demonstrates is that precise timing would be very valuable — not that timing is impossible.</p>
+      <p><b>Result 3 — the event is not typical.</b> Removing ten <i>random</i> days leaves the median annualised return at 8.09% against 8.10% for buy-and-hold, with a 5th percentile of 7.99%. Missing exactly the ten best days sits at the 0.0th percentile of that distribution. Random timing errors are nearly harmless; only precise avoidance of the best days is costly.</p>
+      <p><b>Result 4 — the real argument is inseparability.</b> The twenty best days carried average realised volatility of 66% and sat 33% below the prior peak, against 14% and −11% for ordinary days; the twenty worst were at 52% and −29%. Extremes are 2% of days and 36% of variance. Eight of the ten best days fall within fifteen trading days of one of the ten worst, three within one or two days. Spring 2020 shows it directly: −9.5% on 12 March, +9.3% on 13 March, −12% on 16 March.</p>
+      <p><b>Result 5 — the headline number is unstable.</b> Computed by decade, the cost of missing the ten best days runs 3.8, 4.9, 4.3, 6.5, 4.4 and 10.4 percentage points — a three-fold spread. The frequently quoted figure is largely an artefact of the window.</p>
+      <p><b>Implication.</b> The lesson is right — do not time the market — but it should rest on inseparability rather than on the cost of missing the best days. That distinction has a practical use: it is the test any timing claim must pass. Genuine timing skill must be asymmetric — avoiding the worst must pay more than missing the best costs — and that asymmetry must repeat across more than one decade.</p>
+    </section>
+
+    <details class="appendix" id="apx">
+      <summary><span class="zh">附录 A · 数据、方法与来源</span><span class="en">Appendix A · data, method and sources</span></summary>
+      <p class="zh"><b>数据。</b>标普 500 价格指数（^GSPC）日收盘，1970-01-02 至 2026-10-02，共 14,309 个交易日；全收益指数（^SP500TR）日收盘自 1988 年起，用于稳健性对照。来源为 Yahoo Finance 公开行情接口（需显式给 period1/period2，否则日频会被截断），访问日期 2026-10-03。</p>
+      <p class="zh"><b>做法。</b>日收益 r＝P(t)/P(t−1)−1。「剔除第 k 天」＝把该日收益从复利序列中删除，等价于假设当天不在场、收益为 0。年化收益按首尾日期的实际年数折算。随机对照组为 4,000 次无放回抽样，每次随机剔除 10 天。</p>
+      <p class="zh"><b>未计入。</b>交易成本、税费、股息（主口径为价格指数）、以及"择时者离场期间资金的再投资收益"。剔除单日收益是一个理想化操作，现实中无法做到如此干净。</p>
+      <p class="zh"><b>代码。</b><code>tools/fetch_days_raw.py</code>（取数）、<code>tools/make_days_data.py</code>（全部统计与模拟）、<code>tools/make_days_figs.py</code>（六张图）、<code>tools/make_days_note.py</code>（本页与交互图）。固定输入可完全复现。</p>
+      <p class="en"><b>Data.</b> S&amp;P 500 price index (^GSPC) daily closes, 2 January 1970 to 2 October 2026, 14,309 trading days; the total return index (^SP500TR) daily closes from 1988 as a robustness check. Both from the Yahoo Finance public chart endpoint (period1/period2 must be given explicitly or the daily series is truncated), accessed 3 October 2026.</p>
+      <p class="en"><b>Method.</b> Daily return r = P(t)/P(t−1) − 1. "Removing day k" means deleting that day's return from the compounding sequence, equivalent to holding cash that day. Annualisation uses the actual number of years between the first and last dates. The control group is 4,000 draws without replacement, ten days each.</p>
+      <p class="en"><b>Not included.</b> Transaction costs, taxes, dividends (the headline series is price-only), and any reinvestment return on the cash held while out of the market.</p>
+      <p class="en"><b>Code.</b> <code>tools/fetch_days_raw.py</code>, <code>tools/make_days_data.py</code>, <code>tools/make_days_figs.py</code>, <code>tools/make_days_note.py</code>.</p>
+    </details>
+
+    <details class="appendix">
+      <summary><span class="zh">附录 B · 三个容易被忽略的口径问题</span><span class="en">Appendix B · three measurement problems</span></summary>
+      <p class="zh"><b>一、价格指数还是全收益。</b>本文主口径用价格指数，这是那份流传最广的统计所用的口径。换成全收益指数，全仓基准会抬升约两个百分点，但两侧的对称性不变——原命题的推理问题与股息无关。</p>
+      <p class="zh"><b>二、"剔除一天"是不现实的。</b>真实的择时决策不是"某一天不在场"，而是一段时期的仓位变化，中间还夹着买卖成本与执行滑点。本文的口径只用来检验那个论证逻辑，不能直接当成策略回测。</p>
+      <p class="zh"><b>三、随机模拟的假设。</b>对照组假设每天都可被等概率剔除，这忽略了波动聚集——在真实世界里，"离场"往往发生在高波动期，因此比随机剔除更接近"错过最好 10 天"那一端。这恰恰支持本文的结论：问题不在随机错误，而在于离场时机的系统性偏差。</p>
+      <p class="en"><b>One: price versus total return.</b> The headline series is price-only, matching the widely circulated chart. On a total return basis the buy-and-hold baseline rises by roughly two points but the two-sided symmetry is unchanged — the flaw in the reasoning has nothing to do with dividends.</p>
+      <p class="en"><b>Two: removing a single day is not realistic.</b> A real timing decision is a position change over a period, with execution costs and slippage. This framework tests the logic of the argument, not a tradeable strategy.</p>
+      <p class="en"><b>Three: the random control assumes every day is equally likely to be dropped.</b> That ignores volatility clustering: real exits tend to happen in high-volatility periods, which makes them closer to "missing the best days" than to a random draw. That strengthens the conclusion — the problem is not random error but systematic bias in when investors leave.</p>
+    </details>
+
+    <div class="disclaimer">
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开行情数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. The academic papers cited are references only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
+    </div>
+
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
+    <ol class="refs">
+      <li>Sharpe, W. F. (1975). Likely Gains from Market Timing. <i>Financial Analysts Journal</i>, 31(2), 60–69. <a href="https://doi.org/10.2469/faj.v31.n2.60">doi.org/10.2469/faj.v31.n2.60</a></li>
+      <li>Barber, B. M., &amp; Odean, T. (2000). Trading Is Hazardous to Your Wealth: The Common Stock Investment Performance of Individual Investors. <i>Journal of Finance</i>, 55(2), 773–806. <a href="https://doi.org/10.1111/0022-1082.00226">doi.org/10.1111/0022-1082.00226</a></li>
+      <li>Frazzini, A., &amp; Lamont, O. A. (2008). Dumb money: Mutual fund flows and the cross-section of stock returns. <i>Journal of Financial Economics</i>, 88(2), 299–322. <a href="https://doi.org/10.1016/j.jfineco.2007.07.001">doi.org/10.1016/j.jfineco.2007.07.001</a></li>
+      <li>Cont, R. (2001). Empirical properties of asset returns: stylized facts and statistical issues. <i>Quantitative Finance</i>, 1(2), 223–236. <a href="https://doi.org/10.1080/713665670">doi.org/10.1080/713665670</a></li>
+      <li><span class="zh">行情数据：Yahoo Finance，^GSPC 与 ^SP500TR 日收盘序列，访问日期 2026-10-03。</span><span class="en">Market data: Yahoo Finance, daily ^GSPC and ^SP500TR closes, accessed 3 October 2026.</span></li>
+    </ol>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../gold-inflation-hedge/">
+        <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
+        <span class="v"><span class="zh">← 黄金：抗通胀，还是抗波动</span><span class="en">← Gold: an inflation hedge?</span></span>
+      </a>
+      <a href="../">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+      </a>
+    </nav>
+  </div>
+
+  <footer>
+    <div class="footin">
+<span>Working Paper v1.0 · © 2026 Aylon · Hong Kong</span>
+      <span class="spacer"></span>
+      <a href="../share-kit/"><span class="zh">分享图</span><span class="en">Share cards</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+<script>
+const DATA = {"tradeoff": [{"n": 0, "miss": 8.09897380384843, "avoid": 8.09897380384843}, {"n": 1, "miss": 7.89, "avoid": 8.54}, {"n": 2, "miss": 7.7, "avoid": 8.78}, {"n": 3, "miss": 7.52, "avoid": 8.97}, {"n": 4, "miss": 7.35, "avoid": 9.15}, {"n": 5, "miss": 7.19, "avoid": 9.33}, {"n": 6, "miss": 7.02, "avoid": 9.51}, {"n": 7, "miss": 6.89, "avoid": 9.68}, {"n": 8, "miss": 6.76, "avoid": 9.83}, {"n": 9, "miss": 6.64, "avoid": 9.99}, {"n": 10, "miss": 6.52, "avoid": 10.12}, {"n": 11, "miss": 6.41, "avoid": 10.26}, {"n": 12, "miss": 6.29, "avoid": 10.4}, {"n": 13, "miss": 6.18, "avoid": 10.53}, {"n": 14, "miss": 6.07, "avoid": 10.67}, {"n": 15, "miss": 5.96, "avoid": 10.79}, {"n": 16, "miss": 5.86, "avoid": 10.91}, {"n": 17, "miss": 5.76, "avoid": 11.04}, {"n": 18, "miss": 5.67, "avoid": 11.16}, {"n": 19, "miss": 5.57, "avoid": 11.28}, {"n": 20, "miss": 5.48, "avoid": 11.39}, {"n": 21, "miss": 5.38, "avoid": 11.51}, {"n": 22, "miss": 5.29, "avoid": 11.62}, {"n": 23, "miss": 5.2, "avoid": 11.72}, {"n": 24, "miss": 5.11, "avoid": 11.83}, {"n": 25, "miss": 5.02, "avoid": 11.93}, {"n": 26, "miss": 4.93, "avoid": 12.04}, {"n": 27, "miss": 4.84, "avoid": 12.14}, {"n": 28, "miss": 4.76, "avoid": 12.24}, {"n": 29, "miss": 4.67, "avoid": 12.34}, {"n": 30, "miss": 4.59, "avoid": 12.44}, {"n": 31, "miss": 4.5, "avoid": 12.54}, {"n": 32, "miss": 4.41, "avoid": 12.63}, {"n": 33, "miss": 4.33, "avoid": 12.73}, {"n": 34, "miss": 4.25, "avoid": 12.83}, {"n": 35, "miss": 4.17, "avoid": 12.92}, {"n": 36, "miss": 4.09, "avoid": 13.02}, {"n": 37, "miss": 4.01, "avoid": 13.11}, {"n": 38, "miss": 3.93, "avoid": 13.2}, {"n": 39, "miss": 3.85, "avoid": 13.29}, {"n": 40, "miss": 3.78, "avoid": 13.38}, {"n": 41, "miss": 3.7, "avoid": 13.47}, {"n": 42, "miss": 3.62, "avoid": 13.56}, {"n": 43, "miss": 3.55, "avoid": 13.65}, {"n": 44, "miss": 3.47, "avoid": 13.74}, {"n": 45, "miss": 3.4, "avoid": 13.83}, {"n": 46, "miss": 3.33, "avoid": 13.91}, {"n": 47, "miss": 3.25, "avoid": 14.0}, {"n": 48, "miss": 3.18, "avoid": 14.09}, {"n": 49, "miss": 3.11, "avoid": 14.17}, {"n": 50, "miss": 3.04, "avoid": 14.26}, {"n": 51, "miss": 2.97, "avoid": 14.34}, {"n": 52, "miss": 2.9, "avoid": 14.43}, {"n": 53, "miss": 2.82, "avoid": 14.51}, {"n": 54, "miss": 2.75, "avoid": 14.59}, {"n": 55, "miss": 2.68, "avoid": 14.67}, {"n": 56, "miss": 2.61, "avoid": 14.75}, {"n": 57, "miss": 2.55, "avoid": 14.83}, {"n": 58, "miss": 2.48, "avoid": 14.91}, {"n": 59, "miss": 2.41, "avoid": 14.99}, {"n": 60, "miss": 2.34, "avoid": 15.07}, {"n": 61, "miss": 2.27, "avoid": 15.15}, {"n": 62, "miss": 2.2, "avoid": 15.23}, {"n": 63, "miss": 2.13, "avoid": 15.31}, {"n": 64, "miss": 2.07, "avoid": 15.39}, {"n": 65, "miss": 2.0, "avoid": 15.46}, {"n": 66, "miss": 1.93, "avoid": 15.54}, {"n": 67, "miss": 1.87, "avoid": 15.62}, {"n": 68, "miss": 1.8, "avoid": 15.69}, {"n": 69, "miss": 1.74, "avoid": 15.77}, {"n": 70, "miss": 1.68, "avoid": 15.84}, {"n": 71, "miss": 1.61, "avoid": 15.92}, {"n": 72, "miss": 1.55, "avoid": 15.99}, {"n": 73, "miss": 1.49, "avoid": 16.06}, {"n": 74, "miss": 1.43, "avoid": 16.14}, {"n": 75, "miss": 1.36, "avoid": 16.21}, {"n": 76, "miss": 1.3, "avoid": 16.28}, {"n": 77, "miss": 1.24, "avoid": 16.35}, {"n": 78, "miss": 1.18, "avoid": 16.43}, {"n": 79, "miss": 1.12, "avoid": 16.5}, {"n": 80, "miss": 1.06, "avoid": 16.57}, {"n": 81, "miss": 1.0, "avoid": 16.64}, {"n": 82, "miss": 0.94, "avoid": 16.71}, {"n": 83, "miss": 0.87, "avoid": 16.79}, {"n": 84, "miss": 0.82, "avoid": 16.86}, {"n": 85, "miss": 0.76, "avoid": 16.93}, {"n": 86, "miss": 0.7, "avoid": 17.0}, {"n": 87, "miss": 0.64, "avoid": 17.07}, {"n": 88, "miss": 0.58, "avoid": 17.14}, {"n": 89, "miss": 0.52, "avoid": 17.21}, {"n": 90, "miss": 0.46, "avoid": 17.28}, {"n": 91, "miss": 0.4, "avoid": 17.35}, {"n": 92, "miss": 0.34, "avoid": 17.42}, {"n": 93, "miss": 0.29, "avoid": 17.49}, {"n": 94, "miss": 0.23, "avoid": 17.56}, {"n": 95, "miss": 0.17, "avoid": 17.63}, {"n": 96, "miss": 0.12, "avoid": 17.7}, {"n": 97, "miss": 0.06, "avoid": 17.76}, {"n": 98, "miss": 0.0, "avoid": 17.83}, {"n": 99, "miss": -0.05, "avoid": 17.9}, {"n": 100, "miss": -0.11, "avoid": 17.97}], "base": 8.1};
+const C = {line:'#1F4E79', gold:'#B23A1C', mute:'#8A8172', rule:'#E2DCCE',
+           ink:'#1B1A17', base:'#8A94A6'};
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function T(zh, en){
+  return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh;
+}
+const TR = DATA.tradeoff, BASE = DATA.base;
+const W = 900, H = 320, LP = 62, RP = 18, TP = 18, BP = 54;
+const NMAX = 100, YMIN = -2, YMAX = 20;
+const X = n => LP + n / NMAX * (W - LP - RP);
+const Y = v => TP + (YMAX - v) / (YMAX - YMIN) * (H - TP - BP);
+const svg = document.getElementById('d-svg');
+const slider = document.getElementById('d-n');
+
+function draw(n){
+  const row = TR.find(r => r.n === n) || TR[0];
+  svg.innerHTML = '';
+  // 网格与坐标
+  [0, 5, 10, 15, 20].forEach(v => {
+    svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: Y(v), y2: Y(v),
+                                stroke: C.rule, 'stroke-width': 0.8}));
+    svg.appendChild(el('text', {x: LP - 8, y: Y(v) + 4, 'font-size': 10, fill: C.mute,
+                                'text-anchor': 'end'}, v + '%'));
+  });
+  [0, 20, 40, 60, 80, 100].forEach(v => {
+    svg.appendChild(el('text', {x: X(v), y: H - BP + 18, 'font-size': 10, fill: C.mute,
+                                'text-anchor': 'middle'}, v));
+  });
+  svg.appendChild(el('text', {x: LP, y: TP - 4, 'font-size': 11, fill: C.mute},
+                     T('年化收益（%）', 'annualised return (%)')));
+  svg.appendChild(el('text', {x: W - RP, y: H - BP + 34, 'font-size': 11, fill: C.mute,
+                              'text-anchor': 'end'},
+                     T('被剔除的交易日数', 'trading days removed')));
+  // 基准线
+  svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: Y(BASE), y2: Y(BASE),
+                              stroke: C.base, 'stroke-width': 1.2, 'stroke-dasharray': '5 4'}));
+  // 两条曲线
+  const mk = (key, color) => el('polyline', {
+    points: TR.map(r => X(r.n) + ',' + Y(r[key])).join(' '),
+    fill: 'none', stroke: color, 'stroke-width': 2});
+  svg.appendChild(mk('avoid', C.line));
+  svg.appendChild(mk('miss', C.gold));
+  // 当前 N 的标记
+  svg.appendChild(el('line', {x1: X(n), x2: X(n), y1: TP, y2: H - BP,
+                              stroke: C.ink, 'stroke-width': 1, opacity: .35}));
+  svg.appendChild(el('circle', {cx: X(n), cy: Y(row.avoid), r: 5, fill: C.line}));
+  svg.appendChild(el('circle', {cx: X(n), cy: Y(row.miss), r: 5, fill: C.gold}));
+  svg.appendChild(el('circle', {cx: X(n), cy: Y(BASE), r: 3.5, fill: C.base}));
+
+  document.getElementById('d-nlab').textContent = n;
+  document.getElementById('d-base').textContent = BASE.toFixed(2) + '%';
+  document.getElementById('d-miss').textContent = row.miss.toFixed(2) + '%';
+  document.getElementById('d-avoid').textContent = row.avoid.toFixed(2) + '%';
+  document.getElementById('d-cost').textContent = '−' + (BASE - row.miss).toFixed(2) + 'pp';
+  document.getElementById('d-gain').textContent = '+' + (row.avoid - BASE).toFixed(2) + 'pp';
+}
+
+slider.addEventListener('input', e => draw(parseInt(e.target.value, 10)));
+document.getElementById('d-reset').addEventListener('click', () => {
+  slider.value = 10; draw(10);
+});
+draw(10);
+new MutationObserver(() => draw(parseInt(slider.value, 10)))
+  .observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+</script>
