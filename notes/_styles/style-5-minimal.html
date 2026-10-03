@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5 · 极简长文</title>
+<style>
+html[data-lang="en"] .zh{display:none}
+html[data-lang="zh"] .en{display:none}
+
+
+body{--bg:#FFFFFF;--ink:#111;--body:#333;--rule:#EEE;--accent:#0B5FFF;
+  background:#fff;color:var(--body);font-family:"Noto Sans SC","Microsoft YaHei",-apple-system,system-ui,sans-serif;
+  font-size:16px;line-height:1.85;margin:0}
+.lang{position:fixed;top:10px;right:12px;font-size:12px}
+.lang button{font:inherit;border:1px solid var(--rule);background:#fff;padding:3px 8px;cursor:pointer}
+.lang button.on{background:#111;color:#fff}
+.in{max-width:620px;margin:0 auto;padding:52px 22px 80px}
+.mast{font-size:12px;color:#888;margin-bottom:10px;font-family:ui-monospace,Consolas,monospace}
+h1{font-size:28px;line-height:1.3;margin:0 0 6px;color:var(--ink);font-weight:650}
+.en-title{color:#777;font-size:14px;margin-bottom:18px}
+p{margin:16px 0}
+h2{font-size:19px;margin:36px 0 6px;color:var(--ink);font-weight:650}
+img{width:100%}
+.cap{font-size:13px;color:#888;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+th,td{border-bottom:1px solid var(--rule);padding:7px 8px;text-align:left}
+thead th{color:#555;font-weight:600}
+ol.findings{padding-left:20px}
+ol.findings li{margin:6px 0}
+.abs{border-left:2px solid #ddd;padding-left:14px;color:#555;font-size:15px}
+.kpi{display:none}
+.foot{margin-top:34px;padding-top:12px;border-top:1px solid var(--rule);font-size:12.5px;color:#999;
+  font-family:ui-monospace,Consolas,monospace}
+
+</style>
+</head>
+<body class="">
+<div class="lang"><button data-v="zh" class="on">中文</button><button data-v="en">EN</button></div>
+<div class="in">
+  <div class="mast">Working Paper · 2026-10-03 · v3.6</div>
+  <h1>定投与一次性投入：基于 942 个月度观测的实证检验</h1>
+  <div class="en-title">Dollar-cost averaging vs lump sum: evidence from 942 monthly observations</div>
+  <p class="abs">围绕"一次性投入抑或分期投入"这一长期争论，本文区分了存量资金与流量资金两种情形，并以标普 500 全收益与恒生指数共 942 个月度观测为样本，对每一个月度起点构造两种策略的终值分布。结果显示一次性投入在终值期望与胜率两方面均占优，其劣势样本几乎全部集中于部署期收益为负的起点。</p>
+  <h2>一、研究问题与文献定位</h2><p>设想投资者在 t₀ 时刻持有一笔可投资资金。既有文献对此问题的结论并不含糊：Constantinides（1979）证明分期投入在标准期望效用框架下并非最优，Rozeff（1994）与 Knight 和 Mandell（1992）分别以历史数据与数值模拟得到相同方向；而 Dichtl 与 Drobetz（2011）指出，若投资者以前景理论方式对损失敏感，分期投入可改善其主观效用。二者回答的并非同一个问题。</p>
+  <h2>二、数据与方法</h2><p>样本为 ^SP500TR 全收益月度序列（1988-01 至 2026-09，465 个月）与 ^HSI（1986-11 至 2026-07，477 个月）。对每一个月度起点 t₀，比较一次性投入与分 6／12／24／36 个月等额买入、持有 1 至 20 年的终值，等待期现金按 0% 计息。</p>
+  <ol><li class=""><b>主要发现一。</b>12 个月分期、持有 10 年口径下，一次性投入在 79% 的月度起点胜出，终值中位数高出 0.13 倍本金。</li><li class=""><b>主要发现二。</b>分期投入胜率仅 17–18%，与「部署期市场下跌」的样本占比几乎相等；Δ≈α+β·R_dep，β<0。</li><li class=""><b>主要发现三。</b>1999-02 与 2007-10 两个起点，同一策略相差 34 个百分点。</li><li class=""><b>主要发现四。</b>恒生指数口径下一次性胜率降至 63–69%，结论依赖市场。</li></ol>
+  <img src="../assets/figs/f25-winrate-lines.svg" alt="win rate">
+  <div class="cap">图 1｜分期越长，一次性投入胜率越高（来源：本文回测）。每条线为一个持有期。</div>
+  <table>
+  <caption>表 1｜一次性投入胜率（标普 500 全收益）</caption>
+  <thead><tr><th>持有期</th><th>6 个月</th><th>12 个月</th><th>24 个月</th><th>36 个月</th></tr></thead>
+  <tbody>
+    <tr><td>5 年</td><td>75%</td><td>81%</td><td>85%</td><td>83%</td></tr>
+    <tr><td>10 年</td><td>74%</td><td>79%</td><td>84%</td><td>81%</td></tr>
+    <tr><td>20 年</td><td>74%</td><td>82%</td><td>85%</td><td>81%</td></tr>
+  </tbody>
+</table>
+  <div class="foot">极简长文版式 · 单栏 620px · 无卡片无边框</div>
+</div>
+<div style="max-width:1000px;margin:0 auto;padding:0 26px 46px;font-size:12.5px;line-height:1.7;opacity:.6;font-style:italic">版式参考：Stratechery / Marginal Revolution —— 620px 窄栏、无卡片无边框、纯排版</div>
+
+<script>
+document.querySelectorAll('.lang button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.documentElement.setAttribute('data-lang',b.dataset.v);
+    document.querySelectorAll('.lang button').forEach(function(x){
+      x.classList.toggle('on', x===b);
+    });
+  });
+});
+</script>
+
+</body>
+</html>
