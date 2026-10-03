@@ -625,8 +625,8 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           <div class="herotext">
             <p class="hello"><span class="zh">香港</span><span class="en">Hong Kong</span></p>
             <h1 data-split>Aylon</h1>
-            <p class="role"><span class="tw" data-mode="build" data-delay="350" data-sep=" · " data-words-zh="数据科学家|量化策略师|应用 AI 工程师" data-words-en="Data Scientist|Quantitative Strategist|Applied AI Engineer">数据科学家 · 量化策略师 · 应用 AI 工程师</span><span class="caret" aria-hidden="true"></span></p>
-            <p class="intro"><span class="tw" data-delay="1700" data-once="1" data-words-zh="嗨，我是 Aylon。项目和研究笔记都在这里。" data-words-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="role"><span class="tw" data-mode="cycleThenAll" data-delay="300" data-sep=" · " data-words-zh="数据科学家|量化策略师|应用 AI 工程师" data-words-en="Data Scientist|Quantitative Strategist|Applied AI Engineer">数据科学家 · 量化策略师 · 应用 AI 工程师</span><span class="caret" aria-hidden="true"></span></p>
+            <p class="intro"><span class="tw" data-delay="2600" data-once="1" data-words-zh="嗨，我是 Aylon。项目和研究笔记都在这里。" data-words-en="Hi, I'm Aylon. My projects and research notes are all here.">嗨，我是 Aylon。项目和研究笔记都在这里。</span><span class="caret" aria-hidden="true"></span></p>
             <div class="heroacts">
               <a class="hbtn" href="#work"><svg><use href="#i-arrow"/></svg><span class="zh">看项目</span><span class="en">View Projects</span></a>
               <a class="hbtn ghost" href="https://github.com/Aayloo" target="_blank" rel="noopener"><svg><use href="#i-github"/></svg>GitHub</a>
@@ -1202,16 +1202,60 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       var caret = el.parentNode.querySelector(".caret");
       var delay = parseInt(el.getAttribute("data-delay") || "0", 10);
       var sep = el.getAttribute("data-sep") || " · ";
-      var build = el.getAttribute("data-mode") === "build";
+      var mode = el.getAttribute("data-mode") || "";
       var once = el.getAttribute("data-once") === "1";
       if(caret) caret.classList.remove("done");
 
-      /* build 模式：逐个身份打出来，最后停在「A · B · C」的静态样式 */
-      if(build){
-        var steps = [], acc = "";
-        words.forEach(function(w, k){ acc = k === 0 ? w : acc + sep + w; steps.push(acc); });
-        var finalText = steps[steps.length - 1];
+      /* cycleThenAll：三个身份轮流单独打出，最后停在「A · B · C」 */
+      if(mode === "cycleThenAll"){
+        var finalText = words.join(sep);
         if(RM){ el.textContent = finalText; if(caret) caret.classList.add("done"); return; }
+        el.textContent = "";
+        var k = 0;
+        var typeSpeed = isEn() ? 30 : 62;
+        function oneRound(){
+          var text = words[k], i = 0;
+          (function type(){
+            if(i < text.length){
+              i++; el.textContent = text.slice(0, i);
+              twTimers.push(setTimeout(type, typeSpeed));
+            } else {
+              twTimers.push(setTimeout(function(){ back(text); }, 900));
+            }
+          })();
+        }
+        function back(text){
+          var i = text.length;
+          (function step(){
+            if(i > 0){ i--; el.textContent = text.slice(0, i); twTimers.push(setTimeout(step, 26)); }
+            else {
+              k++;
+              if(k < words.length){ twTimers.push(setTimeout(oneRound, 200)); }
+              else {
+                el.textContent = "";
+                twTimers.push(setTimeout(function(){
+                  var j = 0;
+                  (function fill(){
+                    if(j < finalText.length){
+                      j++; el.textContent = finalText.slice(0, j);
+                      twTimers.push(setTimeout(fill, typeSpeed));
+                    } else if(caret){ caret.classList.add("done"); }
+                  })();
+                }, 300));
+              }
+            }
+          })();
+        }
+        twTimers.push(setTimeout(oneRound, delay));
+        return;
+      }
+
+      /* build：逐段打进去，不做回删 */
+      if(mode === "build"){
+        var steps = [], acc = "";
+        words.forEach(function(w, idx2){ acc = idx2 === 0 ? w : acc + sep + w; steps.push(acc); });
+        var doneText = steps[steps.length - 1];
+        if(RM){ el.textContent = doneText; if(caret) caret.classList.add("done"); return; }
         el.textContent = "";
         var si = 0, ci = 0;
         function typeStep(){
@@ -1232,6 +1276,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         return;
       }
 
+      /* 其余：打一次（once）或循环（cycle） */
       var text0 = words[0];
       if(RM){
         el.textContent = text0;
