@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="542.4471pt" height="433.2768pt" viewBox="0 0 542.4471 433.2768" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="542.4471pt" height="215.4944pt" viewBox="0 0 542.4471 215.4944" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-10-03T00:57:31.128913</dc:date>
+    <dc:date>2026-10-03T12:29:09.826858</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -21,35 +21,35 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 433.2768 
-L 542.4471 433.2768 
+   <path d="M 0 215.4944 
+L 542.4471 215.4944 
 L 542.4471 0 
 L 0 0 
-L 0 433.2768 
+L 0 215.4944 
 z
 " style="fill: none"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 66.8736 362.4 
-L 527.7456 362.4 
-L 527.7456 243.6 
-L 66.8736 243.6 
-L 66.8736 362.4 
+    <path d="M 66.8736 143.984 
+L 527.7456 143.984 
+L 527.7456 52.112 
+L 66.8736 52.112 
+L 66.8736 143.984 
 z
 " style="fill: none"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
      <g id="line2d_1">
-      <path d="M 66.8736 362.4 
-L 66.8736 243.6 
-" clip-path="url(#p4278ae21f4)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
+      <path d="M 66.8736 143.984 
+L 66.8736 52.112 
+" clip-path="url(#p5d7892c380)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
      </g>
      <g id="line2d_2"/>
      <g id="text_1">
       <!-- 0 -->
-      <g style="fill: #6b7280" transform="translate(64.3731 374.348) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(64.3731 155.932) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-11" d="M 1670 -83 
 Q 1261 -83 963 179 
@@ -87,14 +87,14 @@ z
     </g>
     <g id="xtick_2">
      <g id="line2d_3">
-      <path d="M 159.048 362.4 
-L 159.048 243.6 
-" clip-path="url(#p4278ae21f4)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
+      <path d="M 159.048 143.984 
+L 159.048 52.112 
+" clip-path="url(#p5d7892c380)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
      </g>
      <g id="line2d_4"/>
      <g id="text_2">
       <!-- 20 -->
-      <g style="fill: #6b7280" transform="translate(154.047 374.348) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(154.047 155.932) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-13" d="M 294 0 
 L 294 147 
@@ -130,14 +130,14 @@ z
     </g>
     <g id="xtick_3">
      <g id="line2d_5">
-      <path d="M 251.2224 362.4 
-L 251.2224 243.6 
-" clip-path="url(#p4278ae21f4)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
+      <path d="M 251.2224 143.984 
+L 251.2224 52.112 
+" clip-path="url(#p5d7892c380)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
      </g>
      <g id="line2d_6"/>
      <g id="text_3">
       <!-- 40 -->
-      <g style="fill: #6b7280" transform="translate(246.2214 374.348) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(246.2214 155.932) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-15" d="M 2195 0 
 L 2195 3482 
@@ -165,14 +165,14 @@ z
     </g>
     <g id="xtick_4">
      <g id="line2d_7">
-      <path d="M 343.3968 362.4 
-L 343.3968 243.6 
-" clip-path="url(#p4278ae21f4)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
+      <path d="M 343.3968 143.984 
+L 343.3968 52.112 
+" clip-path="url(#p5d7892c380)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
      </g>
      <g id="line2d_8"/>
      <g id="text_4">
       <!-- 60 -->
-      <g style="fill: #6b7280" transform="translate(338.3958 374.348) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(338.3958 155.932) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-17" d="M 1837 -83 
 Q 1498 -83 1232 67 
@@ -222,14 +222,14 @@ z
     </g>
     <g id="xtick_5">
      <g id="line2d_9">
-      <path d="M 435.5712 362.4 
-L 435.5712 243.6 
-" clip-path="url(#p4278ae21f4)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
+      <path d="M 435.5712 143.984 
+L 435.5712 52.112 
+" clip-path="url(#p5d7892c380)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
      </g>
      <g id="line2d_10"/>
      <g id="text_5">
       <!-- 80 -->
-      <g style="fill: #6b7280" transform="translate(430.5702 374.348) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(430.5702 155.932) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-19" d="M 1696 -83 
 Q 1286 -83 966 80 
@@ -293,14 +293,14 @@ z
     </g>
     <g id="xtick_6">
      <g id="line2d_11">
-      <path d="M 527.7456 362.4 
-L 527.7456 243.6 
-" clip-path="url(#p4278ae21f4)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
+      <path d="M 527.7456 143.984 
+L 527.7456 52.112 
+" clip-path="url(#p5d7892c380)" style="fill: none; stroke-dasharray: 2.4,3.2; stroke-dashoffset: 0; stroke: #e9edf2; stroke-opacity: 0.7; stroke-width: 0.8"/>
      </g>
      <g id="line2d_12"/>
      <g id="text_6">
       <!-- 100 -->
-      <g style="fill: #6b7280" transform="translate(520.2441 374.348) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(520.2441 155.932) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-12" d="M 608 0 
 L 608 211 
@@ -326,7 +326,7 @@ z
     </g>
     <g id="text_7">
      <!-- 一次性投入胜率（%，12 个月分期） -->
-     <g style="fill: #6b7280" transform="translate(216.600225 388.3) scale(0.1 -0.1)">
+     <g style="fill: #6b7280" transform="translate(216.600225 169.884) scale(0.1 -0.1)">
       <defs>
        <path id="NotoSansSC-Thin-2238" d="M 320 2605 
 L 6112 2605 
@@ -1229,7 +1229,7 @@ z
      <g id="line2d_13"/>
      <g id="text_8">
       <!-- 持有 5 年 -->
-      <g style="fill: #6b7280" transform="translate(25.3486 347.825504) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(25.3486 133.670496) scale(0.096 -0.096)">
        <defs>
         <path id="NotoSansSC-Thin-3719" d="M 2707 4384 
 L 5747 4384 
@@ -1450,7 +1450,7 @@ z
      <g id="line2d_14"/>
      <g id="text_9">
       <!-- 持有 10 年 -->
-      <g style="fill: #6b7280" transform="translate(20.3476 307.224) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(20.3476 102.272) scale(0.096 -0.096)">
        <use xlink:href="#NotoSansSC-Thin-3719"/>
        <use xlink:href="#NotoSansSC-Thin-3b1e" transform="translate(100 0)"/>
        <use xlink:href="#NotoSansSC-Thin-1" transform="translate(200 0)"/>
@@ -1465,7 +1465,7 @@ z
      <g id="line2d_15"/>
      <g id="text_10">
       <!-- 持有 20 年 -->
-      <g style="fill: #6b7280" transform="translate(20.3476 266.622496) scale(0.096 -0.096)">
+      <g style="fill: #6b7280" transform="translate(20.3476 70.873504) scale(0.096 -0.096)">
        <use xlink:href="#NotoSansSC-Thin-3719"/>
        <use xlink:href="#NotoSansSC-Thin-3b1e" transform="translate(100 0)"/>
        <use xlink:href="#NotoSansSC-Thin-1" transform="translate(200 0)"/>
@@ -1478,61 +1478,61 @@ z
     </g>
    </g>
    <g id="patch_3">
-    <path d="M 66.8736 343.195489 
-L 440.123022 343.195489 
-L 440.123022 330.203008 
-L 66.8736 330.203008 
+    <path d="M 66.8736 129.132511 
+L 440.123022 129.132511 
+L 440.123022 119.084992 
+L 66.8736 119.084992 
 z
-" clip-path="url(#p4278ae21f4)" style="fill: #b23a1c; opacity: 0.92"/>
+" clip-path="url(#p5d7892c380)" style="fill: #b23a1c; opacity: 0.92"/>
    </g>
    <g id="patch_4">
-    <path d="M 66.8736 302.593985 
-L 432.899478 302.593985 
-L 432.899478 289.601504 
-L 66.8736 289.601504 
+    <path d="M 66.8736 97.734015 
+L 432.899478 97.734015 
+L 432.899478 87.686496 
+L 66.8736 87.686496 
 z
-" clip-path="url(#p4278ae21f4)" style="fill: #b23a1c; opacity: 0.92"/>
+" clip-path="url(#p5d7892c380)" style="fill: #b23a1c; opacity: 0.92"/>
    </g>
    <g id="patch_5">
-    <path d="M 66.8736 261.992481 
-L 445.8128 261.992481 
-L 445.8128 249 
-L 66.8736 249 
+    <path d="M 66.8736 66.335519 
+L 445.8128 66.335519 
+L 445.8128 56.288 
+L 66.8736 56.288 
 z
-" clip-path="url(#p4278ae21f4)" style="fill: #b23a1c; opacity: 0.92"/>
+" clip-path="url(#p5d7892c380)" style="fill: #b23a1c; opacity: 0.92"/>
    </g>
    <g id="patch_6">
-    <path d="M 66.8736 357 
-L 357.543471 357 
-L 357.543471 344.007519 
-L 66.8736 344.007519 
+    <path d="M 66.8736 139.808 
+L 357.543471 139.808 
+L 357.543471 129.760481 
+L 66.8736 129.760481 
 z
-" clip-path="url(#p4278ae21f4)" style="fill: #1f4e79; opacity: 0.92"/>
+" clip-path="url(#p5d7892c380)" style="fill: #1f4e79; opacity: 0.92"/>
    </g>
    <g id="patch_7">
-    <path d="M 66.8736 316.398496 
-L 371.539684 316.398496 
-L 371.539684 303.406015 
-L 66.8736 303.406015 
+    <path d="M 66.8736 108.409504 
+L 371.539684 108.409504 
+L 371.539684 98.361985 
+L 66.8736 98.361985 
 z
-" clip-path="url(#p4278ae21f4)" style="fill: #1f4e79; opacity: 0.92"/>
+" clip-path="url(#p5d7892c380)" style="fill: #1f4e79; opacity: 0.92"/>
    </g>
    <g id="patch_8">
-    <path d="M 66.8736 275.796992 
-L 385.789246 275.796992 
-L 385.789246 262.804511 
-L 66.8736 262.804511 
+    <path d="M 66.8736 77.011008 
+L 385.789246 77.011008 
+L 385.789246 66.963489 
+L 66.8736 66.963489 
 z
-" clip-path="url(#p4278ae21f4)" style="fill: #1f4e79; opacity: 0.92"/>
+" clip-path="url(#p5d7892c380)" style="fill: #1f4e79; opacity: 0.92"/>
    </g>
    <g id="patch_9">
-    <path d="M 66.8736 362.4 
-L 527.7456 362.4 
+    <path d="M 66.8736 143.984 
+L 527.7456 143.984 
 " style="fill: none; stroke: #d5dae1; stroke-width: 0.9; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_11">
     <!-- 81% -->
-    <g style="fill: #b23a1c" transform="translate(446.57523 340.347248) scale(0.096 -0.096)">
+    <g style="fill: #b23a1c" transform="translate(446.57523 127.756752) scale(0.096 -0.096)">
      <use xlink:href="#NotoSansSC-Thin-19"/>
      <use xlink:href="#NotoSansSC-Thin-12" transform="translate(52.09375 0)"/>
      <use xlink:href="#NotoSansSC-Thin-6" transform="translate(104.1875 0)"/>
@@ -1540,7 +1540,7 @@ L 527.7456 362.4
    </g>
    <g id="text_12">
     <!-- 63% -->
-    <g style="fill: #1f4e79" transform="translate(363.995679 354.151759) scale(0.096 -0.096)">
+    <g style="fill: #1f4e79" transform="translate(363.995679 138.432241) scale(0.096 -0.096)">
      <defs>
       <path id="NotoSansSC-Thin-14" d="M 1619 -83 
 Q 1261 -83 998 13 
@@ -1588,7 +1588,7 @@ z
    </g>
    <g id="text_13">
     <!-- 79% -->
-    <g style="fill: #b23a1c" transform="translate(439.351686 299.745744) scale(0.096 -0.096)">
+    <g style="fill: #b23a1c" transform="translate(439.351686 96.358256) scale(0.096 -0.096)">
      <defs>
       <path id="NotoSansSC-Thin-18" d="M 1344 0 
 Q 1376 717 1462 1318 
@@ -1655,7 +1655,7 @@ z
    </g>
    <g id="text_14">
     <!-- 66% -->
-    <g style="fill: #1f4e79" transform="translate(377.991892 313.550256) scale(0.096 -0.096)">
+    <g style="fill: #1f4e79" transform="translate(377.991892 107.033744) scale(0.096 -0.096)">
      <use xlink:href="#NotoSansSC-Thin-17"/>
      <use xlink:href="#NotoSansSC-Thin-17" transform="translate(52.09375 0)"/>
      <use xlink:href="#NotoSansSC-Thin-6" transform="translate(104.1875 0)"/>
@@ -1663,7 +1663,7 @@ z
    </g>
    <g id="text_15">
     <!-- 82% -->
-    <g style="fill: #b23a1c" transform="translate(452.265008 259.144241) scale(0.096 -0.096)">
+    <g style="fill: #b23a1c" transform="translate(452.265008 64.959759) scale(0.096 -0.096)">
      <use xlink:href="#NotoSansSC-Thin-19"/>
      <use xlink:href="#NotoSansSC-Thin-13" transform="translate(52.09375 0)"/>
      <use xlink:href="#NotoSansSC-Thin-6" transform="translate(104.1875 0)"/>
@@ -1671,7 +1671,7 @@ z
    </g>
    <g id="text_16">
     <!-- 69% -->
-    <g style="fill: #1f4e79" transform="translate(392.241454 272.948752) scale(0.096 -0.096)">
+    <g style="fill: #1f4e79" transform="translate(392.241454 75.635248) scale(0.096 -0.096)">
      <use xlink:href="#NotoSansSC-Thin-17"/>
      <use xlink:href="#NotoSansSC-Thin-1a" transform="translate(52.09375 0)"/>
      <use xlink:href="#NotoSansSC-Thin-6" transform="translate(104.1875 0)"/>
@@ -1679,7 +1679,7 @@ z
    </g>
    <g id="text_17">
     <!-- 恒生指数为价格指数（不含股息），对一次性投入偏保守 -->
-    <g style="fill: #6b7280" transform="translate(66.8736 15.648) scale(0.096 -0.096)">
+    <g style="fill: #6b7280" transform="translate(66.8736 41.245714) scale(0.096 -0.096)">
      <defs>
       <path id="NotoSansSC-Thin-346e" d="M 1248 5318 
 L 1440 5318 
@@ -2870,7 +2870,7 @@ z
    </g>
    <g id="text_18">
     <!-- 换个市场，结论要打折：恒生指数上只有 63–69% -->
-    <g style="fill: #111827" transform="translate(66.8736 213.6) scale(0.124 -0.124)">
+    <g style="fill: #111827" transform="translate(66.8736 18.112) scale(0.124 -0.124)">
      <defs>
       <path id="NotoSansSC-Thin-377a" d="M 307 1760 
 Q 646 1869 1123 2038 
@@ -3639,16 +3639,16 @@ z
    </g>
    <g id="legend_1">
     <g id="patch_10">
-     <path d="M 70.7136 415.08 
-L 86.0736 415.08 
-L 86.0736 408.36 
-L 70.7136 408.36 
+     <path d="M 70.7136 193.0208 
+L 86.0736 193.0208 
+L 86.0736 186.3008 
+L 70.7136 186.3008 
 z
 " style="fill: #b23a1c; opacity: 0.92"/>
     </g>
     <g id="text_19">
      <!-- 标普 500 全收益 -->
-     <g transform="translate(93.7536 415.08) scale(0.096 -0.096)">
+     <g transform="translate(93.7536 193.0208) scale(0.096 -0.096)">
       <defs>
        <path id="NotoSansSC-Thin-3c1b" d="M 2970 4736 
 L 5734 4736 
@@ -4022,16 +4022,16 @@ z
      </g>
     </g>
     <g id="patch_11">
-     <path d="M 176.3406 415.08 
-L 191.7006 415.08 
-L 191.7006 408.36 
-L 176.3406 408.36 
+     <path d="M 176.3406 193.0208 
+L 191.7006 193.0208 
+L 191.7006 186.3008 
+L 176.3406 186.3008 
 z
 " style="fill: #1f4e79; opacity: 0.92"/>
     </g>
     <g id="text_20">
      <!-- 恒生指数 -->
-     <g transform="translate(199.3806 415.08) scale(0.096 -0.096)">
+     <g transform="translate(199.3806 193.0208) scale(0.096 -0.096)">
       <use xlink:href="#NotoSansSC-Thin-346e"/>
       <use xlink:href="#NotoSansSC-Thin-4923" transform="translate(100 0)"/>
       <use xlink:href="#NotoSansSC-Thin-371f" transform="translate(200 0)"/>
@@ -4042,7 +4042,7 @@ z
   </g>
   <g id="text_21">
    <!-- 标普 500 全收益 1988-01 起；恒生指数 1986-11 起。 -->
-   <g style="fill: #6b7280" transform="translate(7.2 424.938488) scale(0.078 -0.078)">
+   <g style="fill: #6b7280" transform="translate(7.2 207.156087) scale(0.078 -0.078)">
     <defs>
      <path id="NotoSansSC-Thin-e" d="M 282 1638 
 L 282 1862 
@@ -4255,8 +4255,8 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p4278ae21f4">
-   <rect x="66.8736" y="243.6" width="460.872" height="118.8"/>
+  <clipPath id="p5d7892c380">
+   <rect x="66.8736" y="52.112" width="460.872" height="91.872"/>
   </clipPath>
  </defs>
 </svg>
