@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全天候组合实测：不预测，真的能穿越周期吗 · Working Paper</title>
+<meta name="description" content="研究笔记：用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、回撤 −22.3%，比 60/40 更稳，但收益更低、夏普更差；而且 40% 的长债贡献了 53.5% 的风险。含 6 张图表与一个可拖股票权重的交互动画。">
+<meta property="og:title" content="全天候组合实测：不预测，真的能穿越周期吗">
+<meta property="og:description" content="它确实更稳（回撤 −22.3% vs −29.6%），但 35 年没跑赢 60/40，而且风险 53.5% 压在长债上。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/all-weather/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-aw.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="全天候组合实测——35 年跑下来没有跑赢 60/40，但它更稳">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="全天候组合实测：不预测，真的能穿越周期吗">
+<meta name="twitter:description" content="全天候做到了「不预测」，没做到「穿越周期」——它是一台把风险从股票挪到债券的机器。">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-aw.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/all-weather/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:10px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽；
+   表格改成自己横向滚动，而不是撑破版心 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+/* 行内数学：STIX 渲染的 SVG，按 em 设高 + 基线对齐（度量由
+   tools/make_inline_math.py 精确计算，勿手改数值） */
+.imath{display:inline-block;width:auto;max-width:100%;vertical-align:baseline}
+.imath.math-t{height:0.827em;vertical-align:-0.118em}
+.imath.math-vix-sr{height:1.191em;vertical-align:-0.255em}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
+.ctrl input[type=range]{flex:1;min-width:120px}
+.vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
+.vstat{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-03 · v1.0 · 资产配置</span><span class="en">2026-10-03 · v1.0 · Asset allocation</span></span></div>
+  <h1 class="rn-title"><span class="zh">全天候组合实测：不预测，真的能穿越周期吗</span><span class="en">All Weather, tested: does not forecasting actually survive every cycle?</span></h1>
+  <p class="rn-standfirst"><span class="zh">「不看宏观、不预测，也能做出穿越周期的组合」是这个行业里最诱人的一句话。本文用 1990-01 至 2025-09 共 428 个月的美国数据检验它——<b>结论是它做到了前半句，没做到后半句</b>。大众版全天候（30% 股票、40% 长债、15% 中债、各 7.5% 黄金与商品）的年化 7.6%、波动 7.6%、最大回撤 −22.3%，确实比 60/40 稳得多（9.2% 波动、−29.6% 回撤）；<b>但它的收益更低（8.9%）、夏普也更差（0.64 对 0.68）</b>。更关键的是，它并没有做到「环境中性」：<b>40% 的长债贡献了 53.5% 的风险</b>，而商品腿只占 1.2%。</span>
+  <span class="en">"You don't need to forecast macro to build a portfolio that survives every cycle" is the most seductive line in this industry. We test it on 428 monthly US observations from January 1990 to September 2025. <b>The first half holds; the second does not.</b> The retail All Weather portfolio — 30% equities, 40% long bonds, 15% intermediate bonds, 7.5% each gold and commodities — returned 7.6% a year with 7.6% volatility and a −22.3% maximum drawdown, far steadier than a 60/40 (9.2% volatility, −29.6% drawdown). <b>But it earned less (8.9%) and its Sharpe ratio was lower (0.64 versus 0.68).</b> More importantly it is not environment-neutral: <b>a 40% long-bond weight contributes 53.5% of the risk</b>, while commodities contribute 1.2%.</span></p>
+
+  <ul class="rn-findings">
+    <li><span class="zh">35 年回测：大众版全天候年化 <b>7.6%</b>，60/40 是 <b>8.9%</b>，纯股 11.0%；夏普分别是 0.64 / 0.68 / 0.60。</span>
+        <span class="en">Over 35 years: All Weather 7.6% a year, 60/40 8.9%, equities 11.0%; Sharpe ratios 0.64 / 0.68 / 0.60.</span></li>
+    <li><span class="zh">它换到的是回撤：<b>−22.3% vs −29.6%</b>（60/40）和 −50.9%（纯股）。波动 7.6% 也明显更低。</span>
+        <span class="en">What it buys is drawdown control: −22.3% against −29.6% for the 60/40 and −50.9% for equities, with lower volatility too.</span></li>
+    <li><span class="zh">「风险预算」名不副实：资金权重 30/40/15/7.5/7.5，风险贡献却是 <b>32.4 / 53.5 / 10.5 / 2.4 / 1.2</b>。</span>
+        <span class="en">The risk budget is not what the name suggests: capital weights of 30/40/15/7.5/7.5 become risk contributions of <b>32.4 / 53.5 / 10.5 / 2.4 / 1.2</b>.</span></li>
+    <li><span class="zh">四个环境里它只在「增长下降」的两格追平或略胜 60/40，在「增长上升」的两格明显落后。</span>
+        <span class="en">Across four environments it matches or edges the 60/40 only when growth falls; when growth rises it lags clearly.</span></li>
+  </ul>
+
+  <div class="rn-abstract"><span class="zh"><b>摘要</b>本文检验全天候组合（All Weather）的公开描述，而非任何机构的真实持仓。以美国 1990-01 至 2025-09 共 428 个月度观测为样本，我们构造六条资产腿（标普 500 全收益、30 年期与 10 年期美国国债、LBMA 伦敦金价、世界银行商品价格指数、3 个月国库券）并回测四个组合：大众版全天候（30/40/15/7.5/7.5，无杠杆）、风险平价（36 个月滚动协方差、等风险贡献）、60/40 与纯股。<b>长期结果</b>：全天候年化 7.6%、波动 7.6%、最大回撤 −22.3%，60/40 为 8.9%、9.2%、−29.6%，纯股为 11.0%、14.7%、−50.9%；全天候降低了波动与回撤，但收益与夏普均未占优。<b>风险结构</b>：按全样本协方差，长债贡献了 53.5% 的组合风险，商品仅 1.2%，「四个环境各 25% 风险」并未实现。<b>环境检验</b>：按月把样本划入「增长方向 × 通胀方向」四格，全天候在「增长下降」两格与 60/40 接近或略优，在「增长上升」两格落后 1.7 与 2.9 个百分点。<b>归因与反事实</b>：把长债换成现金，年化从 7.6% 降至 6.3%——久期既是它的收益来源，也是它的风险来源；加 1.5 倍杠杆后年化升到 9.6%，但最大回撤扩大到 −33.1%，已深于 60/40。</span>
+  <span class="en"><b>Abstract</b>This note tests the public description of the All Weather portfolio rather than any institution's actual holdings. Using 428 monthly US observations from January 1990 to September 2025, we build six asset legs (S&amp;P 500 total return, 30-year and 10-year Treasuries, the LBMA London gold price, the World Bank commodity price index, and three-month T-bills) and backtest four portfolios: the retail All Weather (30/40/15/7.5/7.5, unlevered), risk parity (36-month rolling covariance, equal risk contribution), a 60/40 and all-equity. <b>Long run</b>: All Weather returned 7.6% with 7.6% volatility and a −22.3% drawdown, against 8.9%/9.2%/−29.6% for the 60/40 and 11.0%/14.7%/−50.9% for equities — lower volatility and drawdown, but lower return and Sharpe. <b>Risk structure</b>: long bonds contribute 53.5% of portfolio variance and commodities 1.2%, so the four environments are not equally risked. <b>Environment test</b>: sorting months into a growth × inflation grid, All Weather matches or edges the 60/40 only in the two falling-growth cells and lags by 1.7 and 2.9 points in the rising-growth cells. <b>Attribution and counterfactual</b>: replacing long bonds with cash cuts the return from 7.6% to 6.3%, so duration is both the return source and the risk source; at 1.5x leverage the return rises to 9.6% but the drawdown widens to −33.1%, deeper than the 60/40.</span></div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　全天候 · 风险平价 · 风险预算 · 四象限 · 久期 · 杠杆</span><span class="en"><b>Keywords</b>　All Weather · risk parity · risk budgeting · economic environments · duration · leverage</span></p>
+
+  <div class="split">
+    <div class="prose">
+
+    <h2 id="s1"><span class="num">01</span><span class="zh">它到底是什么</span><span class="en">What it actually is</span></h2>
+    <p class="zh">先说一个最常见的误解：<b>全天候不是「四等分资金」，而是「四个经济环境各占 25% 的风险」</b>。它的框架来自 Ray Dalio：把经济状态按 增长上升／下降 × 通胀上升／下降 分成四格，每个格子里放进在那种环境下受益的资产——增长上升放股票和信用债，增长下降放名义债券，通胀上升放通胀挂钩债、商品与黄金，通胀下降放名义债券和股票。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 1 · 框架本身</span><span class="en">Exhibit 1 · the framework</span></div>
+      <img src="../assets/figs/aw-quadrant.svg" alt="全天候的四象限框架与资产映射">
+      <p class="ex-note zh">这张图不是回测，是它的设计说明——先看清主张，才谈得上检验。关键在于<b>分母是风险不是资金</b>：债券的波动只有股票的四分之一左右，所以要让四个格子风险对等，要么让债券的资金权重远大于股票，要么整体加杠杆。这也解释了为什么机构版需要借钱，而大众版只能靠堆债券权重来近似。</p>
+      <p class="ex-note en">This is not a backtest but the design statement — the claim has to be stated before it can be tested. The denominator is risk, not capital: because bonds are roughly a quarter as volatile as equities, equalising risk across environments requires either far larger bond weights or leverage.</p>
+      <p class="ex-src"><span class="zh">来源：根据全天候的公开描述整理。</span><span class="en">Source: compiled from the public description of the strategy.</span></p>
+    </div>
+
+    <h2 id="s2"><span class="num">02</span><span class="zh">大众版与机构版是两样东西</span><span class="en">Two different things share the name</span></h2>
+    <p class="zh">市面上流传的"全天候"其实是两样不同的东西：<b>机构版</b>是风险平价加杠杆，真实持仓从不公开；<b>大众版</b>是那个被写成书、传播最广的简化版——30% 股票、40% 长债、15% 中债、各 7.5% 黄金与商品，<b>不加杠杆</b>。本文测的是大众版，因为那是普通人真正能照着做的版本。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 资金权重不等于风险权重</span><span class="en">Exhibit 2 · capital weight is not risk weight</span></div>
+      <img src="../assets/figs/aw-riskcontrib.svg" alt="大众版全天候的资金权重与风险贡献对比">
+      <p class="ex-note zh">按全样本协方差分解，40% 的长债贡献了 <b>53.5%</b> 的组合风险，15% 的中债贡献 10.5%，而两支各 7.5% 的通胀资产——黄金 2.4%、商品 <b>1.2%</b>——加起来不到 4%。<b>「四个环境各占 25% 风险」这件事，在大众版里并没有发生。</b>原因很直接：没有杠杆时，你无法把债券的风险抬到股票的水平，只能靠加大它的资金权重，而这样做出来的组合，风险其实集中在一两支资产上。</p>
+      <p class="ex-note en">By full-sample variance decomposition, a 40% long-bond weight contributes <b>53.5%</b> of portfolio risk, while the two inflation assets — gold at 2.4% and commodities at <b>1.2%</b> — sum to under 4%. The "25% of risk per environment" simply does not happen in the unlevered version.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，全样本协方差。</span><span class="en">Source: author's calculations, full-sample covariance.</span></p>
+    </div>
+
+    <h2 id="s3"><span class="num">03</span><span class="zh">数据与方法</span><span class="en">Data and method</span></h2>
+    <p class="zh">样本为 1990-01 至 2025-09 共 428 个月。六条腿分别是：股票＝标普 500 全收益；长债＝30 年期美国国债（久期按 15 近似）；中债＝10 年期（久期 7.5）；黄金＝LBMA 伦敦金价；商品＝世界银行商品价格指数（Total Index，含能源、金属与农产品）；现金＝3 个月国库券。所有组合按<b>年度再平衡</b>，年内权重固定。</p>
+    <p class="zh">对照组包括：<b>风险平价</b>（用 36 个月滚动协方差求等风险贡献权重，每年 1 月重算——刻意不使用未来信息）、<b>60/40</b>（60% 股票 + 40% 中债）与<b>纯股</b>。需要说明的是，本文检验的是全天候的<b>公开描述</b>，不是任何机构的真实持仓——这是这类研究必须写清楚的前提，否则就是对着影子打拳。</p>
+
+    <h2 id="s4"><span class="num">04</span><span class="zh">第一层：35 年的结果</span><span class="en">First test: thirty-five years</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 3 · 四个组合的净值</span><span class="en">Exhibit 3 · four portfolios, one chart</span></div>
+      <img src="../assets/figs/aw-curves.svg" alt="全天候、风险平价、60/40 与纯股的累计净值">
+      <p class="ex-note zh">对数刻度，所以斜率就是年化增速。全天候（红）的线最平——它确实更稳；但 60/40（蓝）在它上方，纯股在最上方。35 年下来，<b>1 元变成约 13 元（全天候）、19 元（60/40）、40 元（纯股）</b>。这不一定说明全天候不好——它的风险更低——但足以说明一件事：<b>「全天候」这个名字容易被读成"收益也不错"，而它在数据里并不是。</b></p>
+      <p class="ex-note en">On a log scale the slope is the growth rate. All Weather is the flattest line — genuinely steadier — but the 60/40 sits above it and equities above that.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，年度再平衡，不扣交易成本。</span><span class="en">Source: author's backtest, annual rebalancing, before transaction costs.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 4 · 收益、波动与回撤</span><span class="en">Exhibit 4 · return, volatility, drawdown</span></div>
+      <img src="../assets/figs/aw-scatter.svg" alt="四个组合的风险收益散点与最大回撤对比">
+      <p class="ex-note zh">左图里全天候落在最左下——波动 7.6% 换成 7.6% 的年化；60/40 在它右上方，波动 9.2% 换 8.9%。右图是它真正的优势：最大回撤 <b>−22.3%</b>，而 60/40 是 −29.6%、纯股是 −50.9%。<b>所以准确的表述是：它用 1.3 个百分点的年化，买了 7 个百分点的回撤改善。</b>夏普上这笔交易并不划算（0.64 对 0.68），但对一个受不了深回撤的投资者，它可能仍然值得。</p>
+      <p class="ex-note en">All Weather sits bottom-left; the 60/40 is up and to the right. Its real edge is the drawdown: −22.3% against −29.6% and −50.9%. In Sharpe terms the trade is not favourable (0.64 versus 0.68) — but for someone who cannot sit through a deep drawdown, it may still be worth it.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；夏普以 3 个月国库券为无风险利率。</span><span class="en">Source: author's backtest; Sharpe uses three-month T-bills as the risk-free rate.</span></p>
+    </div>
+
+    <h2 id="s5"><span class="num">05</span><span class="zh">第二层：四个环境里它做到均衡了吗</span><span class="en">Second test: is it balanced across environments</span></h2>
+    <p class="zh">这是这篇的核心检验。如果全天候真的"环境中性"，那么它在四个格子里的表现应该接近。做法是：<b>增长轴用失业率的 12 个月变化</b>（下降＝增长上升），<b>通胀轴用 CPI 同比的变化方向</b>（上升＝通胀上升）——两条轴都不使用资产价格，避免循环论证。然后把 428 个月分进四个格子。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 5 · 四个环境下的年化收益</span><span class="en">Exhibit 5 · annualised return by environment</span></div>
+      <img src="../assets/figs/aw-regime.svg" alt="四个经济环境下全天候与 60/40 的年化收益对比">
+      <p class="ex-note zh">全天候在四格里的年化是 6.2 / 8.0 / 9.7 / 7.6，最高与最低差 1.6 倍；60/40 是 7.9 / 10.9 / 10.0 / 6.0，差 1.8 倍——<b>全天候确实更均衡一些，但没有质的变化</b>。真正的差别在结构上：<b>它在两个「增长下降」的格子里追平或略胜 60/40（+0.0 与 +1.6 个百分点），在两个「增长上升」的格子里分别落后 1.7 与 2.9 个百分点</b>。也就是说，它把注押在了"增长转弱"上——那是债券真正发挥作用的环境，也正好对应它 53.5% 的风险集中在长债这件事。</p>
+      <p class="ex-note en">All Weather ranges from 6.2% to 9.7% across the four cells; the 60/40 from 6.0% to 10.9%. It is somewhat more balanced but not qualitatively so. The structural point: it matches or edges the 60/40 only in the two falling-growth cells and lags by 1.7 and 2.9 points in the rising-growth cells — the opposite of "neutral".</p>
+      <p class="ex-src"><span class="zh">来源：本文计算；环境划分不使用资产价格。</span><span class="en">Source: author's calculations; the classification uses no asset prices.</span></p>
+    </div>
+
+    <h2 id="s6"><span class="num">06</span><span class="zh">第三层：它靠什么赢，代价是什么</span><span class="en">Third test: where the return comes from</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 6 · 收益归因、久期与杠杆</span><span class="en">Exhibit 6 · attribution, duration and leverage</span></div>
+      <img src="../assets/figs/aw-attrib.svg" alt="各资产对收益的贡献、长债的反事实与杠杆敏感度">
+      <p class="ex-note zh">左图是各条腿对年化的算术贡献：股票 <b>3.5 个百分点</b>（资金 30%）、长债 <b>2.6</b>（资金 40%）、中债 0.8、黄金 0.5、商品 0.3。<b>30% 的股票贡献了最多收益，40% 的长债贡献了最多风险——这就是大众版的真实结构。</b>右图是加杠杆的结果：1.5 倍的年化升到 9.6%，但最大回撤扩到 <b>−33.1%</b>，已经比 60/40 的 −29.6% 更深；2 倍时回撤达到 −43.8%。把长债换成现金（反事实）年化从 7.6% 掉到 6.3%——<b>久期既是它的收益来源，也是它的风险来源，两者是同一件事。</b></p>
+      <p class="ex-note en">Attribution: equities contribute 3.5 points of return on a 30% weight; long bonds 2.6 points on 40% — and 53.5% of the risk. Leverage at 1.5x lifts the return to 9.6% but the drawdown to −33.1%, deeper than the 60/40. Replacing long bonds with cash cuts the return to 6.3%: duration is the return source and the risk source at once.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算；融资成本按 3 个月国库券 + 50bp。</span><span class="en">Source: author's calculations; financing at three-month T-bills plus 50bp.</span></p>
+    </div>
+
+    <h2 id="s7"><span class="num">07</span><span class="zh">自己动手：把股票权重调上去</span><span class="en">Try it: raise the equity weight</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 7 · 拖动股票权重（可交互）</span><span class="en">Exhibit 7 · drag the equity weight</span></div>
+      <div class="vbox">
+        <div class="ctrl">
+          <span style="font-weight:600"><span class="zh">股票权重</span><span class="en">Equity weight</span></span>
+          <input type="range" id="w-eq" min="0" max="90" value="30" step="5">
+          <b id="w-eqlab" style="font-family:var(--mono)">30%</b>
+          <button type="button" id="w-reset"><span class="zh">回到 30%</span><span class="en">Reset to 30%</span></button>
+        </div>
+        <svg id="w-svg" viewBox="0 0 900 300" role="img" aria-label="不同股票权重下的组合净值与回撤"></svg>
+        <div class="vstat">
+          <span><span class="zh">年化</span><span class="en">Return</span> <b id="w-ann">–</b></span>
+          <span><span class="zh">波动</span><span class="en">Vol</span> <b id="w-vol">–</b></span>
+          <span><span class="zh">最大回撤</span><span class="en">Max DD</span> <b id="w-dd">–</b></span>
+          <span><span class="zh">夏普</span><span class="en">Sharpe</span> <b id="w-sh">–</b></span>
+        </div>
+      </div>
+      <p class="ex-note zh">把股票权重从 30% 往上拖，其余四条腿按原版比例缩放（也就是保持"债券为主"的结构）。可以清楚看到一条规律：<b>年化和回撤几乎同步上升</b>——拖到 60%，收益接近 60/40，但回撤也追上了它；拖到 90%，就更像纯股。这个交互想说的不是"哪个权重最好"，而是：<b>全天候给出的那条"低回撤"曲线，不是免费的，它的价格就写在收益那一栏里。</b></p>
+      <p class="ex-note en">Drag the equity weight up; the other four legs scale proportionally. Return and drawdown rise almost together — at 60% you get close to a 60/40's return and its drawdown. The point is not which weight is best, but that All Weather's smoother path has a price, and the price is in the return column.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，年度再平衡，不扣交易成本。</span><span class="en">Source: author's backtest, annual rebalancing, before costs.</span></p>
+    </div>
+
+    <h2 id="s8"><span class="num">08</span><span class="zh">结论：前半句成立，后半句要打折扣</span><span class="en">Conclusion: half the claim survives</span></h2>
+    <p class="zh">回到开头那句话：「不看宏观、不预测，也能做出穿越周期的组合」。<b>前半句成立</b>——全天候确实不需要预测，四个环境的风险均衡在逻辑上是自洽的，数据里它也真的更稳（波动 7.6% 对 9.2%，回撤 −22.3% 对 −29.6%）。<b>后半句要打折扣</b>：它在 35 年里没有跑赢一个简单的 60/40，夏普还略低；所谓"环境中性"在风险结构上并不成立（长债占 53.5%），在收益上也只在"增长下降"的两格占优。</p>
+    <p class="zh">更准确的表述是这样：<b>全天候是一台"把风险从股票挪到债券"的机器，而不是一台"消除环境依赖"的机器。</b>它做的事情是把组合的收益来源从股权溢价部分转移到期限溢价上——所以它在增长转弱、利率下行的环境里舒服，在增长强劲、利率上行的环境里吃力。过去 35 年债券刚好经历了一轮大牛市，这段时间它尚且只做到这个程度；如果未来是 1980 年前那种利率上行的环境，这个结构会更难受。要拿回收益，就得加杠杆——而 1.5 倍杠杆的回撤（−33.1%）已经超过了它想要规避的那个 60/40。</p>
+    <p class="zh">最后是边界。本文检验的是<b>公开描述的版本</b>，不是任何机构的真实持仓，真实策略在资产选择、期限与择时上都可能不同；商品腿用的是世界银行价格指数，不含展期收益，而真实商品投资大多通过期货获得（这会显著改变结果）；债券用收益率曲线近似，未计入真实基金费率；交易成本未计。这些都不改变主结论的方向，但会让具体数字发生位移。</p>
+    <p class="ex-note en" style="margin-top:14px">Full English version below.</p>
+  </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">它是什么</span><span class="en">What it is</span></a>
+      <a href="#s2">02 <span class="zh">两个版本</span><span class="en">Two versions</span></a>
+      <a href="#s3">03 <span class="zh">数据与方法</span><span class="en">Data</span></a>
+      <a href="#s4">04 <span class="zh">35 年结果</span><span class="en">35 years</span></a>
+      <a href="#s5">05 <span class="zh">四个环境</span><span class="en">Environments</span></a>
+      <a href="#s6">06 <span class="zh">归因与杠杆</span><span class="en">Attribution</span></a>
+      <a href="#s7">07 <span class="zh">自己动手</span><span class="en">Try it</span></a>
+      <a href="#s8">08 <span class="zh">结论</span><span class="en">Conclusion</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
+    </aside>
+  </div>
+
+  <div class="prose">
+
+    <section class="en" id="en-version" style="margin-top:40px">
+      <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
+      <p><b>Question.</b> "You don't need to forecast macro to build a portfolio that survives every cycle." We test the public description of the All Weather portfolio — not any institution's actual holdings — on 428 monthly US observations from January 1990 to September 2025.</p>
+      <p><b>Result 1 — the framework.</b> Four economic environments (growth rising/falling × inflation rising/falling), each allocated 25% of <i>risk</i> rather than capital. Because bonds are roughly a quarter as volatile as equities, equalising risk requires either very large bond weights or leverage. The retail version chooses the former and skips the leverage.</p>
+      <p><b>Result 2 — the risk budget does not hold.</b> Capital weights of 30/40/15/7.5/7.5 produce risk contributions of 32.4/53.5/10.5/2.4/1.2. Long bonds dominate; the two inflation assets together contribute under 4%.</p>
+      <p><b>Result 3 — over 35 years it is steadier but not better.</b> All Weather: 7.6% return, 7.6% volatility, −22.3% drawdown, Sharpe 0.64. The 60/40: 8.9%, 9.2%, −29.6%, Sharpe 0.68. Equities: 11.0%, 14.7%, −50.9%, Sharpe 0.60. It buys a seven-point improvement in drawdown for 1.3 points of return.</p>
+      <p><b>Result 4 — it is not environment-neutral.</b> Sorting months by the twelve-month change in unemployment and the direction of year-on-year inflation, All Weather matches or edges the 60/40 only in the two falling-growth cells (+0.0 and +1.6 points) and lags by 1.7 and 2.9 points when growth rises.</p>
+      <p><b>Result 5 — duration is both the source and the risk.</b> Equities contribute 3.5 points of return on a 30% weight; long bonds 2.6 on 40%. Replacing long bonds with cash cuts the return to 6.3%. At 1.5x leverage the return rises to 9.6% but the drawdown reaches −33.1%, deeper than the 60/40 it was meant to improve on.</p>
+      <p><b>Implication.</b> All Weather is a machine for moving risk from equities to bonds, not a machine for removing dependence on the environment. It shifts the return source from the equity premium toward the term premium, which is comfortable when growth slows and rates fall and uncomfortable when the reverse happens. Limitations: we test the public description; the commodity leg is a price index without roll yield; bonds are approximated from the yield curve; costs are excluded.</p>
+    </section>
+
+    <details class="appendix" id="apx">
+      <summary><span class="zh">附录 A · 数据、方法与来源</span><span class="en">Appendix A · data, method and sources</span></summary>
+      <p class="zh"><b>数据。</b>标普 500 全收益（Yahoo Finance ^SP500TR，月度）；美国财政部国债收益率曲线（3 Mo / 10 Yr / 30 Yr，月末值，1993 与 2001 年个别月份 30 年期或 3 个月未印，按相邻月线性插值补齐）；LBMA 伦敦金价月序列（datahub.io）；世界银行商品价格指数 Total Index（Pink Sheet，Monthly Indices 表）；美国 CPI-U 与美国失业率（BLS，CUUR0000SA0 / LNS14000000）。样本 1990-01 至 2025-09，共 428 个月（BLS 在 2025-10 无数据，故截至 9 月）。访问日期 2026-10-04。</p>
+      <p class="zh"><b>做法。</b>长债＝30 年期收益率 ÷ 12 − 久期 15 × 收益率变动；中债＝10 年期收益率 ÷ 12 − 久期 7.5 × 变动；现金＝3 个月收益率 ÷ 12；其余用价格变动。组合按<b>年度再平衡</b>（年内权重固定）。风险平价用 36 个月滚动协方差、迭代求等风险贡献权重，每年 1 月重算，不使用未来信息。环境划分：增长轴＝失业率 12 个月变化（≤0 为增长上升），通胀轴＝CPI 同比的变化方向（≥0 为通胀上升）。</p>
+      <p class="zh"><b>未计入。</b>交易成本、税费与汇率；商品腿为价格指数，不含期货展期收益——真实商品投资多通过期货，展期收益会显著改变结果；债券用收益率曲线近似，未计入真实基金费率；杠杆部分未计入强平与追加保证金风险。</p>
+      <p class="zh"><b>代码。</b><code>tools/fetch_allweather_raw.py</code>（取数）、<code>tools/make_allweather_data.py</code>（全部统计）、<code>tools/make_allweather_figs.py</code>（六张图）、<code>tools/make_allweather_note.py</code>（本页与交互图）。固定输入可完全复现。</p>
+      <p class="en"><b>Data.</b> S&amp;P 500 total return (Yahoo Finance ^SP500TR, monthly); US Treasury yield curve (3-month / 10-year / 30-year, month-end; a few months in 1993 and 2001 lack the 30-year or 3-month print and are filled by linear interpolation between adjacent months); LBMA London gold price, monthly (datahub.io); World Bank commodity price index, Total Index (Pink Sheet, Monthly Indices); US CPI-U and unemployment rate (BLS, CUUR0000SA0 / LNS14000000). Sample: January 1990 to September 2025, 428 months. Accessed 4 October 2026.</p>
+      <p class="en"><b>Method.</b> Long bonds = 30-year yield ÷ 12 − duration 15 × change in yield; intermediate bonds = 10-year yield ÷ 12 − duration 7.5 × change; cash = 3-month yield ÷ 12; other legs from price changes. Portfolios are rebalanced <b>annually</b> (weights fixed within the year). Risk parity solves for equal risk contributions using a 36-month rolling covariance, recomputed each January with no look-ahead. Environment classification: growth axis = twelve-month change in unemployment (≤0 means rising growth); inflation axis = direction of the change in year-on-year CPI (≥0 means rising inflation).</p>
+      <p class="en"><b>Not included.</b> Transaction costs, taxes and FX; the commodity leg is a price index without roll yield, whereas real commodity exposure is mostly futures-based and roll yield matters; bonds are approximated from the yield curve without fund fees; the leverage exercise ignores margin calls.</p>
+      <p class="en"><b>Code.</b> <code>tools/fetch_allweather_raw.py</code>, <code>tools/make_allweather_data.py</code>, <code>tools/make_allweather_figs.py</code>, <code>tools/make_allweather_note.py</code>.</p>
+    </details>
+
+    <details class="appendix">
+      <summary><span class="zh">附录 B · 三个容易被忽略的口径问题</span><span class="en">Appendix B · three measurement problems</span></summary>
+      <p class="zh"><b>一、"全天候"这个名字测的不是一家机构的真实组合。</b>Bridgewater 从不公开持仓，本文测的是公开流传的简化版。任何声称"回测了全天候"的研究，都应该先说明它测的是哪一个版本——否则结论无法比较。</p>
+      <p class="zh"><b>二、商品的展期收益。</b>世界银行指数是价格指数。真实的商品投资通过期货持有，长期存在展期收益（多数为负），这会明显拉低商品腿的贡献。本文的商品腿因此偏乐观，但它的权重与风险贡献都不到 2%，不影响主线。</p>
+      <p class="zh"><b>三、起点决定了债券的角色。</b>样本从 1990 年开始，恰好覆盖了美国利率从高位回落到零再抬升的完整周期。若从 1980 年开始，债券腿的贡献会大得多；若从 2020 年开始，它会很难看。全天候是一个对利率周期高度敏感的结构。</p>
+      <p class="en"><b>One: the name does not identify one portfolio.</b> Bridgewater does not publish holdings; we test the widely circulated simplified version. Any study claiming to backtest "All Weather" should say which version first, or its results are not comparable.</p>
+      <p class="en"><b>Two: commodity roll yield.</b> The World Bank series is a price index. Real commodity exposure is held via futures, where roll yield is typically negative over time and would reduce the leg's contribution. Our commodity leg is therefore flattering, though at under 2% of risk it does not drive the result.</p>
+      <p class="en"><b>Three: the start date decides the bond's role.</b> The sample begins in 1990 and spans a full cycle of US rates falling to zero and rising again. Starting in 1980 would make the bond leg far more valuable; starting in 2020 would make it look terrible.</p>
+    </details>
+
+    <div class="disclaimer">
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的机构与策略名称仅为研究与引用用途，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. Firm and strategy names are referenced for research purposes only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
+    </div>
+
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
+    <ol class="refs">
+      <li>Perold, A. F., &amp; Sharpe, W. F. (1988). Dynamic Strategies for Asset Allocation. <i>Financial Analysts Journal</i>, 44(1), 16–27.</li>
+      <li>Asness, C. S., Frazzini, A., &amp; Pedersen, L. H. (2012). Leverage Aversion and Risk Parity. <i>Financial Analysts Journal</i>, 68(1), 47–59. <a href="https://doi.org/10.2469/faj.v68.n1.1">doi.org/10.2469/faj.v68.n1.1</a></li>
+      <li>Maillard, S., Roncalli, T., &amp; Teïletche, J. (2010). The Properties of Equally Weighted Risk Contribution Portfolios. <i>Journal of Portfolio Management</i>, 36(4), 60–70. <a href="https://doi.org/10.3905/jpm.2010.36.4.060">doi.org/10.3905/jpm.2010.36.4.060</a></li>
+      <li>Anderson, R. M., Bianchi, S. W., &amp; Goldberg, L. R. (2012). Will My Risk Parity Strategy Outperform? <i>Financial Analysts Journal</i>, 68(6), 75–93. <a href="https://doi.org/10.2469/faj.v68.n6.7">doi.org/10.2469/faj.v68.n6.7</a></li>
+      <li>Arnott, R. D., Harvey, C. R., &amp; Markowitz, H. (2019). A Backtesting Protocol in the Era of Machine Learning. <i>Journal of Financial Data Science</i>, 1(1), 64–74.</li>
+      <li><span class="zh">数据：Yahoo Finance ^SP500TR、美国财政部国债收益率曲线、LBMA 伦敦金价、世界银行商品价格指数、美国劳工统计局 CPI-U 与失业率，访问日期 2026-10-04。</span><span class="en">Data: Yahoo Finance ^SP500TR, US Treasury yield curve, LBMA London gold price, World Bank commodity price index, BLS CPI-U and unemployment rate, accessed 4 October 2026.</span></li>
+    </ol>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../beating-inflation/">
+        <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
+        <span class="v"><span class="zh">← 投资能跑赢通胀吗</span><span class="en">← Can investing beat inflation?</span></span>
+      </a>
+      <a href="../">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+      </a>
+    </nav>
+  </div>
+
+  <footer>
+    <div class="footin">
+<span>Working Paper v1.0 · © 2026 Aylon · Hong Kong</span>
+      <span class="spacer"></span>
+      <a href="../share-kit/"><span class="zh">分享图</span><span class="en">Share cards</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+<script>
+const DATA = {"months": ["1990-02", "1990-03", "1990-04", "1990-05", "1990-06", "1990-07", "1990-08", "1990-09", "1990-10", "1990-11", "1990-12", "1991-01", "1991-02", "1991-03", "1991-04", "1991-05", "1991-06", "1991-07", "1991-08", "1991-09", "1991-10", "1991-11", "1991-12", "1992-01", "1992-02", "1992-03", "1992-04", "1992-05", "1992-06", "1992-07", "1992-08", "1992-09", "1992-10", "1992-11", "1992-12", "1993-01", "1993-02", "1993-03", "1993-04", "1993-05", "1993-06", "1993-07", "1993-08", "1993-09", "1993-10", "1993-11", "1993-12", "1994-01", "1994-02", "1994-03", "1994-04", "1994-05", "1994-06", "1994-07", "1994-08", "1994-09", "1994-10", "1994-11", "1994-12", "1995-01", "1995-02", "1995-03", "1995-04", "1995-05", "1995-06", "1995-07", "1995-08", "1995-09", "1995-10", "1995-11", "1995-12", "1996-01", "1996-02", "1996-03", "1996-04", "1996-05", "1996-06", "1996-07", "1996-08", "1996-09", "1996-10", "1996-11", "1996-12", "1997-01", "1997-02", "1997-03", "1997-04", "1997-05", "1997-06", "1997-07", "1997-08", "1997-09", "1997-10", "1997-11", "1997-12", "1998-01", "1998-02", "1998-03", "1998-04", "1998-05", "1998-06", "1998-07", "1998-08", "1998-09", "1998-10", "1998-11", "1998-12", "1999-01", "1999-02", "1999-03", "1999-04", "1999-05", "1999-06", "1999-07", "1999-08", "1999-09", "1999-10", "1999-11", "1999-12", "2000-01", "2000-02", "2000-03", "2000-04", "2000-05", "2000-06", "2000-07", "2000-08", "2000-09", "2000-10", "2000-11", "2000-12", "2001-01", "2001-02", "2001-03", "2001-04", "2001-05", "2001-06", "2001-07", "2001-08", "2001-09", "2001-10", "2001-11", "2001-12", "2002-01", "2002-02", "2002-03", "2002-04", "2002-05", "2002-06", "2002-07", "2002-08", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-04", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-03", "2004-04", "2004-05", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-02", "2005-03", "2005-04", "2005-05", "2005-06", "2005-07", "2005-08", "2005-09", "2005-10", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-06", "2006-07", "2006-08", "2006-09", "2006-10", "2006-11", "2006-12", "2007-01", "2007-02", "2007-03", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2007-10", "2007-11", "2007-12", "2008-01", "2008-02", "2008-03", "2008-04", "2008-05", "2008-06", "2008-07", "2008-08", "2008-09", "2008-10", "2008-11", "2008-12", "2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09"], "legs": {"股票": [1.2884, 2.6499, -2.4946, 9.7486, -0.6755, -0.3196, -9.0385, -4.8668, -0.4268, 6.4652, 2.7847, 4.3549, 7.1525, 2.4205, 0.2375, 4.3149, -4.5816, 4.6611, 2.3678, -1.6731, 1.3445, -4.0292, 11.4356, -1.8619, 1.2938, -1.9443, 2.9368, 0.4883, -1.4868, 4.0847, -2.0469, 1.1756, 0.3459, 3.4048, 1.2276, 0.835, 1.3641, 2.1096, -2.4168, 2.6745, 0.2927, -0.4027, 3.7948, -0.7666, 2.069, -0.9545, 1.2095, 3.4002, -2.7148, -4.3599, 1.2823, 1.6418, -2.4505, 3.2826, 4.1007, -2.4448, 2.2456, -3.6417, 1.4843, 2.5933, 3.8958, 2.9512, 2.9442, 3.9978, 2.3227, 3.3161, 0.2517, 4.22, -0.3574, 4.3888, 1.9265, 3.4039, 0.9267, 0.963, 1.4738, 2.579, 0.3822, -4.4185, 2.1092, 5.6294, 2.7576, 7.5582, -1.9807, 6.247, 0.7838, -4.1089, 5.97, 6.0885, 4.4804, 7.9568, -5.6023, 5.4761, -3.3392, 4.6288, 1.7174, 1.1064, 7.2122, 5.1211, 1.0061, -1.7192, 4.0621, -1.0648, -14.458, 6.4062, 8.1341, 6.0613, 5.7624, 4.1814, -3.1078, 4.0005, 3.8729, -2.3617, 5.5497, -3.1224, -0.4945, -2.7416, 6.3282, 2.0327, 5.8896, -5.0242, -1.8929, 9.7829, -3.0086, -2.0518, 2.4654, -1.5635, 6.2114, -5.2793, -0.4224, -7.884, 0.4895, 3.5475, -9.1178, -6.3352, 7.7707, 0.6703, -2.4341, -0.9841, -6.2606, -8.0751, 1.9068, 7.6708, 0.8761, -1.4596, -1.9281, 3.7607, -6.0631, -0.7364, -7.1233, -7.7955, 0.6572, -10.8686, 8.8019, 5.8858, -5.8744, -2.6198, -1.5006, 0.9713, 8.2369, 5.2683, 1.2761, 1.7631, 1.95, -1.062, 5.6574, 0.8799, 5.2442, 1.8356, 1.3898, -1.5086, -1.5699, 1.3721, 1.945, -3.31, 0.4047, 1.0829, 1.5278, 4.0463, 3.4028, -2.4378, 2.1046, -1.7706, -1.8968, 3.1821, 0.1419, 3.7188, -0.9123, 0.8095, -1.6671, 3.7822, 0.035, 2.6479, 0.2714, 1.2449, 1.3424, -2.8779, 0.1353, 0.6173, 2.3793, 2.5768, 3.2584, 1.902, 1.4027, 1.5123, -1.9561, 1.1187, 4.4298, 3.4893, -1.6612, -3.1006, 1.4988, 3.74, 1.5907, -4.1808, -0.6937, -5.9981, -3.2483, -0.4319, 4.8702, 1.2954, -8.4305, -0.8408, 1.4466, -8.9106, -16.7951, -7.1752, 1.0642, -8.4289, -10.6478, 8.7598, 9.5709, 5.5932, 0.1985, 7.5634, 3.6103, 3.7318, -1.8576, 5.9982, 1.9316, -3.5973, 3.0975, 6.0347, 1.5786, -7.9851, -5.2349, 7.0061, -4.514, 8.9241, 3.8052, 0.0126, 6.6832, 2.3701, 3.4259, 0.0398, 2.9615, -1.132, -1.6669, -2.0333, -5.4324, -7.0296, 10.9292, -0.2208, 1.0229, 4.4814, 4.3242, 3.2908, -0.6274, -6.0101, 4.1203, 1.3889, 2.2523, 2.5843, -1.8465, 0.5799, 0.9114, 5.1796, 1.3575, 3.7503, 1.9267, 2.339, -1.3428, 5.0886, -2.8961, 3.1358, 4.5967, 3.0474, 2.5318, -3.4576, 4.5746, 0.8404, 0.7391, 2.3476, 2.0656, -1.3792, 4.0004, -1.402, 2.4425, 2.6894, -0.2519, -3.002, 5.7474, -1.5816, 0.9595, 1.2859, -1.9359, 2.0952, -6.0334, -2.4744, 8.4355, 0.2973, -1.5772, -4.9623, -0.1349, 6.7837, 0.3878, 1.7957, 0.2592, 3.6868, 0.1405, 0.0187, -1.824, 3.7035, 1.9765, 1.8966, 3.9708, 0.1165, 1.0271, 1.4073, 0.6242, 2.0563, 0.3062, 2.0628, 2.3335, 3.067, 1.1118, 5.7254, -3.6856, -2.5414, 0.3837, 2.4082, 0.6154, 3.7215, 3.2584, 0.5692, -6.835, 2.0378, -9.029, 8.0135, 3.2109, 1.9431, 4.0489, -6.3548, 7.0477, 1.4373, -1.5841, 1.8711, 2.1659, 3.6299, 3.0183, -0.0392, -8.2319, -12.3513, 12.8194, 4.7627, 1.9888, 5.6385, 7.188, -3.7997, -2.6593, 10.9464, 3.8449, -1.0096, 2.7575, 4.3796, 5.3369, 0.6984, 2.3345, 2.3754, 3.0406, -4.6509, 7.0061, -0.6929, 4.4816, -5.1747, -2.9942, 3.713, -8.7202, 0.1834, -8.2544, 9.2204, -4.0781, -9.2099, 8.0961, 5.5885, -5.7615, 6.2834, -2.44, 3.6714, 1.5609, 0.4347, 6.6076, 3.2124, -1.5921, -4.7678, -2.1027, 9.1326, 4.5431, 1.6804, 5.3396, 3.2175, -4.0845, 4.9585, 3.5882, 1.2172, 2.4256, 2.1357, -0.9068, 5.8701, -2.3838, 2.7847, -1.3048, -5.6344, -0.6781, 6.2945, 5.0852, 2.2443, 2.0272, 3.65], "长债": [-0.495, -0.6383, -4.8308, 7.05, 3.265, 0.5508, -7.8483, 1.1992, 3.4467, 6.4317, 2.8, 1.4383, 0.9842, -0.0675, 1.2867, -0.2167, -1.7117, 1.6017, 5.1967, 4.2717, -0.6983, 0.2092, 8.6117, -4.7825, 0.1975, -1.75, -0.8367, 3.9717, 1.4033, 5.5992, 1.2217, 1.2183, -3.135, 1.2358, 3.4825, 2.5367, 2.526, 2.5153, 2.5047, 2.494, 2.4833, 2.4727, 2.462, 2.4513, 2.4407, -4.59, 0.2383, 3.39, -6.3758, -6.6375, -2.5475, -1.48, -1.9183, 4.9958, -1.4783, -5.0667, -0.985, 0.5242, 1.875, 3.8183, 4.1008, 1.2317, 2.4283, 11.1183, 1.76, -3.0467, 2.9733, 2.36, 3.55, 3.5333, 3.3667, -0.3992, -6.9942, -3.3525, -2.8808, -1.0617, 2.6975, -0.0142, -2.5608, 4.0567, 5.2375, 4.9117, -3.6625, -1.3892, -0.1783, -4.0742, 3.1517, 1.4875, 2.5325, 8.2217, -4.5708, 3.8575, 4.4392, 1.8675, 2.01, 2.6017, -1.16, 0.0492, 0.2017, 2.6033, 3.0417, -0.7225, 5.8842, 4.6542, -2.7192, 1.1983, -0.4558, 1.0492, -7.0542, -0.5625, 0.1933, -2.655, -1.5875, -1.1258, -0.8167, 0.8408, -0.2108, -0.9567, -2.5983, 2.2192, 4.46, 4.4383, -1.1333, -1.1242, 2.935, 2.4717, 3.0608, -2.0533, 2.1608, 4.1017, 3.3317, 1.5801, 1.5739, 1.5677, 1.5615, 1.5554, 1.5492, 1.543, 3.7225, 4.1542, 4.8833, -6.8417, -3.9517, 0.4225, 3.2725, -7.6933, 5.1017, 0.8758, 3.7233, 5.655, 5.9258, 7.995, -4.1975, -4.0225, 6.2017, -2.2308, 4.6833, -1.4908, -0.5808, 8.1242, -2.2692, -13.955, 0.9742, 7.7208, -5.22, 0.2108, 1.4117, 2.0058, 2.8967, 2.2825, -9.7283, -1.5725, 0.9883, 2.185, 5.925, 0.1942, 1.695, -4.3125, 2.1633, 1.8533, -2.955, -1.7367, 4.725, 3.5008, 1.2333, -4.7717, 4.2567, -4.465, -3.0883, 1.5808, 1.8742, -1.7342, 0.0775, -4.2708, -2.745, -0.3275, -0.0233, 2.8292, 4.1658, 1.895, 0.8367, 2.6342, -3.3783, -1.4075, 4.4525, -0.97, 0.6875, -3.6642, -1.5417, 4.1692, 3.9983, -0.3717, 2.0325, 8.0233, -0.7192, 5.8867, 2.4058, 1.4942, -4.5125, -4.0358, 1.3883, 0.3325, 2.7325, 0.0192, -2.0792, 16.5342, 10.4442, -9.1125, -2.0108, 4.9017, -6.5242, -4.3867, -0.6108, 0.4442, 2.0933, 1.6333, -1.2242, 3.2842, -9.3325, 3.6208, 0.6025, -3.1492, 2.57, 6.0075, 5.3758, 0.6975, 7.295, -0.6942, -1.2892, -2.4808, -7.1158, -1.525, 0.285, -0.465, 2.5392, 4.3267, -1.6958, 5.665, 9.085, 4.8358, -3.59, 1.5308, 3.0233, 1.0575, -2.0975, -3.585, 4.3858, 5.5625, -1.0675, 2.5392, -0.7742, -1.0692, -0.9125, 1.6433, -2.265, -3.4517, 2.1183, 0.4575, 2.7058, -6.7583, -5.22, -0.99, -2.4833, 2.3317, 1.27, -2.4858, -4.1208, 5.8033, 0.3725, -0.8283, 1.1275, 3.0725, -0.5433, -0.5392, 3.665, -2.3542, 2.76, 2.7458, 0.3317, 7.5308, -4.66, 1.0667, -1.4883, -0.8792, -3.2733, 2.4458, 0.0333, 2.4342, -1.3283, -0.57, -0.7158, 5.1392, 3.1617, -0.455, -0.6017, 0.0025, 5.4033, 0.5742, -1.6783, -0.1683, -3.4667, -7.7967, -1.0025, 0.2042, 1.5542, -0.4033, 1.85, 1.3908, -1.3158, 0.3425, 2.8917, -2.9733, -0.5558, -0.4017, 0.5017, -3.7, -1.8783, 2.0333, -3.2267, 2.1925, -0.2183, -1.4158, 1.8933, -2.7658, -0.6492, 2.5058, 5.1933, 1.4158, -1.5908, 5.0192, -1.0075, 5.5992, 2.5692, -0.5942, 7.21, -2.4292, 0.435, -1.8167, -1.3558, 6.3025, 5.9683, 7.2858, 0.3458, 0.4942, 0.1917, 1.5408, -1.6175, 0.4917, -2.5108, 0.3533, -0.3983, -2.0458, -5.3342, -3.6542, 1.3167, 1.31, 0.5533, 3.2508, -1.1167, -3.51, -1.69, 1.32, -1.0867, -2.58, -1.215, -10.5075, -7.2983, 1.8933, -2.7658, 4.9008, -8.775, -11.125, -2.8117, 7.1058, -2.2317, 5.7325, -7.9475, 9.0483, 1.65, -3.1575, -5.5383, -0.4058, -0.4017, -5.1975, -2.9167, 8.0517, 7.4092, -0.73, -4.9242, 1.105, -7.2992, 3.3933, 3.2267, 5.7608, 4.2308, 2.2592, -8.2517, 1.8458, -4.6125, 2.015, 4.5558, 1.8325, 4.9742, -4.0517, 3.1725, -2.8433, 4.9742, -0.1517], "中债": [0.1025, -0.3408, -2.2042, 4.0533, 1.9917, 1.2275, -3.0533, 1.0383, 2.01, 3.6458, 2.0383, 1.0483, 0.7442, 0.4433, 0.8958, 0.3683, -0.6783, 0.9867, 3.5333, 3.2767, 0.6225, 1.2975, 5.64, -3.9408, 0.9092, -1.4192, 0.1033, 2.7342, 2.0358, 3.745, 1.31, 2.4267, -2.6942, -0.5583, 2.4542, 1.5108, 1.5003, 1.4897, 1.4791, 1.4685, 1.4579, 1.4473, 1.4368, 1.4262, 1.4156, -2.5475, 0.4858, 1.4608, -2.9, -4.1375, -1.6108, -0.2367, -0.6775, 2.2617, 0.0683, -2.6258, -0.79, -0.0992, 1.1842, 2.4533, 3.4833, 0.7517, 1.575, 6.3642, 1.2, -1.2825, 1.8125, 1.3483, 1.5642, 2.5275, 1.83, 0.315, -3.5083, -1.0642, -1.8717, -0.87, 1.4708, 0.0358, -0.6333, 2.38, 3.185, 2.8558, -2.27, -0.2142, 0.3192, -2.1533, 2.0767, 0.935, 1.7558, 4.2175, -1.8983, 2.1783, 2.61, 0.3367, 1.3133, 2.1292, -0.2142, 0.0933, 0.3975, 1.3733, 1.3633, 0.0033, 3.8333, 4.9958, -1.13, -0.3633, 1.07, 0.3125, -4.3367, 0.7408, -0.3875, -1.6533, -0.805, -0.3408, 0.0433, 1.0983, -0.4083, -0.6983, -1.51, -1.1875, 2.5067, 3.46, -0.9975, 0.0692, 2.4742, 0.4275, 2.8283, -0.0475, 0.7083, 2.6558, 3.1567, 0.7052, 0.7021, 0.699, 0.696, 0.6929, 0.6898, 0.6867, 1.455, 3.0183, 2.9142, -3.5642, -1.7958, 0.5533, 1.3017, -4.0333, 3.5158, 1.2317, 2.2725, 3.6017, 2.6658, 4.29, -1.2292, -2.9375, 4.2233, -1.145, 2.6208, -0.555, -0.0208, 4.1825, -0.9608, -6.8725, 0.1817, 4.7583, -2.6408, -0.3583, 1.2242, 0.9892, 1.8067, 1.415, -5.5725, -0.7825, 0.505, 1.1783, 3.1192, 0.0883, 0.9908, -2.4667, 1.3142, 0.4783, -1.6233, -0.7767, 2.6108, 1.6108, 0.7717, -2.6083, 2.2992, -1.9225, -1.5975, 0.6742, 1.0458, -0.6117, -0.2258, -1.5692, -0.7225, -0.185, 0.0467, 1.7758, 2.1358, 1.1417, 0.6083, 1.2808, -1.5042, -0.5083, 2.5767, 0.0025, 0.6067, -2.0208, -0.2692, 2.5883, 2.7142, 0.2133, 1.04, 5.2325, -0.1467, 4.1333, 1.9908, 0.8467, -3.21, -2.2717, 0.8317, 0.6758, 1.1217, 0.8125, 0.9567, 7.3242, 3.7958, -2.8442, -2.9608, 3.2992, -2.96, -2.475, -0.72, 0.6408, 1.0867, 1.0025, -0.1308, 2.4233, -5.0258, 2.6075, 0.4817, -1.4708, 1.4733, 3.035, 2.7042, 1.1017, 3.0417, 0.235, 0.3092, -1.8675, -3.945, 0.2258, -0.5992, -0.365, 2.0417, 2.3967, -0.7775, 3.2833, 4.1492, 1.105, -1.0058, 0.5067, 1.4775, 0.9375, -1.0217, -1.5342, 2.2342, 2.3608, -0.5142, 1.0675, -0.1433, -0.1408, -0.6633, 0.845, -0.9633, -1.4017, 1.015, 0.255, 1.0783, -3.2075, -2.9458, -0.1367, -1.6333, 1.8367, 0.6933, -0.9625, -2.45, 2.6042, 0.1775, -1.0975, 0.5667, 1.6125, -0.3533, -0.6475, 1.6117, -1.1042, 1.46, 1.3708, -0.4425, 3.7642, -2.3508, 0.9767, -0.4575, -0.3758, -1.42, 1.2225, 0.0858, 1.5867, -0.8292, -0.6683, -0.5842, 3.3242, 1.2642, -0.0233, -0.3217, -0.3167, 2.9133, 0.1075, -1.0925, 0.3458, -1.3817, -4.065, -0.3433, 0.2625, 0.5617, -0.0425, 1.085, 0.775, -0.7317, 0.4033, 1.3758, -1.4125, -0.345, -0.4142, 0.0425, -1.2308, -0.765, 0.8958, -1.5117, 1.0575, -0.1517, -0.6725, 1.0625, -1.2717, -0.055, 1.2983, 2.7117, 0.8092, -0.4725, 2.385, -0.1892, 2.815, 1.4358, -0.4533, 3.5283, -1.0842, 0.4292, -0.6992, -0.39, 2.9158, 3.335, 3.9742, 0.1058, 0.48, 0.1, 0.6242, -0.5075, 0.0233, -0.7267, 0.1817, 0.03, -0.645, -2.2125, -1.2125, 0.5267, 0.5967, -0.5342, 1.4225, -0.5425, -1.5108, -1.4183, 0.3983, -0.805, -0.87, -1.6092, -6.09, -2.9458, 1.4392, -1.8742, 1.4492, -4.4892, -5.6367, -1.1458, 2.7708, -0.3308, 2.7517, -4.25, 5.6258, 0.7675, -1.8625, -3.0383, 0.2242, 0.1508, -1.5717, -0.35, 3.5583, 3.8983, 0.0342, -2.5125, 0.5942, -3.1583, 1.7558, 1.6658, 3.5267, 2.6667, 1.8908, -3.7517, 0.4933, -0.9333, 0.7308, 2.0767, 1.0825, 2.4992, -1.875, 1.5992, -1.34, 2.9533, 0.2242], "黄金": [1.7073, -5.7554, -4.8346, -1.3369, -4.607, 3.125, 8.8154, -1.519, -2.0566, 0.2625, -1.3089, 1.8568, -5.2083, -0.2747, -1.3774, -0.2793, 2.8011, 0.2725, -3.2609, -1.9663, 2.8653, 0.2786, 0.5556, -2.2099, 0.0, -2.8249, -1.4535, -0.59, 1.1869, 3.5191, -2.8329, 0.5831, -0.2899, -2.6163, 0.0, -1.791, 0.0, 0.304, 3.6364, 7.3099, 1.3624, 5.3763, -3.3163, -6.3325, 2.5352, 2.7473, 2.4064, 1.0444, -1.292, 0.5236, -1.8229, 1.061, 1.3123, -0.2591, -1.2987, 3.1579, -0.5102, -1.5385, -1.3021, 0.0, -0.5277, 1.3263, 2.356, -1.5345, 0.7792, -0.5155, -0.5181, -0.2604, 0.0, 0.5222, 0.5195, 3.1008, 1.5038, -2.2222, -0.7576, -0.2545, -1.7857, -0.5195, 1.0444, -1.0336, -0.5222, -0.7874, -2.381, -3.794, -2.2535, 1.4409, -2.2727, 0.0, -0.8721, -4.9853, 0.0, -0.3086, 0.6192, -5.8462, -5.5556, 0.0, 2.7682, -0.3367, 4.0541, -2.9221, -2.3411, 0.3425, -3.0717, 1.7606, 2.4221, -0.6757, -0.6803, -1.7123, 0.0, -0.3484, -1.049, -2.4735, -5.4348, -1.9157, 0.3906, 3.1128, 17.3585, -5.7878, -3.413, 0.3534, 5.6338, -4.6667, -2.0979, -1.7857, 4.0, -1.3986, -2.6702, -0.1712, -1.4599, -1.4815, 1.8797, -2.214, -1.1321, 0.3817, -1.1407, 4.6154, -0.7353, -0.7407, 1.4925, 4.0441, 0.0, -2.4735, 0.0, 2.1739, 4.9645, -0.6757, 3.0612, 3.6304, 2.2293, -2.4922, -0.9585, 2.9032, -0.627, 0.6309, 4.0752, 7.5301, 0.5602, -5.0139, -3.8123, 8.5366, 0.0, -1.4045, 2.5641, 5.2778, 0.0, 2.9024, 4.359, 1.7199, -2.1739, 0.4938, -0.9828, -4.7146, 2.0833, 1.5306, 0.7538, 0.9975, 3.7037, 4.5238, 0.6834, -4.0724, -0.2358, 2.6005, -1.1521, -1.6317, 2.1327, -1.6241, 3.3019, 4.1096, 3.0702, 1.4894, 6.9182, 7.8431, 0.9091, 0.3604, 9.6948, 10.4746, -11.7037, 6.3758, -0.1577, -5.5292, -2.0067, 7.1672, 0.3185, 0.1587, 5.3883, -1.5038, 3.6641, -1.7673, -1.6492, 1.372, 0.0, 7.218, 5.8906, 6.755, -0.3722, 10.8344, 3.5955, 4.9892, -5.9917, -2.3077, 0.0, 5.7368, -10.7447, -1.0727, -2.7711, -5.7001, 7.2273, 5.2696, 9.7788, -2.0148, -3.6797, 4.382, 1.8299, -1.2685, 1.606, 5.058, 4.6138, 8.0537, 0.7098, -1.4978, -2.0572, 1.6438, 3.2345, 4.8738, 2.3237, -3.2441, 1.9279, 4.523, 5.5862, 2.0864, 1.5328, -2.2286, 1.1029, 3.4909, 4.0759, 2.1607, 1.0575, 2.8777, 11.8245, 0.7391, -5.9819, 4.3818, -5.6929, 0.8537, 5.5018, -3.9542, -1.611, -3.6386, 0.6293, -0.3127, 2.2585, 7.0552, 0.1146, -1.431, -2.1487, -0.7715, -2.6316, -2.1499, -6.5913, -4.9731, -5.0212, -4.2442, 5.1322, -0.2219, -2.3721, -3.1131, -4.232, 1.8003, 4.5016, 2.7692, -2.8443, -0.6934, -0.7758, 2.502, -1.2204, -4.4788, -1.2126, -3.8462, 2.2128, 4.1632, -1.9185, -3.912, 1.6964, 0.0, -1.4178, -4.5685, -0.8865, 0.6261, 3.0222, -6.2985, -0.9208, 2.0446, 9.2896, 3.75, -0.241, 1.5298, 1.1895, 4.7806, 0.2244, -0.9701, -4.5215, -2.2889, -6.5428, 3.0251, 3.5235, -0.2431, 2.9245, -1.6575, 1.1236, -1.8254, 3.7187, 2.4162, -2.5875, 0.1562, -1.4041, 5.3006, 0.0, -0.4508, 0.7547, -2.397, -1.6117, -3.4321, -2.9079, -0.3328, 1.419, 0.4938, 2.3751, 3.36, 2.1672, -1.4394, -1.153, -0.1555, 5.8411, 3.9735, 6.1571, 0.7333, -1.0589, -1.6054, 0.5438, 5.5443, 2.3062, -0.3131, 5.7161, 1.9608, 0.9324, 6.6397, 6.6053, -2.387, -1.1446, -1.7895, -0.4287, 0.4844, -3.1601, -4.9779, 2.4447, 5.1136, -0.8108, -1.4714, -1.2721, -0.5602, 0.1127, 2.5324, -1.7563, 1.4525, 2.2026, 4.9569, -0.5647, -4.5431, -0.649, -5.6614, 1.8465, -4.7592, -1.0113, 3.6659, 4.2319, 5.5617, -2.2655, 3.1267, 4.5478, -0.4, -2.4598, 0.4117, -1.6402, -0.1563, 0.0, 3.5491, 2.1169, 0.3949, -0.5408, 6.6733, 8.0167, 0.858, -1.0634, 3.0954, 3.0025, 4.0891, 4.6285, -1.4498, -0.1132, 2.3414, 6.8266, 3.0397, 7.878, 2.8278, 1.3297, -0.3877, 0.8383, 8.9074], "商品": [-3.3398, -2.3035, -3.5956, -0.1834, -3.0934, 4.3616, 21.381, 13.5479, 2.7906, -5.3228, -8.3992, -7.8137, -8.5829, 0.1462, -0.9054, -1.562, -2.7545, 2.186, 1.2956, 2.5877, 3.4213, -2.0465, -5.9244, -1.9166, -0.062, -0.7759, 3.0654, 2.4886, 2.7539, -1.1239, -0.6121, 1.349, -1.2153, -3.017, -2.1444, -1.7901, 1.6342, 1.979, 0.4245, 0.0604, -2.8666, -0.0621, 0.0, -2.0516, 0.3174, -2.0563, -2.0995, 1.8806, 0.5505, -1.1916, 2.3142, 4.2052, 2.7515, 4.0464, -2.5164, -0.7334, 0.4433, 3.148, -1.3406, 2.3995, 0.734, -0.5045, 3.4366, -1.1166, -1.8177, -2.1599, 0.2007, 0.6581, -0.8528, 2.6663, 3.2672, -0.0541, 4.2749, 0.3892, 2.4813, -3.0517, -2.9917, 1.5554, 0.5281, 2.0489, 2.7542, -0.8267, 3.9404, -0.3159, -6.1433, -2.5195, -3.6504, 4.2588, -4.5623, 0.0556, 1.0556, -0.5498, 2.1282, -2.1922, -6.8622, -5.8824, -1.2626, -3.2289, 1.4536, -0.0977, -7.4641, -0.8806, -2.914, 4.7584, -2.5856, -3.0846, -5.4774, 3.5016, -4.6544, 5.306, 8.7095, 0.1453, 1.166, 7.7195, 5.1375, 5.3334, -0.4102, 4.5406, 2.4384, 1.3324, 5.0613, -0.5843, -8.5899, 10.8184, 5.2496, -2.6171, 2.4788, 7.1826, -3.0168, 3.3483, -4.1372, -0.3603, -2.7712, -6.6231, 1.7784, 3.1418, -2.8033, -6.8245, 1.5521, -3.3476, -11.091, -2.8613, -0.5422, 1.6326, 2.0615, 10.2168, 4.4623, -0.0577, -1.9247, 3.4133, 1.9158, 5.3619, 0.2192, -6.0032, 10.3357, 6.6405, 7.1704, -7.1635, -10.191, 2.7201, 2.8083, -0.2116, 2.9378, -4.3346, 6.3582, -0.2453, 5.8783, 3.4653, -0.25, 5.8055, 0.0593, 6.4734, -3.632, 3.9179, 4.7804, -0.0157, 10.4945, -8.006, -3.2885, 6.3487, 2.3144, 11.473, -1.4396, -4.6645, 7.2166, 4.1707, 9.0189, 2.6982, -2.5848, -6.0095, 5.0988, 3.0247, -3.4718, 1.4146, 9.5043, 1.0626, -2.6584, 5.3967, 0.6766, -11.0242, -1.867, 2.4607, 2.9978, -7.4478, 5.7612, 3.7718, 6.1949, 0.7332, 2.8551, 4.2461, -5.1518, 6.1772, 6.6019, 7.7763, -0.5801, 2.8331, 5.7612, 7.3305, 5.4528, 8.2807, 6.2234, 0.3446, -12.77, -9.9678, -21.3825, -18.3153, -14.2944, 3.6306, -4.619, 2.1872, 3.6289, 9.0551, 10.6588, -4.5501, 8.7302, -4.8849, 6.8877, 4.1825, 0.911, 3.3762, -3.0698, 3.3022, 4.6142, -7.5001, -1.1938, 0.8064, 3.1087, 1.854, 5.325, 3.5785, 6.4208, 5.1992, 5.3684, 4.6787, 5.3532, -5.3152, -0.0485, 2.0058, -3.9249, -0.3417, -2.7708, -0.6228, -2.1283, 2.2817, 5.2759, 2.7277, -2.7107, -5.764, -9.6706, 6.2562, 5.8846, 0.3948, -1.1024, -1.4544, 0.3439, 1.938, 2.0017, -4.5464, -4.1065, -0.3046, -0.6721, 1.9726, 1.7461, 0.2184, -1.0292, -1.0045, 2.2353, -1.8288, 1.7448, -1.2834, 0.0024, 0.8081, 0.7019, -3.5072, -3.432, -3.7438, -6.8333, -6.2077, -13.0296, -14.0906, 8.5904, -2.9208, 1.8342, 5.4404, -2.6431, -6.1963, -10.3264, -0.3708, 0.2449, -5.6964, -8.4011, -9.5673, 2.917, 8.9049, 5.1098, 6.4759, 3.5341, -3.1129, 0.7775, 0.3877, 5.224, -2.0688, 8.7548, 1.2446, 0.2675, -4.2285, 0.5243, -2.3435, -4.2752, 2.9733, 3.7061, 4.426, 2.2158, 5.1158, 1.2982, 6.529, -3.6465, 0.3804, 5.0786, 4.7823, -1.2839, -1.8227, -1.2925, 4.5076, 1.482, -11.6224, -7.8162, 1.2767, 3.9576, 1.6919, 3.5304, -1.584, -6.5734, 0.6468, -5.9538, 3.7199, -2.2076, 4.2939, 2.7529, -2.2153, -9.6295, -23.7092, -14.8533, 11.4821, 14.0417, 4.9089, 4.6773, -2.1104, 1.1972, 5.8002, 10.6093, 7.4698, 9.8911, 0.6248, 1.2571, 6.7126, 4.8189, 3.0389, -1.5126, 6.6608, 11.2671, -4.7391, -1.2738, 6.749, 7.9119, 19.5259, -5.5477, 3.2566, 3.0994, -3.1031, 0.5585, -6.9261, -5.9878, -3.2108, -4.1054, -5.7085, -5.0598, -5.0654, 4.1516, -8.668, -1.7439, 4.1309, 4.7864, 6.1171, -1.6625, -5.0953, -4.6651, 0.8441, 0.7735, 2.0664, 5.1459, -4.1839, 0.2767, 0.6287, -2.7132, -3.8296, 2.299, -0.7, 0.7116, 4.6544, -2.1933, -3.3401, -5.643, -2.2539, 5.3549, -0.5041, -2.3741, 0.0059]}, "cash": [0.6667, 0.67, 0.6725, 0.6725, 0.6675, 0.6667, 0.645, 0.6358, 0.6142, 0.6117, 0.6033, 0.5525, 0.5308, 0.5183, 0.4933, 0.4733, 0.4758, 0.4758, 0.475, 0.4575, 0.4383, 0.4133, 0.3725, 0.33, 0.3283, 0.3358, 0.3458, 0.3158, 0.3158, 0.3042, 0.2708, 0.2692, 0.2292, 0.2525, 0.2817, 0.2625, 0.2621, 0.2617, 0.2612, 0.2608, 0.2604, 0.26, 0.2596, 0.2592, 0.2587, 0.2583, 0.2675, 0.2558, 0.2542, 0.2892, 0.2967, 0.3308, 0.3592, 0.355, 0.3658, 0.39, 0.4, 0.4333, 0.4767, 0.4733, 0.5, 0.495, 0.49, 0.4892, 0.4842, 0.4667, 0.4667, 0.4542, 0.45, 0.4567, 0.4567, 0.425, 0.4208, 0.4183, 0.4275, 0.4283, 0.4317, 0.4317, 0.4433, 0.4408, 0.4283, 0.4308, 0.4275, 0.4342, 0.4292, 0.435, 0.4458, 0.44, 0.4133, 0.4375, 0.4375, 0.4367, 0.4217, 0.4342, 0.435, 0.4467, 0.4325, 0.4433, 0.43, 0.4167, 0.4192, 0.425, 0.425, 0.4133, 0.3642, 0.3608, 0.3808, 0.3733, 0.3733, 0.3883, 0.3742, 0.3792, 0.3883, 0.3983, 0.3958, 0.415, 0.4067, 0.4267, 0.4417, 0.4442, 0.48, 0.4817, 0.49, 0.485, 0.4692, 0.49, 0.5225, 0.5258, 0.5192, 0.5317, 0.5175, 0.4908, 0.4644, 0.438, 0.4115, 0.3851, 0.3587, 0.3323, 0.3058, 0.2833, 0.19, 0.1792, 0.1558, 0.14, 0.1408, 0.1467, 0.1467, 0.1475, 0.1433, 0.1408, 0.1442, 0.1417, 0.1333, 0.1233, 0.1042, 0.1, 0.0975, 0.1008, 0.0967, 0.0942, 0.0967, 0.0675, 0.0758, 0.0817, 0.0725, 0.08, 0.08, 0.075, 0.0708, 0.0792, 0.08, 0.0692, 0.0783, 0.0975, 0.1058, 0.1208, 0.1225, 0.1442, 0.1725, 0.1575, 0.1717, 0.2092, 0.2192, 0.225, 0.2333, 0.2492, 0.2708, 0.2842, 0.2625, 0.3142, 0.3333, 0.3342, 0.3642, 0.3725, 0.3875, 0.3833, 0.3958, 0.3783, 0.4183, 0.4267, 0.3833, 0.4317, 0.435, 0.3958, 0.4167, 0.4367, 0.4225, 0.4, 0.3983, 0.3567, 0.4275, 0.335, 0.2858, 0.3342, 0.3025, 0.23, 0.1367, 0.1725, 0.1017, 0.0975, 0.165, 0.1333, 0.1292, 0.1358, 0.085, 0.01, 0.0017, 0.0092, 0.0125, 0.0133, 0.0142, 0.0033, 0.0117, 0.0142, 0.0117, 0.0092, 0.005, 0.0008, 0.0067, 0.0033, 0.0017, 0.0075, 0.0125, 0.0117, 0.0125, 0.0142, 0.0117, 0.0133, 0.0117, 0.0117, 0.015, 0.0058, 0.0125, 0.0108, 0.0042, 0.0017, 0.0033, 0.0008, 0.0133, 0.0008, 0.0017, 0.0017, 0.0017, 0.0008, 0.0033, 0.0067, 0.0042, 0.0058, 0.0025, 0.0033, 0.0058, 0.0075, 0.005, 0.0075, 0.0092, 0.0017, 0.0033, 0.0058, 0.0033, 0.0025, 0.0025, 0.0017, 0.0025, 0.0017, 0.0025, 0.0025, 0.0042, 0.0008, 0.0025, 0.0033, 0.0025, 0.0017, 0.0042, 0.0017, 0.0008, 0.0017, 0.0017, 0.0008, 0.0033, 0.0025, 0.0008, 0.0017, 0.0042, 0.0, 0.0008, 0.0017, 0.0033, 0.0, 0.0, 0.0008, 0.0092, 0.0117, 0.0183, 0.0192, 0.015, 0.0133, 0.0225, 0.0167, 0.0158, 0.0217, 0.0167, 0.0167, 0.0317, 0.0367, 0.0417, 0.0333, 0.0617, 0.0567, 0.0717, 0.07, 0.0833, 0.0792, 0.08, 0.0825, 0.095, 0.1067, 0.1192, 0.125, 0.1358, 0.1375, 0.1467, 0.1475, 0.1617, 0.1625, 0.1767, 0.1833, 0.1925, 0.2033, 0.2017, 0.2033, 0.2025, 0.2025, 0.1958, 0.1817, 0.1675, 0.175, 0.1592, 0.1325, 0.135, 0.1233, 0.13, 0.1208, 0.0042, 0.0083, 0.0108, 0.0108, 0.0075, 0.0067, 0.0067, 0.0067, 0.0067, 0.0067, 0.0058, 0.0033, 0.0008, 0.0008, 0.0008, 0.0042, 0.0042, 0.0025, 0.0058, 0.005, 0.0092, 0.005, 0.0025, 0.005, 0.0142, 0.0308, 0.0608, 0.1067, 0.185, 0.2, 0.2325, 0.3108, 0.3392, 0.3433, 0.3817, 0.3875, 0.395, 0.3625, 0.44, 0.4367, 0.4567, 0.46, 0.4625, 0.4633, 0.4633, 0.4667, 0.4608, 0.4608, 0.4575, 0.4567, 0.4567, 0.4558, 0.4575, 0.4508, 0.4108, 0.3967, 0.3967, 0.3667, 0.3642, 0.365, 0.365, 0.3625, 0.3608, 0.3567, 0.3742, 0.3675]};
+const C = {line:'#1F4E79', hot:'#B23A1C', alt:'#8A94A6', mute:'#8A8172', rule:'#E2DCCE', ink:'#1B1A17'};
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function T(zh, en){ return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh; }
+
+const LEGS = ['股票', '长债', '中债', '黄金', '商品'];
+const BASE = {股票: 0.30, 长债: 0.40, 中债: 0.15, 黄金: 0.075, 商品: 0.075};
+const R = DATA.legs;                     // 各腿月度收益（%）
+const CASH = DATA.cash;                  // 现金月收益（%）
+const N = DATA.months.length;
+const YEARS = N / 12;
+
+function curveFor(equityPct){
+  const e = equityPct / 100;
+  const rest = 1 - e;
+  const baseRest = 1 - BASE.股票;
+  const w = {};
+  LEGS.forEach(function (k) {
+    w[k] = k === '股票' ? e : BASE[k] / baseRest * rest;
+  });
+  const r = new Array(N);
+  for (let i = 0; i < N; i++) {
+    let v = 0;
+    for (let j = 0; j < LEGS.length; j++) v += w[LEGS[j]] * R[LEGS[j]][i];
+    r[i] = v / 100;
+  }
+  const curve = [1];
+  for (let i = 0; i < N; i++) curve.push(curve[i] * (1 + r[i]));
+  const ann = (Math.pow(curve[N], 1 / YEARS) - 1) * 100;
+  const mean = r.reduce(function (a, b) { return a + b; }, 0) / N;
+  const vol = Math.sqrt(r.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / (N - 1)) * Math.sqrt(12) * 100;
+  const cmean = CASH.reduce(function (a, b) { return a + b; }, 0) / N / 100;
+  let peak = -Infinity, dd = 0;
+  curve.forEach(function (v) { peak = Math.max(peak, v); dd = Math.min(dd, v / peak - 1); });
+  return { curve: curve, ann: ann, vol: vol, dd: dd * 100, sharpe: (mean * 12 - cmean * 12) / (vol / 100) };
+}
+
+const W = 900, H = 300, LP = 62, RP = 18, TP = 16, BP = 44;
+const TOP = {y: 16, h: 150}, BOT = {y: 200, h: 66};
+const svg = document.getElementById('w-svg');
+const slider = document.getElementById('w-eq');
+
+function draw(pct){
+  const cur = curveFor(pct);
+  const ref = curveFor(30);
+  svg.innerHTML = '';
+  const all = cur.curve.concat(ref.curve);
+  const lmin = Math.log(Math.min.apply(null, all)), lmax = Math.log(Math.max.apply(null, all));
+  const X = i => LP + i / (cur.curve.length - 1) * (W - LP - RP);
+  const Y = v => TOP.y + TOP.h - (Math.log(v) - lmin) / (lmax - lmin) * TOP.h;
+
+  svg.appendChild(el('polyline', {points: ref.curve.map(function (v, i) { return X(i) + ',' + Y(v); }).join(' '),
+                                  fill: 'none', stroke: C.alt, 'stroke-width': 1.5, 'stroke-dasharray': '4 4'}));
+  svg.appendChild(el('polyline', {points: cur.curve.map(function (v, i) { return X(i) + ',' + Y(v); }).join(' '),
+                                  fill: 'none', stroke: C.hot, 'stroke-width': 2}));
+  svg.appendChild(el('text', {x: LP, y: TOP.y - 2, 'font-size': 11, fill: C.mute},
+                     T('累计净值（对数刻度）；虚线为原版 30%', 'cumulative value (log); dashed = the original 30%')));
+  // 回撤
+  let peak = -Infinity;
+  const dd = cur.curve.map(function (v) { peak = Math.max(peak, v); return v / peak - 1; });
+  const dmin = Math.min.apply(null, dd.concat([-0.05]));
+  const YD = v => BOT.y + (v / dmin) * BOT.h;
+  svg.appendChild(el('polyline', {points: dd.map(function (v, i) { return X(i) + ',' + YD(v); }).join(' '),
+                                  fill: 'none', stroke: C.line, 'stroke-width': 1.6}));
+  svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: BOT.y, y2: BOT.y, stroke: C.rule}));
+  svg.appendChild(el('text', {x: LP, y: BOT.y - 4, 'font-size': 11, fill: C.mute},
+                     T('回撤（%）', 'drawdown (%)')));
+  [0, 0.5, 1].forEach(function (f) {
+    const v = dmin * f;
+    svg.appendChild(el('text', {x: LP - 8, y: YD(v) + 4, 'font-size': 10, fill: C.mute,
+                                'text-anchor': 'end'}, Math.round(v * 100)));
+  });
+  [0, 0.5, 1].forEach(function (f) {
+    const i = Math.round(f * (DATA.months.length - 1));
+    svg.appendChild(el('text', {x: X(i), y: BOT.y + BOT.h + 16, 'font-size': 10, fill: C.mute,
+                                'text-anchor': 'middle'}, DATA.months[i].slice(0, 4)));
+  });
+
+  document.getElementById('w-eqlab').textContent = pct + '%';
+  document.getElementById('w-ann').textContent = cur.ann.toFixed(1) + '%';
+  document.getElementById('w-vol').textContent = cur.vol.toFixed(1) + '%';
+  document.getElementById('w-dd').textContent = cur.dd.toFixed(1) + '%';
+  document.getElementById('w-sh').textContent = cur.sharpe.toFixed(2);
+}
+
+slider.addEventListener('input', e => draw(parseInt(e.target.value, 10)));
+document.getElementById('w-reset').addEventListener('click', () => { slider.value = 30; draw(30); });
+draw(30);
+new MutationObserver(() => draw(parseInt(slider.value, 10)))
+  .observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+</script>

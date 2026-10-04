@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-09-29</lastBuildDate>
   <item>
+    <title>全天候组合实测：不预测，真的能穿越周期吗</title>
+    <link>https://aayloo.github.io/notes/all-weather/</link>
+    <guid>https://aayloo.github.io/notes/all-weather/</guid>
+    <pubDate>Sun, 04 Oct 2026 00:00:00 +0000</pubDate>
+    <description>用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、波动 7.6%、最大回撤 −22.3%，比 60/40 稳得多（9.2% / −29.6%），但收益更低（8.9%）夏普更差（0.64 对 0.68）。更关键的是它并没有做到环境中性：40% 的长债贡献了 53.5% 的风险，商品腿只有 1.2%。含 6 张图表与 1 个可拖股票权重的交互动画。</description>
+  </item>
+  <item>
     <title>投资能跑赢通胀吗</title>
     <link>https://aayloo.github.io/notes/beating-inflation/</link>
     <guid>https://aayloo.github.io/notes/beating-inflation/</guid>
