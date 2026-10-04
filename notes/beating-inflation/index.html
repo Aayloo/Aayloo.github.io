@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>投资能跑赢通胀吗 · Working Paper</title>
+<meta name="description" content="研究笔记：用 1990-01 至 2026-08 共 432 个月的美国数据检验「投资能跑赢通胀」。股票年化实际收益 8.4%，现金只有 0.1%——最初的 100 元 36 年后只值 102 元。含 6 张图表与一个可拖持有期的交互动画。">
+<meta property="og:title" content="投资能跑赢通胀吗">
+<meta property="og:description" content="股票 8.4%、债券 1.9%、现金 0.1%——「投资能跑赢通胀」说的是某一类投资，不是所有投资。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/beating-inflation/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-infl.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="投资能跑赢通胀吗——现金 36 年实际收益 0.1%">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="投资能跑赢通胀吗">
+<meta name="twitter:description" content="现金 36 年实际收益 0.1%，持有 20 年仍有六成窗口跑输通胀。">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-infl.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/beating-inflation/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:10px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 8px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽；
+   表格改成自己横向滚动，而不是撑破版心 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+/* 行内数学：STIX 渲染的 SVG，按 em 设高 + 基线对齐（度量由
+   tools/make_inline_math.py 精确计算，勿手改数值） */
+.imath{display:inline-block;width:auto;max-width:100%;vertical-align:baseline}
+.imath.math-t{height:0.827em;vertical-align:-0.118em}
+.imath.math-vix-sr{height:1.191em;vertical-align:-0.255em}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
+.ctrl input[type=range]{flex:1;min-width:120px}
+.vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
+.vstat{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-03 · v1.0 · 资产配置</span><span class="en">2026-10-03 · v1.0 · Asset allocation</span></span></div>
+  <h1 class="rn-title"><span class="zh">投资能跑赢通胀吗</span><span class="en">Can investing beat inflation?</span></h1>
+  <p class="rn-standfirst"><span class="zh">「钱放着会贬值，投资才能保值」是这个行业里最不需要论证的一句话。本文用 1990-01 至 2026-08 共 432 个月的美国数据检验它，结论是分层的：<b>对股票成立</b>——标普 500 全收益的年化实际收益 8.4%，36 年实际购买力 18.5 倍；<b>对现金几乎不成立</b>——3 个月国库券的年化实际收益只有 0.1%，最初的 100 元 36 年后只值 102 元，而且持有 20 年仍有 <b>六成</b>的窗口跑输通胀；<b>对债券只是勉强打平</b>（1.9%）。更反直觉的是 2022 年：通胀 6.5% 的那一年，五类资产<b>没有一个扛住</b>，连最抗跌的现金也实际亏了 4.7%。</span>
+  <span class="en">"Cash loses value; investing preserves it" is the one line in this industry that nobody bothers to argue with. We test it on 432 monthly observations of US data from January 1990 to August 2026, and the answer splits. <b>It holds for equities</b> — the S&amp;P 500 total return compounded at 8.4% a year after inflation, an 18.5-fold real gain. <b>It barely holds for cash</b> — three-month T-bills returned 0.1% a year in real terms, turning 100 into 102 over 36 years, and cash still trailed inflation in <b>six of every ten</b> twenty-year windows. <b>Bonds merely broke even</b> at 1.9%. Most counterintuitive is 2022: with inflation at 6.5%, <b>not one</b> of the five assets held up, and even cash lost 4.7% in real terms.</span></p>
+
+  <ul class="rn-findings">
+    <li><span class="zh">36 年年化实际收益：股票 <b>8.4%</b> ＞ 60/40 6.2% ＞ 黄金 4.0% ＞ 债券 1.9% ＞ 现金 <b>0.1%</b>。</span>
+        <span class="en">Real annualised returns over 36 years: equities <b>8.4%</b>, 60/40 6.2%, gold 4.0%, bonds 1.9%, cash <b>0.1%</b>.</span></li>
+    <li><span class="zh">最初的 100 元：现金名义上变成 270 元，扣掉通胀后只剩 <b>102 元</b>——36 年白放。</span>
+        <span class="en">100 units in cash became 270 in nominal terms and just <b>102</b> after inflation — 36 years for nothing.</span></li>
+    <li><span class="zh">拉长期限能救股票：标普 500 持有 20 年的滚动窗口里<b>没有一个实际收益为负</b>；但现金持有 20 年仍有 <b>59.9%</b> 跑输通胀。</span>
+        <span class="en">Time rescues equities — <b>not one</b> twenty-year window for the S&amp;P 500 had a negative real return — but cash still trailed inflation in <b>59.9%</b> of them.</span></li>
+    <li><span class="zh">2022 年通胀 6.5%，五类资产实际收益<b>全为负</b>；月度收益与通胀的相关系数全部在 ±0.16 以内。</span>
+        <span class="en">In 2022, with inflation at 6.5%, all five assets had negative real returns, and every correlation with monthly inflation sat within ±0.16.</span></li>
+  </ul>
+
+  <div class="rn-abstract"><span class="zh"><b>摘要</b>本文检验一个几乎不被质疑的命题：投资能保护购买力。以美国 1990-01 至 2026-08 共 432 个月度观测为样本，我们构造五类资产的总收益序列（现金＝3 个月国库券、债券＝10 年期国债、60/40 组合、标普 500 全收益、黄金），并以 CPI 平减得到实际收益。结果显示：<b>长期</b>，股票的年化实际收益为 8.4%，36 年实际购买力 18.5 倍；债券 1.9%、现金 0.1%，其中现金的名义收益几乎全部被通胀吃掉。<b>期限维度</b>上，标普 500 持有 20 年的滚动窗口无一年实际收益为负，而现金持有 20 年仍有 59.9% 的窗口跑输通胀，说明"拉长期限"只对股权类资产有效。<b>通胀冲击</b>层面，2022 年五类资产实际收益全部为负，且各资产月度收益与通胀的相关系数均在 ±0.16 以内。我们据此区分两件事：资产能否在长期提供高于通胀的回报（股权可以），与资产能否对冲通胀的当期冲击（基本没有可以）。</span>
+  <span class="en"><b>Abstract</b>This note tests a proposition that is rarely questioned: that investing protects purchasing power. Using 432 monthly US observations from January 1990 to August 2026, we build total-return series for five assets — cash (three-month T-bills), bonds (10-year Treasuries), a 60/40 mix, the S&amp;P 500 total return index and gold — and deflate them by CPI. <b>Over the long run</b>, equities earned 8.4% a year in real terms and an 18.5-fold real gain over 36 years; bonds earned 1.9% and cash 0.1%, with cash's nominal return almost entirely consumed by inflation. <b>On the horizon dimension</b>, no rolling twenty-year window for the S&amp;P 500 had a negative real return, while cash still trailed inflation in 59.9% of its twenty-year windows — lengthening the horizon rescues equity-like assets only. <b>On inflation shocks</b>, all five assets had negative real returns in 2022 and every correlation with monthly inflation lay within ±0.16. We therefore separate two questions: whether an asset out-earns inflation over the long run (equities do), and whether it hedges the arrival of inflation (almost nothing does).</span></div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　实际收益 · 购买力 · 通胀对冲 · 资产配置 · 期限溢价 · 现金拖累</span><span class="en"><b>Keywords</b>　real returns · purchasing power · inflation hedge · asset allocation · horizon effects · cash drag</span></p>
+
+  <div class="split">
+    <div class="prose">
+
+    <h2 id="s1"><span class="num">01</span><span class="zh">这句话的两个前提</span><span class="en">The two assumptions behind it</span></h2>
+    <p class="zh">「投资能跑赢通胀」听起来像同义反复，其实它藏了两个彼此独立的前提：<b>其一，通胀会持续为正</b>——所以现金和存款会缩水；<b>其二，投资的回报能跟上它</b>。第一个前提在数据上没有问题，问题出在第二个：它把"投资"当成了一个整体，而现实里不同资产的表现差得很远。</p>
+    <p class="zh">本文用美国 1990-01 至 2026-08 共 432 个月的月度数据把这两件事拆开。样本起点由数据可得性决定——美国财政部的国债收益率曲线从 1990 年开始，这条曲线同时给了现金和无风险利率两条腿。样本内含 2022 年那次通胀（CPI 同比 6.5%），那是一次难得的现场测试：四十年来第一次，通胀高到能让"抗通胀"这句话真的受检。<span class="sup">[1][2]</span></p>
+    <p class="zh">五类资产的口径：现金＝3 个月国库券（滚动持有）、债券＝10 年期美国国债、60/40＝六成标普 500 全收益加四成十年国债、股票＝标普 500 全收益、黄金＝伦敦金价。所有收益都先算名义、再除以同期 CPI 得到实际值。</p>
+
+    <h2 id="s2"><span class="num">02</span><span class="zh">先换把尺子</span><span class="en">Change the yardstick first</span></h2>
+    <p class="zh">名义收益是最容易骗人的数字。同一笔 100 元，说"36 年后变成 270 元"和说"36 年后只值 102 元"都对——差别只是有没有扣掉通胀。所以这篇从头到尾都用实际收益。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 1 · 同一笔钱，两种算法</span><span class="en">Exhibit 1 · one investment, two readings</span></div>
+      <img src="../assets/figs/infl-nominal.svg" alt="五类资产名义与实际终值对比">
+      <p class="ex-note zh">1990 年初投入 100 元，持有到今天：现金名义 270 元、实际 <b>102 元</b>；债券名义 520 元、实际 200 元；股票名义 4,900 元、实际 1,850 元。注意倒数第二根柱子——<b>现金的名义收益全部是真的，但购买力几乎原地不动</b>。</p>
+      <p class="ex-note en">100 units invested in January 1990: cash ends at 270 nominal but <b>102</b> in real terms; bonds at 520 and 200; equities at 4,900 and 1,850.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
+    </div>
+
+    <h2 id="s3"><span class="num">03</span><span class="zh">36 年的实际收益</span><span class="en">Thirty-six years of real returns</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 年化实际收益</span><span class="en">Exhibit 2 · real annualised returns</span></div>
+      <img src="../assets/figs/infl-real-ann.svg" alt="五类资产的年化实际收益与通胀基准">
+      <p class="ex-note zh">把通胀画成一条虚线，柱子在线下就说明这类资产长期没跑赢它。<b>现金（0.1%）整根柱子贴在零轴上，债券（1.9%）在通胀线下方</b>，只有股票（8.4%）、60/40（6.2%）和黄金（4.0%）明显在上方。这就是"投资能跑赢通胀"这句话的问题所在：它说的是某一类投资，不是所有投资。</p>
+      <p class="ex-note en">With inflation drawn as a line, any bar below it has failed to beat inflation over the long run. Cash sits on zero, bonds below the line; only equities, the 60/40 and gold clear it.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算；虚线为同期通胀 2.72%。</span><span class="en">Source: author's calculations; the line is 2.72% inflation over the same period.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 3 · 实际购买力的路径</span><span class="en">Exhibit 3 · the path of purchasing power</span></div>
+      <img src="../assets/figs/infl-real-curve.svg" alt="1990 年以来五类资产的实际购买力曲线">
+      <p class="ex-note zh">这条对数刻度上的水平线就是全部答案：<b>现金那条曲线 36 年基本是平的</b>——中间的起伏是通胀和利率的拉锯，终点和起点几乎重合。而且路径比终值更值得看：现金在 2021 年之前其实是缓慢上行的（实际利率为正的年代），<b>2022 一年把它打回了原点</b>。</p>
+      <p class="ex-note en">The flat line is the whole answer: cash's real purchasing power ends almost exactly where it started, having first drifted up during the years of positive real rates and then been reset in 2022.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，扣除 CPI 后的累计实际购买力。</span><span class="en">Source: author's calculations; cumulative real purchasing power after CPI.</span></p>
+    </div>
+
+    <h2 id="s4"><span class="num">04</span><span class="zh">期限能救谁</span><span class="en">Who does time rescue</span></h2>
+    <p class="zh">"长期投资"是这句话的第二个支撑。把每一个月末当作起点，滚动持有 N 年，统计"实际收益为负"的比例——也就是跑输通胀的概率。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 4 · 持有 N 年，跑输通胀的比例</span><span class="en">Exhibit 4 · the share of horizons that lose to inflation</span></div>
+      <img src="../assets/figs/infl-underwater.svg" alt="不同持有年限下各类资产跑输通胀的比例">
+      <p class="ex-note zh">这张图把五类资产分成两半。<b>股票、60/40 和黄金的曲线随期限快速下降</b>：标普 500 持有 20 年的每一个滚动窗口实际收益都是正的，黄金也是。而<b>现金那条线几乎是水平的，在 50–65% 之间来回摆动</b>——持有 1 年跑输的概率是 47%，持有 20 年仍然是 <b>59.9%</b>。换句话说：<b>拉长期限能降低股票的不确定性，但降低不了现金的确定性劣势。</b>债券居中：20 年跑输的比例是 17.7%。</p>
+      <p class="ex-note en">Equities, the 60/40 and gold fall quickly with the horizon — no twenty-year window for the S&amp;P 500 lost to inflation. Cash stays flat between 50% and 65%: 47% at one year, still <b>59.9%</b> at twenty. Lengthening the horizon reduces equities' uncertainty, but cannot remove cash's certain disadvantage.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，以每月为起点滚动持有。</span><span class="en">Source: author's calculations, rolling every month-end start.</span></p>
+    </div>
+
+    <h2 id="s5"><span class="num">05</span><span class="zh">通胀来的那一年</span><span class="en">The year inflation arrived</span></h2>
+    <p class="zh">上面都是长期结论。而「抗通胀」这句话真正被期待发挥作用的时刻，是通胀突然起来的那一年。样本里刚好有一次：2022 年，CPI 同比 6.5%，四十年最高。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 5 · 2022 年，五类资产的实际收益</span><span class="en">Exhibit 5 · 2022, real returns across five assets</span></div>
+      <img src="../assets/figs/infl-2022.svg" alt="2022 年五类资产的名义与实际收益">
+      <p class="ex-note zh"><b>五类资产的实际收益全部为负</b>。名义上最抗跌的是现金（+1.5%），但扣掉 6.5% 的通胀后是 <b>−4.7%</b>；股票和债券名义都跌了近两成，实际亏了 23%——因为那一年美联储在加息，估值和债券价格同时被压。黄金名义基本持平（+0.4%），实际 −5.6%，是除现金外跌得最少的。<b>没有一类资产在那一年扮演了"通胀保险"的角色。</b></p>
+      <p class="ex-note en">Every asset had a negative real return. Cash was the most resilient nominally (+1.5%) but lost <b>4.7%</b> after inflation; equities and bonds fell almost 20% nominally, or 23% in real terms. Gold was flat nominally and −5.6% real. Nothing acted as inflation insurance that year.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，2021-12 → 2022-12。</span><span class="en">Source: author's calculations, December 2021 to December 2022.</span></p>
+    </div>
+
+    <h2 id="s6"><span class="num">06</span><span class="zh">为什么没有真正的通胀对冲</span><span class="en">Why nothing really hedges inflation</span></h2>
+    <p class="zh">把每类资产的月度收益和当月通胀放在一起算相关系数，答案很干脆：<b>全部贴近零</b>。最高的黄金是 +0.13，最低的债券是 −0.16。这意味着当通胀这个月突然跳升时，这些资产的当期收益对它几乎没有系统性反应。</p>
+    <p class="zh">这不是数据的偶然。Fama 与 Schwert（1977）很早就记录过这个现象：股票收益与通胀在短期甚至是负相关的，因为通胀上升往往伴随贴现率上升，两股力量相互抵消。<span class="sup">[1]</span> Katz、Lustig 与 Nielsen（2017）给出了更完整的解释——股票是"实际资产"，但它的实际属性要很长时间才显现，短期被贴现率效应主导。<span class="sup">[3]</span> Mehra 与 Prescott（1985）那篇著名的股权溢价之谜，本质上也在问同一件事：为什么承担了这么多风险，长期回报才刚好补偿过来。<span class="sup">[2]</span></p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 6 · 与通胀的相关系数</span><span class="en">Exhibit 6 · correlation with inflation</span></div>
+      <img src="../assets/figs/infl-corr.svg" alt="五类资产月度收益与通胀的相关系数">
+      <p class="ex-note zh">要成为合格的通胀对冲，相关系数应该显著为正——通胀涨、这项资产也涨。<b>五根柱子都在正负 0.16 以内，等于没有关系</b>。这也解释了为什么"买点黄金防通胀"这类说法在年度尺度上总是时灵时不灵：它赌的不是一个稳定的关系，而是一次特定行情。</p>
+      <p class="ex-note en">A genuine inflation hedge would show a clearly positive correlation. All five bars sit within ±0.16 — effectively no relationship. That is why "buy gold for inflation" works in some years and fails in others: it is not a stable relationship.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，月度名义收益 vs 当月 CPI 同比。</span><span class="en">Source: author's calculations; monthly nominal returns against year-on-year CPI.</span></p>
+    </div>
+
+    <h2 id="s7"><span class="num">07</span><span class="zh">自己动手：换个期限看</span><span class="en">Try another horizon yourself</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 7 · 拖动持有年限（可交互）</span><span class="en">Exhibit 7 · drag the holding period</span></div>
+      <div class="vbox">
+        <div class="ctrl">
+          <span style="font-weight:600"><span class="zh">持有年限</span><span class="en">Holding period</span></span>
+          <input type="range" id="p-n" min="1" max="25" value="10" step="1">
+          <b id="p-nlab" style="font-family:var(--mono)">10</b>
+          <button type="button" id="p-reset"><span class="zh">回到 10 年</span><span class="en">Reset to 10</span></button>
+        </div>
+        <svg id="p-svg" viewBox="0 0 900 300" role="img" aria-label="不同持有期下各类资产跑输通胀的比例与中位实际收益"></svg>
+        <div class="vstat">
+          <span><span class="zh">跑输通胀概率最高的</span><span class="en">Most likely to lag</span> <b id="p-worst">–</b></span>
+          <span><span class="zh">中位实际收益最高</span><span class="en">Highest median real return</span> <b id="p-flat">–</b></span>
+        </div>
+      </div>
+      <p class="ex-note zh">左图是"持有 N 年跑输通胀的比例"，右图是同一期限下的中位实际收益。把年限从 1 拖到 25，可以清楚看到两件事：<b>股票和黄金的概率一路降到零，现金的柱子几乎不动；而中位实际收益那一侧，现金的柱子始终贴着零轴</b>。这也回答了开头那个问题——"投资能跑赢通胀"要成立，需要两个条件同时满足：<b>买的是股权类资产，并且持有的时间足够长</b>。</p>
+      <p class="ex-note en">The left panel is the share of horizons that lose to inflation, the right panel the median real return at that horizon. Drag from 1 to 25 years: equities and gold fall to zero, cash barely moves, and cash's median real return stays pinned near zero.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，数据见附录 A。</span><span class="en">Source: author's calculations; data in Appendix A.</span></p>
+    </div>
+
+    <h2 id="s8"><span class="num">08</span><span class="zh">结论：把两个问题分开</span><span class="en">Conclusion: separate two questions</span></h2>
+    <p class="zh">这篇文章的结论不是一个"能"或"不能"，而是要把问题拆成两件不同的事。<b>第一件是长期购买力</b>：能不能在几十年里持续提供高于通胀的回报。这一件上，股权类资产做到了（实际年化 8.4%），60/40 也做到了（6.2%），黄金做到了但幅度小得多（4.0%）；<b>债券只是打平（1.9%），现金完全没有做到（0.1%）</b>。第二件是<b>当期对冲</b>：通胀冲上来的那一年，能不能保护你。这一件上，五类资产在 2022 年全部为负，月度相关系数全部贴近零——没有一类资产真正承担了这个角色。</p>
+    <p class="zh">把两件事混在一起，就会得到那些听起来对、用时不对的话：用"长期能跑赢通胀"去安慰一个明年要用钱的人，或者用"黄金抗通胀"去解释一个当年就亏损的组合。更实用的表述是：<b>用股权类资产解决长期购买力问题，用期限匹配和现金仓位解决当期支出问题，而不要指望任何单一资产同时对冲通胀的到达。</b></p>
+    <p class="zh">最后是边界。样本只有美国、只有 36 年，且恰好覆盖了一段实际利率从高位回落到零再抬升的完整周期——换一个国家或换一个起点，"现金实际收益 0.1%"这个数字会变。债券收益用收益率曲线近似，未计入真实债券基金的费率；现金用 3 个月国库券代表，而个人存款利率通常还低于它，所以现金的实际表现可能比文中更差。这些都不改变主结论，但值得写在明处。</p>
+    <p class="ex-note en" style="margin-top:14px">Full English version below.</p>
+  </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">两个前提</span><span class="en">Two assumptions</span></a>
+      <a href="#s2">02 <span class="zh">换把尺子</span><span class="en">Yardstick</span></a>
+      <a href="#s3">03 <span class="zh">36 年实际收益</span><span class="en">Real returns</span></a>
+      <a href="#s4">04 <span class="zh">期限能救谁</span><span class="en">Horizons</span></a>
+      <a href="#s5">05 <span class="zh">2022 那一年</span><span class="en">2022</span></a>
+      <a href="#s6">06 <span class="zh">为什么没有对冲</span><span class="en">No hedge</span></a>
+      <a href="#s7">07 <span class="zh">自己动手</span><span class="en">Try it</span></a>
+      <a href="#s8">08 <span class="zh">结论</span><span class="en">Conclusion</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
+    </aside>
+  </div>
+
+  <div class="prose">
+
+    <section class="en" id="en-version" style="margin-top:40px">
+      <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
+      <p><b>Question.</b> "Cash loses value; investing preserves it" is repeated so often that its two assumptions go unexamined: that inflation persists, and that investment returns keep up with it. We test both on 432 monthly US observations from January 1990 to August 2026.</p>
+      <p><b>Result 1 — the second assumption fails for two of the five assets.</b> Real annualised returns: the S&amp;P 500 total return 8.4%, a 60/40 mix 6.2%, gold 4.0%, 10-year Treasuries 1.9%, three-month T-bills <b>0.1%</b>. 100 units in cash became 270 nominal and just <b>102</b> after inflation — the entire nominal gain was consumed.</p>
+      <p><b>Result 2 — the horizon rescues equities, not cash.</b> Rolling every month-end start, no twenty-year window for the S&amp;P 500 had a negative real return, and the same holds for gold and the 60/40. Cash's curve is flat: 47% of one-year horizons lost to inflation, and still <b>59.9%</b> at twenty years. Lengthening the horizon reduces uncertainty for risky assets; it cannot remove cash's certain disadvantage.</p>
+      <p><b>Result 3 — 2022 tested the hedge claim directly.</b> With CPI at 6.5%, all five assets had negative real returns. Cash was the most resilient nominally (+1.5%) but lost 4.7% real; equities and bonds lost about 23% real; gold was flat nominally and −5.6% real.</p>
+      <p><b>Result 4 — nothing is a real inflation hedge.</b> Correlations between monthly returns and monthly inflation sit within ±0.16 for every asset. Fama and Schwert (1977) documented the short-horizon negative relation; Katz, Lustig and Nielsen (2017) explain it through sticky discount rates — equities are real assets, but their realness shows up over decades, not quarters.</p>
+      <p><b>Implication.</b> Separate the two questions. For long-run purchasing power, equity-like assets work and cash does not. For the arrival of inflation, almost nothing works. Mixing the two produces advice that sounds right and fails when used.</p>
+    </section>
+
+    <details class="appendix" id="apx">
+      <summary><span class="zh">附录 A · 数据、方法与来源</span><span class="en">Appendix A · data, method and sources</span></summary>
+      <p class="zh"><b>数据。</b>美国 CPI-U（BLS，CUUR0000SA0）；美国财政部国债收益率曲线（3 Mo 与 10 Yr，1990 起，取月末值）；标普 500 全收益指数（Yahoo Finance ^SP500TR，月度）；LBMA 伦敦金价月序列（datahub.io）。样本 1990-01 至 2026-08，共 432 个月（个别月份因收益率曲线缺值被跳过）。访问日期 2026-10-04。</p>
+      <p class="zh"><b>做法。</b>现金＝3 个月国库券收益率 ÷ 12；债券＝票息 ÷ 12 − 久期 7.5 × 收益率变动；60/40＝60% 股票 + 40% 债券；股票与黄金用价格变动。实际收益＝(1 + 名义) ÷ (1 + 通胀) − 1。滚动持有 N 年＝以任一月末为起点、连续持有 N×12 个月的实际收益。</p>
+      <p class="zh"><b>未计入。</b>交易成本、税费、汇率；债券用收益率曲线近似，未计入真实债券基金的费率与跟踪误差；现金用 3 个月国库券代表，个人存款利率通常更低。样本仅覆盖美国，且只有一段完整周期。</p>
+      <p class="zh"><b>代码。</b><code>tools/fetch_inflation_raw.py</code>（取数）、<code>tools/make_inflation_data.py</code>（全部统计）、<code>tools/make_inflation_figs.py</code>（六张图）、<code>tools/make_inflation_note.py</code>（本页与交互图）。固定输入可完全复现。</p>
+      <p class="en"><b>Data.</b> US CPI-U (BLS, CUUR0000SA0); US Treasury yield curve (3-month and 10-year, month-end, from 1990); S&amp;P 500 total return (Yahoo Finance ^SP500TR, monthly); LBMA London gold price, monthly (datahub.io). Sample: January 1990 to August 2026, 432 months (a few months skipped where the yield curve had gaps). Accessed 4 October 2026.</p>
+      <p class="en"><b>Method.</b> Cash = three-month T-bill yield ÷ 12; bonds = coupon ÷ 12 − duration 7.5 × change in yield; 60/40 = 60% equities + 40% bonds; equities and gold from price changes. Real return = (1 + nominal) ÷ (1 + inflation) − 1. A rolling holding period of N years starts at every month-end and holds for N×12 months.</p>
+      <p class="en"><b>Not included.</b> Transaction costs, taxes and FX; bonds are approximated from the yield curve with no fund fees or tracking error; cash is proxied by T-bills, whereas retail deposit rates are typically lower. The sample covers the US only, and only one full cycle.</p>
+      <p class="en"><b>Code.</b> <code>tools/fetch_inflation_raw.py</code>, <code>tools/make_inflation_data.py</code>, <code>tools/make_inflation_figs.py</code>, <code>tools/make_inflation_note.py</code>.</p>
+    </details>
+
+    <details class="appendix">
+      <summary><span class="zh">附录 B · 三个容易被忽略的口径问题</span><span class="en">Appendix B · three measurement problems</span></summary>
+      <p class="zh"><b>一、用哪国的通胀。</b>本文用美国 CPI，因为所有资产都以美元计价。对以港币或人民币计价的投资者，还要叠加汇率：过去 36 年美元走强的年份，本币计价的美国资产实际收益会明显低于文中的数字。</p>
+      <p class="zh"><b>二、起点决定了现金的结论。</b>1990 年的起点恰好是实际利率的高位。若从 1980 年（实际利率更高）或 2010 年（实际利率为负）开始，"现金实际收益 0.1%"会明显不同——现金的长期结论对利率周期高度敏感。</p>
+      <p class="zh"><b>三、房子不在这张图里。</b>房产的实际收益高度依赖杠杆、按揭利率、地点与持有成本，用任何一个公开指数代表"买房"都会失真，所以本文没有把它纳入同一个坐标系。这不代表房产不重要，只代表它不适合和这五类资产放在同一张图里比较。</p>
+      <p class="en"><b>One: whose inflation.</b> We use US CPI because every asset is dollar-denominated. For a Hong Kong or mainland investor, FX sits on top: in years when the dollar strengthened, the local-currency real return on these US assets was materially lower than shown.</p>
+      <p class="en"><b>Two: the start date decides the cash result.</b> January 1990 happens to sit near a peak in real rates. Starting in 1980 (higher real rates) or 2010 (negative real rates) would move the 0.1% figure substantially — cash's long-run record is highly sensitive to the rate cycle.</p>
+      <p class="en"><b>Three: property is not on this chart.</b> Housing returns depend heavily on leverage, mortgage rates, location and carrying costs; any single public index would misrepresent "buying a home". It is excluded for comparability, not because it does not matter.</p>
+    </details>
+
+    <div class="disclaimer">
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的学术论文仅为文献引用，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. The academic papers cited are references only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
+    </div>
+
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
+    <ol class="refs">
+      <li>Fama, E. F., &amp; Schwert, G. W. (1977). Asset returns and inflation. <i>Journal of Financial Economics</i>, 5(2), 115–146. <a href="https://doi.org/10.1016/0304-405X(77)90014-9">doi.org/10.1016/0304-405X(77)90014-9</a></li>
+      <li>Mehra, R., &amp; Prescott, E. C. (1985). The equity premium: A puzzle. <i>Journal of Monetary Economics</i>, 15(2), 145–161. <a href="https://doi.org/10.1016/0304-3932(85)90061-3">doi.org/10.1016/0304-3932(85)90061-3</a></li>
+      <li>Katz, M., Lustig, H., &amp; Nielsen, L. (2017). Are Stocks Real Assets? Sticky Discount Rates in Stock Markets. <i>Review of Financial Studies</i>, 30(2), 539–587. <a href="https://doi.org/10.1093/rfs/hhw072">doi.org/10.1093/rfs/hhw072</a></li>
+      <li>Erb, C. B., &amp; Harvey, C. R. (2013). The Golden Dilemma. <i>Financial Analysts Journal</i>, 69(4), 10–42. <a href="https://doi.org/10.2469/faj.v69.n4.1">doi.org/10.2469/faj.v69.n4.1</a></li>
+      <li><span class="zh">行情与宏观数据：美国劳工统计局 CPI-U、美国财政部国债收益率曲线、Yahoo Finance ^SP500TR、LBMA 伦敦金价（datahub.io），访问日期 2026-10-04。</span><span class="en">Market and macro data: US BLS CPI-U, US Treasury yield curve, Yahoo Finance ^SP500TR, LBMA London gold price (datahub.io), accessed 4 October 2026.</span></li>
+    </ol>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../missing-best-days/">
+        <span class="k"><span class="zh">上一篇</span><span class="en">Previous</span></span>
+        <span class="v"><span class="zh">← 错过最好的十天</span><span class="en">← The ten best days</span></span>
+      </a>
+      <a href="../gold-inflation-hedge/">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">黄金：抗通胀，还是抗波动 →</span><span class="en">Gold: an inflation hedge? →</span></span>
+      </a>
+    </nav>
+  </div>
+
+  <footer>
+    <div class="footin">
+<span>Working Paper v1.0 · © 2026 Aylon · Hong Kong</span>
+      <span class="spacer"></span>
+      <a href="../share-kit/"><span class="zh">分享图</span><span class="en">Share cards</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+<script>
+const DATA = {"ns": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25], "series": {"现金": [{"neg": 46.7, "median": 0.2, "worst": -8.2, "best": 3.9}, {"neg": 51.2, "median": -0.2, "worst": -12.8, "best": 7.2}, {"neg": 55.1, "median": -1.0, "worst": -12.8, "best": 9.8}, {"neg": 58.6, "median": -2.1, "worst": -12.2, "best": 12.9}, {"neg": 61.6, "median": -2.6, "worst": -13.1, "best": 15.3}, {"neg": 65.0, "median": -2.3, "worst": -14.1, "best": 18.1}, {"neg": 63.8, "median": -3.4, "worst": -15.0, "best": 19.9}, {"neg": 63.4, "median": -5.0, "worst": -16.0, "best": 20.7}, {"neg": 62.3, "median": -6.2, "worst": -16.6, "best": 21.6}, {"neg": 62.2, "median": -7.2, "worst": -18.1, "best": 24.5}, {"neg": 62.0, "median": -7.8, "worst": -19.3, "best": 25.5}, {"neg": 63.9, "median": -8.8, "worst": -22.0, "best": 26.1}, {"neg": 63.8, "median": -9.8, "worst": -22.8, "best": 25.2}, {"neg": 64.0, "median": -9.1, "worst": -23.8, "best": 22.7}, {"neg": 63.5, "median": -9.0, "worst": -23.5, "best": 21.5}, {"neg": 62.5, "median": -9.7, "worst": -22.8, "best": 23.4}, {"neg": 63.6, "median": -9.1, "worst": -21.3, "best": 25.2}, {"neg": 61.6, "median": -9.0, "worst": -21.7, "best": 25.6}, {"neg": 60.3, "median": -7.9, "worst": -23.4, "best": 24.4}, {"neg": 59.9, "median": -7.5, "worst": -23.9, "best": 23.0}, {"neg": 61.1, "median": -4.6, "worst": -24.6, "best": 18.9}, {"neg": 60.1, "median": -3.6, "worst": -24.0, "best": 17.3}, {"neg": 56.4, "median": -1.7, "worst": -22.0, "best": 15.1}, {"neg": 52.1, "median": -1.2, "worst": -20.4, "best": 13.1}, {"neg": 50.0, "median": -0.4, "worst": -20.0, "best": 12.7}], "债券": [{"neg": 37.1, "median": 2.7, "worst": -26.6, "best": 23.0}, {"neg": 33.3, "median": 5.2, "worst": -34.1, "best": 30.8}, {"neg": 29.3, "median": 8.2, "worst": -36.1, "best": 45.4}, {"neg": 27.9, "median": 9.1, "worst": -36.6, "best": 48.0}, {"neg": 24.7, "median": 12.6, "worst": -31.0, "best": 51.0}, {"neg": 22.5, "median": 15.7, "worst": -32.6, "best": 54.7}, {"neg": 23.0, "median": 19.6, "worst": -30.6, "best": 64.9}, {"neg": 18.5, "median": 23.5, "worst": -29.9, "best": 88.1}, {"neg": 19.8, "median": 26.9, "worst": -28.5, "best": 84.4}, {"neg": 19.2, "median": 28.9, "worst": -28.9, "best": 88.7}, {"neg": 17.7, "median": 30.2, "worst": -31.0, "best": 109.6}, {"neg": 18.1, "median": 31.0, "worst": -30.2, "best": 123.4}, {"neg": 19.2, "median": 39.8, "worst": -28.5, "best": 122.7}, {"neg": 19.3, "median": 44.9, "worst": -26.6, "best": 121.9}, {"neg": 18.7, "median": 44.9, "worst": -22.8, "best": 111.8}, {"neg": 19.2, "median": 48.7, "worst": -23.3, "best": 117.2}, {"neg": 19.3, "median": 51.2, "worst": -18.6, "best": 145.7}, {"neg": 16.7, "median": 49.3, "worst": -12.4, "best": 158.2}, {"neg": 15.7, "median": 60.1, "worst": -12.2, "best": 148.3}, {"neg": 17.7, "median": 71.9, "worst": -14.0, "best": 172.7}, {"neg": 17.2, "median": 66.8, "worst": -15.3, "best": 175.1}, {"neg": 14.9, "median": 77.2, "worst": -8.8, "best": 181.6}, {"neg": 5.8, "median": 82.9, "worst": -10.7, "best": 166.1}, {"neg": 0.0, "median": 85.6, "worst": 1.3, "best": 169.3}, {"neg": 0.0, "median": 83.7, "worst": 3.1, "best": 177.1}], "60/40": [{"neg": 18.8, "median": 8.3, "worst": -26.9, "best": 33.0}, {"neg": 17.4, "median": 14.3, "worst": -26.5, "best": 50.6}, {"neg": 20.2, "median": 20.1, "worst": -21.6, "best": 76.0}, {"neg": 12.5, "median": 27.9, "worst": -20.1, "best": 112.3}, {"neg": 8.3, "median": 32.1, "worst": -19.6, "best": 124.4}, {"neg": 2.2, "median": 38.5, "worst": -4.7, "best": 129.1}, {"neg": 2.3, "median": 46.6, "worst": -13.6, "best": 139.9}, {"neg": 3.6, "median": 52.6, "worst": -25.6, "best": 179.2}, {"neg": 5.6, "median": 59.7, "worst": -18.5, "best": 206.6}, {"neg": 3.2, "median": 66.3, "worst": -8.4, "best": 219.0}, {"neg": 0.0, "median": 76.9, "worst": 2.2, "best": 184.4}, {"neg": 0.0, "median": 85.7, "worst": 9.4, "best": 202.7}, {"neg": 0.0, "median": 95.0, "worst": 23.7, "best": 202.5}, {"neg": 0.0, "median": 102.2, "worst": 35.1, "best": 200.7}, {"neg": 0.0, "median": 110.0, "worst": 44.8, "best": 211.8}, {"neg": 0.0, "median": 116.4, "worst": 54.6, "best": 240.8}, {"neg": 0.0, "median": 130.3, "worst": 63.8, "best": 241.6}, {"neg": 0.0, "median": 146.4, "worst": 72.4, "best": 198.7}, {"neg": 0.0, "median": 161.6, "worst": 76.8, "best": 225.1}, {"neg": 0.0, "median": 172.2, "worst": 99.1, "best": 256.7}, {"neg": 0.0, "median": 188.1, "worst": 102.3, "best": 277.3}, {"neg": 0.0, "median": 207.9, "worst": 81.7, "best": 315.3}, {"neg": 0.0, "median": 241.5, "worst": 94.0, "best": 344.2}, {"neg": 0.0, "median": 280.3, "worst": 104.9, "best": 389.9}, {"neg": 0.0, "median": 310.8, "worst": 133.7, "best": 397.2}], "股票": [{"neg": 17.9, "median": 11.8, "worst": -43.5, "best": 52.4}, {"neg": 18.4, "median": 20.3, "worst": -47.6, "best": 80.5}, {"neg": 16.7, "median": 31.3, "worst": -42.7, "best": 118.7}, {"neg": 20.8, "median": 45.1, "worst": -40.1, "best": 169.5}, {"neg": 22.3, "median": 56.9, "worst": -37.7, "best": 212.3}, {"neg": 14.7, "median": 73.6, "worst": -20.4, "best": 225.2}, {"neg": 9.8, "median": 84.4, "worst": -36.3, "best": 232.3}, {"neg": 8.6, "median": 85.8, "worst": -54.0, "best": 271.5}, {"neg": 8.3, "median": 97.3, "worst": -48.3, "best": 342.0}, {"neg": 10.9, "median": 111.1, "worst": -34.5, "best": 353.3}, {"neg": 14.0, "median": 124.7, "worst": -29.5, "best": 329.6}, {"neg": 8.3, "median": 131.8, "worst": -19.9, "best": 435.6}, {"neg": 1.4, "median": 134.1, "worst": -6.7, "best": 477.9}, {"neg": 0.0, "median": 154.9, "worst": 16.0, "best": 436.4}, {"neg": 0.0, "median": 162.5, "worst": 24.2, "best": 536.2}, {"neg": 0.0, "median": 160.0, "worst": 37.1, "best": 632.7}, {"neg": 0.0, "median": 160.8, "worst": 52.7, "best": 694.8}, {"neg": 0.0, "median": 184.2, "worst": 69.9, "best": 440.7}, {"neg": 0.0, "median": 210.8, "worst": 75.7, "best": 413.8}, {"neg": 0.0, "median": 243.0, "worst": 94.8, "best": 425.3}, {"neg": 0.0, "median": 275.9, "worst": 136.0, "best": 469.3}, {"neg": 0.0, "median": 320.2, "worst": 112.1, "best": 522.3}, {"neg": 0.0, "median": 358.0, "worst": 141.1, "best": 628.5}, {"neg": 0.0, "median": 418.2, "worst": 168.5, "best": 545.2}, {"neg": 0.0, "median": 465.9, "worst": 219.8, "best": 587.6}], "黄金": [{"neg": 45.0, "median": 2.5, "worst": -28.6, "best": 80.1}, {"neg": 40.4, "median": 6.0, "worst": -33.5, "best": 132.9}, {"neg": 40.4, "median": 5.9, "worst": -38.8, "best": 142.1}, {"neg": 39.8, "median": 15.3, "worst": -40.5, "best": 142.8}, {"neg": 39.8, "median": 21.8, "worst": -41.6, "best": 165.0}, {"neg": 36.1, "median": 23.8, "worst": -43.4, "best": 248.2}, {"neg": 36.5, "median": 24.4, "worst": -43.0, "best": 266.9}, {"neg": 35.7, "median": 22.5, "worst": -44.4, "best": 298.1}, {"neg": 35.5, "median": 28.4, "worst": -48.8, "best": 352.6}, {"neg": 27.9, "median": 34.9, "worst": -47.7, "best": 406.7}, {"neg": 25.3, "median": 55.8, "worst": -53.1, "best": 382.6}, {"neg": 20.1, "median": 65.4, "worst": -47.3, "best": 398.4}, {"neg": 10.1, "median": 83.2, "worst": -40.7, "best": 372.8}, {"neg": 6.8, "median": 110.4, "worst": -35.0, "best": 313.2}, {"neg": 3.6, "median": 130.4, "worst": -32.6, "best": 268.0}, {"neg": 1.2, "median": 163.0, "worst": -4.7, "best": 258.0}, {"neg": 0.9, "median": 163.9, "worst": -1.8, "best": 288.5}, {"neg": 0.0, "median": 180.1, "worst": 17.5, "best": 341.6}, {"neg": 0.0, "median": 189.7, "worst": 34.8, "best": 394.4}, {"neg": 0.0, "median": 187.8, "worst": 70.0, "best": 463.9}, {"neg": 0.0, "median": 169.1, "worst": 74.4, "best": 590.9}, {"neg": 0.0, "median": 164.0, "worst": 70.7, "best": 587.2}, {"neg": 0.0, "median": 145.0, "worst": 71.1, "best": 696.2}, {"neg": 0.0, "median": 167.1, "worst": 65.7, "best": 864.7}, {"neg": 0.0, "median": 161.1, "worst": 44.0, "best": 841.3}]}};
+const C = {cash:'#8A94A6', bond:'#1F4E79', mix:'#5B8FC9', stock:'#B23A1C', gold:'#C9922E',
+           mute:'#8A8172', rule:'#E2DCCE', ink:'#1B1A17'};
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function T(zh, en){ return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh; }
+
+const NS_LIST = DATA.ns;
+const SER = DATA.series;                 // {资产: [{neg, median, worst, best}, ...]}
+const NAMES = Object.keys(SER);
+const KEY = {'现金':'cash','债券':'bond','60/40':'mix','股票':'stock','黄金':'gold'};
+const EN = {'现金':'Cash','债券':'Bonds','60/40':'60/40','股票':'Equities','黄金':'Gold'};
+
+const svg = document.getElementById('p-svg');
+const slider = document.getElementById('p-n');
+const W = 900, H = 300, GAP = 42;
+const PANEL = [{x: 8, w: 430, title: ['跑输通胀的比例（%）','share losing to inflation (%)']},
+               {x: 470, w: 422, title: ['中位实际收益（%）','median real return (%)']}];
+
+function draw(n){
+  const i = NS_LIST.indexOf(n);
+  svg.innerHTML = '';
+  const rowH = (H - GAP - 26) / NAMES.length;
+  // 左：跑输通胀的比例
+  const left = PANEL[0], right = PANEL[1];
+  const maxNeg = 70;
+  NAMES.forEach(function(name, k){
+    const y = 30 + k * rowH;
+    const v = SER[name][i].neg;
+    const w = Math.max(2, v / maxNeg * (left.w - 120));
+    svg.appendChild(el('text', {x: left.x, y: y + rowH / 2 + 4, 'font-size': 11.5,
+                                fill: C.mute, 'text-anchor': 'start'}, T(name, EN[name] || name)));
+    svg.appendChild(el('rect', {x: left.x + 62, y: y + 6, width: left.w - 120, height: rowH - 12,
+                                fill: '#F2EFE8'}));
+    svg.appendChild(el('rect', {x: left.x + 62, y: y + 6, width: w, height: rowH - 12,
+                                fill: C[KEY[name]]}));
+    svg.appendChild(el('text', {x: left.x + 62 + w + 6, y: y + rowH / 2 + 4, 'font-size': 11,
+                                fill: C.ink, 'font-family': 'ui-monospace,monospace'}, v + '%'));
+  });
+  // 右：中位实际收益
+  const vals = NAMES.map(function(name){ return SER[name][i].median; });
+  const lo = Math.min(-5, Math.min.apply(null, vals)), hi = Math.max(10, Math.max.apply(null, vals));
+  const X = v => right.x + 62 + (v - lo) / (hi - lo) * (right.w - 130);
+  svg.appendChild(el('line', {x1: X(0), x2: X(0), y1: 24, y2: H - 16, stroke: C.rule}));
+  NAMES.forEach(function(name, k){
+    const y = 30 + k * rowH;
+    const v = SER[name][i].median;
+    const x0 = Math.min(X(0), X(v)), w = Math.max(1.5, Math.abs(X(v) - X(0)));
+    svg.appendChild(el('rect', {x: x0, y: y + 6, width: w, height: rowH - 12, fill: C[KEY[name]]}));
+    svg.appendChild(el('text', {x: v >= 0 ? X(v) + 6 : X(v) - 6, y: y + rowH / 2 + 4, 'font-size': 11,
+                                fill: C.ink, 'font-family': 'ui-monospace,monospace',
+                                'text-anchor': v >= 0 ? 'start' : 'end'}, v + '%'));
+  });
+  // 两个面板的标题
+  svg.appendChild(el('text', {x: left.x, y: 14, 'font-size': 11.5, fill: C.mute}, T(PANEL[0].title[0], PANEL[0].title[1])));
+  svg.appendChild(el('text', {x: right.x, y: 14, 'font-size': 11.5, fill: C.mute}, T(PANEL[1].title[0], PANEL[1].title[1])));
+
+  document.getElementById('p-nlab').textContent = n;
+  let worst = NAMES[0], best = NAMES[0];
+  NAMES.forEach(function(name){
+    if(SER[name][i].neg > SER[worst][i].neg) worst = name;
+    if(SER[name][i].median > SER[best][i].median) best = name;
+  });
+  document.getElementById('p-worst').textContent = T(worst, EN[worst] || worst);
+  document.getElementById('p-flat').textContent = T(best, EN[best] || best);
+}
+
+slider.addEventListener('input', e => draw(parseInt(e.target.value, 10)));
+document.getElementById('p-reset').addEventListener('click', () => { slider.value = 10; draw(10); });
+draw(10);
+new MutationObserver(() => draw(parseInt(slider.value, 10)))
+  .observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+</script>
