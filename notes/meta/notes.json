@@ -1,0 +1,276 @@
+{
+  "site": {
+    "name": "Notes",
+    "brand": "Aylon",
+    "base_url": "https://aayloo.github.io/notes/",
+    "personal_site": "https://aayloo.github.io/",
+    "github": "https://github.com/Aayloo",
+    "updated": "2026-09-29",
+    "tagline_zh": "前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。",
+    "tagline_en": "Reading notes on frontier technology. Facts, inferences and opinions kept apart — every number carries a source."
+  },
+  "tags": {
+    "signal": {
+      "zh": "信号",
+      "en": "Signal"
+    },
+    "portfolio": {
+      "zh": "组合",
+      "en": "Portfolio"
+    },
+    "attribution": {
+      "zh": "归因",
+      "en": "Attribution"
+    },
+    "data-eng": {
+      "zh": "数据与工程",
+      "en": "Data & Engineering"
+    },
+    "models": {
+      "zh": "模型与验证",
+      "en": "Models & Validation"
+    },
+    "craft": {
+      "zh": "研究与表达",
+      "en": "Research & Writing"
+    }
+  },
+  "notes": [
+    {
+      "slug": "all-weather",
+      "title_zh": "全天候组合实测：不预测，真的能穿越周期吗",
+      "title_en": "All Weather, tested: does not forecasting actually survive every cycle?",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-04",
+      "updated": "2026-10-04",
+      "version": "v1.0",
+      "minutes": 16,
+      "summary_zh": "用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、波动 7.6%、最大回撤 −22.3%，比 60/40 稳得多（9.2% / −29.6%），但收益更低（8.9%）夏普更差（0.64 对 0.68）。更关键的是它并没有做到环境中性：40% 的长债贡献了 53.5% 的风险，商品腿只有 1.2%。含 6 张图表与 1 个可拖股票权重的交互动画。",
+      "summary_en": "428 monthly US observations test the public description of All Weather: 7.6% a year, −22.3% maximum drawdown, steadier than a 60/40 but with lower return and Sharpe. It is not environment-neutral — long bonds carry 53.5% of the risk while commodities carry 1.2%.",
+      "path": "all-weather/",
+      "featured": true
+    },
+    {
+      "slug": "beating-inflation",
+      "title_zh": "投资能跑赢通胀吗",
+      "title_en": "Can investing beat inflation?",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-04",
+      "updated": "2026-10-04",
+      "version": "v1.0",
+      "minutes": 15,
+      "summary_zh": "用 1990-01 至 2026-08 共 432 个月的美国数据检验「投资能跑赢通胀」。股票年化实际收益 8.4%、债券 1.9%、现金只有 0.1%——最初的 100 元 36 年后只值 102 元，而且持有 20 年仍有六成窗口跑输通胀。2022 年通胀 6.5% 时五类资产实际收益全为负。含 6 张图表与 1 个可拖持有期的交互动画。",
+      "summary_en": "432 monthly US observations test whether investing beats inflation. Real annualised returns: equities 8.4%, bonds 1.9%, cash just 0.1% — 100 units of cash became 102 after 36 years, and cash still trailed inflation in 59.9% of twenty-year windows. In 2022 all five assets lost in real terms.",
+      "path": "beating-inflation/",
+      "featured": true
+    },
+    {
+      "slug": "missing-best-days",
+      "title_zh": "错过最好的十天：一句被误用的统计",
+      "title_en": "The ten best days: a statistic used the wrong way",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-03",
+      "updated": "2026-10-03",
+      "version": "v1.0",
+      "minutes": 14,
+      "summary_zh": "用标普 500 从 1970 年至今 14,309 个交易日检验「错过最好的 10 天，收益腰斩」。全仓年化 8.10%，错过最好 10 天降到 6.52%——但躲过最差 10 天升到 10.12%，幅度还更大。随机剔除 10 天则几乎没影响，而最好的日子与最差的日子只隔几天。含 6 张图表与 1 个可拖天数的交互动画。",
+      "summary_en": "14,309 trading days test the claim that missing the ten best days halves your return. Buy-and-hold compounds at 8.10% and missing the best ten cuts it to 6.52% — but avoiding the worst ten lifts it to 10.12%, a bigger move. Missing ten random days changes almost nothing, and the best days sit days away from the worst.",
+      "path": "missing-best-days/",
+      "featured": true
+    },
+    {
+      "slug": "gold-inflation-hedge",
+      "title_zh": "黄金：抗通胀，还是抗波动？",
+      "title_en": "Gold: an inflation hedge, or a volatility hedge?",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-03",
+      "updated": "2026-10-03",
+      "version": "v1.0",
+      "minutes": 15,
+      "summary_zh": "以 1968-01 至 2026-08 共 703 个月的伦敦金价与美国 CPI 检验「黄金抗通胀」。58 年看它确实跑赢（实际购买力 12.5 倍），但 1980 年买在高点要等 45 年才回本，持有十年有四成窗口是亏的。它真正对冲的是组合波动：与股票相关性 −0.08，加入 10% 可把最大回撤从 28.4% 降到 24.6%。含 7 张图表与 1 个可拖权重的交互动画。",
+      "summary_en": "703 monthly observations of the London gold price and US CPI test the claim that gold hedges inflation. Over 58 years real purchasing power rose 12.5-fold — but a January 1980 buyer waited 45 years to break even, and 40% of ten-year windows lost money after inflation.",
+      "path": "gold-inflation-hedge/",
+      "featured": true
+    },
+    {
+      "slug": "vix-buy-the-fear",
+      "title_zh": "VIX 冲上 30 的时候，该贪婪吗？",
+      "title_en": "When VIX tops 30, should you be greedy?",
+      "tags": [
+        "portfolio",
+        "signal"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-03",
+      "updated": "2026-10-03",
+      "version": "v1.0",
+      "minutes": 16,
+      "summary_zh": "「别人恐惧我贪婪」在收益层面站得住：VIX ≥ 30 之后 12 个月的中位收益是 21.8%。但 36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次买入后两年仍在亏损。含 8 张图表与 1 个可拖阈值的交互动画。",
+      "summary_en": "\"Be greedy when others are fearful\" survives on returns: the median 12-month return after VIX ≥ 30 is 21.8%. But 36 years produced only seven independent episodes, one of which was still losing money two years later.",
+      "path": "vix-buy-the-fear/",
+      "featured": true
+    },
+    {
+      "slug": "lump-sum-vs-dca",
+      "title_zh": "定投与一次性投入：基于 942 个月度观测的实证检验",
+      "title_en": "Dollar-cost averaging vs lump sum: evidence from 942 monthly observations",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-02",
+      "updated": "2026-10-02",
+      "version": "v3.9",
+      "minutes": 15,
+      "summary_zh": "研究工作稿：以标普 500 全收益与恒生指数共 942 个月度观测检验一次性投入与分期定额投入（DCA）。一次性投入在约八成起点占优，其劣势几乎全部集中于「部署期下跌」的样本；换到恒生指数，优势降至 63–69%。含 9 张图表与 2 个交互动画，文末附参考文献。",
+      "summary_en": "A working paper on DCA versus lump sum using 942 monthly observations across two markets: all-in wins about 80% of starts, and its losses concentrate in falling deployment windows.",
+      "path": "lump-sum-vs-dca/",
+      "featured": true
+    },
+    {
+      "slug": "cost-of-constraints",
+      "title_zh": "约束的代价：多资产组合里，每个\"不许超\"都在收费",
+      "title_en": "Every constraint has a price",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-09-29",
+      "updated": "2026-09-29",
+      "version": "v1.0",
+      "minutes": 12,
+      "summary_zh": "同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps/年；但样本短的时候，同样的约束是保险而不是成本。四张图 + 八条可点开的文献。",
+      "summary_en": "Four ordinary institutional constraints cost 46.8 bps at an identical risk budget — and act as insurance when the sample is short.",
+      "path": "cost-of-constraints/",
+      "featured": true
+    },
+    {
+      "slug": "factor-screening",
+      "title_zh": "因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零",
+      "title_en": "Factor screening: why an in-sample Sharpe of 1.95 can be worth zero",
+      "tags": [
+        "signal"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-09-25",
+      "updated": "2026-09-25",
+      "version": "v1.0",
+      "minutes": 12,
+      "summary_zh": "同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。",
+      "summary_en": "Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors by t-statistic earn 1.95 in sample and 0.03 out of sample.",
+      "path": "factor-screening/",
+      "featured": true
+    },
+    {
+      "slug": "glossary",
+      "title_zh": "术语表：System One · RLCD · 校准 · 类型安全",
+      "title_en": "Glossary: System One, RLCD, calibration, type safety",
+      "tags": [
+        "models"
+      ],
+      "format": "tool",
+      "status": "published",
+      "date": "2026-09-25",
+      "updated": "2026-09-25",
+      "version": "v1.0",
+      "minutes": 5,
+      "summary_zh": "本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。",
+      "summary_en": "Every term used in these notes: a one-line definition, why it matters, and a source anchor other notes link to.",
+      "path": "glossary/",
+      "featured": false
+    },
+    {
+      "slug": "ai-factor-referee",
+      "title_zh": "AI 挖因子，谁来当裁判",
+      "title_en": "Let the agent propose; let the referee judge",
+      "tags": [
+        "signal",
+        "models"
+      ],
+      "format": "study",
+      "status": "library",
+      "date": "2026-09-29",
+      "updated": "2026-09-29",
+      "version": "v1.0",
+      "minutes": 14,
+      "summary_zh": "2026 年 9 月三篇论文指向同一件事：提议可以交给 AI，裁判不能。含机制流程图与三张模拟图：边看边停每千提案错误放行 205 个，冻结裁判只有 39 个，代价是等待时间。",
+      "summary_en": "Three September 2026 papers point at one division of labour: let the agent propose, keep the referee outside. 205 vs 39 wrongful admissions per 1,000 proposals — the difference is who judges.",
+      "path": "ai-factor-referee/",
+      "featured": true
+    },
+    {
+      "slug": "jev-system-one-models",
+      "title_zh": "Jev 与 System One Models：把 AI 变成代码里的一个判断",
+      "title_en": "Jev and System One Models: turning AI into a decision inside your code",
+      "tags": [
+        "models"
+      ],
+      "format": "study",
+      "status": "library",
+      "date": "2026-09-25",
+      "updated": "2026-09-25",
+      "version": "v1.0",
+      "minutes": 16,
+      "summary_zh": "它不是「更聪明的分类器」，而是一类新的接口：非结构化状态进，带校准概率的类型化决策出。本文拆开它的定义、机制、与 LLM 的差别、能落地的位置，以及哪些话目前只能算官方口径。",
+      "summary_en": "Not a smarter classifier — a new interface: unstructured state in, typed decisions with calibrated probabilities out.",
+      "path": "jev-system-one-models/",
+      "featured": true
+    },
+    {
+      "slug": "sell-in-may",
+      "title_zh": "Sell in May：季节性到底是不是真的",
+      "title_en": "Sell in May: is the seasonality real?",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "planned",
+      "date": null,
+      "updated": null,
+      "version": null,
+      "minutes": 11,
+      "summary_zh": "把几十年的月度收益铺成一张热力图，季节形状一眼可见。但可见不等于可交易：扣除成本、换手与多重检验之后，还剩多少。",
+      "summary_en": "Decades of monthly returns as a heat map make the seasonal shape obvious. Visible is not the same as tradeable: what survives costs, turnover and multiple testing.",
+      "path": null,
+      "featured": false
+    },
+    {
+      "slug": "permanent-portfolio",
+      "title_zh": "永久组合实测：四等分真的能应对任何环境吗",
+      "title_en": "The Permanent Portfolio, tested",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "planned",
+      "date": null,
+      "updated": null,
+      "version": null,
+      "minutes": 15,
+      "summary_zh": "股/长债/黄金/现金各 25%，Harry Browne 的设计承诺是「不需要预测、不需要判断」。用同一套数据回测，看它的收益来自哪一条腿，以及它在四十年里到底避开了什么。",
+      "summary_en": "25% each in stocks, long bonds, gold and cash — Harry Browne's design promises no forecasting and no judgement. Backtested on the same dataset: where the return comes from, and what it actually avoided.",
+      "path": null,
+      "featured": false
+    }
+  ]
+}
