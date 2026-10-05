@@ -170,7 +170,7 @@
       <p class="ex-note en">The Permanent Portfolio sits bottom-left: <b>5.8% volatility for 7.18% a year</b>. It earns <b>1.9 points less</b> than the 60/40 but carries an <b>11.5-point shallower</b> maximum drawdown (−15.5% against −27.0%), and its worst twelve months is −13.5% against −24.0% and −43.3%. Its Sharpe of <b>0.75</b> is the highest of the four — a rule with no optimisation in it beats a deliberately designed risk-parity product (All Weather, 0.68) on risk-adjusted terms.</p>
       <p class="ex-src"><span class="zh">来源：本文回测；夏普以 3 个月国库券为无风险利率。</span><span class="en">Source: author's backtest; Sharpe uses three-month T-bills as the risk-free rate.</span></p>
     </div>
-    <p class="zh">把它拆成具体年份会更清楚：35.7 年里有 34 个完整年份，它只有 <b>6 年亏钱</b>，其中 4 年的亏损都在 3% 以内（1994 −2.7%、2008 −0.3%、2013 −2.7%、2015 −2.2%、2018 −1.0%），唯一的例外是 2022 年的 −11.9%。滚动持有 12 个月，亏钱的窗口占 <b>12.5%</b>，四个组合里最低（60/40 为 14.9%，纯股 16.5%）。</p>
+    <p class="zh">把它拆成具体年份会更清楚：35.7 年里有 34 个完整年份，它只有 <b>6 年亏钱</b>，其中 5 年的亏损都在 3% 以内（1994 −2.7%、2008 −0.3%、2013 −2.7%、2015 −2.2%、2018 −1.0%），唯一的例外是 2022 年的 −11.9%。滚动持有 12 个月，亏钱的窗口占 <b>11.8%</b>，四个组合里最低（60/40 为 14.9%，纯股 16.5%）。</p>
 
     <h2 id="s5"><span class="num">05</span><span class="zh">第二层：资金四等分，风险也四等分了吗</span><span class="en">Second test: is equal money equal risk?</span></h2>
     <p class="zh">这是全文最重要的一张图，因为它是这个策略<b>唯一真正的机制</b>。把组合的方差按四条腿分解（用年度再平衡下的时变权重），25% 的资金对应的是：股票 <b>37.5%</b>、长债 <b>33.9%</b>、黄金 <b>28.4%</b>、现金 <b>0.2%</b>。</p>
@@ -214,7 +214,7 @@
     <div class="exhibit">
       <div class="ex-label"><span class="zh">Exhibit 8 · 七个起点</span><span class="en">Exhibit 8 · seven start dates</span></div>
       <img src="../assets/figs/pp-starts.svg" alt="七个不同起点下四个组合的年化收益">
-      <p class="ex-note zh">起点敏感性是检验"稳健"最便宜的一把尺子。从 1990、1995、2000、2005、2010、2015、2020 七个起点分别重算，永久组合的年化始终落在 <b>6.8% 到 8.5%</b> 之间（跨度 1.7 个百分点）；全天候是 5.4% 到 7.9%（跨度 2.5 个百分点），而且在 2020 起点掉到 5.4%——那之后债券几乎没有再提供什么。60/40 与纯股对起点更敏感（2020 起点分别到 9.5% 与 15% 以上），因为它们的好坏几乎完全取决于股票那一段。<b>永久组合的"无聊"体现在这里：它不挑入场时间。</b></p>
+      <p class="ex-note zh">起点敏感性是检验"稳健"最便宜的一把尺子。从 1990、1995、2000、2005、2010、2015、2020 七个起点分别重算，永久组合的年化始终落在 <b>6.8% 到 8.5%</b> 之间（跨度 1.7 个百分点）；全天候是 5.4% 到 7.9%（跨度 2.5 个百分点），而且在 2020 起点掉到 5.4%——那之后债券几乎没有再提供什么。60/40 与纯股对起点更敏感：2020 起点分别是 9.3% 与 15.3%，因为它们的好坏几乎完全取决于股票那一段。<b>永久组合的"无聊"体现在这里：它不挑入场时间。</b></p>
       <p class="ex-note en">Start-date sensitivity is the cheapest robustness test there is. Re-running from 1990, 1995, 2000, 2005, 2010, 2015 and 2020, the Permanent Portfolio stays between <b>6.8% and 8.5%</b> a year — a 1.7-point spread — while All Weather spans 5.4% to 7.9% and falls to 5.4% from a 2020 start, after which bonds stopped contributing much. The 60/40 and equities are far more start-dependent, because their outcome is essentially the equity decade you happen to get.</p>
       <p class="ex-src"><span class="zh">来源：本文回测；每个起点从该年 1 月开始，最短样本 5.7 年。</span><span class="en">Source: author's backtest; each start begins in January of that year, with a minimum sample of 5.7 years.</span></p>
     </div>
