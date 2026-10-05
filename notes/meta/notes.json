@@ -10,6 +10,10 @@
     "tagline_en": "Reading notes on frontier technology. Facts, inferences and opinions kept apart — every number carries a source."
   },
   "tags": {
+    "starter": {
+      "zh": "入门",
+      "en": "Start here"
+    },
     "signal": {
       "zh": "信号",
       "en": "Signal"
@@ -35,12 +39,49 @@
       "en": "Research & Writing"
     }
   },
+  "starter_band": {
+    "label_zh": "入门科普 · 先看这四篇",
+    "label_en": "Start here · four explainers",
+    "note_zh": "读不下去就从这几篇开始：组合怎么分钱、黄金到底管不管用、VIX 该不该贪婪。",
+    "note_en": "If the list looks long, start here: how a portfolio splits its money, whether gold actually hedges, and whether high VIX means buy.",
+    "items": [
+      {
+        "slug": "permanent-portfolio",
+        "kicker_zh": "配置入门",
+        "kicker_en": "Allocation basics",
+        "blurb_zh": "四等分资金＝等风险；但通胀那一格它没扛住。",
+        "blurb_en": "Equal money, nearly equal risk — but it failed the inflation test."
+      },
+      {
+        "slug": "all-weather",
+        "kicker_zh": "配置进阶",
+        "kicker_en": "Allocation, next step",
+        "blurb_zh": "更稳，却没跑赢 60/40；风险其实压在长债上。",
+        "blurb_en": "Steadier than a 60/40, no better on return, with the risk sitting in bonds."
+      },
+      {
+        "slug": "gold-inflation-hedge",
+        "kicker_zh": "单一资产",
+        "kicker_en": "One asset",
+        "blurb_zh": "58 年确实跑赢通胀，但 1980 年买的人等了 45 年。",
+        "blurb_en": "It did beat inflation — a January 1980 buyer waited 45 years."
+      },
+      {
+        "slug": "vix-buy-the-fear",
+        "kicker_zh": "市场情绪",
+        "kicker_en": "Market mood",
+        "blurb_zh": "「别人恐惧我贪婪」站得住，但 36 年只给了 7 次机会。",
+        "blurb_en": "Greedy when others are fearful holds up — on seven chances in 36 years."
+      }
+    ]
+  },
   "notes": [
     {
       "slug": "all-weather",
       "title_zh": "全天候组合实测：不预测，真的能穿越周期吗",
       "title_en": "All Weather, tested: does not forecasting actually survive every cycle?",
       "tags": [
+        "starter",
         "portfolio"
       ],
       "format": "study",
@@ -49,6 +90,8 @@
       "updated": "2026-10-04",
       "version": "v1.0",
       "minutes": 16,
+      "figures": 6,
+      "starter_rank": 2,
       "summary_zh": "用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、波动 7.6%、最大回撤 −22.3%，比 60/40 稳得多（9.2% / −29.6%），但收益更低（8.9%）夏普更差（0.64 对 0.68）。更关键的是它并没有做到环境中性：40% 的长债贡献了 53.5% 的风险，商品腿只有 1.2%。含 6 张图表与 1 个可拖股票权重的交互动画。",
       "summary_en": "428 monthly US observations test the public description of All Weather: 7.6% a year, −22.3% maximum drawdown, steadier than a 60/40 but with lower return and Sharpe. It is not environment-neutral — long bonds carry 53.5% of the risk while commodities carry 1.2%.",
       "path": "all-weather/",
@@ -95,6 +138,7 @@
       "title_zh": "黄金：抗通胀，还是抗波动？",
       "title_en": "Gold: an inflation hedge, or a volatility hedge?",
       "tags": [
+        "starter",
         "portfolio"
       ],
       "format": "study",
@@ -113,6 +157,7 @@
       "title_zh": "VIX 冲上 30 的时候，该贪婪吗？",
       "title_en": "When VIX tops 30, should you be greedy?",
       "tags": [
+        "starter",
         "portfolio",
         "signal"
       ],
@@ -259,6 +304,7 @@
       "title_zh": "永久组合实测：四等分真的能应对任何环境吗",
       "title_en": "The Permanent Portfolio, tested: does an even split cover every environment?",
       "tags": [
+        "starter",
         "portfolio"
       ],
       "format": "study",

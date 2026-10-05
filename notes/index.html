@@ -33,7 +33,7 @@
 
 <div class="wrap">
   <header class="nhero">
-    <div class="eyebrow">Notes · 阅读笔记</div>
+    <div class="eyebrow"><span class="zh">Notes · 阅读笔记</span><span class="en">Notes · Reading notes</span></div>
     <h1><span class="zh">把前沿技术读成能用的东西</span><span class="en">Reading frontier technology into something usable</span></h1>
     <p class="lede">
       <span class="zh">这里放我读完一篇论文、一个新品、一套方法之后的整理结果。原则只有一条：<b>事实、推断、观点分开写</b>，官方口径与我的判断不混在一起，每个数字都能点回出处。</span>
@@ -47,8 +47,52 @@
     </div>
   </header>
 
+  <!-- NOTES:FEATURED:START -->
+        <section class="feat" aria-label="入门科普">
+          <div class="fh">
+            <b><span class="zh">入门科普 · 先看这四篇</span><span class="en">Start here · four explainers</span></b>
+            <span><span class="zh">读不下去就从这几篇开始：组合怎么分钱、黄金到底管不管用、VIX 该不该贪婪。</span><span class="en">If the list looks long, start here: how a portfolio splits its money, whether gold actually hedges, and whether high VIX means buy.</span></span>
+          </div>
+          <div class="fgrid">
+            <a class="fcard" href="permanent-portfolio/"
+               data-card data-tags="starter portfolio"
+               data-text="永久组合实测：四等分真的能应对任何环境吗 The Permanent Portfolio, tested: does an even split cover every environment? 四等分资金＝等风险；但通胀那一格它没扛住。 Equal money, nearly equal risk — but it failed the inflation test.">
+              <span class="fk"><span class="zh">配置入门</span><span class="en">Allocation basics</span></span>
+              <b><span class="zh">永久组合实测：四等分真的能应对任何环境吗</span><span class="en">The Permanent Portfolio, tested: does an even split cover every environment?</span></b>
+              <span class="fs"><span class="zh">四等分资金＝等风险；但通胀那一格它没扛住。</span><span class="en">Equal money, nearly equal risk — but it failed the inflation test.</span></span>
+              <span class="fm">2026-10-05</span>
+            </a>
+            <a class="fcard" href="all-weather/"
+               data-card data-tags="starter portfolio"
+               data-text="全天候组合实测：不预测，真的能穿越周期吗 All Weather, tested: does not forecasting actually survive every cycle? 更稳，却没跑赢 60/40；风险其实压在长债上。 Steadier than a 60/40, no better on return, with the risk sitting in bonds.">
+              <span class="fk"><span class="zh">配置进阶</span><span class="en">Allocation, next step</span></span>
+              <b><span class="zh">全天候组合实测：不预测，真的能穿越周期吗</span><span class="en">All Weather, tested: does not forecasting actually survive every cycle?</span></b>
+              <span class="fs"><span class="zh">更稳，却没跑赢 60/40；风险其实压在长债上。</span><span class="en">Steadier than a 60/40, no better on return, with the risk sitting in bonds.</span></span>
+              <span class="fm">2026-10-04</span>
+            </a>
+            <a class="fcard" href="gold-inflation-hedge/"
+               data-card data-tags="starter portfolio"
+               data-text="黄金：抗通胀，还是抗波动？ Gold: an inflation hedge, or a volatility hedge? 58 年确实跑赢通胀，但 1980 年买的人等了 45 年。 It did beat inflation — a January 1980 buyer waited 45 years.">
+              <span class="fk"><span class="zh">单一资产</span><span class="en">One asset</span></span>
+              <b><span class="zh">黄金：抗通胀，还是抗波动？</span><span class="en">Gold: an inflation hedge, or a volatility hedge?</span></b>
+              <span class="fs"><span class="zh">58 年确实跑赢通胀，但 1980 年买的人等了 45 年。</span><span class="en">It did beat inflation — a January 1980 buyer waited 45 years.</span></span>
+              <span class="fm">2026-10-03</span>
+            </a>
+            <a class="fcard" href="vix-buy-the-fear/"
+               data-card data-tags="starter portfolio signal"
+               data-text="VIX 冲上 30 的时候，该贪婪吗？ When VIX tops 30, should you be greedy? 「别人恐惧我贪婪」站得住，但 36 年只给了 7 次机会。 Greedy when others are fearful holds up — on seven chances in 36 years.">
+              <span class="fk"><span class="zh">市场情绪</span><span class="en">Market mood</span></span>
+              <b><span class="zh">VIX 冲上 30 的时候，该贪婪吗？</span><span class="en">When VIX tops 30, should you be greedy?</span></b>
+              <span class="fs"><span class="zh">「别人恐惧我贪婪」站得住，但 36 年只给了 7 次机会。</span><span class="en">Greedy when others are fearful holds up — on seven chances in 36 years.</span></span>
+              <span class="fm">2026-10-03</span>
+            </a>
+          </div>
+        </section>
+        <!-- NOTES:FEATURED:END -->
+
   <div class="filters">
     <!-- NOTES:CHIPS:START --><button class="chip" data-tag="all" aria-pressed="true"><span class="zh">全部</span><span class="en">All</span></button>
+            <button class="chip" data-tag="starter" aria-pressed="false"><span class="zh">入门</span><span class="en">Start here</span></button>
             <button class="chip" data-tag="signal" aria-pressed="false"><span class="zh">信号</span><span class="en">Signal</span></button>
             <button class="chip" data-tag="portfolio" aria-pressed="false"><span class="zh">组合</span><span class="en">Portfolio</span></button>
             <button class="chip" data-tag="models" aria-pressed="false"><span class="zh">模型与验证</span><span class="en">Models & Validation</span></button>
@@ -59,106 +103,118 @@
     </label>
   </div>
 
+  <p class="sortnote"><span class="zh">下面按更新时间倒序，最新在最前面；上面四篇是入门科普，可以从那里开始读。</span><span class="en">Everything below is newest first; the four cards above are the explainer starters.</span></p>
+
   <div class="cards">
           <!-- NOTES:CARDS:START -->
-          <article class="ncard"
-                   data-card data-tags="portfolio" data-text="永久组合实测：四等分真的能应对任何环境吗 The Permanent Portfolio, tested: does an even split cover every environment? 股、长债、黄金、现金各 25%，用 1990-01 至 2025-09 共 428 个月的美国数据检验。它年化 7.18%、波动 5.8%、最大回撤 −15.5%、夏普 0.75，是四个组合里最高的；25% 的资金对应 37.5 / 33.9 / 28.4 / 0.2 的风险贡献——四等分资金意外地做到了等风险。但 CPI 高于 5% 的 26 个月里它年化 −2.8%，黄金腿 −2.95%，它并没有抗住通胀。含 8 张图表与一个可拖黄金权重、可播放历史的交互动画。 25% each in stocks, long bonds, gold and cash, tested on 428 monthly US observations from 1990-01 to 2025-09: 7.18% a year, 5.8% volatility, a −15.5% maximum drawdown and the highest Sharpe of the four portfolios (0.75). Equal money turns out to be very nearly equal risk (37.5 / 33.9 / 28.4 / 0.2) — but it lost 2.8% a year across the 26 months with CPI above 5%, with gold at −2.95%. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+          <article class="ncard is-starter"
+                   data-card data-tags="starter portfolio" data-text="永久组合实测：四等分真的能应对任何环境吗 The Permanent Portfolio, tested: does an even split cover every environment? 股、长债、黄金、现金各 25%，用 1990-01 至 2025-09 共 428 个月的美国数据检验。它年化 7.18%、波动 5.8%、最大回撤 −15.5%、夏普 0.75，是四个组合里最高的；25% 的资金对应 37.5 / 33.9 / 28.4 / 0.2 的风险贡献——四等分资金意外地做到了等风险。但 CPI 高于 5% 的 26 个月里它年化 −2.8%，黄金腿 −2.95%，它并没有抗住通胀。含 8 张图表与一个可拖黄金权重、可播放历史的交互动画。 25% each in stocks, long bonds, gold and cash, tested on 428 monthly US observations from 1990-01 to 2025-09: 7.18% a year, 5.8% volatility, a −15.5% maximum drawdown and the highest Sharpe of the four portfolios (0.75). Equal money turns out to be very nearly equal risk (37.5 / 33.9 / 28.4 / 0.2) — but it lost 2.8% a year across the 26 months with CPI above 5%, with gold at −2.95%. starter portfolio">
+            <div class="tagrow"><span class="tag t-starter"><span class="zh">入门</span><span class="en">Start here</span></span><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="permanent-portfolio/"><span class="zh">永久组合实测：四等分真的能应对任何环境吗</span><span class="en">The Permanent Portfolio, tested: does an even split cover every environment?</span></a></h3>
             <p class="sub"><span class="zh">The Permanent Portfolio, tested: does an even split cover every environment?</span><span class="en">永久组合实测：四等分真的能应对任何环境吗</span></p>
+            <p class="nmeta">2026-10-05 · 18 min</p>
             <p><span class="zh">股、长债、黄金、现金各 25%，用 1990-01 至 2025-09 共 428 个月的美国数据检验。它年化 7.18%、波动 5.8%、最大回撤 −15.5%、夏普 0.75，是四个组合里最高的；25% 的资金对应 37.5 / 33.9 / 28.4 / 0.2 的风险贡献——四等分资金意外地做到了等风险。但 CPI 高于 5% 的 26 个月里它年化 −2.8%，黄金腿 −2.95%，它并没有抗住通胀。含 8 张图表与一个可拖黄金权重、可播放历史的交互动画。</span>
                <span class="en">25% each in stocks, long bonds, gold and cash, tested on 428 monthly US observations from 1990-01 to 2025-09: 7.18% a year, 5.8% volatility, a −15.5% maximum drawdown and the highest Sharpe of the four portfolios (0.75). Equal money turns out to be very nearly equal risk (37.5 / 33.9 / 28.4 / 0.2) — but it lost 2.8% a year across the 26 months with CPI above 5%, with gold at −2.95%.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0518 min<a class="more" href="permanent-portfolio/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="permanent-portfolio/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
-          <article class="ncard"
-                   data-card data-tags="portfolio" data-text="全天候组合实测：不预测，真的能穿越周期吗 All Weather, tested: does not forecasting actually survive every cycle? 用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、波动 7.6%、最大回撤 −22.3%，比 60/40 稳得多（9.2% / −29.6%），但收益更低（8.9%）夏普更差（0.64 对 0.68）。更关键的是它并没有做到环境中性：40% 的长债贡献了 53.5% 的风险，商品腿只有 1.2%。含 6 张图表与 1 个可拖股票权重的交互动画。 428 monthly US observations test the public description of All Weather: 7.6% a year, −22.3% maximum drawdown, steadier than a 60/40 but with lower return and Sharpe. It is not environment-neutral — long bonds carry 53.5% of the risk while commodities carry 1.2%. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+          <article class="ncard is-starter"
+                   data-card data-tags="starter portfolio" data-text="全天候组合实测：不预测，真的能穿越周期吗 All Weather, tested: does not forecasting actually survive every cycle? 用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、波动 7.6%、最大回撤 −22.3%，比 60/40 稳得多（9.2% / −29.6%），但收益更低（8.9%）夏普更差（0.64 对 0.68）。更关键的是它并没有做到环境中性：40% 的长债贡献了 53.5% 的风险，商品腿只有 1.2%。含 6 张图表与 1 个可拖股票权重的交互动画。 428 monthly US observations test the public description of All Weather: 7.6% a year, −22.3% maximum drawdown, steadier than a 60/40 but with lower return and Sharpe. It is not environment-neutral — long bonds carry 53.5% of the risk while commodities carry 1.2%. starter portfolio">
+            <div class="tagrow"><span class="tag t-starter"><span class="zh">入门</span><span class="en">Start here</span></span><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="all-weather/"><span class="zh">全天候组合实测：不预测，真的能穿越周期吗</span><span class="en">All Weather, tested: does not forecasting actually survive every cycle?</span></a></h3>
             <p class="sub"><span class="zh">All Weather, tested: does not forecasting actually survive every cycle?</span><span class="en">全天候组合实测：不预测，真的能穿越周期吗</span></p>
+            <p class="nmeta">2026-10-04 · 16 min</p>
             <p><span class="zh">用 1990-01 至 2025-09 共 428 个月的美国数据检验全天候组合的公开描述。它年化 7.6%、波动 7.6%、最大回撤 −22.3%，比 60/40 稳得多（9.2% / −29.6%），但收益更低（8.9%）夏普更差（0.64 对 0.68）。更关键的是它并没有做到环境中性：40% 的长债贡献了 53.5% 的风险，商品腿只有 1.2%。含 6 张图表与 1 个可拖股票权重的交互动画。</span>
                <span class="en">428 monthly US observations test the public description of All Weather: 7.6% a year, −22.3% maximum drawdown, steadier than a 60/40 but with lower return and Sharpe. It is not environment-neutral — long bonds carry 53.5% of the risk while commodities carry 1.2%.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0416 min<a class="more" href="all-weather/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="all-weather/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
           <article class="ncard"
                    data-card data-tags="portfolio" data-text="投资能跑赢通胀吗 Can investing beat inflation? 用 1990-01 至 2026-08 共 432 个月的美国数据检验「投资能跑赢通胀」。股票年化实际收益 8.4%、债券 1.9%、现金只有 0.1%——最初的 100 元 36 年后只值 102 元，而且持有 20 年仍有六成窗口跑输通胀。2022 年通胀 6.5% 时五类资产实际收益全为负。含 6 张图表与 1 个可拖持有期的交互动画。 432 monthly US observations test whether investing beats inflation. Real annualised returns: equities 8.4%, bonds 1.9%, cash just 0.1% — 100 units of cash became 102 after 36 years, and cash still trailed inflation in 59.9% of twenty-year windows. In 2022 all five assets lost in real terms. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+            <div class="tagrow"><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="beating-inflation/"><span class="zh">投资能跑赢通胀吗</span><span class="en">Can investing beat inflation?</span></a></h3>
             <p class="sub"><span class="zh">Can investing beat inflation?</span><span class="en">投资能跑赢通胀吗</span></p>
+            <p class="nmeta">2026-10-04 · 15 min</p>
             <p><span class="zh">用 1990-01 至 2026-08 共 432 个月的美国数据检验「投资能跑赢通胀」。股票年化实际收益 8.4%、债券 1.9%、现金只有 0.1%——最初的 100 元 36 年后只值 102 元，而且持有 20 年仍有六成窗口跑输通胀。2022 年通胀 6.5% 时五类资产实际收益全为负。含 6 张图表与 1 个可拖持有期的交互动画。</span>
                <span class="en">432 monthly US observations test whether investing beats inflation. Real annualised returns: equities 8.4%, bonds 1.9%, cash just 0.1% — 100 units of cash became 102 after 36 years, and cash still trailed inflation in 59.9% of twenty-year windows. In 2022 all five assets lost in real terms.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0415 min<a class="more" href="beating-inflation/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="beating-inflation/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
           <article class="ncard"
                    data-card data-tags="portfolio" data-text="错过最好的十天：一句被误用的统计 The ten best days: a statistic used the wrong way 用标普 500 从 1970 年至今 14,309 个交易日检验「错过最好的 10 天，收益腰斩」。全仓年化 8.10%，错过最好 10 天降到 6.52%——但躲过最差 10 天升到 10.12%，幅度还更大。随机剔除 10 天则几乎没影响，而最好的日子与最差的日子只隔几天。含 6 张图表与 1 个可拖天数的交互动画。 14,309 trading days test the claim that missing the ten best days halves your return. Buy-and-hold compounds at 8.10% and missing the best ten cuts it to 6.52% — but avoiding the worst ten lifts it to 10.12%, a bigger move. Missing ten random days changes almost nothing, and the best days sit days away from the worst. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+            <div class="tagrow"><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="missing-best-days/"><span class="zh">错过最好的十天：一句被误用的统计</span><span class="en">The ten best days: a statistic used the wrong way</span></a></h3>
             <p class="sub"><span class="zh">The ten best days: a statistic used the wrong way</span><span class="en">错过最好的十天：一句被误用的统计</span></p>
+            <p class="nmeta">2026-10-03 · 14 min</p>
             <p><span class="zh">用标普 500 从 1970 年至今 14,309 个交易日检验「错过最好的 10 天，收益腰斩」。全仓年化 8.10%，错过最好 10 天降到 6.52%——但躲过最差 10 天升到 10.12%，幅度还更大。随机剔除 10 天则几乎没影响，而最好的日子与最差的日子只隔几天。含 6 张图表与 1 个可拖天数的交互动画。</span>
                <span class="en">14,309 trading days test the claim that missing the ten best days halves your return. Buy-and-hold compounds at 8.10% and missing the best ten cuts it to 6.52% — but avoiding the worst ten lifts it to 10.12%, a bigger move. Missing ten random days changes almost nothing, and the best days sit days away from the worst.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0314 min<a class="more" href="missing-best-days/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="missing-best-days/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
-          <article class="ncard"
-                   data-card data-tags="portfolio" data-text="黄金：抗通胀，还是抗波动？ Gold: an inflation hedge, or a volatility hedge? 以 1968-01 至 2026-08 共 703 个月的伦敦金价与美国 CPI 检验「黄金抗通胀」。58 年看它确实跑赢（实际购买力 12.5 倍），但 1980 年买在高点要等 45 年才回本，持有十年有四成窗口是亏的。它真正对冲的是组合波动：与股票相关性 −0.08，加入 10% 可把最大回撤从 28.4% 降到 24.6%。含 7 张图表与 1 个可拖权重的交互动画。 703 monthly observations of the London gold price and US CPI test the claim that gold hedges inflation. Over 58 years real purchasing power rose 12.5-fold — but a January 1980 buyer waited 45 years to break even, and 40% of ten-year windows lost money after inflation. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+          <article class="ncard is-starter"
+                   data-card data-tags="starter portfolio" data-text="黄金：抗通胀，还是抗波动？ Gold: an inflation hedge, or a volatility hedge? 以 1968-01 至 2026-08 共 703 个月的伦敦金价与美国 CPI 检验「黄金抗通胀」。58 年看它确实跑赢（实际购买力 12.5 倍），但 1980 年买在高点要等 45 年才回本，持有十年有四成窗口是亏的。它真正对冲的是组合波动：与股票相关性 −0.08，加入 10% 可把最大回撤从 28.4% 降到 24.6%。含 7 张图表与 1 个可拖权重的交互动画。 703 monthly observations of the London gold price and US CPI test the claim that gold hedges inflation. Over 58 years real purchasing power rose 12.5-fold — but a January 1980 buyer waited 45 years to break even, and 40% of ten-year windows lost money after inflation. starter portfolio">
+            <div class="tagrow"><span class="tag t-starter"><span class="zh">入门</span><span class="en">Start here</span></span><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="gold-inflation-hedge/"><span class="zh">黄金：抗通胀，还是抗波动？</span><span class="en">Gold: an inflation hedge, or a volatility hedge?</span></a></h3>
             <p class="sub"><span class="zh">Gold: an inflation hedge, or a volatility hedge?</span><span class="en">黄金：抗通胀，还是抗波动？</span></p>
+            <p class="nmeta">2026-10-03 · 15 min</p>
             <p><span class="zh">以 1968-01 至 2026-08 共 703 个月的伦敦金价与美国 CPI 检验「黄金抗通胀」。58 年看它确实跑赢（实际购买力 12.5 倍），但 1980 年买在高点要等 45 年才回本，持有十年有四成窗口是亏的。它真正对冲的是组合波动：与股票相关性 −0.08，加入 10% 可把最大回撤从 28.4% 降到 24.6%。含 7 张图表与 1 个可拖权重的交互动画。</span>
                <span class="en">703 monthly observations of the London gold price and US CPI test the claim that gold hedges inflation. Over 58 years real purchasing power rose 12.5-fold — but a January 1980 buyer waited 45 years to break even, and 40% of ten-year windows lost money after inflation.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0315 min<a class="more" href="gold-inflation-hedge/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="gold-inflation-hedge/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
-          <article class="ncard"
-                   data-card data-tags="portfolio signal" data-text="VIX 冲上 30 的时候，该贪婪吗？ When VIX tops 30, should you be greedy? 「别人恐惧我贪婪」在收益层面站得住：VIX ≥ 30 之后 12 个月的中位收益是 21.8%。但 36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次买入后两年仍在亏损。含 8 张图表与 1 个可拖阈值的交互动画。 &quot;Be greedy when others are fearful&quot; survives on returns: the median 12-month return after VIX ≥ 30 is 21.8%. But 36 years produced only seven independent episodes, one of which was still losing money two years later. portfolio signal">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span><span class="tag t-signal">signal</span></div>
+          <article class="ncard is-starter"
+                   data-card data-tags="starter portfolio signal" data-text="VIX 冲上 30 的时候，该贪婪吗？ When VIX tops 30, should you be greedy? 「别人恐惧我贪婪」在收益层面站得住：VIX ≥ 30 之后 12 个月的中位收益是 21.8%。但 36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次买入后两年仍在亏损。含 8 张图表与 1 个可拖阈值的交互动画。 &quot;Be greedy when others are fearful&quot; survives on returns: the median 12-month return after VIX ≥ 30 is 21.8%. But 36 years produced only seven independent episodes, one of which was still losing money two years later. starter portfolio signal">
+            <div class="tagrow"><span class="tag t-starter"><span class="zh">入门</span><span class="en">Start here</span></span><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span><span class="tag t-signal"><span class="zh">信号</span><span class="en">Signal</span></span></div>
             <h3><a href="vix-buy-the-fear/"><span class="zh">VIX 冲上 30 的时候，该贪婪吗？</span><span class="en">When VIX tops 30, should you be greedy?</span></a></h3>
             <p class="sub"><span class="zh">When VIX tops 30, should you be greedy?</span><span class="en">VIX 冲上 30 的时候，该贪婪吗？</span></p>
+            <p class="nmeta">2026-10-03 · 16 min</p>
             <p><span class="zh">「别人恐惧我贪婪」在收益层面站得住：VIX ≥ 30 之后 12 个月的中位收益是 21.8%。但 36 年半里这样的机会只有 7 个互不重叠的市场阶段，其中一次买入后两年仍在亏损。含 8 张图表与 1 个可拖阈值的交互动画。</span>
                <span class="en">&quot;Be greedy when others are fearful&quot; survives on returns: the median 12-month return after VIX ≥ 30 is 21.8%. But 36 years produced only seven independent episodes, one of which was still losing money two years later.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0316 min<a class="more" href="vix-buy-the-fear/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="vix-buy-the-fear/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
           <article class="ncard"
                    data-card data-tags="portfolio" data-text="定投与一次性投入：基于 942 个月度观测的实证检验 Dollar-cost averaging vs lump sum: evidence from 942 monthly observations 研究工作稿：以标普 500 全收益与恒生指数共 942 个月度观测检验一次性投入与分期定额投入（DCA）。一次性投入在约八成起点占优，其劣势几乎全部集中于「部署期下跌」的样本；换到恒生指数，优势降至 63–69%。含 9 张图表与 2 个交互动画，文末附参考文献。 A working paper on DCA versus lump sum using 942 monthly observations across two markets: all-in wins about 80% of starts, and its losses concentrate in falling deployment windows. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+            <div class="tagrow"><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="lump-sum-vs-dca/"><span class="zh">定投与一次性投入：基于 942 个月度观测的实证检验</span><span class="en">Dollar-cost averaging vs lump sum: evidence from 942 monthly observations</span></a></h3>
             <p class="sub"><span class="zh">Dollar-cost averaging vs lump sum: evidence from 942 monthly observations</span><span class="en">定投与一次性投入：基于 942 个月度观测的实证检验</span></p>
+            <p class="nmeta">2026-10-02 · 15 min</p>
             <p><span class="zh">研究工作稿：以标普 500 全收益与恒生指数共 942 个月度观测检验一次性投入与分期定额投入（DCA）。一次性投入在约八成起点占优，其劣势几乎全部集中于「部署期下跌」的样本；换到恒生指数，优势降至 63–69%。含 9 张图表与 2 个交互动画，文末附参考文献。</span>
                <span class="en">A working paper on DCA versus lump sum using 942 monthly observations across two markets: all-in wins about 80% of starts, and its losses concentrate in falling deployment windows.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-10-0215 min<a class="more" href="lump-sum-vs-dca/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="lump-sum-vs-dca/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
           <article class="ncard"
                    data-card data-tags="portfolio" data-text="约束的代价：多资产组合里，每个&quot;不许超&quot;都在收费 Every constraint has a price 同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps/年；但样本短的时候，同样的约束是保险而不是成本。四张图 + 八条可点开的文献。 Four ordinary institutional constraints cost 46.8 bps at an identical risk budget — and act as insurance when the sample is short. portfolio">
-            <div class="tagrow"><span class="tag t-portfolio">portfolio</span></div>
+            <div class="tagrow"><span class="tag t-portfolio"><span class="zh">组合</span><span class="en">Portfolio</span></span></div>
             <h3><a href="cost-of-constraints/"><span class="zh">约束的代价：多资产组合里，每个&quot;不许超&quot;都在收费</span><span class="en">Every constraint has a price</span></a></h3>
             <p class="sub"><span class="zh">Every constraint has a price</span><span class="en">约束的代价：多资产组合里，每个&quot;不许超&quot;都在收费</span></p>
+            <p class="nmeta">2026-09-29 · 12 min</p>
             <p><span class="zh">同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps/年；但样本短的时候，同样的约束是保险而不是成本。四张图 + 八条可点开的文献。</span>
                <span class="en">Four ordinary institutional constraints cost 46.8 bps at an identical risk budget — and act as insurance when the sample is short.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-09-2912 min<a class="more" href="cost-of-constraints/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="cost-of-constraints/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
           <article class="ncard"
                    data-card data-tags="signal" data-text="因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零 Factor screening: why an in-sample Sharpe of 1.95 can be worth zero 同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。 Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors by t-statistic earn 1.95 in sample and 0.03 out of sample. signal">
-            <div class="tagrow"><span class="tag t-signal">signal</span></div>
+            <div class="tagrow"><span class="tag t-signal"><span class="zh">信号</span><span class="en">Signal</span></span></div>
             <h3><a href="factor-screening/"><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span><span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></a></h3>
             <p class="sub"><span class="zh">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span><span class="en">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span></p>
+            <p class="nmeta">2026-09-25 · 12 min</p>
             <p><span class="zh">同一份模拟数据，强弱两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。附「证明一个因子需要多少年数据」的门槛计算与 11 条可点开的文献。</span>
                <span class="en">Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors by t-statistic earn 1.95 in sample and 0.03 out of sample.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-09-2512 min<a class="more" href="factor-screening/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="factor-screening/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
 
           <article class="ncard"
                    data-card data-tags="models" data-text="术语表：System One · RLCD · 校准 · 类型安全 Glossary: System One, RLCD, calibration, type safety 本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。 Every term used in these notes: a one-line definition, why it matters, and a source anchor other notes link to. models">
-            <div class="tagrow"><span class="tag t-models">models</span></div>
+            <div class="tagrow"><span class="tag t-models"><span class="zh">模型与验证</span><span class="en">Models &amp; Validation</span></span></div>
             <h3><a href="glossary/"><span class="zh">术语表：System One · RLCD · 校准 · 类型安全</span><span class="en">Glossary: System One, RLCD, calibration, type safety</span></a></h3>
             <p class="sub"><span class="zh">Glossary: System One, RLCD, calibration, type safety</span><span class="en">术语表：System One · RLCD · 校准 · 类型安全</span></p>
+            <p class="nmeta">2026-09-25 · 5 min</p>
             <p><span class="zh">本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。</span>
                <span class="en">Every term used in these notes: a one-line definition, why it matters, and a source anchor other notes link to.</span></p>
-            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span>2026-09-255 min<a class="more" href="glossary/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
+            <div class="foot"><span class="st st-pub"><span class="zh">已发布</span><span class="en">Published</span></span><a class="more" href="glossary/"><span class="zh">读全文 →</span><span class="en">Read →</span></a></div>
           </article>
           <!-- NOTES:CARDS:END -->
   </div>

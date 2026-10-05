@@ -52,6 +52,14 @@
       c.style.display = show ? '' : 'none';
       if (show) shown++;
     });
+    /* 精选带跟着筛选走：四张都被筛掉就整块隐藏，不留空标题 */
+    var band = document.querySelector('.feat');
+    if (band) {
+      var anyFeat = Array.prototype.some.call(band.querySelectorAll('[data-card]'), function (c) {
+        return c.style.display !== 'none';
+      });
+      band.style.display = anyFeat ? '' : 'none';
+    }
     if (empty) empty.hidden = shown > 0;
   }
   chips.forEach(function (c) {

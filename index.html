@@ -330,6 +330,24 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nbody p:last-child,.nbody ol:last-child{margin-bottom:0}
 .nbody .take{margin:0;background:var(--teal2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;
   padding:10px 14px;font-size:13.5px;line-height:1.75;color:#0B5A4C;max-width:80ch}
+/* notes: 入门科普精选带 */
+.nfeat{margin:6px 0 16px;padding:16px 18px 18px;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(180deg,var(--card),var(--card2));box-shadow:var(--sh1)}
+.nfeat .nflab{display:block;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.1em;
+  color:var(--teal);margin-bottom:10px}
+.nfeat .nflab i{font-style:normal;font-family:var(--f-body);font-size:12.5px;font-weight:600;
+  letter-spacing:0;color:var(--mute);margin-left:8px}
+.nfgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.nfcard{display:flex;flex-direction:column;gap:5px;padding:13px 14px;border:1px solid var(--line);
+  border-radius:12px;background:#fff;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s}
+.nfcard:hover{text-decoration:none;transform:translateY(-2px);box-shadow:var(--sh2);border-color:var(--line2)}
+.nfcard .nfk{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--teal)}
+.nfcard b{font-family:var(--f-head);font-size:15px;color:var(--ink);line-height:1.35}
+.nfcard .nfs{font-size:13px;line-height:1.7;color:var(--ink2)}
+.nfcard .nfm{font-family:var(--mono);font-size:10.5px;color:var(--mute);margin-top:auto;padding-top:4px}
+.nitem.is-feat .ntag{color:var(--amber)}
+@media (max-width:560px){.nfgrid{grid-template-columns:1fr}}
+
 
 /* contact */
 .contact{margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:18px;
@@ -894,7 +912,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="3">0</b><span><span class="zh">篇研究笔记 · 验证 / 成本 / 另类数据</span><span class="en">Research notes · validation / cost / alt data</span></span></div>
+          <div><b data-to="9">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法</span><span class="en">Research notes · allocation, beliefs, method</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -968,8 +986,8 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
                     <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">业绩与风险归因</span><span class="en">Performance &amp; Risk Attribution</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
                     <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">风险计量（VaR / 回撤）</span><span class="en">Risk Measures (VaR / Drawdown)</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
                     <li><a class="srow" href="#p-risk"><span class="sn"><span class="zh">市场与产品数据语言</span><span class="en">Market &amp; Product Data Literacy</span></span><span class="to"><span class="zh">组合风险 ↗</span><span class="en">Portfolio Risk ↗</span></span></a></li>
-                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">中英研究报告写作</span><span class="en">Bilingual Research Writing</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">Notes ↗</span></span></a></li>
-                    <li><a class="srow" href="#notes"><span class="sn"><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; Visuals</span></span><span class="to"><span class="zh">笔记 ↗</span><span class="en">Notes ↗</span></span></a></li>
+                    <li><a class="srow" href="https://aayloo.github.io/notes/permanent-portfolio/" target="_blank" rel="noopener"><span class="sn"><span class="zh">中英研究报告写作</span><span class="en">Bilingual Research Writing</span></span><span class="to"><span class="zh">永久组合 ↗</span><span class="en">The Permanent Portfolio ↗</span></span></a></li>
+                    <li><a class="srow" href="https://aayloo.github.io/notes/beating-inflation/" target="_blank" rel="noopener"><span class="sn"><span class="zh">项目讲解与可视化</span><span class="en">Walkthroughs &amp; Visuals</span></span><span class="to"><span class="zh">通胀那篇 ↗</span><span class="en">Beating Inflation ↗</span></span></a></li>
                   </ul>
                 </div>
               </section>
@@ -1014,12 +1032,44 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">9 篇 · 点标题展开，长文另开页</span><span class="en">9 notes · long reads open a page</span></span></div>
+          <span class="hint"><span class="zh">9 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">9 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
-          <details class="nitem rv">
+<!-- NOTES:STARTER:BAND -->
+        <div class="nfeat rv">
+          <span class="nflab"><span class="zh">入门科普 · 先看这四篇</span><span class="en">Start here · four explainers</span><i><span class="zh">组合怎么分钱、黄金管不管用、VIX 该不该贪婪</span><span class="en">how a portfolio splits its money, whether gold hedges, whether high VIX means buy</span></i></span>
+          <div class="nfgrid">
+            <a class="nfcard" href="notes/permanent-portfolio/">
+              <span class="nfk"><span class="zh">配置入门</span><span class="en">Allocation basics</span></span>
+              <b><span class="zh">永久组合实测：四等分真的能应对任何环境吗</span><span class="en">The Permanent Portfolio, tested</span></b>
+              <span class="nfs"><span class="zh">四等分资金＝等风险；但通胀那一格它没扛住。</span><span class="en">Equal money, nearly equal risk — but it failed the inflation test.</span></span>
+              <span class="nfm">2026-10-05</span>
+            </a>
+            <a class="nfcard" href="notes/all-weather/">
+              <span class="nfk"><span class="zh">配置进阶</span><span class="en">Allocation, next step</span></span>
+              <b><span class="zh">全天候组合实测：不预测，真的能穿越周期吗</span><span class="en">All Weather, tested</span></b>
+              <span class="nfs"><span class="zh">更稳，却没跑赢 60/40；风险其实压在长债上。</span><span class="en">Steadier than a 60/40, no better on return, with the risk sitting in bonds.</span></span>
+              <span class="nfm">2026-10-04</span>
+            </a>
+            <a class="nfcard" href="notes/gold-inflation-hedge/">
+              <span class="nfk"><span class="zh">单一资产</span><span class="en">One asset</span></span>
+              <b><span class="zh">黄金：抗通胀，还是抗波动？</span><span class="en">Gold: inflation hedge or volatility hedge?</span></b>
+              <span class="nfs"><span class="zh">58 年确实跑赢通胀，但 1980 年买的人等了 45 年。</span><span class="en">It did beat inflation — a January 1980 buyer waited 45 years.</span></span>
+              <span class="nfm">2026-10-03</span>
+            </a>
+            <a class="nfcard" href="notes/vix-buy-the-fear/">
+              <span class="nfk"><span class="zh">市场情绪</span><span class="en">Market mood</span></span>
+              <b><span class="zh">VIX 冲上 30 的时候，该贪婪吗？</span><span class="en">When VIX tops 30, should you be greedy?</span></b>
+              <span class="nfs"><span class="zh">「别人恐惧我贪婪」站得住，但 36 年只给了 7 次机会。</span><span class="en">Greedy when others are fearful holds up — on seven chances in 36 years.</span></span>
+              <span class="nfm">2026-10-03</span>
+            </a>
+          </div>
+        </div>
+        <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv is-feat">
             <summary>
-              <span class="ntag">PORTFOLIO · 资产配置</span>
+              <span class="ntag">入门 · PORTFOLIO · 资产配置 · 2026-10-05</span>
               <h4><a href="notes/permanent-portfolio/"><span class="zh">永久组合实测：四等分真的能应对任何环境吗</span><span class="en">The Permanent Portfolio, tested: does an even split cover every environment?</span></a></h4>
               <p class="nsum"><span class="zh">股、长债、黄金、现金各 25%：夏普 0.75 是四个组合里最高的，最大回撤 −15.5% 最浅——但 CPI 高于 5% 的 26 个月里它是 −2.8%，黄金腿 −2.95%。</span>
               <span class="en">25% each in stocks, long bonds, gold and cash: the highest Sharpe of the four (0.75) and the shallowest drawdown (−15.5%) — yet it lost 2.8% a year across the 26 months with CPI above 5%, with gold at −2.95%.</span></p>
@@ -1033,41 +1083,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">The real mechanism is not inflation protection but that <b>an even split of money turns out to be very nearly an even split of risk</b>: 25% each produces risk contributions of 37.5 / 33.9 / 28.4 / 0.2, because the three risky legs all have volatilities of 12–15% while cash has 0.7%. All Weather's promised "25% of risk per environment" actually runs 32.4 / <b>53.5</b> / 10.5 / 2.4 / 1.2. Its best year was 2008 (−0.3%) and its worst 2022 (−11.9%), with the entire drawdown falling between December 2021 and September 2022.</span></p>
             </div>
           </details>
-<details class="nitem rv">
+
+          <details class="nitem rv is-feat">
             <summary>
-              <span class="ntag">SIGNAL · 信号研究</span>
-              <h4><a href="notes/factor-screening/"><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span><span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></a></h4>
-              <p class="nsum"><span class="zh">同一份模拟数据、两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。</span>
-              <span class="en">Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors earn 1.95 in sample and 0.03 out.</span></p>
-              <a class="go" href="notes/factor-screening/"><span class="zh">读全文（3 张图 · 11 条文献）→</span><span class="en">Read the note (3 figures, 11 sources) →</span></a>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">400 个候选因子、8 个真因子、15 年样本：按 t 值取前 10，样本内漂亮、样本外归零，命中率只有 30%；更严格的五层过滤选出的 4 个全是噪声。附「证明一个因子需要多少年数据」的门槛计算（年化夏普 0.3 需要约 164 年）。</span>
-              <span class="en">400 candidates, eight real factors, fifteen years: the top ten by t-statistic collapse out of sample, with a 30% hit rate; a stricter filter picked four factors and none were real. Includes the arithmetic of how many years of data a factor needs.</span></p>
-              <p class="take"><span class="zh">结论先行：筛选的天花板由信噪比决定，不由方法决定——所以我不再问「这个因子是否存在」，而是问「我的决策有多依赖它」。</span>
-              <span class="en">The ceiling on screening is set by the signal, not the technique — so the question becomes how much the decision depends on the factor, not whether it exists.</span></p>
-            </div>
-          </details>
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">PORTFOLIO · 组合</span>
-              <h4><a href="notes/cost-of-constraints/"><span class="zh">约束的代价：多资产组合里，每个"不许超"都在收费</span><span class="en">Every constraint has a price</span></a></h4>
-              <p class="nsum"><span class="zh">同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps/年；但样本短的时候，同样的约束是保险而不是成本。</span>
-              <span class="en">Four ordinary institutional constraints cost 46.8 bps at an identical risk budget — and act as insurance when the sample is short.</span></p>
-              <a class="go" href="notes/cost-of-constraints/"><span class="zh">读全文（4 张图 · 8 条文献）→</span><span class="en">Read the note (4 figures, 8 sources) →</span></a>
-              <span class="nchev"></span>
-            </summary>
-            <div class="nbody">
-              <p><span class="zh">无约束的"最优"把 63.8% 押在信用债上——那不是洞察，是误差放大器。单资产上限 20% 值 27.9 bps、久期上限 2 年值 7.0、月度换手上限 25% 值 13.5、禁投清单值 10.1；四条一起 46.8 bps，小于它们单价的算术和 58.5 bps，因为约束之间会互相遮蔽。</span>
-              <span class="en">The unconstrained optimum puts 63.8% in credit — an error amplifier, not insight. The cap costs 27.9 bps, the duration cap 7.0, the turnover cap 13.5, the exclusion list 10.1; together 46.8, below their arithmetic sum of 58.5.</span></p>
-              <p class="take"><span class="zh">反直觉的一半：估计窗口只有 24 个月时，无约束组合样本外超额夏普的 10 分位是 −0.02，加约束后是 +0.18。约束不是免费的，但它买的是对你自己的估计误差的保险。</span>
-              <span class="en">The counter-intuitive half: with a 24-month window the 10th percentile is −0.02 unconstrained versus +0.18 constrained. A constraint is not free, but what it buys is insurance against your own estimation error.</span></p>
-            </div>
-          </details>
-          <details class="nitem rv">
-            <summary>
-              <span class="ntag">PORTFOLIO · 资产配置</span>
+              <span class="ntag">入门 · PORTFOLIO · 资产配置 · 2026-10-04</span>
               <h4><a href="notes/all-weather/"><span class="zh">全天候组合实测：不预测，真的能穿越周期吗</span><span class="en">All Weather, tested: does not forecasting actually survive every cycle?</span></a></h4>
               <p class="nsum"><span class="zh">它确实更稳（回撤 −22.3% 对 −29.6%），但 35 年没跑赢 60/40，而且 40% 的长债贡献了 53.5% 的风险。</span>
               <span class="en">It is genuinely steadier (−22.3% drawdown against −29.6%) — but over 35 years it did not beat a 60/40, and long bonds carry 53.5% of the risk.</span></p>
@@ -1081,9 +1100,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">It is not environment-neutral either: long bonds carry 53.5% of the risk while commodities carry 1.2%, and across the four growth × inflation cells it only matches the 60/40 when growth falls. It moves risk from equities to bonds rather than removing dependence on the environment.</span></p>
             </div>
           </details>
+
           <details class="nitem rv">
             <summary>
-              <span class="ntag">PORTFOLIO · 资产配置</span>
+              <span class="ntag">PORTFOLIO · 资产配置 · 2026-10-04</span>
               <h4><a href="notes/beating-inflation/"><span class="zh">投资能跑赢通胀吗</span><span class="en">Can investing beat inflation?</span></a></h4>
               <p class="nsum"><span class="zh">股票 8.4%、债券 1.9%、现金只有 0.1%——「投资能跑赢通胀」说的是某一类投资，不是所有投资。</span>
               <span class="en">Equities 8.4%, bonds 1.9%, cash just 0.1% — "investing beats inflation" describes some investments, not all of them.</span></p>
@@ -1097,9 +1117,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">The horizon layer is stranger still: no twenty-year window lost money in real terms for equities, gold or the 60/40, while cash still trailed inflation in <b>59.9%</b> of its twenty-year windows. In 2022 every asset lost in real terms. Keep long-run purchasing power and inflation hedging as two separate questions.</span></p>
             </div>
           </details>
+
           <details class="nitem rv">
             <summary>
-              <span class="ntag">PORTFOLIO · 组合与执行</span>
+              <span class="ntag">PORTFOLIO · 组合与执行 · 2026-10-03</span>
               <h4><a href="notes/missing-best-days/"><span class="zh">错过最好的十天：一句被误用的统计</span><span class="en">The ten best days: a statistic used the wrong way</span></a></h4>
               <p class="nsum"><span class="zh">「错过最好的 10 天，收益腰斩」只引用了对自己有利的一半——躲过最差 10 天的幅度还更大。</span>
               <span class="en">"Miss the ten best days and your return halves" quotes only half the evidence: avoiding the ten worst moves the number further.</span></p>
@@ -1113,9 +1134,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">What it proves is that precise timing would be very valuable, not that timing is impossible. And the extreme case sits at the 0th percentile of a random distribution — removing ten random days barely changes anything (8.09%). The real argument is inseparability: eight of the ten best days fall within fifteen trading days of one of the ten worst.</span></p>
             </div>
           </details>
-          <details class="nitem rv">
+
+          <details class="nitem rv is-feat">
             <summary>
-              <span class="ntag">PORTFOLIO · 资产配置</span>
+              <span class="ntag">入门 · PORTFOLIO · 资产配置 · 2026-10-03</span>
               <h4><a href="notes/gold-inflation-hedge/"><span class="zh">黄金：抗通胀，还是抗波动？</span><span class="en">Gold: an inflation hedge, or a volatility hedge?</span></a></h4>
               <p class="nsum"><span class="zh">58 年看黄金确实跑赢通胀（实际购买力 12.5 倍）——但 1980 年买在高点的人，要等到 2025 年才回本。</span>
               <span class="en">Over 58 years gold did beat inflation — but a January 1980 buyer waited until 2025 to break even.</span></p>
@@ -1129,9 +1151,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">Forty per cent of ten-year windows lose money after inflation, and gold fell in five of the thirteen highest-inflation years. What it really hedges is portfolio volatility: correlation −0.08 with equities, and 10% in a 60/40 cuts the maximum drawdown from 28.4% to 24.6%. Put it in the diversification column, not the inflation-insurance column.</span></p>
             </div>
           </details>
-          <details class="nitem rv">
+
+          <details class="nitem rv is-feat">
             <summary>
-              <span class="ntag">PORTFOLIO · 风险与情绪</span>
+              <span class="ntag">入门 · PORTFOLIO · 风险与情绪 · 2026-10-03</span>
               <h4><a href="notes/vix-buy-the-fear/"><span class="zh">VIX 冲上 30 的时候，该贪婪吗？</span><span class="en">When VIX tops 30, should you be greedy?</span></a></h4>
               <p class="nsum"><span class="zh">「别人恐惧我贪婪」在收益层面站得住：VIX ≥ 30 之后 12 个月的中位收益是 21.8%。但 36 年半里这样的机会只有 7 个市场阶段，其中一次买入后两年仍在亏损。</span>
               <span class="en">The maxim survives on returns — 21.8% median over the next twelve months. But 36 years produced only seven independent episodes, one of which was still losing money two years later.</span></p>
@@ -1145,9 +1168,10 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
               <span class="en">One of the seven was a loser (−8.1% median). Written as a rule, it returns 4.1% annualised against 11.2% for buy-and-hold. VIX is a risk-pricing gauge, not a directional signal.</span></p>
             </div>
           </details>
+
           <details class="nitem rv">
             <summary>
-              <span class="ntag">PORTFOLIO · 投资决策</span>
+              <span class="ntag">PORTFOLIO · 投资决策 · 2026-10-02</span>
               <h4><a href="notes/lump-sum-vs-dca/"><span class="zh">定投还是 all-in：一个被问错的题</span><span class="en">Lump sum or dollar-cost averaging?</span></a></h4>
               <p class="nsum"><span class="zh">942 个月真实数据（美股 + 港股）：一次性投入赢约 80% 的起点，但它输的那 20% 恰好是「投完就跌」的月份。</span>
               <span class="en">942 months across two markets: all-in wins about 80% of starts — and loses exactly when the crash arrives immediately.</span></p>
@@ -1162,9 +1186,41 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             </div>
           </details>
 
-          
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">PORTFOLIO · 组合 · 2026-09-29</span>
+              <h4><a href="notes/cost-of-constraints/"><span class="zh">约束的代价：多资产组合里，每个"不许超"都在收费</span><span class="en">Every constraint has a price</span></a></h4>
+              <p class="nsum"><span class="zh">同样 8% 波动预算下，四条典型机构约束一共拿走 46.8 bps/年；但样本短的时候，同样的约束是保险而不是成本。</span>
+              <span class="en">Four ordinary institutional constraints cost 46.8 bps at an identical risk budget — and act as insurance when the sample is short.</span></p>
+              <a class="go" href="notes/cost-of-constraints/"><span class="zh">读全文（4 张图 · 8 条文献）→</span><span class="en">Read the note (4 figures, 8 sources) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">无约束的"最优"把 63.8% 押在信用债上——那不是洞察，是误差放大器。单资产上限 20% 值 27.9 bps、久期上限 2 年值 7.0、月度换手上限 25% 值 13.5、禁投清单值 10.1；四条一起 46.8 bps，小于它们单价的算术和 58.5 bps，因为约束之间会互相遮蔽。</span>
+              <span class="en">The unconstrained optimum puts 63.8% in credit — an error amplifier, not insight. The cap costs 27.9 bps, the duration cap 7.0, the turnover cap 13.5, the exclusion list 10.1; together 46.8, below their arithmetic sum of 58.5.</span></p>
+              <p class="take"><span class="zh">反直觉的一半：估计窗口只有 24 个月时，无约束组合样本外超额夏普的 10 分位是 −0.02，加约束后是 +0.18。约束不是免费的，但它买的是对你自己的估计误差的保险。</span>
+              <span class="en">The counter-intuitive half: with a 24-month window the 10th percentile is −0.02 unconstrained versus +0.18 constrained. A constraint is not free, but what it buys is insurance against your own estimation error.</span></p>
+            </div>
+          </details>
 
-                                      </div>
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">SIGNAL · 信号研究 · 2026-09-25</span>
+              <h4><a href="notes/factor-screening/"><span class="zh">因子筛选：为什么样本内 1.95 的漂亮结果，样本外会归零</span><span class="en">Factor screening: why an in-sample Sharpe of 1.95 can be worth zero</span></a></h4>
+              <p class="nsum"><span class="zh">同一份模拟数据、两档信噪比：弱信号下按 t 值挑出的前 10 名，样本内夏普 1.95、样本外 0.03。</span>
+              <span class="en">Two signal-to-noise regimes on the same simulation: with a weak signal, the top ten factors earn 1.95 in sample and 0.03 out.</span></p>
+              <a class="go" href="notes/factor-screening/"><span class="zh">读全文（3 张图 · 11 条文献）→</span><span class="en">Read the note (3 figures, 11 sources) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">400 个候选因子、8 个真因子、15 年样本：按 t 值取前 10，样本内漂亮、样本外归零，命中率只有 30%；更严格的五层过滤选出的 4 个全是噪声。附「证明一个因子需要多少年数据」的门槛计算（年化夏普 0.3 需要约 164 年）。</span>
+              <span class="en">400 candidates, eight real factors, fifteen years: the top ten by t-statistic collapse out of sample, with a 30% hit rate; a stricter filter picked four factors and none were real. Includes the arithmetic of how many years of data a factor needs.</span></p>
+              <p class="take"><span class="zh">结论先行：筛选的天花板由信噪比决定，不由方法决定——所以我不再问「这个因子是否存在」，而是问「我的决策有多依赖它」。</span>
+              <span class="en">The ceiling on screening is set by the signal, not the technique — so the question becomes how much the decision depends on the factor, not whether it exists.</span></p>
+            </div>
+          </details>
+
+        </div>
       </section>
 
       <!-- contact -->
