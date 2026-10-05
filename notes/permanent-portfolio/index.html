@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永久组合实测：四等分真的能应对任何环境吗 · Working Paper</title>
+<meta name="description" content="研究笔记：股、长债、黄金、现金各 25%，用 1990-01 至 2025-09 共 428 个月的美国数据检验。它年化 7.2%、波动 5.8%、最大回撤 −15.5%、夏普 0.75，是四个组合里最高的；但 CPI 高于 5% 的 26 个月里它年化 −2.8%，黄金腿是 −3.0%。它赢在风险真的被四等分了，不是赢在抗通胀。含 8 张图表与一个可拖黄金权重的交互动画。">
+<meta property="og:title" content="永久组合实测：四等分真的能应对任何环境吗">
+<meta property="og:description" content="它做到了一件全天候没做到的事——把风险四等分（37.5 / 33.9 / 28.4 / 0.2）。但它没有抗住通胀：CPI 高于 5% 的 26 个月里，黄金腿年化 −3.0%。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/permanent-portfolio/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-pp.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="永久组合实测——股债金现金各四分之一，35 年夏普 0.75">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="永久组合实测：四等分真的能应对任何环境吗">
+<meta name="twitter:description" content="它靠四等分拿到了最高夏普，却在通胀那一年交了最贵的学费。">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-pp.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/permanent-portfolio/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;padding:0}
+.rn-tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--e-accent);border:1px solid var(--e-rule);border-radius:999px;padding:4px 11px;background:#fff}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:12px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 10px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
+.ctrl input[type=range]{flex:1;min-width:120px}
+.vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
+.vstat{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.vstat2{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:12.6px;color:#8A8172;margin-top:6px}
+.vstat2 b{font-family:var(--mono);font-size:14px;color:var(--e-accent)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-05 · v1.0 · 组合实测 02 · 资产配置</span><span class="en">2026-10-05 · v1.0 · Portfolio test 02 · Asset allocation</span></span></div>
+  <h1 class="rn-title"><span class="zh">永久组合实测：四等分真的能应对任何环境吗</span><span class="en">The Permanent Portfolio, tested: does an even split really cover every environment?</span></h1>
+  <p class="rn-tags"><span><span class="zh">投资</span><span class="en">Investing</span></span><span><span class="zh">组合实测</span><span class="en">Backtest</span></span><span><span class="zh">资产配置</span><span class="en">Asset allocation</span></span></p>
+  <p class="rn-standfirst"><span class="zh">把资金分成四份——股票、长期国债、黄金、现金各 25%——大概是投资书里最简单的一条规则。1990-01 至 2025-09 共 428 个月的美国数据显示：它年化 <b>7.18%</b>、波动 5.8%、最大回撤 <b>−15.5%</b>、夏普 <b>0.75</b>，在四个对比组合里波动最低、回撤最浅、夏普最高，而且对起点最不敏感。<b>但它赢的原因和它自己讲的故事不一样。</b>它的黄金腿在 CPI 高于 5% 的 26 个月里年化 <b>−2.95%</b>，最大的一次回撤发生在 2022 年而不是 2008 年——它没有抗住通胀。真正让它赢的是另一件事：<b>四等分的资金，几乎正好变成了四等分的风险</b>（37.5 / 33.9 / 28.4 / 0.2）——全天候花力气宣称却没能做到的事，它靠简单做到了。</span>
+  <span class="en">Split your money four ways — stocks, long-term Treasuries, gold and cash, 25% each — and you have probably the simplest rule in investing. On 428 monthly US observations from January 1990 to September 2025 it returned <b>7.18%</b> a year with 5.8% volatility, a <b>−15.5%</b> maximum drawdown and a Sharpe ratio of <b>0.75</b> — the lowest volatility, shallowest drawdown and highest Sharpe of the four portfolios tested, and the least sensitive to the start date. <b>But it wins for a different reason than the one it advertises.</b> Its gold leg lost <b>2.95%</b> a year across the 26 months when CPI inflation ran above 5%, and its worst drawdown came in 2022, not 2008. What actually makes it work is that <b>an even split of money turns out to be very nearly an even split of risk</b> (37.5 / 33.9 / 28.4 / 0.2) — the thing All Weather claims and fails to deliver, achieved by not trying.</span></p>
+
+  <ul class="rn-findings">
+    <li><span class="zh">35.7 年：年化 <b>7.18%</b>、波动 5.8%、最大回撤 <b>−15.5%</b>、夏普 <b>0.75</b>；60/40 是 9.09% / 9.1% / −27.0% / 0.70，全天候是 7.90% / 7.6% / −21.7% / 0.68。</span>
+        <span class="en">Over 35.7 years: 7.18% a year, 5.8% volatility, a <b>−15.5%</b> maximum drawdown and a Sharpe of <b>0.75</b>, against 9.09% / 9.1% / −27.0% / 0.70 for a 60/40 and 7.90% / 7.6% / −21.7% / 0.68 for All Weather.</span></li>
+    <li><span class="zh">25 / 25 / 25 / 25 的资金，风险贡献是 <b>37.5 / 33.9 / 28.4 / 0.2</b>；同期大众版全天候是 30/40/15/7.5/7.5 → <b>32.4 / 53.5 / 10.5 / 2.4 / 1.2</b>。宣称等风险的那个没做到，只承诺等资金的那个做到了。</span>
+        <span class="en">A 25/25/25/25 split produces risk contributions of <b>37.5 / 33.9 / 28.4 / 0.2</b>; the retail All Weather's 30/40/15/7.5/7.5 produces <b>32.4 / 53.5 / 10.5 / 2.4 / 1.2</b>. The one that promises equal risk does not deliver it; the one that only promises equal money does.</span></li>
+    <li><span class="zh">它不抗通胀：CPI 同比高于 5% 的 26 个月里年化 <b>−2.8%</b>，黄金腿 −2.95%、长债腿 −12.65%；只有股票（+1.4%）和现金（+1.9%）为正。四个组合与通胀的月度相关性都在 −0.12 到 −0.13。</span>
+        <span class="en">It does not hedge inflation: across the 26 months with year-on-year CPI above 5% it lost <b>2.8%</b> a year, with gold at −2.95% and long bonds at −12.65%; only equities (+1.4%) and cash (+1.9%) were positive. Every portfolio's monthly correlation with inflation sits between −0.12 and −0.13.</span></li>
+    <li><span class="zh">它最亮和最暗的一年相邻：2008 年 <b>−0.3%</b>（60/40 是 −15.0%、纯股 −37.0%），2022 年 <b>−11.9%</b>（60/40 −18.1%、纯股 −18.1%）。最大回撤 −15.5% 全部发生在 2021-12 到 2022-09。</span>
+        <span class="en">Its best and worst years are neighbours: <b>−0.3%</b> in 2008 (−15.0% for the 60/40, −37.0% for equities) and <b>−11.9%</b> in 2022 (−18.1% and −18.1%). The entire −15.5% drawdown ran from December 2021 to September 2022.</span></li>
+    <li><span class="zh">收益归因：股票 2.98、黄金 1.79、长债 1.67、现金 <b>0.68</b> 个百分点（合计 7.12%，与几何年化 7.18% 吻合）。现金买的是选择权，不是收益——扣掉通胀后它 35.7 年的实际年化只有 0.12%。</span>
+        <span class="en">Return attribution: equities 2.98, gold 1.79, long bonds 1.67 and cash just <b>0.68</b> percentage points — summing to 7.12% against a geometric 7.18%. Cash buys an option, not a return: after inflation its real annualised return over 35.7 years was 0.12%.</span></li>
+  </ul>
+
+  <div class="rn-abstract"><span class="zh"><b>摘要</b>本文检验永久组合（Permanent Portfolio）的公开描述：股票、长期国债、黄金与现金各 25%，年度再平衡，不使用杠杆，不做预测。<b>口径</b>沿用《全天候组合实测》的同一份美国数据管线（标普 500 全收益、30 年期国债按久期 15 合成、LBMA 伦敦金价、3 个月国库券），1990-01 至 2025-09 共 428 个月；唯一改动是把再平衡从「每月回到固定权重」改为<b>真正的年度再平衡</b>（每年 1 月重置，年内权重漂移），更接近该策略的实际做法，两种口径的对照见附录。<b>结果</b>：永久组合年化 7.18%、波动 5.8%、最大回撤 −15.5%、夏普 0.75；同期大众版全天候 7.90% / 7.6% / −21.7% / 0.68，60/40 为 9.09% / 9.1% / −27.0% / 0.70，纯股 11.04% / 14.7% / −50.9% / 0.60。<b>风险结构</b>：25% 的资金权重对应的风险贡献是 37.5 / 33.9 / 28.4 / 0.2——三条风险资产的长期波动率都落在 12–15%，而现金只有 0.7%，于是「等资金」意外地近似「等风险」。<b>环境检验</b>：CPI 同比高于 5% 的 26 个月里，永久组合年化 −2.8%，黄金腿 −2.95%，长债腿 −12.65%；最大回撤发生在 2021-12 至 2022-09。它真正避开的是 2008 年那类通缩型危机（全年 −0.3%），不是通胀。<b>归因</b>：股票贡献 2.98 个百分点，黄金 1.79，长债 1.67，现金 0.68；现金腿的实际年化贡献只有 0.12%，它的作用是不必被迫卖出。<b>边界</b>：样本不含 1970 年代，美国单一市场，黄金为现货价，未计交易成本、税费与持有成本。</span>
+  <span class="en"><b>Abstract</b>This note tests the public description of the Permanent Portfolio: 25% each in equities, long-term Treasuries, gold and cash, rebalanced annually, unlevered, with no forecasting. <b>Setting.</b> We reuse the same US data pipeline as the All Weather study (S&amp;P 500 total return, a 30-year Treasury synthesised with duration 15, the LBMA London gold price and three-month T-bills) over 428 months from January 1990 to September 2025. The one change is that we move from "reset to fixed weights every month" to <b>true annual rebalancing</b> — weights reset each January and drift within the year — which is closer to how the strategy is actually run; both conventions are tabulated in the appendix. <b>Results.</b> The Permanent Portfolio returned 7.18% a year with 5.8% volatility, a −15.5% maximum drawdown and a Sharpe of 0.75, against 7.90% / 7.6% / −21.7% / 0.68 for All Weather, 9.09% / 9.1% / −27.0% / 0.70 for a 60/40, and 11.04% / 14.7% / −50.9% / 0.60 for equities. <b>Risk structure.</b> Capital weights of 25% each become risk contributions of 37.5 / 33.9 / 28.4 / 0.2: because the three risky legs all have long-run volatilities of 12–15% while cash has 0.7%, equal money is very nearly equal risk. <b>Environments.</b> In the 26 months with year-on-year CPI above 5% the portfolio lost 2.8% a year, with gold at −2.95% and long bonds at −12.65%; its worst drawdown ran from December 2021 to September 2022. What it actually avoided was a deflationary crisis: it lost 0.3% in 2008. <b>Attribution.</b> Equities contribute 2.98 points, gold 1.79, long bonds 1.67 and cash 0.68; the cash leg's real contribution is 0.12% a year, and its job is the ability not to be a forced seller. <b>Limits.</b> The sample excludes the 1970s, covers the US only, uses spot gold, and ignores costs, taxes and carry.</span></div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　永久组合 · 四等分 · 1/N · 风险贡献 · 再平衡 · 通胀对冲</span><span class="en"><b>Keywords</b>　Permanent Portfolio · equal weight · 1/N · risk contribution · rebalancing · inflation hedging</span></p>
+
+  <div class="split">
+    <div class="prose">
+
+    <h2 id="s1"><span class="num">01</span><span class="zh">它到底是什么</span><span class="en">What it actually is</span></h2>
+    <p class="zh">永久组合是 Harry Browne 在 1980 年代提出、并在 1999 年的《Fail-Safe Investing》里写成规则的一种配置：<b>股票、长期国债、黄金、现金各 25%</b>，不加杠杆，不预测宏观，按固定规则再平衡。它的论证不是「这四类资产预期收益最高」——恰恰相反，它承认其中至少两条腿在大多数时候是拖后腿的——而是「<b>没有人知道下一个十年是哪种环境</b>」。</p>
+    <p class="zh">Browne 把经济状态分成四种：<b>繁荣</b>、<b>通货膨胀</b>、<b>衰退</b>、<b>通货紧缩（银根紧缩）</b>。每一种状态都会让某一类资产大涨、让其余的难受：繁荣时企业盈利上升，股票受益；通胀与货币贬值时，黄金这类实际资产重估；通缩和衰退时利率下行，长期国债的票息变得更有价值；银根紧缩、信贷冻结时，现金本身就是最有价值的资产。既然无法预测哪一种先来，就每种都买一份，每份一样大。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 1 · 设计本身</span><span class="en">Exhibit 1 · the design</span></div>
+      <img src="../assets/figs/pp-quadrant.svg" alt="永久组合的四环境框架与四条腿的对应关系">
+      <p class="ex-note zh">这张图不是回测，是这个策略的全部主张。它和《全天候组合实测》用的是同一组轴，差别只有一句话：<b>全天候分的是「风险」，永久组合分的是「钱」</b>。这个差别看起来只是措辞，实际决定了后面所有结果——全天候为了让四个格子的风险相等，必须把 40% 押在长久期债券上（或者加杠杆）；永久组合只承诺每格 25% 的资金，于是它不需要协方差矩阵，也不需要借钱，代价是四个格子的风险天然不等。</p>
+      <p class="ex-note en">This is not a backtest but the whole claim. It uses the same axes as the All Weather note, and the difference is one sentence: <b>All Weather divides risk; the Permanent Portfolio divides money.</b> That sounds like wording, but it decides everything downstream — equalising risk across four cells forces All Weather into a 40% long-bond weight (or leverage), while equalising money requires no covariance matrix and no borrowing, at the cost of unequal risk across cells.</p>
+      <p class="ex-src"><span class="zh">来源：根据永久组合的公开描述整理；现金一格对应 Browne 所说的银根紧缩与衰退。</span><span class="en">Source: compiled from the public description of the strategy; the cash cell corresponds to Browne's tight-money recession.</span></p>
+    </div>
+
+    <h2 id="s2"><span class="num">02</span><span class="zh">为什么"四等分"不是随便分的</span><span class="en">Why the naive split is not naive</span></h2>
+    <p class="zh">先看一个容易被忽略的算术事实。四条腿的<b>长期年化波动率</b>差别极大：股票 14.7%、长债 13.1%、黄金 12.2%——三条风险资产挤在 12% 到 15% 这个窄区间里；而现金（3 个月国库券）只有 <b>0.7%</b>。这意味着把资金四等分，得到的风险分布不是 25 / 25 / 25 / 25，而是<b>三条腿各约三分之一的风险，再加一块几乎不动的压舱石</b>。这正是下一节要检验的核心。</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <caption><span class="zh">表 1｜四条腿的分工，以及它们各自的长期波动率（1990-01 → 2025-09）</span><span class="en">Table 1｜What each leg is for, and its long-run volatility (Jan 1990 – Sep 2025)</span></caption>
+        <thead><tr><th><span class="zh">腿</span><span class="en">Leg</span></th><th><span class="zh">它负责的环境</span><span class="en">Environment it covers</span></th><th><span class="zh">作用</span><span class="en">Role</span></th><th><span class="zh">年化波动</span><span class="en">Volatility</span></th></tr></thead>
+        <tbody>
+          <tr><td><span class="zh">股票</span><span class="en">Equities</span></td><td><span class="zh">繁荣</span><span class="en">Prosperity</span></td><td><span class="zh">增长引擎</span><span class="en">Growth engine</span></td><td>14.7%</td></tr>
+          <tr><td><span class="zh">长期国债</span><span class="en">Long bonds</span></td><td><span class="zh">通缩 · 衰退</span><span class="en">Deflation · recession</span></td><td><span class="zh">利率下行的受益者</span><span class="en">Benefits when rates fall</span></td><td>13.1%</td></tr>
+          <tr><td><span class="zh">黄金</span><span class="en">Gold</span></td><td><span class="zh">通胀 · 货币贬值</span><span class="en">Inflation · debasement</span></td><td><span class="zh">实际资产的替代品</span><span class="en">Real-asset substitute</span></td><td>12.2%</td></tr>
+          <tr><td><span class="zh">现金</span><span class="en">Cash</span></td><td><span class="zh">银根紧缩</span><span class="en">Tight money</span></td><td><span class="zh">流动性；不必被迫卖出</span><span class="en">Liquidity; never a forced seller</span></td><td>0.7%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="zh">第二件事是它<b>主动放弃了所有需要估计的东西</b>。均值—方差最优、风险平价、Black-Litterman，第一步都要估预期收益或协方差；估计本身带来的误差往往比资产配置的差异更大。DeMiguel、Garlappi 与 Uppal 在 2009 年用 14 个数据集比较了 1/N 等权与十几种数据驱动方法，发现等权在大多数情况下并不输——原因不是等权聪明，而是<b>它什么都不估</b>。永久组合是这件事的极端版本：它连资产集都提前定好了，只剩一个动作，就是每年把四份拉回 25%。</p>
+    <p class="zh">第三件事是它对执行者的要求也很低。<b>没有杠杆</b>，所以不存在融资成本和追加保证金；<b>没有择时</b>，所以不需要判断；<b>没有故事</b>，所以不需要向任何人解释为什么这一季跑输了。最后一点在机构里往往是致命的：一个前台团队很难向客户说明「我们故意用 25% 的现金和 25% 的黄金拖住收益，因为我们要买一份保险」。这也是为什么这条最简单的规则，主要活在个人投资者和家族办公室那里。</p>
+
+    <h2 id="s3"><span class="num">03</span><span class="zh">数据与方法</span><span class="en">Data and method</span></h2>
+    <p class="zh">样本为 1990-01 至 2025-09 共 428 个月，与《全天候组合实测》完全同一份公开数据：股票＝标普 500 全收益；长债＝30 年期美国国债（按久期 15 用收益率曲线合成）；黄金＝LBMA 伦敦金价月序列；现金＝3 个月美国国库券。对照组沿用该文的三个组合：<b>大众版全天候</b>（30% 股票 / 40% 长债 / 15% 中债 / 各 7.5% 黄金与商品）、<b>60/40</b>（60% 股票 + 40% 的 10 年期国债）、<b>纯股</b>。</p>
+    <p class="zh">有一个口径上的改动需要写明。<b>《全天候组合实测》里，四个组合的权重是每月回到固定值的；本篇改为真正的年度再平衡</b>——每年 1 月重置回目标权重，年内让权重随价格漂移。更接近永久组合的实际做法，也才让「再平衡」这件事真的发生在组合里。两个口径的完整对照放在附录 A 的表里：年度再平衡让所有多资产组合的年化略高（因为赢家在年内可以多跑一段），但四个组合的排序、以及本篇的全部结论都不变。风险贡献、归因与交互图都按年度再平衡的时变权重计算。</p>
+    <p class="zh">需要提前说明的是，本文检验的是<b>永久组合的公开描述</b>，不是任何人的真实账户。真实的永久组合在资产选择上有大量变体（黄金可以一半换成金矿股，股票可以一半换成小盘股，债券可以拆成短、中、长三段），再平衡阈值也常写成「某一腿涨到 35% 或跌到 15% 就调回 25%」。本文用的是最广为人知的四等分版本。</p>
+
+    <h2 id="s4"><span class="num">04</span><span class="zh">第一层：35.7 年的结果</span><span class="en">First test: thirty-five years</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 四个组合的净值</span><span class="en">Exhibit 2 · four portfolios, one chart</span></div>
+      <img src="../assets/figs/pp-curves.svg" alt="永久组合、全天候、60/40 与纯股的累计净值">
+      <p class="ex-note zh">对数刻度，斜率就是年化增速。永久组合（红）是最平的那条：1 元最终变成 <b>11.9 元</b>，全天候 15.1 元，60/40 22.3 元，纯股 41.9 元。这条线看起来最"无聊"，但它的意义不在终值，而在路径——<b>它是唯一一条在 2008 年几乎不回头的线</b>。</p>
+      <p class="ex-note en">On a log scale the slope is the growth rate. The Permanent Portfolio is the flattest line: 1 unit ends at <b>11.9</b>, against 15.1 for All Weather, 22.3 for the 60/40 and 41.9 for equities. The point is not the endpoint but the path — it is the only line that barely broke stride in 2008.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，年度再平衡，不扣交易成本。</span><span class="en">Source: author's backtest, annual rebalancing, before transaction costs.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 3 · 收益、波动与回撤</span><span class="en">Exhibit 3 · return, volatility, drawdown</span></div>
+      <img src="../assets/figs/pp-scatter.svg" alt="四个组合的风险收益散点与最大回撤对比">
+      <p class="ex-note zh">左图里永久组合落在最左下角：<b>5.8% 的波动换 7.18% 的年化</b>。它比 60/40 少赚 <b>1.9 个百分点</b>，但最大回撤浅了 <b>11.5 个百分点</b>（−15.5% 对 −27.0%），最差的 12 个月是 −13.5%，而 60/40 是 −24.0%、纯股 −43.3%。<b>夏普 0.75 是四个里最高的</b>——这也是本文最反直觉的结果之一：一个不做任何优化的规则，风险调整后打败了一个被认真设计过的风险平价产品（全天候 0.68）。</p>
+      <p class="ex-note en">The Permanent Portfolio sits bottom-left: <b>5.8% volatility for 7.18% a year</b>. It earns <b>1.9 points less</b> than the 60/40 but carries an <b>11.5-point shallower</b> maximum drawdown (−15.5% against −27.0%), and its worst twelve months is −13.5% against −24.0% and −43.3%. Its Sharpe of <b>0.75</b> is the highest of the four — a rule with no optimisation in it beats a deliberately designed risk-parity product (All Weather, 0.68) on risk-adjusted terms.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；夏普以 3 个月国库券为无风险利率。</span><span class="en">Source: author's backtest; Sharpe uses three-month T-bills as the risk-free rate.</span></p>
+    </div>
+    <p class="zh">把它拆成具体年份会更清楚：35.7 年里有 34 个完整年份，它只有 <b>6 年亏钱</b>，其中 4 年的亏损都在 3% 以内（1994 −2.7%、2008 −0.3%、2013 −2.7%、2015 −2.2%、2018 −1.0%），唯一的例外是 2022 年的 −11.9%。滚动持有 12 个月，亏钱的窗口占 <b>12.5%</b>，四个组合里最低（60/40 为 14.9%，纯股 16.5%）。</p>
+
+    <h2 id="s5"><span class="num">05</span><span class="zh">第二层：资金四等分，风险也四等分了吗</span><span class="en">Second test: is equal money equal risk?</span></h2>
+    <p class="zh">这是全文最重要的一张图，因为它是这个策略<b>唯一真正的机制</b>。把组合的方差按四条腿分解（用年度再平衡下的时变权重），25% 的资金对应的是：股票 <b>37.5%</b>、长债 <b>33.9%</b>、黄金 <b>28.4%</b>、现金 <b>0.2%</b>。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 4 · 资金权重与风险贡献</span><span class="en">Exhibit 4 · capital weight vs risk contribution</span></div>
+      <img src="../assets/figs/pp-risk.svg" alt="永久组合的资金权重与风险贡献对比">
+      <p class="ex-note zh">三条风险资产的风险贡献落在 28% 到 38% 之间，而四分之一的现金只贡献了 0.2% 的组合风险。换句话说，<b>这个组合在风险层面实际上是「三条腿各三分之一 + 一块现金」</b>；四等分资金之所以有效，是因为它恰好让三条波动率相近的腿各自拿到了相近的风险，而现金那一份自动变成了不产生风险的压舱石。对照大众版全天候：它的资金权重是 30/40/15/7.5/7.5，风险贡献却是 <b>32.4 / 53.5 / 10.5 / 2.4 / 1.2</b>——<b>宣称「四个环境各 25% 风险」的那个没做到，只承诺「四等分资金」的这个做到了。</b></p>
+      <p class="ex-note en">The three risky legs land between 28% and 38% of the risk, while the quarter in cash contributes 0.2%. In risk terms the portfolio is really "a third each in three legs plus a ballast". Equal money works because the three legs happen to have similar volatilities, so each receives a similar share of risk, and the cash quarter drops out of the risk budget entirely. Compare the retail All Weather: capital weights of 30/40/15/7.5/7.5 become risk contributions of <b>32.4 / 53.5 / 10.5 / 2.4 / 1.2</b>. The portfolio that promises equal risk does not deliver it; the one that only promises equal money does.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，全样本协方差 × 年度再平衡的时变权重；35.7 年的平均权重为 25.4 / 24.8 / 25.2 / 24.6。</span><span class="en">Source: author's calculations, full-sample covariance with annual-rebalancing time-varying weights; average weights over 35.7 years were 25.4 / 24.8 / 25.2 / 24.6.</span></p>
+    </div>
+    <p class="zh">这里要说清楚一件事，免得被读成"四等分总是对的"：<b>这个结果依赖于资产的选择</b>。三条腿的波动率刚好都在 12% 到 15%，是 Browne 挑资产的结果，不是数学定理。如果把长债换成 2 年期国债（波动率低得多），或者把黄金换成商品（波动率高得多），等资金的分配就会明显偏离等风险，回报也会变差。真正可迁移的那句话是：<b>等权是一种不需要估计的默认值，它在资产波动率相近时表现最好</b>——这也正好解释了 DeMiguel 等人 2009 年的结论。</p>
+
+    <h2 id="s6"><span class="num">06</span><span class="zh">第三层：它抗通胀吗</span><span class="en">Third test: does it hedge inflation?</span></h2>
+    <p class="zh">永久组合最常被推销的功能，是「黄金腿保护你免受通胀伤害」。检验方式很直接：按月筛选 CPI 同比高于 5% 的月份——428 个月里有 <b>26 个</b>，集中在 1991 年初、2008 年三季度和 2021–2023 那一轮——然后看各组合在这些月份里的表现。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 5 · 高通胀月份的年化收益</span><span class="en">Exhibit 5 · annualised return in high-inflation months</span></div>
+      <img src="../assets/figs/pp-hot.svg" alt="CPI 同比高于 5% 的月份里四个组合的年化收益">
+      <p class="ex-note zh">结果和宣传相反：通胀高于 5% 的月份里，永久组合年化 <b>−2.8%</b>，全天候 −6.2%，60/40 −1.4%，<b>只有纯股为正（+1.4%）</b>。拆到每条腿：黄金 <b>−2.95%</b>、长债 <b>−12.65%</b>、股票 +1.36%、现金 +1.88%。四个组合与通胀的月度相关系数都在 −0.12 到 −0.13 之间，符号是负的。<b>被雇来对冲通胀的那条腿，在最需要它的 26 个月里是负的；而三条腿里唯一为正的风险资产是股票。</b>这个结论与黄金那一篇（1968 年以来 703 个月）以及 Erb 与 Harvey 的《The Golden Dilemma》一致：黄金更像是对冲货币与波动的资产，不是一个短窗口的通胀保险。</p>
+      <p class="ex-note en">The opposite of the pitch: in months with inflation above 5% the Permanent Portfolio lost <b>2.8%</b> a year, All Weather −6.2%, the 60/40 −1.4%, and <b>only equities were positive (+1.4%)</b>. Leg by leg: gold <b>−2.95%</b>, long bonds <b>−12.65%</b>, equities +1.36%, cash +1.88%. Every portfolio's monthly correlation with inflation is negative, between −0.12 and −0.13. The leg hired to hedge inflation lost money in exactly the 26 months it was hired for, and the only positive risky asset was equities. This matches the gold note (703 months since 1968) and Erb and Harvey's "The Golden Dilemma": gold behaves more like a hedge against currency debasement and volatility than a short-horizon inflation hedge.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算；通胀为 CPI-U 同比，筛选阈值 5%，样本内 26 个月，其中 2021-07 至 2023-03 连续 21 个月。</span><span class="en">Source: author's calculations; year-on-year CPI-U above 5%, 26 months in sample, 21 of them consecutive from July 2021 to March 2023.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 6 · 2008 与 2022 的对照</span><span class="en">Exhibit 6 · 2008 against 2022</span></div>
+      <img src="../assets/figs/pp-years.svg" alt="2008 年与 2022 年四个组合的全年收益">
+      <p class="ex-note zh">把两个年份并排看，这个策略的性格就出来了。2008 年——通缩型危机、利率暴跌——永久组合全年 <b>−0.3%</b>，全天候 +2.0%，而 60/40 亏 15.0%、纯股亏 37.0%：<b>这正是它被设计来应对的环境，它也确实做到了。</b>2022 年——通胀 40 年最高、股债同跌——永久组合亏 <b>−11.9%</b>，只比纯股的 −18.1% 好一点，甚至没比 60/40 的 −18.1% 强多少。<b>它全部的最大回撤（−15.5%）都发生在 2021-12 到 2022-09 这一段</b>：黄金腿没有补上长债腿的缺口。一个策略最糟糕的一段，恰好落在它宣称负责的那种环境里，这是最需要写清楚的诚实。</p>
+      <p class="ex-note en">Put the two years side by side and the personality appears. In 2008 — a deflationary crisis with collapsing rates — the Permanent Portfolio lost <b>0.3%</b> and All Weather gained 2.0%, while the 60/40 lost 15.0% and equities 37.0%: the environment it was designed for, handled. In 2022 — the highest inflation in forty years, with stocks and bonds falling together — it lost <b>11.9%</b>, only modestly better than equities' −18.1% and not much better than the 60/40. Its entire −15.5% drawdown ran from December 2021 to September 2022, and the gold leg did not cover for the long bonds. A strategy's worst stretch landing in the environment it claims to own is the most important thing to say out loud.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，日历年收益，年度再平衡。</span><span class="en">Source: author's backtest, calendar-year returns, annual rebalancing.</span></p>
+    </div>
+
+    <h2 id="s7"><span class="num">07</span><span class="zh">第四层：它躲过了什么、付出了什么</span><span class="en">Fourth test: what it avoided, and what it paid</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 7 · 收益从哪条腿来</span><span class="en">Exhibit 7 · where the return comes from</span></div>
+      <img src="../assets/figs/pp-attrib.svg" alt="四条腿对年化收益的加权贡献">
+      <p class="ex-note zh">把 7.18% 的年化拆开：股票贡献 <b>2.98</b> 个百分点（占四成二），黄金 <b>1.79</b>，长债 <b>1.67</b>，现金 <b>0.68</b>。四项相加 7.12%，与几何年化 7.18% 相互验证（这是算术贡献，不是复利）。两个细节值得停一下：<b>第一，黄金这条腿的收益贡献略高于长债</b>——在 1990 年以后的这轮债券大牛市里，这个结果多少有点反直觉；<b>第二，现金的贡献看上去有 0.68 个百分点，但扣掉通胀之后，它 35.7 年的实际年化只有 0.12%</b>（股票 8.16%、黄金 3.58%、长债 2.92%）。现金不是收益来源，它是那份"不必被迫卖出"的期权费。</p>
+      <p class="ex-note en">Decomposing the 7.18%: equities contribute <b>2.98</b> points (42% of the total), gold <b>1.79</b>, long bonds <b>1.67</b> and cash <b>0.68</b>. The four sum to 7.12% against a geometric 7.18% — an arithmetic decomposition, not compounding. Two details are worth pausing on. Gold contributed slightly more than long bonds, which is counter-intuitive given the bond bull market of this sample. And cash's 0.68 points are nominal: after inflation its real annualised return over 35.7 years was just 0.12%, against 8.16% for equities, 3.58% for gold and 2.92% for long bonds. Cash is not a return source; it is the premium paid for never being a forced seller.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，时变权重 × 各腿月度收益的年化算术贡献；实际收益用 CPI-U 平减。</span><span class="en">Source: author's calculations; annualised arithmetic contribution of time-varying weights times leg returns; real returns deflated by CPI-U.</span></p>
+    </div>
+    <p class="zh">所以这个组合的"性格"可以一句话概括：<b>它把 75% 的资金放在三台互不相干的发动机上，用剩下 25% 买一份流动性保险。</b>它最舒服的环境是利率下行（2008、2020 这类年份），最难受的是利率快速上行（2022）。这也解释了为什么它在样本里跑不赢 60/40：过去 35 年股票的风险溢价远高于其他三条腿，而它自愿只拿了 25% 的股票。它换回来的，是路径的平滑——如果你在 2008 年 10 月打开账户，这个理由会突然变得很值钱。</p>
+
+    <h2 id="s8"><span class="num">08</span><span class="zh">换个起点，再自己动一次手</span><span class="en">Change the start, then change the weights</span></h2>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 8 · 七个起点</span><span class="en">Exhibit 8 · seven start dates</span></div>
+      <img src="../assets/figs/pp-starts.svg" alt="七个不同起点下四个组合的年化收益">
+      <p class="ex-note zh">起点敏感性是检验"稳健"最便宜的一把尺子。从 1990、1995、2000、2005、2010、2015、2020 七个起点分别重算，永久组合的年化始终落在 <b>6.8% 到 8.5%</b> 之间（跨度 1.7 个百分点）；全天候是 5.4% 到 7.9%（跨度 2.5 个百分点），而且在 2020 起点掉到 5.4%——那之后债券几乎没有再提供什么。60/40 与纯股对起点更敏感（2020 起点分别到 9.5% 与 15% 以上），因为它们的好坏几乎完全取决于股票那一段。<b>永久组合的"无聊"体现在这里：它不挑入场时间。</b></p>
+      <p class="ex-note en">Start-date sensitivity is the cheapest robustness test there is. Re-running from 1990, 1995, 2000, 2005, 2010, 2015 and 2020, the Permanent Portfolio stays between <b>6.8% and 8.5%</b> a year — a 1.7-point spread — while All Weather spans 5.4% to 7.9% and falls to 5.4% from a 2020 start, after which bonds stopped contributing much. The 60/40 and equities are far more start-dependent, because their outcome is essentially the equity decade you happen to get.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；每个起点从该年 1 月开始，最短样本 5.7 年。</span><span class="en">Source: author's backtest; each start begins in January of that year, with a minimum sample of 5.7 years.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 9 · 拖动黄金权重（可交互）</span><span class="en">Exhibit 9 · drag the gold weight</span></div>
+      <div class="vbox">
+        <div class="ctrl">
+          <span style="font-weight:600"><span class="zh">黄金权重</span><span class="en">Gold weight</span></span>
+          <input type="range" id="g-w" min="0" max="50" value="25" step="5">
+          <b id="g-wlab" style="font-family:var(--mono)">25%</b>
+          <button type="button" class="primary" id="g-play"><span class="zh">▶ 播放这段历史</span><span class="en">▶ Play the history</span></button>
+          <button type="button" id="g-reset"><span class="zh">回到 25%</span><span class="en">Reset to 25%</span></button>
+        </div>
+        <svg id="g-svg" viewBox="0 0 900 360" role="img" aria-label="不同黄金权重下的组合净值与回撤路径"></svg>
+        <div class="vstat">
+          <span><span class="zh">年化</span><span class="en">Return</span> <b id="g-ann">–</b></span>
+          <span><span class="zh">波动</span><span class="en">Vol</span> <b id="g-vol">–</b></span>
+          <span><span class="zh">最大回撤</span><span class="en">Max DD</span> <b id="g-dd">–</b></span>
+          <span><span class="zh">夏普</span><span class="en">Sharpe</span> <b id="g-sh">–</b></span>
+        </div>
+        <div class="vstat2">
+          <span><span class="zh">时间</span><span class="en">Date</span> <b id="g-year">–</b></span>
+          <span><span class="zh">净值</span><span class="en">Value</span> <b id="g-val">–</b></span>
+          <span><span class="zh">回撤</span><span class="en">Drawdown</span> <b id="g-ddc">–</b></span>
+        </div>
+      </div>
+      <p class="ex-note zh">拖动滑块改变黄金权重，其余三条腿（股票、长债、现金）三等分剩余资金，同样是年度再平衡，规则不变。灰色虚线是原版 25% 作为参照；点"播放这段历史"会让一个游标从 1990 年扫到 2025 年，同时在下方读出当时的净值和回撤——<b>你会看到那条"平滑"的曲线是怎么被一段一段走出来的</b>。可以试三个位置：<b>0%</b>（黄金全部换成另外三条腿）年化 7.13%、波动 6.5%、回撤 −18.7%；<b>25%</b>（原版）7.18% / 5.8% / −15.5%；<b>50%</b> 7.07% / 7.0% / −14.3%。<b>结论有点扫兴：黄金权重从 0% 拉到 50%，年化几乎不动（7.13% 到 7.07%），变的是波动与回撤。</b>这条腿买的是路径，不是收益——和 Exhibit 7 的归因完全一致。</p>
+      <p class="ex-note en">Drag the slider to change the gold weight; the other three legs split the remainder equally, still rebalanced annually, with no other rule changed. The grey dashed line is the original 25% for reference, and "Play the history" sweeps a cursor from 1990 to 2025 while the value and drawdown are read out below — you can watch the smooth-looking path being walked one month at a time. Three positions are worth trying: at <b>0%</b> gold the portfolio returns 7.13% with 6.5% volatility and a −18.7% drawdown; at <b>25%</b> it is 7.18% / 5.8% / −15.5%; at <b>50%</b> it is 7.07% / 7.0% / −14.3%. <b>The slightly deflating conclusion: moving gold from 0% to 50% barely changes the return (7.13% to 7.07%); what changes is the path.</b> This leg buys a smoother ride, not a higher return — exactly what the attribution in Exhibit 7 says.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，年度再平衡，不扣交易成本；游标为按月份推进的历史重演。</span><span class="en">Source: author's backtest, annual rebalancing, before costs; the cursor replays the history month by month.</span></p>
+    </div>
+
+    <h2 id="s9"><span class="num">09</span><span class="zh">结论：它赢在风险，不在通胀</span><span class="en">Conclusion: it wins on risk, not on inflation</span></h2>
+    <p class="zh">回到开头的问题：四等分真的能应对任何环境吗。<b>答案分两半，而且恰好和它的宣传相反。</b>在"风险分配"这件事上，它做得比那个专门为风险分配设计的策略更好：25% 的资金对应 37.5 / 33.9 / 28.4 / 0.2 的风险，夏普 0.75 是四个组合里最高的，起点敏感性最低，2008 年只跌 0.3%。在"应对任何环境"这件事上，它明显不成立：它的黄金腿在通胀高于 5% 的 26 个月里年化 −2.95%，它最大的回撤发生在 2022 年，而不是它被设计来防的危机里。</p>
+    <p class="zh">更准确的表述是这样：<b>永久组合不是一台"应对任何环境"的机器，而是一台"把风险平均分给三条腿、再用现金买一份选择权"的机器。</b>它最擅长的环境是利率下行与通缩型衰退（2008、2020），最不擅长的是利率快速上行（2022）。它的四条腿里，真正长期贡献收益的是股票，真正长期贡献稳定的是现金几乎不参与风险这件事，而黄金与长债是两台方向相反的保险——它们在样本里的平均表现相近（黄金 1.79、长债 1.67 个百分点），但保险的有效期不同：长债在通缩时管用，黄金在货币贬值时管用，两者都不在"CPI 5% 以上"这个具体的门槛上管用。</p>
+    <p class="zh">最后一个数字对比值得记住：<b>它用 1.9 个百分点的年化（7.18% 对 9.09%），买了 11.5 个百分点的回撤（−15.5% 对 −27.0%），以及一条不需要判断的规则。</b>这笔交易值不值，取决于你是否需要那条路径——而不是取决于它是否叫"永久"。</p>
+    <p class="zh">边界必须写清楚。第一，样本从 1990 年开始，<b>不含 1970 年代</b>——那是黄金对冲通胀最有名的一段，也是这类策略最有利的样本；同样，样本覆盖了一轮罕见的债券大牛市，长债腿的成绩单未来未必能复制。第二，全部是美国资产，未考虑汇率与跨境税负。第三，黄金用的是 LBMA 现货价，不含持有成本，也不含金矿股（Browne 的版本允许一半黄金换成金矿股，两者行为差别很大）。第四，长债与中债用收益率曲线按固定久期合成，不是真实基金的净值，未计费率。第五，不扣交易成本与税；每年 1 月四腿调回 25% 的换手很小，但真实账户还有买卖价差。第六，Browne 的再平衡规则常写成 15/35 阈值带，本文用的是每年 1 月固定再平衡；附录 A 给了两种口径的完整对照，结论不变。第七，本文检验的是公开描述的规则，不是任何人的真实账户。</p>
+    <p class="ex-note en" style="margin-top:14px">Full English version below.</p>
+  </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">它是什么</span><span class="en">What it is</span></a>
+      <a href="#s2">02 <span class="zh">为什么不是随便分</span><span class="en">Why it works</span></a>
+      <a href="#s3">03 <span class="zh">数据与方法</span><span class="en">Data</span></a>
+      <a href="#s4">04 <span class="zh">35.7 年结果</span><span class="en">35 years</span></a>
+      <a href="#s5">05 <span class="zh">风险四等分了吗</span><span class="en">Risk split</span></a>
+      <a href="#s6">06 <span class="zh">它抗通胀吗</span><span class="en">Inflation</span></a>
+      <a href="#s7">07 <span class="zh">躲过了什么</span><span class="en">What it avoided</span></a>
+      <a href="#s8">08 <span class="zh">起点与交互</span><span class="en">Starts &amp; try it</span></a>
+      <a href="#s9">09 <span class="zh">结论</span><span class="en">Conclusion</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
+    </aside>
+  </div>
+
+  <div class="prose">
+
+    <section class="en" id="en-version" style="margin-top:40px">
+      <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
+      <p><b>Question.</b> Harry Browne's Permanent Portfolio puts 25% each in equities, long-term Treasuries, gold and cash, rebalances on a fixed rule, never uses leverage and never forecasts. We test that public description on 428 monthly US observations from January 1990 to September 2025, using the same data pipeline as the All Weather study, with one change: weights are reset each January and allowed to drift within the year, rather than being reset to fixed weights every month.</p>
+      <p><b>Result 1 — the long run.</b> 7.18% a year, 5.8% volatility, a −15.5% maximum drawdown and a Sharpe of 0.75. All Weather: 7.90% / 7.6% / −21.7% / 0.68. A 60/40: 9.09% / 9.1% / −27.0% / 0.70. Equities: 11.04% / 14.7% / −50.9% / 0.60. One unit becomes 11.9, against 15.1, 22.3 and 41.9. It trades 1.9 points of return for an 11.5-point improvement in drawdown, and its Sharpe is the highest of the four.</p>
+      <p><b>Result 2 — equal money is very nearly equal risk.</b> Capital weights of 25% each produce risk contributions of 37.5 / 33.9 / 28.4 / 0.2. The three risky legs have long-run volatilities of 14.7%, 13.1% and 12.2%, while cash has 0.7%, so the quarter in cash drops out of the risk budget and the remaining three split the risk almost evenly. The retail All Weather, which promises 25% of the risk in each of four environments, actually runs 32.4 / 53.5 / 10.5 / 2.4 / 1.2. The portfolio that claims equal risk does not deliver it; the one that only claims equal money does.</p>
+      <p><b>Result 3 — it does not hedge inflation.</b> In the 26 months with year-on-year CPI above 5%, the Permanent Portfolio lost 2.8% a year, with gold at −2.95% and long bonds at −12.65%; only equities (+1.36%) and cash (+1.88%) were positive. The 60/40 lost 1.4% and All Weather 6.2%. Every portfolio's monthly correlation with inflation lies between −0.12 and −0.13.</p>
+      <p><b>Result 4 — its best and worst years are neighbours.</b> 2008: −0.3%, against −15.0% for the 60/40 and −37.0% for equities. 2022: −11.9%, against −18.1% and −18.1%, with All Weather at −20.0%. The entire −15.5% drawdown ran from December 2021 to September 2022, in the inflation the gold leg was supposed to cover.</p>
+      <p><b>Result 5 — where the return comes from.</b> Equities contribute 2.98 points, gold 1.79, long bonds 1.67 and cash 0.68, summing to 7.12% against the geometric 7.18%. Deflated by CPI, the cash leg earned 0.12% a year over 35.7 years, against 8.16% for equities, 3.58% for gold and 2.92% for long bonds. Cash buys the option never to be a forced seller; it is not a return source.</p>
+      <p><b>Implication.</b> The Permanent Portfolio is not a machine for surviving any environment; it is a machine for splitting risk evenly across three legs and spending the fourth quarter on liquidity insurance. It is at its best when rates fall into a deflationary recession (2008, 2020) and at its worst when rates rise quickly (2022). Limitations: the sample starts in 1990 and excludes the 1970s, covers the US only, uses spot gold without carry or miners, synthesises bonds from the yield curve, ignores costs and taxes, and uses calendar-year rather than 15/35 band rebalancing (both conventions are tabulated in the appendix).</p>
+    </section>
+
+    <details class="appendix" id="apx">
+      <summary><span class="zh">附录 A · 数据、方法与两种再平衡口径</span><span class="en">Appendix A · data, method and two rebalancing conventions</span></summary>
+      <p class="zh"><b>数据。</b>与《全天候组合实测》同一份管线：标普 500 全收益（Yahoo Finance ^SP500TR，月度）；美国财政部国债收益率曲线（3 个月 / 10 年 / 30 年，月末值，个别缺月按相邻月线性插值）；LBMA 伦敦金价月序列（datahub.io）；美国 CPI-U（BLS，CUUR0000SA0）。样本 1990-01 至 2025-09，共 428 个月。</p>
+      <p class="zh"><b>做法。</b>股票用价格变动（全收益）；长债＝30 年期收益率 ÷ 12 − 久期 15 × 收益率变动；中债＝10 年期收益率 ÷ 12 − 久期 7.5 × 变动；现金＝3 个月收益率 ÷ 12；黄金用现货月收益。组合按<b>年度再平衡</b>：每年 1 月重置到目标权重，年内权重随价格漂移，组合月收益为权重与各腿收益的加权和。风险贡献按时变权重与全样本协方差计算；收益归因为各腿加权收益贡献的年化算术平均。</p>
+      <p class="zh"><b>关于现金腿的处理。</b>现金不是一条"资产"而是 3 个月国库券的月收益（成交价近似为无风险利率 ÷ 12），因此它的波动率只有 0.7%，在风险分解里几乎不出现。这一点对理解永久组合很重要：它的第四条腿在风险预算上等于不存在。</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">附录表 A1｜两种再平衡口径的对照（年化 % / 最大回撤 % / 夏普）</span><span class="en">Appendix Table A1｜Two rebalancing conventions (return % / max drawdown % / Sharpe)</span></caption>
+          <thead><tr><th><span class="zh">组合</span><span class="en">Portfolio</span></th><th><span class="zh">年度再平衡（本篇）</span><span class="en">Annual (this note)</span></th><th><span class="zh">每月固定权重（全天候那篇）</span><span class="en">Monthly fixed weights (All Weather note)</span></th></tr></thead>
+          <tbody>
+            <tr><td><span class="zh">永久组合</span><span class="en">Permanent</span></td><td>7.18 / −15.5 / 0.75</td><td>6.95 / −16.0 / 0.72</td></tr>
+            <tr><td><span class="zh">全天候</span><span class="en">All Weather</span></td><td>7.90 / −21.7 / 0.68</td><td>7.61 / −22.3 / 0.64</td></tr>
+            <tr><td>60/40</td><td>9.09 / −27.0 / 0.70</td><td>8.91 / −29.6 / 0.68</td></tr>
+            <tr><td><span class="zh">纯股</span><span class="en">Equities</span></td><td>11.04 / −50.9 / 0.60</td><td>11.04 / −50.9 / 0.60</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="zh">年度再平衡让赢家在年内多跑一段，所以多资产组合的年化都略高 0.2 到 0.3 个百分点，回撤略浅；纯股不受影响。两个口径下四个组合的排序与本文全部结论一致。</p>
+      <p class="zh"><b>未计入。</b>交易成本、税费与汇率；黄金现货不含持有成本与展期；债券用收益率曲线合成，未计基金费率；再平衡为每年 1 月，未采用 15/35 阈值带；杠杆与强平不在本文范围（永久组合本身不加杠杆）。</p>
+      <p class="zh"><b>代码。</b><code>tools/make_pp_data.py</code>（全部统计）、<code>tools/make_pp_figs.py</code>（8 张图）、<code>tools/make_pp_note.py</code>（本页与交互动画）；数据复用 <code>tools/fetch_allweather_raw.py</code> 与 <code>tools/make_allweather_data.py</code> 的原始序列，固定输入可完全复现。</p>
+      <p class="en"><b>Data.</b> The same pipeline as the All Weather note: S&amp;P 500 total return (Yahoo Finance ^SP500TR, monthly); US Treasury yield curve (3-month / 10-year / 30-year month-end, interpolated where a print is missing); the LBMA London gold price (datahub.io); US CPI-U (BLS, CUUR0000SA0). January 1990 to September 2025, 428 months.</p>
+      <p class="en"><b>Method.</b> Equities from price changes (total return); long bonds = 30-year yield ÷ 12 − duration 15 × change in yield; intermediate bonds = 10-year yield ÷ 12 − duration 7.5 × change; cash = three-month yield ÷ 12; gold from monthly spot returns. Portfolios are <b>rebalanced annually</b>: weights are reset each January and drift within the year, and the monthly portfolio return is the weighted sum of leg returns. Risk contributions use time-varying weights and the full-sample covariance; attribution is the annualised arithmetic mean of each leg's weighted return contribution.</p>
+      <p class="en"><b>On the cash leg.</b> Cash is not an asset but the monthly return on three-month T-bills (approximately the risk-free rate ÷ 12), so its volatility is 0.7% and it effectively disappears from the risk decomposition. This matters for reading the portfolio: its fourth leg does not exist in the risk budget.</p>
+      <p class="en">Annual rebalancing lets winners run within the year, so every multi-asset portfolio earns 0.2–0.3 points more with slightly shallower drawdowns; equities are unaffected. The ranking and every conclusion of this note are unchanged under either convention. <b>Not included:</b> transaction costs, taxes and FX; spot gold without carry; bonds synthesised from the yield curve without fund fees; calendar-year rather than 15/35 band rebalancing; leverage (the Permanent Portfolio is unlevered by construction).</p>
+      <p class="en"><b>Code.</b> <code>tools/make_pp_data.py</code>, <code>tools/make_pp_figs.py</code>, <code>tools/make_pp_note.py</code>; underlying series from <code>tools/fetch_allweather_raw.py</code> and <code>tools/make_allweather_data.py</code>.</p>
+    </details>
+
+    <details class="appendix">
+      <summary><span class="zh">附录 B · 四个容易被忽略的口径问题</span><span class="en">Appendix B · four measurement problems</span></summary>
+      <p class="zh"><b>一、"四等分"的好处依赖资产选择。</b>三条腿的波动率都在 12–15% 是等权能近似等风险的前提。换掉任意一条腿（例如把黄金换成商品、把长债换成短债），等资金就不再等于等风险，结论也会变。可迁移的是"等权是不需要估计的默认值"，不是"四等分最优"。</p>
+      <p class="zh"><b>二、现金的贡献是名义的。</b>现金腿 0.68 个百分点的收益贡献，扣掉通胀后只剩 0.12% 的实际年化。把现金写成"第二大收益来源"是一个容易犯的错——名义上它是收益，实际它只是把购买力保存下来，外加一份流动性期权。</p>
+      <p class="zh"><b>三、样本从 1990 年开始。</b>这既排除了 1970 年代（黄金对冲通胀最有力的证据所在），也包含了一轮罕见的债券大牛市。把起点换到 1970 年或 1980 年，四条腿的相对贡献会明显不同——这正是起点检验（Exhibit 8）在 1990 年之后只覆盖有限区间的原因。</p>
+      <p class="zh"><b>四、黄金腿与实际持有的差距。</b>本文用 LBMA 现货价，不含保管费、买卖价差与税；Browne 的版本允许一半黄金配置金矿股，而金矿股带股票贝塔，在 2008 年与 2022 年的行为都和现货金不同。真实账户的黄金腿会比这里的表现更差一些。</p>
+      <p class="en"><b>One: the benefit of equal weight depends on asset choice.</b> The three legs having volatilities of 12–15% is what makes equal money approximately equal risk. Swap any leg — commodities for gold, short bonds for long — and it stops being true. What generalises is "equal weight is the default that estimates nothing", not "equal weight is optimal".</p>
+      <p class="en"><b>Two: cash's contribution is nominal.</b> Its 0.68 points of return contribution shrink to 0.12% a year in real terms. Calling cash a major return source is a mistake; it preserves purchasing power and buys a liquidity option.</p>
+      <p class="en"><b>Three: the sample starts in 1990.</b> That excludes the 1970s — where the case for gold as an inflation hedge is strongest — and includes a rare bond bull market. From a 1970 or 1980 start the four legs would contribute very differently, which is exactly why the start-date test covers a limited range.</p>
+      <p class="en"><b>Four: spot gold is not a holding.</b> The LBMA price excludes storage, spreads and tax, and Browne allowed half the gold sleeve to be mining equities, which carry equity beta and behaved differently in 2008 and 2022. A real account's gold leg would do somewhat worse than shown.</p>
+    </details>
+
+    <div class="disclaimer">
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的机构与策略名称仅为研究与引用用途，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. Firm and strategy names are referenced for research purposes only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
+    </div>
+
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
+    <ol class="refs">
+      <li>Browne, H. (1999). <i>Fail-Safe Investing: Lifelong Financial Security in 30 Minutes</i>. St. Martin's Press. ISBN 978-0-3122-6321-8.</li>
+      <li>Rowland, C., &amp; Lawson, J. M. (2012). <i>The Permanent Portfolio: Harry Browne's Long-Term Investment Strategy</i>. Wiley. ISBN 978-1-1182-8825-2.</li>
+      <li>DeMiguel, V., Garlappi, L., &amp; Uppal, R. (2009). Optimal Versus Naive Diversification: How Inefficient Is the 1/N Portfolio Strategy? <i>Review of Financial Studies</i>, 22(5), 1915–1953. <a href="https://doi.org/10.1093/rfs/hhm075">doi.org/10.1093/rfs/hhm075</a></li>
+      <li>Perold, A. F., &amp; Sharpe, W. F. (1988). Dynamic Strategies for Asset Allocation. <i>Financial Analysts Journal</i>, 44(1), 16–27. <a href="https://doi.org/10.2469/faj.v44.n1.16">doi.org/10.2469/faj.v44.n1.16</a></li>
+      <li>Bouchey, P., Nemtchinov, V., Paulsen, A., &amp; Stein, D. M. (2012). Volatility Harvesting: Why Does Diversifying and Rebalancing Create Portfolio Growth? <i>Journal of Wealth Management</i>, 15(2), 26–35. <a href="https://doi.org/10.3905/jwm.2012.15.2.026">doi.org/10.3905/jwm.2012.15.2.026</a></li>
+      <li>Erb, C. B., &amp; Harvey, C. R. (2013). The Golden Dilemma. <i>Financial Analysts Journal</i>, 69(4), 10–42. <a href="https://doi.org/10.2469/faj.v69.n4.1">doi.org/10.2469/faj.v69.n4.1</a></li>
+      <li>Baur, D. G., &amp; Lucey, B. M. (2010). Is Gold a Hedge or a Safe Haven? An Analysis of Stocks, Bonds and Gold. <i>Financial Review</i>, 45(2), 217–229. <a href="https://doi.org/10.1111/j.1540-6288.2010.00244.x">doi.org/10.1111/j.1540-6288.2010.00244.x</a></li>
+      <li>Asness, C. S., Frazzini, A., &amp; Pedersen, L. H. (2012). Leverage Aversion and Risk Parity. <i>Financial Analysts Journal</i>, 68(1), 47–59. <a href="https://doi.org/10.2469/faj.v68.n1.1">doi.org/10.2469/faj.v68.n1.1</a></li>
+      <li>Arnott, R. D., Harvey, C. R., &amp; Markowitz, H. (2019). A Backtesting Protocol in the Era of Machine Learning. <i>Journal of Financial Data Science</i>, 1(1), 64–74. <a href="https://doi.org/10.3905/jfds.2019.1.064">doi.org/10.3905/jfds.2019.1.064</a></li>
+      <li><span class="zh">数据：Yahoo Finance ^SP500TR、美国财政部国债收益率曲线、LBMA 伦敦金价、世界银行商品价格指数、美国劳工统计局 CPI-U 与失业率，访问日期 2026-10-05。</span><span class="en">Data: Yahoo Finance ^SP500TR, US Treasury yield curve, LBMA London gold price, World Bank commodity price index, BLS CPI-U and unemployment rate, accessed 5 October 2026.</span></li>
+    </ol>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../all-weather/">
+        <span class="k"><span class="zh">组合实测 01</span><span class="en">Portfolio test 01</span></span>
+        <span class="v"><span class="zh">← 全天候组合实测</span><span class="en">← All Weather, tested</span></span>
+      </a>
+      <a href="../">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+      </a>
+    </nav>
+  </div>
+
+  <footer>
+    <div class="footin">
+<span>Working Paper v1.0 · © 2026 Aylon · Hong Kong</span>
+      <span class="spacer"></span>
+      <a href="../share-kit/"><span class="zh">分享图</span><span class="en">Share cards</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+
+<script src="../assets/site.js"></script>
+<script>
+const DATA = {"months": ["1990-02", "1990-03", "1990-04", "1990-05", "1990-06", "1990-07", "1990-08", "1990-09", "1990-10", "1990-11", "1990-12", "1991-01", "1991-02", "1991-03", "1991-04", "1991-05", "1991-06", "1991-07", "1991-08", "1991-09", "1991-10", "1991-11", "1991-12", "1992-01", "1992-02", "1992-03", "1992-04", "1992-05", "1992-06", "1992-07", "1992-08", "1992-09", "1992-10", "1992-11", "1992-12", "1993-01", "1993-02", "1993-03", "1993-04", "1993-05", "1993-06", "1993-07", "1993-08", "1993-09", "1993-10", "1993-11", "1993-12", "1994-01", "1994-02", "1994-03", "1994-04", "1994-05", "1994-06", "1994-07", "1994-08", "1994-09", "1994-10", "1994-11", "1994-12", "1995-01", "1995-02", "1995-03", "1995-04", "1995-05", "1995-06", "1995-07", "1995-08", "1995-09", "1995-10", "1995-11", "1995-12", "1996-01", "1996-02", "1996-03", "1996-04", "1996-05", "1996-06", "1996-07", "1996-08", "1996-09", "1996-10", "1996-11", "1996-12", "1997-01", "1997-02", "1997-03", "1997-04", "1997-05", "1997-06", "1997-07", "1997-08", "1997-09", "1997-10", "1997-11", "1997-12", "1998-01", "1998-02", "1998-03", "1998-04", "1998-05", "1998-06", "1998-07", "1998-08", "1998-09", "1998-10", "1998-11", "1998-12", "1999-01", "1999-02", "1999-03", "1999-04", "1999-05", "1999-06", "1999-07", "1999-08", "1999-09", "1999-10", "1999-11", "1999-12", "2000-01", "2000-02", "2000-03", "2000-04", "2000-05", "2000-06", "2000-07", "2000-08", "2000-09", "2000-10", "2000-11", "2000-12", "2001-01", "2001-02", "2001-03", "2001-04", "2001-05", "2001-06", "2001-07", "2001-08", "2001-09", "2001-10", "2001-11", "2001-12", "2002-01", "2002-02", "2002-03", "2002-04", "2002-05", "2002-06", "2002-07", "2002-08", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-04", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-03", "2004-04", "2004-05", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-02", "2005-03", "2005-04", "2005-05", "2005-06", "2005-07", "2005-08", "2005-09", "2005-10", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-06", "2006-07", "2006-08", "2006-09", "2006-10", "2006-11", "2006-12", "2007-01", "2007-02", "2007-03", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2007-10", "2007-11", "2007-12", "2008-01", "2008-02", "2008-03", "2008-04", "2008-05", "2008-06", "2008-07", "2008-08", "2008-09", "2008-10", "2008-11", "2008-12", "2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09"], "cash": [0.6667, 0.67, 0.6725, 0.6725, 0.6675, 0.6667, 0.645, 0.6358, 0.6142, 0.6117, 0.6033, 0.5525, 0.5308, 0.5183, 0.4933, 0.4733, 0.4758, 0.4758, 0.475, 0.4575, 0.4383, 0.4133, 0.3725, 0.33, 0.3283, 0.3358, 0.3458, 0.3158, 0.3158, 0.3042, 0.2708, 0.2692, 0.2292, 0.2525, 0.2817, 0.2625, 0.2621, 0.2617, 0.2612, 0.2608, 0.2604, 0.26, 0.2596, 0.2592, 0.2587, 0.2583, 0.2675, 0.2558, 0.2542, 0.2892, 0.2967, 0.3308, 0.3592, 0.355, 0.3658, 0.39, 0.4, 0.4333, 0.4767, 0.4733, 0.5, 0.495, 0.49, 0.4892, 0.4842, 0.4667, 0.4667, 0.4542, 0.45, 0.4567, 0.4567, 0.425, 0.4208, 0.4183, 0.4275, 0.4283, 0.4317, 0.4317, 0.4433, 0.4408, 0.4283, 0.4308, 0.4275, 0.4342, 0.4292, 0.435, 0.4458, 0.44, 0.4133, 0.4375, 0.4375, 0.4367, 0.4217, 0.4342, 0.435, 0.4467, 0.4325, 0.4433, 0.43, 0.4167, 0.4192, 0.425, 0.425, 0.4133, 0.3642, 0.3608, 0.3808, 0.3733, 0.3733, 0.3883, 0.3742, 0.3792, 0.3883, 0.3983, 0.3958, 0.415, 0.4067, 0.4267, 0.4417, 0.4442, 0.48, 0.4817, 0.49, 0.485, 0.4692, 0.49, 0.5225, 0.5258, 0.5192, 0.5317, 0.5175, 0.4908, 0.4644, 0.438, 0.4115, 0.3851, 0.3587, 0.3323, 0.3058, 0.2833, 0.19, 0.1792, 0.1558, 0.14, 0.1408, 0.1467, 0.1467, 0.1475, 0.1433, 0.1408, 0.1442, 0.1417, 0.1333, 0.1233, 0.1042, 0.1, 0.0975, 0.1008, 0.0967, 0.0942, 0.0967, 0.0675, 0.0758, 0.0817, 0.0725, 0.08, 0.08, 0.075, 0.0708, 0.0792, 0.08, 0.0692, 0.0783, 0.0975, 0.1058, 0.1208, 0.1225, 0.1442, 0.1725, 0.1575, 0.1717, 0.2092, 0.2192, 0.225, 0.2333, 0.2492, 0.2708, 0.2842, 0.2625, 0.3142, 0.3333, 0.3342, 0.3642, 0.3725, 0.3875, 0.3833, 0.3958, 0.3783, 0.4183, 0.4267, 0.3833, 0.4317, 0.435, 0.3958, 0.4167, 0.4367, 0.4225, 0.4, 0.3983, 0.3567, 0.4275, 0.335, 0.2858, 0.3342, 0.3025, 0.23, 0.1367, 0.1725, 0.1017, 0.0975, 0.165, 0.1333, 0.1292, 0.1358, 0.085, 0.01, 0.0017, 0.0092, 0.0125, 0.0133, 0.0142, 0.0033, 0.0117, 0.0142, 0.0117, 0.0092, 0.005, 0.0008, 0.0067, 0.0033, 0.0017, 0.0075, 0.0125, 0.0117, 0.0125, 0.0142, 0.0117, 0.0133, 0.0117, 0.0117, 0.015, 0.0058, 0.0125, 0.0108, 0.0042, 0.0017, 0.0033, 0.0008, 0.0133, 0.0008, 0.0017, 0.0017, 0.0017, 0.0008, 0.0033, 0.0067, 0.0042, 0.0058, 0.0025, 0.0033, 0.0058, 0.0075, 0.005, 0.0075, 0.0092, 0.0017, 0.0033, 0.0058, 0.0033, 0.0025, 0.0025, 0.0017, 0.0025, 0.0017, 0.0025, 0.0025, 0.0042, 0.0008, 0.0025, 0.0033, 0.0025, 0.0017, 0.0042, 0.0017, 0.0008, 0.0017, 0.0017, 0.0008, 0.0033, 0.0025, 0.0008, 0.0017, 0.0042, 0.0, 0.0008, 0.0017, 0.0033, 0.0, 0.0, 0.0008, 0.0092, 0.0117, 0.0183, 0.0192, 0.015, 0.0133, 0.0225, 0.0167, 0.0158, 0.0217, 0.0167, 0.0167, 0.0317, 0.0367, 0.0417, 0.0333, 0.0617, 0.0567, 0.0717, 0.07, 0.0833, 0.0792, 0.08, 0.0825, 0.095, 0.1067, 0.1192, 0.125, 0.1358, 0.1375, 0.1467, 0.1475, 0.1617, 0.1625, 0.1767, 0.1833, 0.1925, 0.2033, 0.2017, 0.2033, 0.2025, 0.2025, 0.1958, 0.1817, 0.1675, 0.175, 0.1592, 0.1325, 0.135, 0.1233, 0.13, 0.1208, 0.0042, 0.0083, 0.0108, 0.0108, 0.0075, 0.0067, 0.0067, 0.0067, 0.0067, 0.0067, 0.0058, 0.0033, 0.0008, 0.0008, 0.0008, 0.0042, 0.0042, 0.0025, 0.0058, 0.005, 0.0092, 0.005, 0.0025, 0.005, 0.0142, 0.0308, 0.0608, 0.1067, 0.185, 0.2, 0.2325, 0.3108, 0.3392, 0.3433, 0.3817, 0.3875, 0.395, 0.3625, 0.44, 0.4367, 0.4567, 0.46, 0.4625, 0.4633, 0.4633, 0.4667, 0.4608, 0.4608, 0.4575, 0.4567, 0.4567, 0.4558, 0.4575, 0.4508, 0.4108, 0.3967, 0.3967, 0.3667, 0.3642, 0.365, 0.365, 0.3625, 0.3608, 0.3567, 0.3742, 0.3675], "legs": {"股票": [1.2884, 2.6499, -2.4946, 9.7486, -0.6755, -0.3196, -9.0385, -4.8668, -0.4268, 6.4652, 2.7847, 4.3549, 7.1525, 2.4205, 0.2375, 4.3149, -4.5816, 4.6611, 2.3678, -1.6731, 1.3445, -4.0292, 11.4356, -1.8619, 1.2938, -1.9443, 2.9368, 0.4883, -1.4868, 4.0847, -2.0469, 1.1756, 0.3459, 3.4048, 1.2276, 0.835, 1.3641, 2.1096, -2.4168, 2.6745, 0.2927, -0.4027, 3.7948, -0.7666, 2.069, -0.9545, 1.2095, 3.4002, -2.7148, -4.3599, 1.2823, 1.6418, -2.4505, 3.2826, 4.1007, -2.4448, 2.2456, -3.6417, 1.4843, 2.5933, 3.8958, 2.9512, 2.9442, 3.9978, 2.3227, 3.3161, 0.2517, 4.22, -0.3574, 4.3888, 1.9265, 3.4039, 0.9267, 0.963, 1.4738, 2.579, 0.3822, -4.4185, 2.1092, 5.6294, 2.7576, 7.5582, -1.9807, 6.247, 0.7838, -4.1089, 5.97, 6.0885, 4.4804, 7.9568, -5.6023, 5.4761, -3.3392, 4.6288, 1.7174, 1.1064, 7.2122, 5.1211, 1.0061, -1.7192, 4.0621, -1.0648, -14.458, 6.4062, 8.1341, 6.0613, 5.7624, 4.1814, -3.1078, 4.0005, 3.8729, -2.3617, 5.5497, -3.1224, -0.4945, -2.7416, 6.3282, 2.0327, 5.8896, -5.0242, -1.8929, 9.7829, -3.0086, -2.0518, 2.4654, -1.5635, 6.2114, -5.2793, -0.4224, -7.884, 0.4895, 3.5475, -9.1178, -6.3352, 7.7707, 0.6703, -2.4341, -0.9841, -6.2606, -8.0751, 1.9068, 7.6708, 0.8761, -1.4596, -1.9281, 3.7607, -6.0631, -0.7364, -7.1233, -7.7955, 0.6572, -10.8686, 8.8019, 5.8858, -5.8744, -2.6198, -1.5006, 0.9713, 8.2369, 5.2683, 1.2761, 1.7631, 1.95, -1.062, 5.6574, 0.8799, 5.2442, 1.8356, 1.3898, -1.5086, -1.5699, 1.3721, 1.945, -3.31, 0.4047, 1.0829, 1.5278, 4.0463, 3.4028, -2.4378, 2.1046, -1.7706, -1.8968, 3.1821, 0.1419, 3.7188, -0.9123, 0.8095, -1.6671, 3.7822, 0.035, 2.6479, 0.2714, 1.2449, 1.3424, -2.8779, 0.1353, 0.6173, 2.3793, 2.5768, 3.2584, 1.902, 1.4027, 1.5123, -1.9561, 1.1187, 4.4298, 3.4893, -1.6612, -3.1006, 1.4988, 3.74, 1.5907, -4.1808, -0.6937, -5.9981, -3.2483, -0.4319, 4.8702, 1.2954, -8.4305, -0.8408, 1.4466, -8.9106, -16.7951, -7.1752, 1.0642, -8.4289, -10.6478, 8.7598, 9.5709, 5.5932, 0.1985, 7.5634, 3.6103, 3.7318, -1.8576, 5.9982, 1.9316, -3.5973, 3.0975, 6.0347, 1.5786, -7.9851, -5.2349, 7.0061, -4.514, 8.9241, 3.8052, 0.0126, 6.6832, 2.3701, 3.4259, 0.0398, 2.9615, -1.132, -1.6669, -2.0333, -5.4324, -7.0296, 10.9292, -0.2208, 1.0229, 4.4814, 4.3242, 3.2908, -0.6274, -6.0101, 4.1203, 1.3889, 2.2523, 2.5843, -1.8465, 0.5799, 0.9114, 5.1796, 1.3575, 3.7503, 1.9267, 2.339, -1.3428, 5.0886, -2.8961, 3.1358, 4.5967, 3.0474, 2.5318, -3.4576, 4.5746, 0.8404, 0.7391, 2.3476, 2.0656, -1.3792, 4.0004, -1.402, 2.4425, 2.6894, -0.2519, -3.002, 5.7474, -1.5816, 0.9595, 1.2859, -1.9359, 2.0952, -6.0334, -2.4744, 8.4355, 0.2973, -1.5772, -4.9623, -0.1349, 6.7837, 0.3878, 1.7957, 0.2592, 3.6868, 0.1405, 0.0187, -1.824, 3.7035, 1.9765, 1.8966, 3.9708, 0.1165, 1.0271, 1.4073, 0.6242, 2.0563, 0.3062, 2.0628, 2.3335, 3.067, 1.1118, 5.7254, -3.6856, -2.5414, 0.3837, 2.4082, 0.6154, 3.7215, 3.2584, 0.5692, -6.835, 2.0378, -9.029, 8.0135, 3.2109, 1.9431, 4.0489, -6.3548, 7.0477, 1.4373, -1.5841, 1.8711, 2.1659, 3.6299, 3.0183, -0.0392, -8.2319, -12.3513, 12.8194, 4.7627, 1.9888, 5.6385, 7.188, -3.7997, -2.6593, 10.9464, 3.8449, -1.0096, 2.7575, 4.3796, 5.3369, 0.6984, 2.3345, 2.3754, 3.0406, -4.6509, 7.0061, -0.6929, 4.4816, -5.1747, -2.9942, 3.713, -8.7202, 0.1834, -8.2544, 9.2204, -4.0781, -9.2099, 8.0961, 5.5885, -5.7615, 6.2834, -2.44, 3.6714, 1.5609, 0.4347, 6.6076, 3.2124, -1.5921, -4.7678, -2.1027, 9.1326, 4.5431, 1.6804, 5.3396, 3.2175, -4.0845, 4.9585, 3.5882, 1.2172, 2.4256, 2.1357, -0.9068, 5.8701, -2.3838, 2.7847, -1.3048, -5.6344, -0.6781, 6.2945, 5.0852, 2.2443, 2.0272, 3.65], "长债": [-0.495, -0.6383, -4.8308, 7.05, 3.265, 0.5508, -7.8483, 1.1992, 3.4467, 6.4317, 2.8, 1.4383, 0.9842, -0.0675, 1.2867, -0.2167, -1.7117, 1.6017, 5.1967, 4.2717, -0.6983, 0.2092, 8.6117, -4.7825, 0.1975, -1.75, -0.8367, 3.9717, 1.4033, 5.5992, 1.2217, 1.2183, -3.135, 1.2358, 3.4825, 2.5367, 2.526, 2.5153, 2.5047, 2.494, 2.4833, 2.4727, 2.462, 2.4513, 2.4407, -4.59, 0.2383, 3.39, -6.3758, -6.6375, -2.5475, -1.48, -1.9183, 4.9958, -1.4783, -5.0667, -0.985, 0.5242, 1.875, 3.8183, 4.1008, 1.2317, 2.4283, 11.1183, 1.76, -3.0467, 2.9733, 2.36, 3.55, 3.5333, 3.3667, -0.3992, -6.9942, -3.3525, -2.8808, -1.0617, 2.6975, -0.0142, -2.5608, 4.0567, 5.2375, 4.9117, -3.6625, -1.3892, -0.1783, -4.0742, 3.1517, 1.4875, 2.5325, 8.2217, -4.5708, 3.8575, 4.4392, 1.8675, 2.01, 2.6017, -1.16, 0.0492, 0.2017, 2.6033, 3.0417, -0.7225, 5.8842, 4.6542, -2.7192, 1.1983, -0.4558, 1.0492, -7.0542, -0.5625, 0.1933, -2.655, -1.5875, -1.1258, -0.8167, 0.8408, -0.2108, -0.9567, -2.5983, 2.2192, 4.46, 4.4383, -1.1333, -1.1242, 2.935, 2.4717, 3.0608, -2.0533, 2.1608, 4.1017, 3.3317, 1.5801, 1.5739, 1.5677, 1.5615, 1.5554, 1.5492, 1.543, 3.7225, 4.1542, 4.8833, -6.8417, -3.9517, 0.4225, 3.2725, -7.6933, 5.1017, 0.8758, 3.7233, 5.655, 5.9258, 7.995, -4.1975, -4.0225, 6.2017, -2.2308, 4.6833, -1.4908, -0.5808, 8.1242, -2.2692, -13.955, 0.9742, 7.7208, -5.22, 0.2108, 1.4117, 2.0058, 2.8967, 2.2825, -9.7283, -1.5725, 0.9883, 2.185, 5.925, 0.1942, 1.695, -4.3125, 2.1633, 1.8533, -2.955, -1.7367, 4.725, 3.5008, 1.2333, -4.7717, 4.2567, -4.465, -3.0883, 1.5808, 1.8742, -1.7342, 0.0775, -4.2708, -2.745, -0.3275, -0.0233, 2.8292, 4.1658, 1.895, 0.8367, 2.6342, -3.3783, -1.4075, 4.4525, -0.97, 0.6875, -3.6642, -1.5417, 4.1692, 3.9983, -0.3717, 2.0325, 8.0233, -0.7192, 5.8867, 2.4058, 1.4942, -4.5125, -4.0358, 1.3883, 0.3325, 2.7325, 0.0192, -2.0792, 16.5342, 10.4442, -9.1125, -2.0108, 4.9017, -6.5242, -4.3867, -0.6108, 0.4442, 2.0933, 1.6333, -1.2242, 3.2842, -9.3325, 3.6208, 0.6025, -3.1492, 2.57, 6.0075, 5.3758, 0.6975, 7.295, -0.6942, -1.2892, -2.4808, -7.1158, -1.525, 0.285, -0.465, 2.5392, 4.3267, -1.6958, 5.665, 9.085, 4.8358, -3.59, 1.5308, 3.0233, 1.0575, -2.0975, -3.585, 4.3858, 5.5625, -1.0675, 2.5392, -0.7742, -1.0692, -0.9125, 1.6433, -2.265, -3.4517, 2.1183, 0.4575, 2.7058, -6.7583, -5.22, -0.99, -2.4833, 2.3317, 1.27, -2.4858, -4.1208, 5.8033, 0.3725, -0.8283, 1.1275, 3.0725, -0.5433, -0.5392, 3.665, -2.3542, 2.76, 2.7458, 0.3317, 7.5308, -4.66, 1.0667, -1.4883, -0.8792, -3.2733, 2.4458, 0.0333, 2.4342, -1.3283, -0.57, -0.7158, 5.1392, 3.1617, -0.455, -0.6017, 0.0025, 5.4033, 0.5742, -1.6783, -0.1683, -3.4667, -7.7967, -1.0025, 0.2042, 1.5542, -0.4033, 1.85, 1.3908, -1.3158, 0.3425, 2.8917, -2.9733, -0.5558, -0.4017, 0.5017, -3.7, -1.8783, 2.0333, -3.2267, 2.1925, -0.2183, -1.4158, 1.8933, -2.7658, -0.6492, 2.5058, 5.1933, 1.4158, -1.5908, 5.0192, -1.0075, 5.5992, 2.5692, -0.5942, 7.21, -2.4292, 0.435, -1.8167, -1.3558, 6.3025, 5.9683, 7.2858, 0.3458, 0.4942, 0.1917, 1.5408, -1.6175, 0.4917, -2.5108, 0.3533, -0.3983, -2.0458, -5.3342, -3.6542, 1.3167, 1.31, 0.5533, 3.2508, -1.1167, -3.51, -1.69, 1.32, -1.0867, -2.58, -1.215, -10.5075, -7.2983, 1.8933, -2.7658, 4.9008, -8.775, -11.125, -2.8117, 7.1058, -2.2317, 5.7325, -7.9475, 9.0483, 1.65, -3.1575, -5.5383, -0.4058, -0.4017, -5.1975, -2.9167, 8.0517, 7.4092, -0.73, -4.9242, 1.105, -7.2992, 3.3933, 3.2267, 5.7608, 4.2308, 2.2592, -8.2517, 1.8458, -4.6125, 2.015, 4.5558, 1.8325, 4.9742, -4.0517, 3.1725, -2.8433, 4.9742, -0.1517], "黄金": [1.7073, -5.7554, -4.8346, -1.3369, -4.607, 3.125, 8.8154, -1.519, -2.0566, 0.2625, -1.3089, 1.8568, -5.2083, -0.2747, -1.3774, -0.2793, 2.8011, 0.2725, -3.2609, -1.9663, 2.8653, 0.2786, 0.5556, -2.2099, 0.0, -2.8249, -1.4535, -0.59, 1.1869, 3.5191, -2.8329, 0.5831, -0.2899, -2.6163, 0.0, -1.791, 0.0, 0.304, 3.6364, 7.3099, 1.3624, 5.3763, -3.3163, -6.3325, 2.5352, 2.7473, 2.4064, 1.0444, -1.292, 0.5236, -1.8229, 1.061, 1.3123, -0.2591, -1.2987, 3.1579, -0.5102, -1.5385, -1.3021, 0.0, -0.5277, 1.3263, 2.356, -1.5345, 0.7792, -0.5155, -0.5181, -0.2604, 0.0, 0.5222, 0.5195, 3.1008, 1.5038, -2.2222, -0.7576, -0.2545, -1.7857, -0.5195, 1.0444, -1.0336, -0.5222, -0.7874, -2.381, -3.794, -2.2535, 1.4409, -2.2727, 0.0, -0.8721, -4.9853, 0.0, -0.3086, 0.6192, -5.8462, -5.5556, 0.0, 2.7682, -0.3367, 4.0541, -2.9221, -2.3411, 0.3425, -3.0717, 1.7606, 2.4221, -0.6757, -0.6803, -1.7123, 0.0, -0.3484, -1.049, -2.4735, -5.4348, -1.9157, 0.3906, 3.1128, 17.3585, -5.7878, -3.413, 0.3534, 5.6338, -4.6667, -2.0979, -1.7857, 4.0, -1.3986, -2.6702, -0.1712, -1.4599, -1.4815, 1.8797, -2.214, -1.1321, 0.3817, -1.1407, 4.6154, -0.7353, -0.7407, 1.4925, 4.0441, 0.0, -2.4735, 0.0, 2.1739, 4.9645, -0.6757, 3.0612, 3.6304, 2.2293, -2.4922, -0.9585, 2.9032, -0.627, 0.6309, 4.0752, 7.5301, 0.5602, -5.0139, -3.8123, 8.5366, 0.0, -1.4045, 2.5641, 5.2778, 0.0, 2.9024, 4.359, 1.7199, -2.1739, 0.4938, -0.9828, -4.7146, 2.0833, 1.5306, 0.7538, 0.9975, 3.7037, 4.5238, 0.6834, -4.0724, -0.2358, 2.6005, -1.1521, -1.6317, 2.1327, -1.6241, 3.3019, 4.1096, 3.0702, 1.4894, 6.9182, 7.8431, 0.9091, 0.3604, 9.6948, 10.4746, -11.7037, 6.3758, -0.1577, -5.5292, -2.0067, 7.1672, 0.3185, 0.1587, 5.3883, -1.5038, 3.6641, -1.7673, -1.6492, 1.372, 0.0, 7.218, 5.8906, 6.755, -0.3722, 10.8344, 3.5955, 4.9892, -5.9917, -2.3077, 0.0, 5.7368, -10.7447, -1.0727, -2.7711, -5.7001, 7.2273, 5.2696, 9.7788, -2.0148, -3.6797, 4.382, 1.8299, -1.2685, 1.606, 5.058, 4.6138, 8.0537, 0.7098, -1.4978, -2.0572, 1.6438, 3.2345, 4.8738, 2.3237, -3.2441, 1.9279, 4.523, 5.5862, 2.0864, 1.5328, -2.2286, 1.1029, 3.4909, 4.0759, 2.1607, 1.0575, 2.8777, 11.8245, 0.7391, -5.9819, 4.3818, -5.6929, 0.8537, 5.5018, -3.9542, -1.611, -3.6386, 0.6293, -0.3127, 2.2585, 7.0552, 0.1146, -1.431, -2.1487, -0.7715, -2.6316, -2.1499, -6.5913, -4.9731, -5.0212, -4.2442, 5.1322, -0.2219, -2.3721, -3.1131, -4.232, 1.8003, 4.5016, 2.7692, -2.8443, -0.6934, -0.7758, 2.502, -1.2204, -4.4788, -1.2126, -3.8462, 2.2128, 4.1632, -1.9185, -3.912, 1.6964, 0.0, -1.4178, -4.5685, -0.8865, 0.6261, 3.0222, -6.2985, -0.9208, 2.0446, 9.2896, 3.75, -0.241, 1.5298, 1.1895, 4.7806, 0.2244, -0.9701, -4.5215, -2.2889, -6.5428, 3.0251, 3.5235, -0.2431, 2.9245, -1.6575, 1.1236, -1.8254, 3.7187, 2.4162, -2.5875, 0.1562, -1.4041, 5.3006, 0.0, -0.4508, 0.7547, -2.397, -1.6117, -3.4321, -2.9079, -0.3328, 1.419, 0.4938, 2.3751, 3.36, 2.1672, -1.4394, -1.153, -0.1555, 5.8411, 3.9735, 6.1571, 0.7333, -1.0589, -1.6054, 0.5438, 5.5443, 2.3062, -0.3131, 5.7161, 1.9608, 0.9324, 6.6397, 6.6053, -2.387, -1.1446, -1.7895, -0.4287, 0.4844, -3.1601, -4.9779, 2.4447, 5.1136, -0.8108, -1.4714, -1.2721, -0.5602, 0.1127, 2.5324, -1.7563, 1.4525, 2.2026, 4.9569, -0.5647, -4.5431, -0.649, -5.6614, 1.8465, -4.7592, -1.0113, 3.6659, 4.2319, 5.5617, -2.2655, 3.1267, 4.5478, -0.4, -2.4598, 0.4117, -1.6402, -0.1563, 0.0, 3.5491, 2.1169, 0.3949, -0.5408, 6.6733, 8.0167, 0.858, -1.0634, 3.0954, 3.0025, 4.0891, 4.6285, -1.4498, -0.1132, 2.3414, 6.8266, 3.0397, 7.878, 2.8278, 1.3297, -0.3877, 0.8383, 8.9074]}};
+const C = {main:'#B23A1C', base:'#8A94A6', line:'#1F4E79', rule:'#E2DCCE', mute:'#8A8172', ink:'#1B1A17'};
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function T(zh, en){ return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh; }
+
+const ORD = ['股票', '长债', '黄金', '现金'];
+const N = DATA.months.length, YEARS = N / 12;
+const R = {};
+ORD.forEach(function (k) { R[k] = k === '现金' ? DATA.cash : DATA.legs[k]; });
+const CASHMEAN = R['现金'].reduce(function (a, b) { return a + b; }, 0) / N / 100;
+
+function weightsOf(goldPct){
+  const g = goldPct / 100, rest = (1 - g) / 3;
+  return {股票: rest, 长债: rest, 黄金: g, 现金: rest};
+}
+
+function run(w0){
+  const r = new Array(N);
+  let w = Object.assign({}, w0), prev = null;
+  for (let i = 0; i < N; i++) {
+    const yr = DATA.months[i].slice(0, 4);
+    if (prev === null || yr !== prev) w = Object.assign({}, w0);
+    const x = {}; let ri = 0;
+    ORD.forEach(function (k) { x[k] = R[k][i] / 100; ri += w[k] * x[k]; });
+    r[i] = ri;
+    ORD.forEach(function (k) { w[k] = w[k] * (1 + x[k]) / (1 + ri); });
+    prev = yr;
+  }
+  const curve = [1];
+  for (let i = 0; i < N; i++) curve.push(curve[i] * (1 + r[i]));
+  let peak = -Infinity;
+  const dd = curve.map(function (v) { peak = Math.max(peak, v); return v / peak - 1; });
+  const ann = (Math.pow(curve[N], 1 / YEARS) - 1) * 100;
+  const mean = r.reduce(function (a, b) { return a + b; }, 0) / N;
+  const vol = Math.sqrt(r.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / (N - 1)) * Math.sqrt(12) * 100;
+  return {curve: curve, dd: dd, ann: ann, vol: vol,
+          ddmin: Math.min.apply(null, dd) * 100,
+          sharpe: (mean * 12 - CASHMEAN * 12) / (vol / 100)};
+}
+
+/* 轴范围固定：预先算出 0%–50% 全部曲线的包络，滑动时坐标轴不会跳 */
+const GRID = [];
+for (let g = 0; g <= 50; g += 5) GRID.push({g: g, res: run(weightsOf(g))});
+let lmin = Infinity, lmax = -Infinity, ddMin = 0;
+GRID.forEach(function (o) {
+  o.res.curve.forEach(function (v) { lmin = Math.min(lmin, Math.log(v)); lmax = Math.max(lmax, Math.log(v)); });
+  ddMin = Math.min(ddMin, o.res.ddmin / 100);
+});
+
+const W = 900, H = 360, LP = 68, RP = 24;
+const TOP = {y: 34, h: 168}, BOT = {y: 254, h: 62};
+const X = function (i) { return LP + i / N * (W - LP - RP); };
+const Y = function (v) { return TOP.y + TOP.h - (Math.log(v) - lmin) / (lmax - lmin) * TOP.h; };
+const YD = function (v) { return BOT.y + (v / ddMin) * BOT.h; };
+
+const slider = document.getElementById('g-w');
+const playBtn = document.getElementById('g-play');
+const svg = document.getElementById('g-svg');
+
+let goldPct = 25;
+let current = run(weightsOf(25));
+let shown = current.curve.slice();
+let morphFrom = shown.slice(), morphTo = shown.slice(), morphT = 1, morphStart = 0;
+let tracerT = 1, playing = false, lastTs = 0, looping = false;
+
+function ease(t){ return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+function polyline(points, stroke, width, dash){
+  const a = {points: points.join(' '), fill: 'none', stroke: stroke, 'stroke-width': width};
+  if (dash) a['stroke-dasharray'] = dash;
+  return el('polyline', a);
+}
+
+function draw(){
+  svg.innerHTML = '';
+  /* 顶部：净值（对数） */
+  const base = run(weightsOf(25)).curve;
+  svg.appendChild(polyline(base.map(function (v, i) { return X(i) + ',' + Y(v); }), C.base, 1.4, '4 4'));
+  svg.appendChild(polyline(shown.map(function (v, i) { return X(i) + ',' + Y(v); }), C.main, 2.1));
+  svg.appendChild(el('text', {x: LP, y: TOP.y - 12, 'font-size': 11, fill: C.mute},
+    T('组合净值（对数刻度，1990-01 = 1）；虚线 = 原版 25% 黄金', 'portfolio value (log, Jan 1990 = 1); dashed = the original 25% gold')));
+  [1, 2, 4, 8, 16].forEach(function (v) {
+    if (Math.log(v) < lmin || Math.log(v) > lmax) return;
+    const y = Y(v);
+    svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: y, y2: y, stroke: C.rule, 'stroke-width': 0.8, 'stroke-dasharray': '3 4'}));
+    svg.appendChild(el('text', {x: LP - 8, y: y + 4, 'font-size': 10, fill: C.mute, 'text-anchor': 'end'}, v + 'x'));
+  });
+  /* 底部：回撤 */
+  const area = [X(0) + ',' + YD(0)];
+  shown.forEach(function (v, i) { area.push(X(i) + ',' + YD(current.dd[i])); });
+  area.push(X(N) + ',' + YD(0));
+  svg.appendChild(el('polygon', {points: area.join(' '), fill: 'rgba(31,78,121,0.13)', stroke: 'none'}));
+  svg.appendChild(polyline(shown.map(function (v, i) { return X(i) + ',' + YD(current.dd[i]); }), C.line, 1.6));
+  svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: YD(0), y2: YD(0), stroke: C.rule, 'stroke-width': 1}));
+  svg.appendChild(el('text', {x: LP, y: BOT.y - 10, 'font-size': 11, fill: C.mute},
+    T('回撤（%，叠加显示）', 'drawdown (%, stacked below)')));
+  [0, 0.5, 1].forEach(function (f) {
+    const v = ddMin * f;
+    svg.appendChild(el('text', {x: LP - 8, y: YD(v) + 4, 'font-size': 10, fill: C.mute, 'text-anchor': 'end'},
+      Math.round(v * 100)));
+  });
+  [1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025].forEach(function (yr) {
+    let idx = 0;
+    for (let i = 0; i < N; i++) if (parseInt(DATA.months[i].slice(0, 4), 10) <= yr) idx = i + 1;
+    svg.appendChild(el('text', {x: X(idx), y: BOT.y + BOT.h + 16, 'font-size': 10, fill: C.mute, 'text-anchor': 'middle'}, yr));
+  });
+  /* 游标 */
+  const k = Math.round(tracerT * N);
+  const vx = X(k);
+  svg.appendChild(el('line', {x1: vx, x2: vx, y1: TOP.y - 4, y2: BOT.y + BOT.h, stroke: C.ink, 'stroke-width': 1, opacity: 0.35}));
+  if (k > 0) {
+    svg.appendChild(el('circle', {cx: vx, cy: Y(current.curve[k]), r: 4, fill: C.main, stroke: '#fff', 'stroke-width': 1.5}));
+    svg.appendChild(el('circle', {cx: vx, cy: YD(current.dd[k]), r: 3.2, fill: C.line, stroke: '#fff', 'stroke-width': 1.3}));
+  }
+  const mi = Math.max(0, Math.min(N - 1, k - 1));
+  document.getElementById('g-year').textContent = k === 0 ? DATA.months[0].slice(0, 4) : DATA.months[mi];
+  document.getElementById('g-val').textContent = current.curve[k].toFixed(2) + 'x';
+  document.getElementById('g-ddc').textContent = (current.dd[k] * 100).toFixed(1) + '%';
+}
+
+function stats(){
+  document.getElementById('g-wlab').textContent = goldPct + '%';
+  document.getElementById('g-ann').textContent = current.ann.toFixed(2) + '%';
+  document.getElementById('g-vol').textContent = current.vol.toFixed(1) + '%';
+  document.getElementById('g-dd').textContent = current.ddmin.toFixed(1) + '%';
+  document.getElementById('g-sh').textContent = current.sharpe.toFixed(2);
+}
+
+function loop(ts){
+  let need = false;
+  if (morphT < 1) {
+    morphT = Math.min(1, (ts - morphStart) / 340);
+    const e = ease(morphT);
+    shown = morphFrom.map(function (v, i) { return v + (morphTo[i] - v) * e; });
+    need = true;
+  }
+  if (playing) {
+    const dt = lastTs ? ts - lastTs : 16;
+    tracerT = Math.min(1, tracerT + dt / 9000);
+    if (tracerT >= 1) {
+      playing = false;
+      playBtn.innerHTML = '<span class="zh">▶ 重播</span><span class="en">▶ Replay</span>';
+    }
+    need = true;
+  }
+  lastTs = ts;
+  draw();
+  if (need) requestAnimationFrame(loop); else looping = false;
+}
+function ensure(){ if (!looping) { looping = true; lastTs = 0; requestAnimationFrame(loop); } }
+
+function setGold(g, animate){
+  goldPct = g;
+  current = run(weightsOf(g));
+  if (animate === false) {
+    shown = current.curve.slice(); morphTo = shown.slice(); morphT = 1;
+  } else {
+    const e = ease(morphT);
+    morphFrom = shown.map(function (v, i) { return v + (morphTo[i] - v) * e; });
+    morphTo = current.curve.slice();
+    morphT = 0; morphStart = performance.now();
+  }
+  stats();
+  ensure();
+}
+
+slider.addEventListener('input', function (e) { setGold(parseInt(e.target.value, 10), true); });
+document.getElementById('g-reset').addEventListener('click', function () {
+  slider.value = 25; setGold(25, true); tracerT = 1; ensure();
+});
+playBtn.addEventListener('click', function () {
+  tracerT = 0; playing = true; lastTs = 0; ensure();
+  playBtn.innerHTML = '<span class="zh">⏸ 暂停</span><span class="en">⏸ Pause</span>';
+});
+new MutationObserver(function () {
+  playBtn.innerHTML = playing
+    ? '<span class="zh">⏸ 暂停</span><span class="en">⏸ Pause</span>'
+    : (tracerT >= 1 ? '<span class="zh">▶ 重播</span><span class="en">▶ Replay</span>'
+                    : '<span class="zh">▶ 播放这段历史</span><span class="en">▶ Play the history</span>');
+  draw();
+}).observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+
+stats();
+draw();
+</script>

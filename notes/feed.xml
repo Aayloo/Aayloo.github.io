@@ -3,7 +3,7 @@
   <title>Aylon · Notes</title>
   <link>https://aayloo.github.io/notes/</link>
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
-  <lastBuildDate>2026-09-29</lastBuildDate>
+  <lastBuildDate>2026-10-05</lastBuildDate>
   <item>
     <title>全天候组合实测：不预测，真的能穿越周期吗</title>
     <link>https://aayloo.github.io/notes/all-weather/</link>
@@ -66,5 +66,12 @@
     <guid>https://aayloo.github.io/notes/glossary/</guid>
     <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
     <description>本文里出现的每个术语，给一句话定义、一个「为什么重要」和一条出处。其他笔记直接引用这里的锚点。</description>
+  </item>
+  <item>
+    <title>永久组合实测：四等分真的能应对任何环境吗</title>
+    <link>https://aayloo.github.io/notes/permanent-portfolio/</link>
+    <guid>https://aayloo.github.io/notes/permanent-portfolio/</guid>
+    <pubDate>Mon, 05 Oct 2026 00:00:00 +0000</pubDate>
+    <description>股、长债、黄金、现金各 25%，用 1990-01 至 2025-09 共 428 个月的美国数据检验。它年化 7.18%、波动 5.8%、最大回撤 −15.5%、夏普 0.75，是四个组合里最高的；25% 的资金对应 37.5 / 33.9 / 28.4 / 0.2 的风险贡献——四等分资金意外地做到了等风险。但 CPI 高于 5% 的 26 个月里它年化 −2.8%，黄金腿 −2.95%，它并没有抗住通胀。含 8 张图表与一个可拖黄金权重、可播放历史的交互动画。</description>
   </item>
 </channel></rss>
