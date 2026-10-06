@@ -912,7 +912,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="9">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法</span><span class="en">Research notes · allocation, beliefs, method</span></span></div>
+          <div><b data-to="10">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1032,7 +1032,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">9 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">9 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">10 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">10 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
@@ -1066,6 +1066,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">PORTFOLIO · 系统策略 · 2026-10-06</span>
+              <h4><a href="notes/trend-following/"><span class="zh">趋势跟踪实测：它是一份保险，不是一台发动机</span><span class="en">Trend following, tested: insurance, not an engine</span></a></h4>
+              <p class="nsum"><span class="zh">命中率 53% 的信号是真的，但做成多空却跑不赢 60/40——问题在做空那条腿。它真正买到的是坏日子的凸性。</span>
+              <span class="en">The 53% hit rate is real, but the long-short version still loses to a 60/40 — the short leg is the problem. What it actually buys is downside convexity.</span></p>
+              <a class="go" href="notes/trend-following/"><span class="zh">读全文（7 张图 · 可拖目标波动率的交互）→</span><span class="en">Read the note (7 figures + interactive) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">用 11 个 ETF、4,931 个交易日（2008-04 → 2026-10）检验跨资产时序动量。信号本身有效：<b>方向命中率稳定在 53%</b>，30 组参数全部为正，方向反转后毛夏普 −0.22。但组合结果是：多空年化 <b>3.49%</b> / 夏普 0.38，只做多 6.15% / 0.58，同期 60/40 是 <b>8.26% / 0.75</b>。</span>
+              <span class="en">Eleven ETFs and 4,931 trading days test cross-asset time-series momentum. The signal works — a <b>53% direction hit rate</b>, all 30 parameter sets positive, and −0.22 when the sign is reversed. Yet long-short earns <b>3.49%</b> a year with a Sharpe of 0.38, long-only 6.15% / 0.58, and the 60/40 <b>8.26% / 0.75</b>.</span></p>
+              <p class="take"><span class="zh">把组合简化成 1/N 等权、只改方向用法，答案就清楚了：多空毛夏普 <b>0.15</b>、只做多 <b>0.56</b>、永远做多 0.50——价值来自「在下跌前离场」，不是「在下跌中做空」。<b>趋势需要的不是会波动的资产，而是会跌的资产。</b>它真正的用处写在条件收益里：标普最差 10% 的交易日，日均跌幅只有 60/40 的八分之一，2022 年 +13.9% 对 −16.6%。成本放大十倍仍为正，但 ETF 形式容量只有 50 万美元——要上规模必须走期货。</span>
+              <span class="en">Simplify to equal weights and only change the use of direction: long-short earns a gross Sharpe of <b>0.15</b>, long-only <b>0.56</b> and always-long 0.50. The value comes from leaving before declines, not from shorting them — <b>trend needs assets that can fall</b>. Its real use shows up in conditional returns: one eighth of the 60/40's loss on the worst 10% of days, and +13.9% in 2022 against −16.6%. Costs are not the constraint, but ETF capacity is only $0.5m — size requires futures.</span></p>
+            </div>
+          </details>
 
           <details class="nitem rv is-feat">
             <summary>

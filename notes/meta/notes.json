@@ -77,6 +77,25 @@
   },
   "notes": [
     {
+      "slug": "trend-following",
+      "title_zh": "趋势跟踪实测：它是一份保险，不是一台发动机",
+      "title_en": "Trend following, tested: insurance, not an engine",
+      "tags": [
+        "portfolio",
+        "signal"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-06",
+      "updated": "2026-10-06",
+      "version": "v1.0",
+      "minutes": 17,
+      "summary_zh": "用 11 个 ETF、4,931 个交易日检验跨资产时序动量。信号本身有效（方向命中率 53%，30 组参数全为正），但做空那条腿在长牛资产上一直赔钱：多空夏普 0.38、只做多 0.58，都跑不赢 60/40 的 0.75。它真正的价值在坏日子——标普最差 10% 的交易日里跌幅只有 60/40 的八分之一，2022 年 +13.9% 对 −16.6%。含 7 张图表与一个可拖目标波动率的交互动画，配套代码与 chart pack 已开源。",
+      "summary_en": "11 ETFs and 4,931 trading days test cross-asset time-series momentum. The signal works (a 53% direction hit rate, all 30 parameter sets positive), but the short leg bleeds in a universe that mostly rises: long-short Sharpe 0.38, long-only 0.58, against 0.75 for a 60/40. Its value is conditional — one eighth of the 60/40's loss on the worst 10% of days, and +13.9% in 2022 against −16.6%.",
+      "path": "trend-following/",
+      "featured": true
+    },
+    {
       "slug": "all-weather",
       "title_zh": "全天候组合实测：不预测，真的能穿越周期吗",
       "title_en": "All Weather, tested: does not forecasting actually survive every cycle?",

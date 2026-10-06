@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-10-05</lastBuildDate>
   <item>
+    <title>趋势跟踪实测：它是一份保险，不是一台发动机</title>
+    <link>https://aayloo.github.io/notes/trend-following/</link>
+    <guid>https://aayloo.github.io/notes/trend-following/</guid>
+    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
+    <description>用 11 个 ETF、4,931 个交易日检验跨资产时序动量。信号本身有效（方向命中率 53%，30 组参数全为正），但做空那条腿在长牛资产上一直赔钱：多空夏普 0.38、只做多 0.58，都跑不赢 60/40 的 0.75。它真正的价值在坏日子——标普最差 10% 的交易日里跌幅只有 60/40 的八分之一，2022 年 +13.9% 对 −16.6%。含 7 张图表与一个可拖目标波动率的交互动画，配套代码与 chart pack 已开源。</description>
+  </item>
+  <item>
     <title>永久组合实测：四等分真的能应对任何环境吗</title>
     <link>https://aayloo.github.io/notes/permanent-portfolio/</link>
     <guid>https://aayloo.github.io/notes/permanent-portfolio/</guid>
