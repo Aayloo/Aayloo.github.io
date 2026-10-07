@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>60/40 及其变体：最有名的配置规则经得起检验吗 · Working Paper</title>
+<meta name="description" content="研究笔记：60% 股票 + 40% 债券，用 1990-01 至 2025-09 共 428 个月的美国数据回测。它年化 9.09%、波动 9.1%、最大回撤 −27.0%、夏普 0.70——但 60% 这个数字比 40–50% 同时更亏回撤、更少夏普（−27.0% 对 −21.5%）。它真正的失效场景是股债同跌：2022 年两条腿各跌 18.1%，全样本有 13.5% 的月份两条腿同时下跌；CPI 高于 5% 时两者相关性从 −0.04 翻到 +0.38。把 10% 挪给黄金是最便宜的修补（夏普 0.76、回撤 −22.7%）。含 10 张图表（其中 1 张可拖动股票权重）与 2 张附录表。">
+<meta property="og:title" content="60/40 及其变体：最有名的配置规则经得起检验吗">
+<meta property="og:description" content="60/40 不是最好的组合：永久组合夏普 0.75 更高；60% 这个数字也比 40–50% 差。它真正的失效场景是股债同跌，最便宜的修补是加 10% 黄金。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/sixty-forty-variants/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-sf.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="60/40 及其变体——股票权重从 0% 到 100% 的夏普与最大回撤">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="60/40 及其变体：最有名的配置规则经得起检验吗">
+<meta name="twitter:description" content="60% 这个数字比 40–50% 更差：夏普 0.70 对 0.72，最大回撤 −27.0% 对 −21.5%。">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-sf.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/sixty-forty-variants/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;padding:0}
+.rn-tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--e-accent);border:1px solid var(--e-rule);border-radius:999px;padding:4px 11px;background:#fff}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:12px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 10px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
+.ctrl input[type=range]{flex:1;min-width:120px}
+.vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
+.vstat{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.vstat2{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:12.6px;color:#8A8172;margin-top:6px}
+.vstat2 b{font-family:var(--mono);font-size:14px;color:var(--e-accent)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-07 · v1.0 · 组合实测 03 · 资产配置</span><span class="en">2026-10-07 · v1.0 · Portfolio test 03 · Asset allocation</span></span></div>
+  <h1 class="rn-title"><span class="zh">60/40 及其变体：最有名的配置规则经得起检验吗</span><span class="en">The 60/40, tested: does the most famous allocation rule hold up?</span></h1>
+  <p class="rn-tags"><span><span class="zh">投资</span><span class="en">Investing</span></span><span><span class="zh">组合实测</span><span class="en">Backtest</span></span><span><span class="zh">资产配置</span><span class="en">Asset allocation</span></span></p>
+  <p class="rn-standfirst"><span class="zh">60% 股票 + 40% 债券，大概是投资界最有名的一条配置规则，也是最多人被默认分配的那一个。用 1990-01 至 2025-09 共 428 个月的美国数据把它跑一遍：年化 <b>9.09%</b>、波动 9.1%、最大回撤 <b>−27.0%</b>、夏普 0.70。它是一个不容易被打败的默认值，但它既不是最好的那一个（永久组合的夏普是 0.75），也不是它自己宣称的那一个——真正击败它的是 2022 年，股票与债券同时下跌。<b>60% 这个数字本身也值得怀疑</b>：把股票权重扫一遍会发现，夏普的最高点在 40–50%，而最大回撤在 50% 到 60% 之间跳了一级。</span>
+  <span class="en">Sixty per cent equities, forty per cent bonds — probably the most famous allocation rule in investing, and the one most people are defaulted into. On 428 monthly US observations from January 1990 to September 2025 it returned <b>9.09%</b> a year with 9.1% volatility, a <b>−27.0%</b> maximum drawdown and a Sharpe ratio of 0.70. It is a hard default to beat, but it is neither the best portfolio available (the Permanent Portfolio's Sharpe is 0.75) nor the one it advertises: what actually broke it was 2022, when stocks and bonds fell together. <b>The number 60 itself is questionable</b> — sweep the equity weight and the Sharpe ratio peaks at 40–50%, while the maximum drawdown jumps a level between 50% and 60%.</span></p>
+
+  <ul class="rn-findings">
+    <li><span class="zh">35.7 年：年化 <b>9.09%</b>、波动 9.1%、最大回撤 <b>−27.0%</b>、夏普 0.70。同一份数据里纯股是 11.04% / 14.7% / −50.9% / 0.60，永久组合是 7.18% / 5.8% / −15.5% / <b>0.75</b>。</span>
+        <span class="en">Over 35.7 years: 9.09% a year, 9.1% volatility, a <b>−27.0%</b> maximum drawdown and a Sharpe of 0.70, against 11.04% / 14.7% / −50.9% / 0.60 for equities and 7.18% / 5.8% / −15.5% / <b>0.75</b> for the Permanent Portfolio.</span></li>
+    <li><span class="zh">60% 不是最优点。把股票权重从 0% 扫到 100%，夏普最高在 <b>40–50%</b>（0.72），最大回撤的低原也在那一带；50% 到 60% 之间回撤从 −21.5% 跳到 <b>−27.0%</b>，而年化只多 0.6 个百分点。</span>
+        <span class="en">60% is not the optimum. Sweeping the equity weight from 0% to 100%, the Sharpe ratio peaks at <b>40–50%</b> (0.72) and the drawdown plateau sits in the same band; from 50% to 60% the maximum drawdown jumps from −21.5% to <b>−27.0%</b> while the return rises by only 0.6 points.</span></li>
+    <li><span class="zh">它真正的失效场景是股债同跌：428 个月里有 <b>56 个月（13.5%）</b>两条腿同时下跌；2022 年两条腿各 −18.1%，组合全年 −18.1%——分散在那一年没有起作用。</span>
+        <span class="en">Its real failure mode is stocks and bonds falling together: in <b>56 of 428 months (13.5%)</b> both legs fell at once, and in 2022 they each lost 18.1% — the portfolio lost 18.1% too.</span></li>
+    <li><span class="zh">在高通胀里相关性会翻转：CPI 同比高于 5% 的 33 个月里，股票与 10 年期国债的相关性从全样本的 −0.04 变成 <b>+0.38</b>；同一段里六条腿只有现金为正（+2.35%），长债最差（−10.04%）。</span>
+        <span class="en">The correlation flips in high inflation: across the 33 months with CPI above 5%, stocks and ten-year Treasuries correlate at <b>+0.38</b> rather than −0.04, and cash (+2.35%) is the only positive leg of the six, with long bonds worst at −10.04%.</span></li>
+    <li><span class="zh">最便宜的修补是把 10% 挪给黄金：年化只少 0.13 个百分点，夏普升到 <b>0.76</b>，回撤收到 <b>−22.7%</b>。同样挪 10% 给商品反而更差（−28.5%），给现金基本中性。</span>
+        <span class="en">The cheapest fix is to move 10% into gold: it costs 0.13 points of return and buys a Sharpe of <b>0.76</b> and a <b>−22.7%</b> drawdown. Moving the same 10% into commodities is worse (−28.5%) and into cash roughly neutral.</span></li>
+    <li><span class="zh">杠杆不改夏普：2 倍杠杆把年化抬到 14.24%，回撤同时变成 −49.5%，夏普从 0.70 掉到 <b>0.68</b>。它放大的是同一个风险收益比，不是一条更好的策略。</span>
+        <span class="en">Leverage does not change the Sharpe ratio: at 2× the return rises to 14.24%, the drawdown to −49.5%, and the Sharpe falls from 0.70 to <b>0.68</b>. It scales the same trade-off rather than improving it.</span></li>
+  </ul>
+
+  <div class="rn-abstract">
+    <p class="zh"><b>问题</b>60% 股票 + 40% 债券是最广为人知的配置规则，但它既没有提出者也没有理论基础。本文检验它三件事：60% 这个比例是不是最优点；它在什么条件下整体失效；最便宜的修补是什么。</p>
+    <p class="zh"><b>环境</b>1990-01 至 2025-09 共 428 个月的美国数据，与前两篇组合实测同一份管线（标普 500 全收益、美国国债收益率曲线、LBMA 金价、世界银行商品价格指数、3 个月国库券、BLS CPI）。年度再平衡，不扣交易成本；杠杆情景的融资成本按 3 个月国库券 + 0.5% 年化计。</p>
+    <p class="zh"><b>结果</b>60/40 年化 9.09%、波动 9.1%、最大回撤 −27.0%、夏普 0.70。夏普的最高点在股票权重 40–50%（0.72），最大回撤的低原也在同一段；60% 相对 50% 多赚 0.6 个百分点，却多亏 5.5 个百分点的回撤。把股票权重扫到 0% 与 100%，年化从 4.91% 单调升到 11.04%，夏普与回撤却都不是单调的。</p>
+    <p class="zh"><b>失效场景</b>全样本里股票与 10 年期国债的相关性是 −0.04，但在 CPI 高于 5% 的 33 个月里是 +0.38；428 个月里有 56 个月（13.5%）两条腿同时下跌，2022 年最极端（各 −18.1%）。</p>
+    <p class="zh"><b>修补与杠杆</b>把 10% 挪给黄金，夏普从 0.70 升到 0.76、回撤从 −27.0% 收到 −22.7%，代价是 0.13 个百分点年化；挪给商品更差，挪给现金基本中性。杠杆把年化抬到 10.44% / 11.75% / 14.24%（1.25× / 1.5× / 2×），夏普却降到 0.69 / 0.69 / 0.68。</p>
+    <p class="zh"><b>边界</b>样本从 1990 年开始，不含 1970 年代；债券用收益率曲线按固定久期合成，不是真实基金净值；黄金用 LBMA 现货价，不含持有成本；全部是美国资产，未计汇率、税费与交易成本。</p>
+    <p class="en"><b>Question</b>The 60/40 — sixty per cent equities, forty per cent bonds — is the most widely held rule in asset allocation, and it has no author and no theory. This note tests three things about it: whether 60% is the best point on the curve, under what conditions it fails as a whole, and what the cheapest fix is.</p>
+    <p class="en"><b>Setting</b>428 monthly US observations from January 1990 to September 2025, using the same pipeline as the two earlier portfolio studies (S&amp;P 500 total return, the US Treasury yield curve, the LBMA London gold price, the World Bank commodity price index, three-month T-bills and BLS CPI). Annual rebalancing, before transaction costs; leverage is funded at three-month T-bills plus 0.5% a year.</p>
+    <p class="en"><b>Results</b>The 60/40 returned 9.09% a year with 9.1% volatility, a −27.0% maximum drawdown and a Sharpe of 0.70. The Sharpe ratio peaks at an equity weight of 40–50% (0.72) and the drawdown plateau lies in the same band; moving from 50% to 60% adds 0.6 points of return and 5.5 points of drawdown. Sweeping the equity weight from 0% to 100%, the return rises monotonically from 4.91% to 11.04% while both Sharpe and drawdown are non-monotonic.</p>
+    <p class="en"><b>Where it breaks</b>The full-sample correlation between equities and ten-year Treasuries is −0.04, but across the 33 months with CPI above 5% it is +0.38. In 56 of 428 months (13.5%) both legs fell at once; 2022 was the extreme case, at −18.1% each.</p>
+    <p class="en"><b>Fix and leverage</b>Moving 10% into gold lifts the Sharpe ratio from 0.70 to 0.76 and cuts the drawdown from −27.0% to −22.7% for 0.13 points of return; commodities are worse and cash roughly neutral. Leverage lifts the return to 10.44% / 11.75% / 14.24% at 1.25× / 1.5× / 2× while the Sharpe falls to 0.69 / 0.69 / 0.68.</p>
+    <p class="en"><b>Limits</b>The sample starts in 1990 and excludes the 1970s; bonds are synthesised from the yield curve at fixed duration rather than taken from fund NAVs; gold is the LBMA spot price without carry; everything is US, and exchange rates, taxes and transaction costs are ignored.</p>
+  </div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　60/40 · 资产配置 · 再平衡 · 股债相关性 · 最大回撤 · 黄金</span><span class="en"><b>Keywords</b>　60/40 · asset allocation · rebalancing · stock-bond correlation · maximum drawdown · gold</span></p>
+
+  <div class="split">
+    <div class="prose">
+
+    <h2 id="s1"><span class="num">01</span><span class="zh">它是什么</span><span class="en">What it is</span></h2>
+    <p class="zh">60/40 没有提出者，也没有一本书。它是一条从实践里沉淀出来的默认值：<b>六成股票、四成债券，每年调回这个比例，其他什么都不做</b>。它流行的原因不是回报最高，而是它在两个方向上都不过分——股票提供了几乎全部的长期收益，债券把那部分收益的波动削掉一半。</p>
+    <p class="zh">先看一条算术。如果股票长期年化 11.0%、10 年期国债 4.9%，两者相关性接近零，那么 60/40 的算术年化大约是 0.6 × 11.0% + 0.4 × 4.9% = 8.5%。实际跑出来的 <b>9.09%</b> 比这个高。差额来自再平衡：每年把涨多的那条腿卖掉一点、买回跌的那条腿，等于在做一件幅度很轻微、但完全不需要判断的低买高卖。</p>
+    <p class="zh">所以本文要检验的不是「分散化有用」——那是算术；而是三个具体问题：（一）<b>60% 这个数字是不是风险收益的最优点</b>？（二）<b>它在什么条件下会整体失效</b>？（三）如果失效，<b>最便宜的修补是什么</b>？</p>
+    <p class="en">Nobody invented the 60/40 and nobody wrote its book. It is a default that accumulated out of practice: <b>sixty per cent equities, forty per cent bonds, reset to that ratio once a year, and nothing else</b>. It became the default not because it earns the most but because it is not extreme in either direction — equities supply almost all of the long-run return, and bonds cut the volatility of that return roughly in half.</p>
+    <p class="en">Start with the arithmetic. If equities compound at 11.0% and ten-year Treasuries at 4.9% with a correlation near zero, a 60/40 should earn about 0.6 × 11.0% + 0.4 × 4.9% = 8.5%. It actually delivered <b>9.09%</b>. The difference comes from rebalancing: selling a little of whichever leg ran and buying back the one that fell is a very mild form of buy-low-sell-high that requires no forecasting at all.</p>
+    <p class="en">So the question is not whether diversification works — that is arithmetic. It is three specific questions: (1) <b>is 60% the best point on the risk/return curve?</b> (2) <b>under what conditions does the whole thing fail at once?</b> (3) if it fails, <b>what is the cheapest fix?</b></p>
+
+    <h2 id="s2"><span class="num">02</span><span class="zh">数据与方法</span><span class="en">Data and method</span></h2>
+    <p class="zh">样本为 1990-01 至 2025-09 共 428 个月，与《全天候组合实测》《永久组合实测》完全同一份公开数据：股票＝标普 500 全收益；债券＝10 年期美国国债（按久期 7.5 用收益率曲线合成）；另有 30 年期长债、LBMA 伦敦金价、世界银行商品价格指数与 3 个月国库券。组合按<b>年度再平衡</b>：每年 1 月重置回目标权重，年内让权重随价格漂移。</p>
+    <p class="zh">三处口径一开始就要写明。第一，<b>不扣交易成本</b>；60/40 的年换手率只有 3.7%，实际摩擦很小，而加黄金会把它抬到 4.0%。第二，杠杆情景的<b>融资成本按 3 个月国库券 + 0.5% 年化</b>计，约等于历史上券商融资成本的下限，并且假设不存在强平。第三，所有债券都用收益率曲线合成，不是真实基金净值——这不改变结论的方向，但会让数字比真实账户略干净。</p>
+    <p class="zh">还做了一个很少被画的检验：<b>把股票权重从 0% 每 5 个百分点扫到 100%</b>，其余全部买入 10 年期国债。21 个组合、同一份数据、同一条规则，唯一的变量就是那个数字。第 04 节的两张图就是这次扫描。</p>
+    <p class="en">The sample is 428 monthly US observations from January 1990 to September 2025, on exactly the same public data as the All Weather and Permanent Portfolio studies: equities are the S&amp;P 500 total return; bonds are ten-year Treasuries synthesised from the yield curve at duration 7.5; alongside them sit 30-year Treasuries, the LBMA London gold price, the World Bank commodity price index and three-month T-bills. Portfolios are <b>rebalanced annually</b>: weights reset each January and drift with prices within the year.</p>
+    <p class="en">Three conventions are worth stating up front. First, <b>transaction costs are excluded</b>; the 60/40 turns over about 3.7% a year, so the real friction is small, and adding gold lifts it only to 4.0%. Second, leverage is <b>funded at three-month T-bills plus 0.5% a year</b>, roughly the floor of historical broker financing, and no margin call is assumed. Third, bonds are synthesised from the yield curve rather than taken from fund NAVs — this does not change the direction of any conclusion but makes the numbers slightly cleaner than a real account.</p>
+    <p class="en">One rarely drawn check is also included: <b>sweeping the equity weight from 0% to 100% in five-point steps</b>, with everything else in ten-year Treasuries. Twenty-one portfolios, one data set, one rule, and a single variable. The two charts in section 04 are that sweep.</p>
+
+    <h2 id="s3"><span class="num">03</span><span class="zh">第一层：35.7 年的成绩</span><span class="en">First test: thirty-five years</span></h2>
+    <p class="zh">先把基准放上桌。35.7 年里 1 元变成 <b>22.3 元</b>：年化 9.09%、波动 9.1%、最深的回撤 <b>−27.0%</b>（2007-10 到 2009-02，共 16 个月）、夏普 0.70。</p>
+    <p class="zh">它落在三个对比组合的中间。纯股赚得最多（11.04%）但波动也最高（14.7%）、回撤 −50.9%；永久组合和全天候赚得少（7.18%、7.90%），路径却平得多（回撤 −15.5%、−21.7%）。如果问题只是「哪个组合风险调整后最好」，答案不是 60/40——<b>永久组合的夏普是 0.75，比它高，波动只有它的三分之二</b>。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 1 · 四个组合的净值</span><span class="en">Exhibit 1 · four portfolios, one chart</span></div>
+      <img src="../assets/figs/sf-curves.svg" alt="60/40、全天候、永久组合与纯股的累计净值对比">
+      <p class="ex-note zh">对数刻度，斜率就是年化增速。60/40（红）的终值居中：1 元变成 <b>22.3 元</b>，纯股 41.9 元，全天候 15.1 元，永久组合 11.9 元。这张图里 60/40 的位置很典型——<b>它赚得比两个防御型组合多，波动和回撤也明显更深</b>：2000–2002、2008、2020、2022 每一次它都跟着跌，而永久组合在 2008 年几乎不走样。</p>
+      <p class="ex-note en">On a log scale the slope is the growth rate. The 60/40 (red) ends in the middle: 1 unit becomes <b>22.3</b>, against 41.9 for equities, 15.1 for All Weather and 11.9 for the Permanent Portfolio. Its position is the familiar one — <b>it earns more than the two defensive portfolios and carries visibly more volatility and drawdown</b>: it fell in 2000–02, 2008, 2020 and 2022, while the Permanent Portfolio barely broke stride in 2008.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，1990-01 → 2025-09 共 428 个月，年度再平衡，不扣交易成本。</span><span class="en">Source: author's backtest, 428 months from Jan 1990 to Sep 2025, annual rebalancing, before costs.</span></p>
+    </div>
+
+    <h2 id="s4"><span class="num">04</span><span class="zh">第二层：60% 这个数字对吗</span><span class="en">Second test: is 60% the right number?</span></h2>
+    <p class="zh">把股票权重从 0% 每 5 个百分点加一次。<b>年化收益几乎是一条直线</b>：从 4.91% 一路升到 11.04%，每多 1 个百分点的股票大约换来 0.06 个百分点的年化。</p>
+    <p class="zh"><b>风险不是直线。</b>波动率在股票 20% 附近触底（6.3%），之后才缓慢回升；最大回撤的低原出现在 20%–50% 这一段——20% 是 −20.9%、40% 是 −21.0%、50% 是 −21.5%。真正值得注意的是 <b>50% 到 60% 之间的那一跳</b>：回撤从 −21.5% 直接变成 −27.0%，一步多出 5.5 个百分点，而年化只多 0.6 个百分点。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 股票权重 0%–100%：年化与波动</span><span class="en">Exhibit 2 · equity weight 0–100%: return and volatility</span></div>
+      <img src="../assets/figs/sf-sweep.svg" alt="股票权重从 0% 到 100% 的年化收益与波动率">
+      <p class="ex-note zh">红线是年化，蓝线是波动率。年化几乎是直线（4.91% → 11.04%），波动率不是：它在股票 20% 附近触底（6.3%），之后单调上升。竖线是经典的 60/40。这张图的含义是——<b>收益的边际贡献是恒定的，风险的边际贡献不是</b>，所以「股票多一点、收益多一点」这句话只对了一半。</p>
+      <p class="ex-note en">The red line is return, the blue line volatility. Return is almost straight (4.91% to 11.04%); volatility is not — it bottoms near a 20% equity weight (6.3%) and then rises monotonically. The vertical line marks the classic 60/40. The point is that <b>the marginal contribution to return is constant while the marginal contribution to risk is not</b>, so "more equities, more return" is only half the story.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测，21 个组合（股票权重 0%–100%，步长 5%），其余买入 10 年期国债。</span><span class="en">Source: author's backtest of 21 portfolios (equity weight 0–100% in 5-point steps), the remainder in ten-year Treasuries.</span></p>
+    </div>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 3 · 同一扫描：夏普与最大回撤</span><span class="en">Exhibit 3 · the same sweep: Sharpe and drawdown</span></div>
+      <img src="../assets/figs/sf-plateau.svg" alt="股票权重从 0% 到 100% 的夏普比率与最大回撤">
+      <p class="ex-note zh">左图是夏普，右图是最大回撤，横轴都是股票权重。夏普在 <b>40%–50%</b> 形成一段 0.72 的高原，往两端都下降；最大回撤从 20% 到 50% 一直贴在 −21% 附近，然后在 50% → 55% → 60% 之间连掉两级（−21.5% → −23.7% → −27.0%）。<b>60/40 正好落在台阶的右侧</b>：比 50/50 多赚 0.6 个百分点，多亏 5.5 个百分点。</p>
+      <p class="ex-note en">Sharpe on the left, maximum drawdown on the right, both against the equity weight. Sharpe forms a plateau at <b>40–50%</b> and falls away on both sides; drawdown sits near −21% from 20% to 50%, then drops twice in a row from 50% → 55% → 60% (−21.5% → −23.7% → −27.0%). <b>The 60/40 lands on the wrong side of that step</b>: 0.6 points more return than a 50/50, 5.5 points more drawdown.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；夏普按 3 个月国库券为无风险利率、月度超额收益年化计算。</span><span class="en">Source: author's backtest; Sharpe computed from annualised monthly excess returns over three-month T-bills.</span></p>
+    </div>
+    <p class="zh">这不是说 60% 是错的。0.70 与 0.72 的差别在统计上很可能不显著，而且结论依赖于 1990 年之后的这 428 个月。它说明的是另一件事：<b>「60」这个数字不是被算出来的，是被记住的</b>。它的来源是习惯——六成比四成听起来更像「以股票为主」，而「以股票为主」是大多数人对长期投资的心理默认值。</p>
+    <p class="en">This does not make 60% wrong. The gap between 0.70 and 0.72 is very likely statistically insignificant, and the result depends on these particular 428 months. What it shows is something else: <b>the number 60 was remembered, not calculated</b>. It comes from habit — six out of ten sounds more like "mostly equities", and mostly equities is the psychological default for long-term investing.</p>
+
+    <h2 id="s5"><span class="num">05</span><span class="zh">第三层：两条腿一起失灵</span><span class="en">Third test: when both legs fail together</span></h2>
+    <p class="zh">60/40 的全部论证压在一条相关性上：股票跌的时候，债券涨。全样本里这条相关性的确是 −0.04，接近零、方向正确。</p>
+    <p class="zh"><b>但它会翻。</b>428 个月里有 <b>56 个月（13.5%）</b>是两条腿同时下跌——平均每七个半月遇到一次，不算罕见。2022 年是最干净的一次示范：标普 500 全年 −18.1%，10 年期国债全年 −18.1%，组合全年 −18.1%；同一年全天候 −20.0%，永久组合 −11.9%。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 4 · 2008 / 2013 / 2022 三个年份</span><span class="en">Exhibit 4 · three years: 2008, 2013, 2022</span></div>
+      <img src="../assets/figs/sf-years.svg" alt="2008、2013 与 2022 年五个组合的全年收益">
+      <p class="ex-note zh">2008 年（股跌债涨）是 60/40 的正面案例：−15.0%，比纯股的 −37.0% 浅得多；2013 年（股涨债跌）也是：+16.3%。2022 年是反面案例——股票 −18.1%、10 年期国债 −18.1%，60/40 全年 <b>−18.1%</b>，与纯股完全一样，<b>这一年它没有起到任何分散作用</b>。作为对照，永久组合只跌 11.9%，而把 40% 押在长久期债券上的全天候跌了 20.0%。</p>
+      <p class="ex-note en">2008 (equities down, bonds up) is the 60/40's best advertisement: −15.0% against −37.0% for equities; so is 2013 (+16.3%). 2022 is the counter-example — equities −18.1%, ten-year Treasuries −18.1%, the 60/40 <b>−18.1%</b>, exactly the same as equities alone. <b>That year diversification did nothing.</b> By contrast the Permanent Portfolio lost 11.9%, while All Weather — with 40% in long duration — lost 20.0%.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；三条腿的全年收益：2008 年股票 −37.0%、中债 +17.9%；2013 年 +32.4% / −7.7%；2022 年 −18.1% / −18.1%。</span><span class="en">Source: author's backtest; the two legs by year: 2008 equities −37.0% and intermediate Treasuries +17.9%; 2013 +32.4% / −7.7%; 2022 −18.1% / −18.1%.</span></p>
+    </div>
+    <p class="zh">值得记住的是翻转的条件。把 CPI 同比高于 5% 的 33 个月单独拿出来，股票与 10 年期国债的相关性从 −0.04 变成 <b>+0.38</b>——这时两条腿不是互相抵消，而是被同一个变量（利率）推着走。同一段区间里六条腿<b>只有现金为正</b>（年化 +2.35%），其余是股票 −0.43%、黄金 −0.69%、中债 −5.12%、商品 −7.16%、长债 −10.04%；60/40 整体 −1.99%。</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 5 · 高通胀的 33 个月里，六条腿各是什么表现</span><span class="en">Exhibit 5 · the six legs in the 33 high-inflation months</span></div>
+      <img src="../assets/figs/sf-hot.svg" alt="CPI 同比高于 5% 的 33 个月里各资产腿的年化收益">
+      <p class="ex-note zh">筛选条件是 CPI 同比 &gt; 5%，共 33 个月（占样本 7.7%）。被当作通胀对冲工具的两条腿——<b>长债和商品——恰好是最差的两条</b>（−10.04% 和 −7.16%）；黄金只是轻微为负（−0.69%），真正为正是现金（+2.35%）。这就是为什么「加一点实物资产」这个说法需要被拆开看：<b>黄金和商品的对手变量不是同一个</b>，黄金对着实际利率与货币信用，商品对着需求——而在 2008 与 2022 那种环境里，需求是往下走的。</p>
+      <p class="ex-note en">The filter is year-on-year CPI above 5%: 33 months, or 7.7% of the sample. The two legs usually sold as inflation hedges — <b>long bonds and commodities — are the worst of the six</b> (−10.04% and −7.16%); gold is only slightly negative (−0.69%), and the only positive leg is cash (+2.35%). This is why "add some real assets" has to be split in two: <b>gold and commodities do not answer to the same variable</b>. Gold answers to real rates and monetary credibility; commodities answer to demand — and in 2008 and 2022 alike, demand was falling.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；筛选窗口内股票与 10 年期国债的相关性为 +0.38，全样本为 −0.04。</span><span class="en">Source: author's backtest; the equity/ten-year Treasury correlation is +0.38 inside the filter window against −0.04 over the full sample.</span></p>
+    </div>
+    <p class="zh">这条观察决定了修补的方向：既然失效发生在「两条腿被同一个变量驱动」的时候，新加的资产就不能再由那个变量驱动。</p>
+    <p class="en">That observation sets the direction of the fix: if the failure happens when both legs are driven by the same variable, the asset added has to be driven by a different one.</p>
+    <h2 id="s6"><span class="num">06</span><span class="zh">修补：三种加法，只有一种管用</span><span class="en">The fix: three additions, one of them works</span></h2>
+    <p class="zh">既然失效发生在「两条腿被同一个变量推着走」的时候，修补的方向就清楚了：新加的资产不能再由那个变量驱动。最常被推荐的是三个候选——黄金、商品、现金。为了让差别只剩一个变量，三种变体用同一个做法：把 60/40 整体缩小到 90%（股票 54%、债券 36%），腾出 10% 给第三种资产。</p>
+    <p class="en">If the failure happens when both legs are driven by the same variable, the direction of the fix is clear: whatever gets added must not answer to that variable. The three usual candidates are gold, commodities and cash. To keep the difference to a single variable, all three variants shrink the 60/40 to ninety per cent of the portfolio - 54% equities, 36% bonds - and hand the last 10% to the third asset.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 6 · 10% 的三种加法</span><span class="en">Exhibit 6 · three ways to spend 10%</span></div>
+      <img src="../assets/figs/sf-variants.svg" alt="三种 10% 变体相对原版 60/40 的净值比">
+      <p class="ex-note zh">四条线是相对原版 60/40 的净值比。三条变体在 35.7 年后都略输原版：黄金 −4.2%、商品 −11.0%、现金 −17.4%，但路径完全不同——<b>商品在 2008 年前一度领先，之后一路走低</b>，最大回撤 −28.5% 比原版的 −27.0% 还深，因为它对冲的不是通胀，是需求。真正让黄金胜出的是波动与回撤：8.2% 对 9.1%、−22.7% 对 −27.0%，夏普 <b>0.76 对 0.70</b>——本文测过的所有组合里最高的一个。</p>
+      <p class="ex-note en">The four lines are value ratios against the original 60/40. All three variants end slightly behind after 35.7 years - gold −4.2%, commodities −11.0%, cash −17.4% - but the paths differ completely. Commodities led before 2008 and bled from there, with a −28.5% maximum drawdown deeper than the original's −27.0%, because what they hedge is not inflation but demand. Gold wins on volatility and drawdown: 8.2% against 9.1%, −22.7% against −27.0%, and a Sharpe of <b>0.76 against 0.70</b>, the highest of every portfolio tested here.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；三个变体都是 54% 股票 / 36% 中债 / 10% 第三资产，年度再平衡，不扣成本。</span><span class="en">Source: author's backtest; each variant is 54% equities / 36% intermediate Treasuries / 10% in the third asset, annually rebalanced, before costs.</span></p>
+    </div>
+    <p class="zh">三件事必须同时说清楚。第一，<b>只有黄金这一种加法同时改善了夏普和回撤</b>；商品是最像"通胀对冲"、结果最差的那个，连最大回撤都比原版深。第二，黄金的优势<b>不是"抗通胀"</b>：在 CPI 高于 5% 的那 33 个月里它的年化是 −0.69%，几乎没有帮上忙；它压低回撤主要发生在 2008 年那种通缩型危机和随后的降息周期里，以及靠 8.2% 的低波动把整条路径压平。第三，这笔交易的量级不大——<b>年化少 0.13 个百分点，换 4.3 个百分点的回撤</b>，值不值取决于你更在意终值还是路径。</p>
+    <p class="en">Three things have to be said at once. First, <b>gold is the only addition that improves both Sharpe and drawdown</b>; commodities, the asset that looks most like an inflation hedge, is the worst of the three, with a drawdown deeper than the original. Second, gold's edge is <b>not inflation hedging</b>: over the 33 months with CPI above 5% it returned −0.69% a year, essentially no help at all. It earns its keep in deflationary crises and the rate cuts that follow, as in 2008, and by simply running at 8.2% volatility, which flattens the whole path. Third, the trade is small: <b>0.13 points less a year buys 4.3 points less drawdown</b>, and whether that is worth it depends on whether you care about the endpoint or the path.</p>
+
+    <h2 id="s7"><span class="num">07</span><span class="zh">收益从哪来，杠杆能做什么</span><span class="en">Where the return comes from, and what leverage does</span></h2>
+    <p class="zh">先问一个更基本的问题：9.09% 究竟是哪条腿赚出来的。</p>
+    <p class="en">Start with a more basic question: which leg actually earned the 9.09%.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 7 · 收益从哪条腿来</span><span class="en">Exhibit 7 · where the return comes from</span></div>
+      <img src="../assets/figs/sf-attrib.svg" alt="股票与中债两条腿的资金权重与收益贡献份额">
+      <p class="ex-note zh">把 9.09% 拆开：股票贡献 <b>7.08</b> 个百分点（占七成七），中债贡献 <b>2.06</b>（占两成三）。两项相加 9.14%，与几何年化 9.09% 相互验证（这是算术贡献，不是复利）。<b>六成资金拿走七成七的收益</b>——这解释了为什么任何削减股票权重的"改进"都很难在收益上赢过原版，也解释了为什么 40/60 的夏普更高而终值只有 14.8 元（对原版的 22.3 元）。浅色是资金权重，深色是它拿走的收益份额，两条腿都被拉长了同一件事。</p>
+      <p class="ex-note en">Decomposing the 9.09%: equities contribute <b>7.08</b> points, or seventy-seven per cent of the total, and intermediate Treasuries <b>2.06</b>, or twenty-three per cent. The two sum to 9.14% against a geometric 9.09% - an arithmetic decomposition, not compounding. <b>Sixty per cent of the capital takes seventy-seven per cent of the return</b>, which is why no variant that cuts the equity weight beats the original on return, and why a 40/60 ends at 14.8 against 22.3 despite the higher Sharpe. Light bars are capital weights, dark bars the share of return each leg takes.</p>
+      <p class="ex-src"><span class="zh">来源：本文计算，时变权重 × 各腿月度收益的年化算术贡献。</span><span class="en">Source: author's calculations; annualised arithmetic contribution of time-varying weights times leg returns.</span></p>
+    </div>
+    <p class="zh">于是就有了最自然的那个问题：既然收益主要来自股票，为什么不干脆多买股票，或者借钱多买？前面的扫描已经回答了前半句——<b>股票 100% 的夏普是 0.60，比 60/40 的 0.70 更低</b>，最大回撤 −50.9%，接近两倍。后半句是杠杆问题。</p>
+    <p class="en">Which raises the obvious follow-up: if the return comes from equities, why not hold more of them, or borrow to hold more? The sweep already answers the first half - <b>100% equities has a Sharpe of 0.60, below the 60/40's 0.70</b>, with a −50.9% maximum drawdown, close to double. The second half is a leverage question.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 8 · 杠杆能把 60/40 变成什么</span><span class="en">Exhibit 8 · what leverage does to a 60/40</span></div>
+      <img src="../assets/figs/sf-leverage.svg" alt="不同杠杆倍数下 60/40 的年化收益与最大回撤">
+      <p class="ex-note zh">把 60/40 整体放大：1.25 倍年化 10.44%、1.5 倍 11.75%、2 倍 14.24%。看起来像是免费的收益，但同一张图的另一条线是：最大回撤从 −27.0% 走到 −33.2%、−39.0%、−49.5%，最差 12 个月从 −24.0% 走到 −44.6%；而夏普几乎不动（0.70 / 0.69 / 0.69 / 0.68）。<b>杠杆放大的是同一个交易，不是更好的交易。</b>两倍杠杆用接近翻倍的回撤换 5 个百分点年化，而这还没算追加保证金——真实的保证金账户在 −49.5% 这条路径上，很可能在走到终点之前就已经被强平了。</p>
+      <p class="ex-note en">Scale the whole 60/40 up: 1.25x returns 10.44% a year, 1.5x 11.75%, 2x 14.24%. That looks like free return, but the other line on the same chart says otherwise: the maximum drawdown goes from −27.0% to −33.2%, −39.0% and −49.5%, and the worst twelve months from −24.0% to −44.6%, while the Sharpe barely moves at 0.70 / 0.69 / 0.69 / 0.68. <b>Leverage magnifies the same trade rather than improving it.</b> Two times leverage buys five points of return with roughly twice the drawdown, and that ignores margin calls: a real margin account on that −49.5% path would very likely be liquidated before it ever reached the endpoint.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；融资成本按 3 个月国库券 + 0.5% 年化计，未计追加保证金与强制平仓。</span><span class="en">Source: author's backtest; funding cost assumed at three-month T-bills plus 0.5% a year, with no margin calls or forced liquidation modelled.</span></p>
+    </div>
+    <p class="zh">两件事合起来指向同一个结论：60/40 的收益结构是「用六成股票买收益，用四成债券买路」，杠杆没有改变这个结构，只是把两条腿一起放大。Asness、Frazzini 与 Pedersen 在《杠杆厌恶与风险平价》里讨论的正是这件事——如果投资者不能或不愿加杠杆，就只能靠资产配置而不是借款去调风险。这也是为什么「提高股票比例」看上去像免费的午餐：它确实提高了收益，代价写在回撤那一列里。</p>
+    <p class="en">Together these point to one conclusion. The 60/40 earns its return with six parts equities and buys its path with four parts bonds; leverage does not change that structure, it enlarges both legs at once. Asness, Frazzini and Pedersen's "Leverage Aversion and Risk Parity" is about exactly this: investors who cannot or will not lever must adjust risk through allocation rather than borrowing. It is also why raising the equity weight only looks free - it does raise the return, and the price is written in the drawdown column.</p>
+
+    <h2 id="s8"><span class="num">08</span><span class="zh">换个起点，再自己动手</span><span class="en">Change the start, then move the weight yourself</span></h2>
+    <p class="zh">前面所有结论都建立在一个人为的假设上：你在 1990 年 1 月入场。这个假设显然不成立，所以换七个起点各自重算一遍。</p>
+    <p class="en">Every conclusion above rests on one artificial assumption: that you started in January 1990. That is obviously not true for anyone, so the whole thing gets re-run from seven different starting points.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 9 · 七个起点</span><span class="en">Exhibit 9 · seven start dates</span></div>
+      <img src="../assets/figs/sf-starts.svg" alt="七个不同起点下五个组合的年化收益">
+      <p class="ex-note zh">起点敏感性是检验"稳健"最便宜的一把尺子。从 1990、1995、2000、2005、2010、2015、2020 七个起点分别重算，60/40 的年化落在 <b>6.9% 到 9.5%</b>（跨度 2.6 个百分点），最差的是 2000 起点——那一年入场的人先经历了两轮股灾。四个组合的排序在七个起点里基本不变：纯股最高、60/40 第二、全天候与永久组合在后；唯一的例外是 2020 起点，永久组合（8.5%）追到了 60/40（9.3%）附近。<b>加黄金那个变体在七个起点里五个赢、两个打平</b>，是三种加法里唯一稳定的改进。</p>
+      <p class="ex-note en">Start-date sensitivity is the cheapest robustness test there is. Re-running from January 1990, 1995, 2000, 2005, 2010, 2015 and 2020, the 60/40 lands between <b>6.9% and 9.5%</b> a year, a 2.6-point spread, with the 2000 start the worst: that cohort met two equity bears before anything else. The ranking of the four portfolios is essentially unchanged across the seven starts - equities first, the 60/40 second, All Weather and the Permanent Portfolio behind - the one exception being 2020, where the Permanent Portfolio (8.5%) nearly catches the 60/40 (9.3%). <b>The gold variant beats the original in five of the seven starts and ties in the other two</b>, the only stable improvement among the three additions.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；每个起点从该年 1 月开始，最短样本 5.7 年。</span><span class="en">Source: author's backtest; each start begins in January of that year, with a minimum sample of 5.7 years.</span></p>
+    </div>
+    <p class="zh">最后把选择权交给你自己。下面这张图把 60/40 重新参数化：不再固定成 60/40，而是一个从 0% 到 100% 的股票权重滑块，另一端永远是 10 年期国债。</p>
+    <p class="en">Finally, the choice goes back to you. The chart below re-parameterises the 60/40: instead of a fixed sixty-forty, a slider from 0% to 100% equities, with intermediate Treasuries taking the other side.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 10 · 拖动股票权重（可交互）</span><span class="en">Exhibit 10 · drag the equity weight</span></div>
+      <div class="vbox">
+        <div class="ctrl">
+          <span style="font-weight:600"><span class="zh">股票权重</span><span class="en">Equity weight</span></span>
+          <input type="range" id="i-w" min="0" max="100" value="60" step="5">
+          <b id="i-wlab" style="font-family:var(--mono)">60%</b>
+          <button type="button" class="primary" id="i-play"><span class="zh">▶ 播放这段历史</span><span class="en">▶ Play the history</span></button>
+          <button type="button" id="i-reset"><span class="zh">回到 60%</span><span class="en">Reset to 60%</span></button>
+        </div>
+        <svg id="i-svg" viewBox="0 0 900 360" role="img" aria-label="不同股票权重下的组合净值与回撤路径"></svg>
+        <div class="vstat">
+          <span><span class="zh">年化</span><span class="en">Return</span> <b id="i-ann">–</b></span>
+          <span><span class="zh">波动</span><span class="en">Vol</span> <b id="i-vol">–</b></span>
+          <span><span class="zh">最大回撤</span><span class="en">Max DD</span> <b id="i-dd">–</b></span>
+          <span><span class="zh">夏普</span><span class="en">Sharpe</span> <b id="i-sh">–</b></span>
+        </div>
+        <div class="vstat2">
+          <span><span class="zh">时间</span><span class="en">Date</span> <b id="i-year">–</b></span>
+          <span><span class="zh">净值</span><span class="en">Value</span> <b id="i-val">–</b></span>
+          <span><span class="zh">回撤</span><span class="en">Drawdown</span> <b id="i-ddc">–</b></span>
+        </div>
+      </div>
+      <p class="ex-note zh">拖动滑块，资金在股票与 10 年期国债之间重新分配，规则不变：仍然是每年 1 月再平衡。灰色虚线固定在原版 60% 作为参照；点"播放这段历史"会让一个游标从 1990 年扫到 2025 年，下方同步读出当时的净值与回撤——你会看到那条曲线是<b>一段一段走出来的，而不是一条平滑的斜率</b>。可以试三个位置：<b>0%</b>（纯债）年化 4.91%、回撤 −25.4%、夏普 0.33；<b>40%</b> 年化 7.85%、回撤 −21.0%、夏普 <b>0.72</b>（扫描的最高点）；<b>100%</b>（纯股）年化 11.04%、回撤 −50.9%、夏普 0.60。三点连起来就是本文那句话的结构：<b>收益随股票单调上升，夏普先升后降，回撤在 50% 之后开始加速。</b></p>
+      <p class="ex-note en">Drag the slider and the money is reallocated between equities and intermediate Treasuries under one unchanged rule: reset each January. The grey dashed line stays pinned at the original 60% for reference. Pressing "Play the history" sweeps a cursor from 1990 to 2025 while the panel below reads out value and drawdown at that moment, so you can watch the curve <b>being walked out month by month rather than drawn as one smooth slope</b>. Three positions are worth trying: <b>0%</b> (all bonds) 4.91% a year, −25.4% drawdown, Sharpe 0.33; <b>40%</b> 7.85%, −21.0%, Sharpe <b>0.72</b>, the peak of the sweep; <b>100%</b> (all equities) 11.04%, −50.9%, Sharpe 0.60. Connect the three and you get the shape of this whole note: <b>return rises monotonically with the equity weight, Sharpe rises and then falls, and the drawdown starts accelerating after 50%.</b></p>
+      <p class="ex-src"><span class="zh">来源：本文回测；滑块每 5% 一档，0%–100% 共 21 个组合。</span><span class="en">Source: author's backtest; the slider steps every 5%, covering 21 portfolios from 0% to 100%.</span></p>
+    </div>
+
+    <h2 id="s9"><span class="num">09</span><span class="zh">结论：一个很难被打败的默认值</span><span class="en">Conclusion: a default that is hard to beat</span></h2>
+    <p class="zh">回到开头那个问题：60/40 是不是"最简单的最有效"。<b>答案分三层，而且每一层的方向都不一样。</b>作为默认值，它确实有效：35.7 年里年化 9.09%、夏普 0.70，跑赢全天候（7.90% / 0.68），样本覆盖了三次股灾与一轮 40 年最高的通胀。作为"最优"，它不是：永久组合的夏普 0.75 更高，最大回撤只有 −15.5%，比它浅 11.5 个百分点。作为"60/40 这个具体的数字"，它最站不住：夏普的最高点在 40–50%，回撤的低原也在那一带，而 50% → 60% 这一步回撤跳了 <b>5.5 个百分点</b>，年化只多 0.6 个百分点。</p>
+    <p class="zh">它的第二个弱点更根本：<b>整套论证压在一条相关性上。</b>"股票跌的时候债券涨"在全样本里是 −0.04，接近零、方向正确；但在 CPI 高于 5% 的 33 个月里，它翻成 <b>+0.38</b>——两条腿被同一个变量（利率）推着走。428 个月里有 56 个月两条腿同时下跌（13.5%），2022 年更是两条腿各跌 18.1%、组合全年 −18.1%，与纯股一模一样。<b>一个策略最糟糕的一段，落在它唯一依赖的假设失效的时候</b>，这是本文最需要写清楚的一件事。</p>
+    <p class="zh">修补的方向也就清楚了：加一条不被同一个变量驱动的腿。三种加法里只有 <b>10% 黄金</b>同时改善夏普（0.76，全场最高）与回撤（−22.7%），代价是终值少 4.2%。但必须诚实：黄金也不是靠"抗通胀"赢的——高通胀的 33 个月里它的年化是 −0.69%，它赢在低相关、低波动，以及 2008 年那次降息周期。商品则是最贵的教训：看上去最像通胀对冲，最大回撤比原版还深。杠杆是另一个诱惑，答案是"不"：2 倍把年化从 9.09% 抬到 14.24%，同时把回撤从 −27.0% 推到 −49.5%，而夏普几乎不动——放大的是同一个交易。</p>
+    <p class="zh">最后一个数字值得记住：<b>60/40 用 6.9% 到 9.5% 的年化（取决于你什么时候入场），买了一条不需要判断的规则。</b>它的价值不在"60"这个数字，而在"有一个能记住、并且在恐慌时执行得下去的比例"。如果你只从这篇文章拿走一件事，拿走这个：<b>一个事后看来不是最优、但你能在 2008 年 10 月照做的比例，比一个更优但需要判断的比例有用得多。</b></p>
+    <p class="zh">边界必须写清楚。第一，样本从 1990 年开始，<b>不含 1970 年代</b>——那正是股票与债券同跌、也是这种配置最难受的年代；样本同时还覆盖了一轮罕见的债券大牛市，未来那 40% 未必能复制。第二，本文的债券腿用 10 年期国债、按久期 7.5 合成；换成 30 年期长债，年化从 9.09% 升到 9.65%，但最大回撤从 2008 年挪到了 2022 年（−27.4%），附录 A 有对照。第三，全部是美国资产，未考虑汇率与跨境税负。第四，黄金用 LBMA 现货价，不含持有成本；商品用价格指数，不含展期收益。第五，不扣交易成本与税，每年 1 月再平衡的换手约 3.7%。第六，0.70 与 0.72 的差别在统计上很可能不显著，本文的结论依赖这 428 个月。</p>
+    <p class="ex-note en" style="margin-top:14px">Full English version below.</p>
+  </div>
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">它是什么</span><span class="en">What it is</span></a>
+      <a href="#s2">02 <span class="zh">数据与方法</span><span class="en">Data</span></a>
+      <a href="#s3">03 <span class="zh">35.7 年结果</span><span class="en">35 years</span></a>
+      <a href="#s4">04 <span class="zh">60% 对吗</span><span class="en">Is 60% right?</span></a>
+      <a href="#s5">05 <span class="zh">两条腿一起失灵</span><span class="en">Both legs fail</span></a>
+      <a href="#s6">06 <span class="zh">修补：加 10%</span><span class="en">The fix</span></a>
+      <a href="#s7">07 <span class="zh">归因与杠杆</span><span class="en">Attribution &amp; leverage</span></a>
+      <a href="#s8">08 <span class="zh">起点与交互</span><span class="en">Starts &amp; try it</span></a>
+      <a href="#s9">09 <span class="zh">结论</span><span class="en">Conclusion</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
+    </aside>
+  </div>
+
+  <div class="prose">
+
+    <section class="en" id="en-version" style="margin-top:40px">
+      <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
+      <p><b>Question.</b> Sixty per cent equities, forty per cent bonds, rebalanced on a fixed calendar, never levered, never forecast - the most famous allocation rule there is. We test that public convention on 428 monthly US observations from January 1990 to September 2025, on the same data pipeline as the All Weather and Permanent Portfolio notes, with one methodological change: weights are reset each January and allowed to drift within the year rather than being pinned every month.</p>
+      <p><b>Result 1 - the long run.</b> 9.09% a year, 9.1% volatility, a −27.0% maximum drawdown and a Sharpe ratio of 0.70. In the same sample all-equities returned 11.04% with a −50.9% drawdown and a 0.60 Sharpe, All Weather 7.90% / −21.7% / 0.68, and the Permanent Portfolio 7.18% / −15.5% / 0.75. The 60/40 is a hard default to beat on return, but it is not the best portfolio available, and the one it loses to does so with drawdowns less than two thirds as deep.</p>
+      <p><b>Result 2 - the number 60 is questionable.</b> Sweeping the equity weight from 0% to 100%, Sharpe peaks at 40-50% (0.72) and the drawdown plateau sits in the same band. Between 50% and 60% the maximum drawdown jumps from −21.5% to −27.0% while the return rises only 0.6 points. The 60/40 sits on the wrong side of that step. The gap between 0.70 and 0.72 is almost certainly statistically insignificant, which is itself the point: sixty was remembered, not calculated.</p>
+      <p><b>Result 3 - the real failure mode.</b> The whole argument rests on one correlation: bonds up when stocks fall. Over the full sample it is −0.04. In the 33 months with year-on-year CPI above 5% it flips to <b>+0.38</b>, because both legs are then driven by the same variable, rates. In 56 of 428 months, 13.5%, the two legs fell together. In 2022 they fell 18.1% each and the portfolio lost 18.1%, exactly as much as equities alone, while the Permanent Portfolio lost 11.9%.</p>
+      <p><b>Result 4 - the fix is narrow.</b> Of the three usual additions - gold, commodities, cash - only a 10% gold sleeve (54% equities / 36% Treasuries / 10% gold) improves both Sharpe and drawdown: 8.96% a year, 8.2% volatility, −22.7%, Sharpe <b>0.76</b>, the highest of anything tested, at a cost of 4.2% of terminal value. It is worth being precise about why: in the 33 high-inflation months gold returned −0.69%, so it does not hedge the thing it is usually sold as hedging. It earns its place through low correlation and low volatility, and in the deflationary crisis of 2008. Commodities, the asset that looks most like an inflation hedge, ended with a deeper drawdown than the original.</p>
+      <p><b>Result 5 - leverage magnifies, it does not improve.</b> Two times leverage lifts the return from 9.09% to 14.24% and the drawdown from −27.0% to −49.5%, with the Sharpe barely moving (0.68), before any margin call. Start dates from 1995 to 2020 leave the 60/40 between 6.9% and 9.5% a year, with the 2000 cohort worst off.</p>
+      <p><b>Implication.</b> The 60/40 is not the best allocation; it is the most memorable one. What it buys with the 1.9 points of annual return it forgoes against the Permanent Portfolio is a rule simple enough to follow in October 2008. Limitations: the sample starts in 1990 and excludes the 1970s; bonds are synthesised from the yield curve at ten-year maturity, with a thirty-year version tabulated in the appendix whose worst drawdown moves from 2008 to 2022; gold is spot without carry and commodities are a price index without roll yield; the US only; no costs or taxes.</p>
+    </section>
+
+    <details class="appendix" id="apx">
+      <summary><span class="zh">附录 A · 数据、方法与全部口径</span><span class="en">Appendix A · data, method and every convention</span></summary>
+      <p class="zh"><b>数据。</b>与《全天候组合实测》《永久组合实测》同一份管线：标普 500 全收益（Yahoo Finance ^SP500TR，月度）；美国财政部国债收益率曲线（3 个月 / 10 年 / 30 年，月末值，个别缺月按相邻月线性插值）；LBMA 伦敦金价月序列；世界银行商品价格指数；美国 CPI-U（BLS）。样本 1990-01 至 2025-09，共 428 个月（35.7 年）。</p>
+      <p class="zh"><b>做法。</b>股票用价格变动（全收益）；债券＝对应期限收益率 ÷ 12 − 久期 × 收益率变动（10 年期久期取 7.5，30 年期取 15）；现金＝3 个月收益率 ÷ 12；黄金与商品用价格指数月收益。<b>所有组合按年度再平衡</b>：每年 1 月重置到目标权重，年内权重随价格漂移，组合月收益为权重与各腿收益的加权和；换手率按每年 1 月的调仓幅度计算。收益归因为各腿加权收益贡献的年化算术平均。夏普按 3 个月国库券为无风险利率、月度超额收益年化计算。</p>
+      <p class="zh"><b>三个需要提前说明的口径。</b>第一，<b>债券期限</b>：主表用 10 年期（久期 7.5）。换成 30 年期长债，年化从 9.09% 升到 9.65%、波动从 9.1% 升到 10.0%、夏普不变（0.70），但最大回撤的年份从 2008 年挪到了 2022 年（−27.4%，2021-12 至 2022-09）：长债版是用 2008 年的保护换来了 2022 年的暴露。第二，<b>再平衡</b>：本文用真正的年度再平衡（每年 1 月重置），比"每月回到固定权重"更接近实际做法，也让再平衡这件事真的发生在组合里。第三，<b>杠杆</b>：单列一节，融资成本按 3 个月国库券 + 0.5% 年化计，未计追加保证金与强制平仓。</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">附录表 A1｜全部被测组合（1990-01 至 2025-09，年度再平衡，不扣成本）</span><span class="en">Appendix Table A1｜every portfolio tested (Jan 1990 - Sep 2025, annual rebalancing, before costs)</span></caption>
+          <thead><tr>
+            <th><span class="zh">组合</span><span class="en">Portfolio</span></th>
+            <th><span class="zh">年化 %</span><span class="en">Return</span></th>
+            <th><span class="zh">波动 %</span><span class="en">Vol</span></th>
+            <th><span class="zh">夏普</span><span class="en">Sharpe</span></th>
+            <th><span class="zh">最大回撤 %</span><span class="en">Max DD</span></th>
+            <th><span class="zh">最差 12 月 %</span><span class="en">Worst 12m</span></th>
+            <th><span class="zh">年换手 %</span><span class="en">Turnover</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td><b>60/40</b></td><td><b>9.09</b></td><td>9.1</td><td>0.70</td><td>−27.0</td><td>−24.0</td><td>3.7</td></tr>
+            <tr><td><span class="zh">60/40·长债版</span><span class="en">60/40 long bonds</span></td><td>9.65</td><td>10.0</td><td>0.70</td><td>−27.4</td><td>−23.5</td><td>4.3</td></tr>
+            <tr><td>80/20</td><td>10.16</td><td>11.7</td><td>0.65</td><td>−39.4</td><td>−33.6</td><td>2.5</td></tr>
+            <tr><td>40/60</td><td>7.85</td><td>7.1</td><td>0.72</td><td>−21.0</td><td>−18.1</td><td>3.7</td></tr>
+            <tr><td><span class="zh">60/40+黄金</span><span class="en">60/40 + gold</span></td><td>8.96</td><td>8.2</td><td><b>0.76</b></td><td>−22.7</td><td>−21.4</td><td>4.0</td></tr>
+            <tr><td><span class="zh">60/40+商品</span><span class="en">60/40 + commodities</span></td><td>8.73</td><td>8.4</td><td>0.72</td><td>−28.5</td><td>−26.0</td><td>4.4</td></tr>
+            <tr><td><span class="zh">60/40+现金</span><span class="en">60/40 + cash</span></td><td>8.50</td><td>8.2</td><td>0.71</td><td>−24.3</td><td>−21.6</td><td>3.9</td></tr>
+            <tr><td><span class="zh">全天候</span><span class="en">All Weather</span></td><td>7.90</td><td>7.6</td><td>0.68</td><td>−21.7</td><td>−20.8</td><td>4.8</td></tr>
+            <tr><td><span class="zh">永久组合</span><span class="en">Permanent</span></td><td>7.18</td><td>5.8</td><td>0.75</td><td>−15.5</td><td>−13.5</td><td>4.5</td></tr>
+            <tr><td><span class="zh">纯股</span><span class="en">Equities</span></td><td>11.04</td><td>14.7</td><td>0.60</td><td>−50.9</td><td>−43.3</td><td>—</td></tr>
+            <tr><td><span class="zh">纯债</span><span class="en">Bonds</span></td><td>4.91</td><td>7.0</td><td>0.33</td><td>−25.4</td><td>−20.6</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="zh"><b>未计入。</b>交易成本、税费与汇率；黄金现货不含持有成本；商品指数不含展期收益；债券用收益率曲线合成，未计基金费率与凸性；再平衡为每年 1 月，未测试阈值带（例如偏离 5 个百分点才动手）；杠杆一节未计追加保证金。</p>
+      <p class="zh"><b>代码。</b><code>tools/make_sf_data.py</code>（全部统计）、<code>tools/make_sf_figs.py</code>（9 张图）、<code>tools/make_sf_note.py</code>（本页与交互图）；底层序列复用 <code>tools/fetch_allweather_raw.py</code> 与 <code>tools/make_allweather_data.py</code>，固定输入可完全复现。</p>
+      <p class="en"><b>Data.</b> The same pipeline as the All Weather and Permanent Portfolio notes: S&amp;P 500 total return (Yahoo Finance ^SP500TR, monthly); US Treasury yield curve (3-month / 10-year / 30-year month-end); the LBMA London gold price; the World Bank commodity price index; US CPI-U. January 1990 to September 2025, 428 months, 35.7 years.</p>
+      <p class="en"><b>Method.</b> Equities from total-return price changes; bonds = yield ÷ 12 − duration × change in yield (duration 7.5 at ten years, 15 at thirty); cash = three-month yield ÷ 12; gold and commodities from monthly price-index returns. <b>All portfolios are rebalanced annually</b>: weights reset each January and drift within the year, and the monthly portfolio return is the weighted sum of leg returns; turnover is the January adjustment. Attribution is the annualised arithmetic mean of each leg's weighted contribution; Sharpe uses three-month T-bills as the risk-free rate.</p>
+      <p class="en"><b>Three conventions to flag.</b> First, <b>bond maturity</b>: the main table uses ten years (duration 7.5). Substituting thirty-year Treasuries lifts the return from 9.09% to 9.65% and volatility from 9.1% to 10.0% with an unchanged Sharpe of 0.70, but moves the worst drawdown from 2008 to 2022 (2021-12 to 2022-09, −27.4%): the long-bond version spends 2008's protection to buy 2022's exposure. Second, <b>rebalancing</b>: genuine annual resets, closer to how the rule is actually run and enough to make rebalancing actually happen inside the portfolio. Third, <b>leverage</b>: covered separately, funded at three-month T-bills plus 0.5% a year, with no margin calls modelled.</p>
+      <p class="en"><b>Not included.</b> Transaction costs, taxes and FX; spot gold without carry; a commodity index without roll yield; bonds synthesised from the yield curve without fees or convexity; band rebalancing rather than calendar-year; margin calls in the leverage section.</p>
+      <p class="en"><b>Code.</b> <code>tools/make_sf_data.py</code>, <code>tools/make_sf_figs.py</code>, <code>tools/make_sf_note.py</code>; underlying series from <code>tools/fetch_allweather_raw.py</code> and <code>tools/make_allweather_data.py</code>.</p>
+    </details>
+    <details class="appendix">
+      <summary><span class="zh">附录 B · 五个容易被忽略的口径问题</span><span class="en">Appendix B · five measurement problems</span></summary>
+      <p class="zh"><b>一、"60/40"没有作者，也没有理论。</b>它不是从最优化里算出来的，而是从实践里沉淀出来的习惯。这一点决定了怎么检验它：可以检验它作为一条规则的长期表现，但不能说它"错"——因为一个习惯没有可以被证伪的内部逻辑。</p>
+      <p class="zh"><b>二、相关性是状态依赖的。</b>全样本的 −0.04 是一堆不同环境的平均：通缩型危机里股债负相关，通胀型冲击里正相关。用一条平均相关性去论证任何配置的可靠性，都会在状态切换时失效——这正是 2022 年发生的事。</p>
+      <p class="zh"><b>三、债券是收益率曲线合成出来的，不是基金净值。</b>按久期近似意味着不含凸性、不含基金费率，也不含真实的买卖价差。真实的长债基金在 2022 年的跌幅往往比这个合成序列更深。</p>
+      <p class="zh"><b>四、黄金与商品都是"裸价格"。</b>黄金用 LBMA 现货价，不含保管费与交易成本，也不含把黄金借出去可以赚到的利息；商品用价格指数，不含期货展期收益。真实账户里这两条腿都会比本文更差。</p>
+      <p class="zh"><b>五、0.70 与 0.72 的差别不显著。</b>428 个月的夏普比率，0.02 的差距落在噪声范围内。本文真正站得住的差异不是夏普，而是两个更大的量：<b>50% 到 60% 之间 5.5 个百分点的回撤跳升</b>，以及 <b>股债相关性从 −0.04 翻到 +0.38</b>。</p>
+      <p class="en"><b>One: the 60/40 has no author and no theory.</b> It was not computed from an optimisation; it settled out of practice as a habit. That changes how to test it - its long-run behaviour as a rule can be measured, but it cannot be called "wrong", because a habit has no internal logic to falsify.</p>
+      <p class="en"><b>Two: correlations are regime-dependent.</b> The full-sample −0.04 averages over very different environments - negative in deflationary crises, positive in inflation shocks. Any allocation argument resting on one average correlation breaks when the regime turns, which is exactly what happened in 2022.</p>
+      <p class="en"><b>Three: bonds here are synthesised, not fund NAV.</b> The duration approximation has no convexity, no fund fees and no real bid-ask spread. Actual long-bond funds fell further in 2022 than this synthetic series does.</p>
+      <p class="en"><b>Four: gold and commodities are bare prices.</b> Gold is the LBMA spot series, excluding storage and trading costs and excluding the interest earned by lending it out; commodities are a price index without roll yield. In a real account both legs would do worse.</p>
+      <p class="en"><b>Five: 0.70 against 0.72 is not significant.</b> Over 428 months a Sharpe gap of 0.02 sits inside the noise. What does hold up are two larger quantities: the <b>5.5-point drawdown step between a 50/50 and a 60/40</b>, and the <b>flip in the equity/bond correlation from −0.04 to +0.38</b>.</p>
+    </details>
+
+    <div class="disclaimer">
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的机构与策略名称仅为研究与引用用途，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. Firm and strategy names are referenced for research purposes only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
+    </div>
+
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
+    <ol class="refs">
+      <li>Markowitz, H. (1952). Portfolio Selection. <i>The Journal of Finance</i>, 7(1), 77–91. <a href="https://doi.org/10.1111/j.1540-6261.1952.tb01525.x">doi.org/10.1111/j.1540-6261.1952.tb01525.x</a></li>
+      <li>Perold, A. F., &amp; Sharpe, W. F. (1988). Dynamic Strategies for Asset Allocation. <i>Financial Analysts Journal</i>, 44(1), 16–27. <a href="https://doi.org/10.2469/faj.v44.n1.16">doi.org/10.2469/faj.v44.n1.16</a></li>
+      <li>DeMiguel, V., Garlappi, L., &amp; Uppal, R. (2009). Optimal Versus Naive Diversification: How Inefficient Is the 1/N Portfolio Strategy? <i>Review of Financial Studies</i>, 22(5), 1915–1953. <a href="https://doi.org/10.1093/rfs/hhm075">doi.org/10.1093/rfs/hhm075</a></li>
+      <li>Asness, C. S., Frazzini, A., &amp; Pedersen, L. H. (2012). Leverage Aversion and Risk Parity. <i>Financial Analysts Journal</i>, 68(1), 47–59. <a href="https://doi.org/10.2469/faj.v68.n1.1">doi.org/10.2469/faj.v68.n1.1</a></li>
+      <li>Erb, C. B., &amp; Harvey, C. R. (2013). The Golden Dilemma. <i>Financial Analysts Journal</i>, 69(4), 10–42. <a href="https://doi.org/10.2469/faj.v69.n4.1">doi.org/10.2469/faj.v69.n4.1</a></li>
+      <li>Baur, D. G., &amp; Lucey, B. M. (2010). Is Gold a Hedge or a Safe Haven? An Analysis of Stocks, Bonds and Gold. <i>Financial Review</i>, 45(2), 217–229. <a href="https://doi.org/10.1111/j.1540-6288.2010.00244.x">doi.org/10.1111/j.1540-6288.2010.00244.x</a></li>
+      <li>Arnott, R. D., Harvey, C. R., &amp; Markowitz, H. (2019). A Backtesting Protocol in the Era of Machine Learning. <i>Journal of Financial Data Science</i>, 1(1), 64–74. <a href="https://doi.org/10.3905/jfds.2019.1.064">doi.org/10.3905/jfds.2019.1.064</a></li>
+      <li><span class="zh">数据：Yahoo Finance ^SP500TR、美国财政部国债收益率曲线、LBMA 伦敦金价、世界银行商品价格指数、美国劳工统计局 CPI-U，访问日期 2026-10-05。</span><span class="en">Data: Yahoo Finance ^SP500TR, US Treasury yield curve, LBMA London gold price, World Bank commodity price index, BLS CPI-U, accessed 5 October 2026.</span></li>
+    </ol>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../permanent-portfolio/">
+        <span class="k"><span class="zh">组合实测 02</span><span class="en">Portfolio test 02</span></span>
+        <span class="v"><span class="zh">← 永久组合实测</span><span class="en">← The Permanent Portfolio, tested</span></span>
+      </a>
+      <a href="../">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+      </a>
+    </nav>
+  </div>
+
+  <footer>
+    <div class="footin">
+<span>Working Paper v1.0 · © 2026 Aylon · Hong Kong</span>
+      <span class="spacer"></span>
+      <a href="../share-kit/"><span class="zh">分享图</span><span class="en">Share cards</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+<script src="../assets/site.js"></script>
+<script>
+const DATA = {"months": ["1990-02", "1990-03", "1990-04", "1990-05", "1990-06", "1990-07", "1990-08", "1990-09", "1990-10", "1990-11", "1990-12", "1991-01", "1991-02", "1991-03", "1991-04", "1991-05", "1991-06", "1991-07", "1991-08", "1991-09", "1991-10", "1991-11", "1991-12", "1992-01", "1992-02", "1992-03", "1992-04", "1992-05", "1992-06", "1992-07", "1992-08", "1992-09", "1992-10", "1992-11", "1992-12", "1993-01", "1993-02", "1993-03", "1993-04", "1993-05", "1993-06", "1993-07", "1993-08", "1993-09", "1993-10", "1993-11", "1993-12", "1994-01", "1994-02", "1994-03", "1994-04", "1994-05", "1994-06", "1994-07", "1994-08", "1994-09", "1994-10", "1994-11", "1994-12", "1995-01", "1995-02", "1995-03", "1995-04", "1995-05", "1995-06", "1995-07", "1995-08", "1995-09", "1995-10", "1995-11", "1995-12", "1996-01", "1996-02", "1996-03", "1996-04", "1996-05", "1996-06", "1996-07", "1996-08", "1996-09", "1996-10", "1996-11", "1996-12", "1997-01", "1997-02", "1997-03", "1997-04", "1997-05", "1997-06", "1997-07", "1997-08", "1997-09", "1997-10", "1997-11", "1997-12", "1998-01", "1998-02", "1998-03", "1998-04", "1998-05", "1998-06", "1998-07", "1998-08", "1998-09", "1998-10", "1998-11", "1998-12", "1999-01", "1999-02", "1999-03", "1999-04", "1999-05", "1999-06", "1999-07", "1999-08", "1999-09", "1999-10", "1999-11", "1999-12", "2000-01", "2000-02", "2000-03", "2000-04", "2000-05", "2000-06", "2000-07", "2000-08", "2000-09", "2000-10", "2000-11", "2000-12", "2001-01", "2001-02", "2001-03", "2001-04", "2001-05", "2001-06", "2001-07", "2001-08", "2001-09", "2001-10", "2001-11", "2001-12", "2002-01", "2002-02", "2002-03", "2002-04", "2002-05", "2002-06", "2002-07", "2002-08", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-04", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-03", "2004-04", "2004-05", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-02", "2005-03", "2005-04", "2005-05", "2005-06", "2005-07", "2005-08", "2005-09", "2005-10", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-06", "2006-07", "2006-08", "2006-09", "2006-10", "2006-11", "2006-12", "2007-01", "2007-02", "2007-03", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2007-10", "2007-11", "2007-12", "2008-01", "2008-02", "2008-03", "2008-04", "2008-05", "2008-06", "2008-07", "2008-08", "2008-09", "2008-10", "2008-11", "2008-12", "2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09"], "cash": [0.6667, 0.67, 0.6725, 0.6725, 0.6675, 0.6667, 0.645, 0.6358, 0.6142, 0.6117, 0.6033, 0.5525, 0.5308, 0.5183, 0.4933, 0.4733, 0.4758, 0.4758, 0.475, 0.4575, 0.4383, 0.4133, 0.3725, 0.33, 0.3283, 0.3358, 0.3458, 0.3158, 0.3158, 0.3042, 0.2708, 0.2692, 0.2292, 0.2525, 0.2817, 0.2625, 0.2621, 0.2617, 0.2612, 0.2608, 0.2604, 0.26, 0.2596, 0.2592, 0.2587, 0.2583, 0.2675, 0.2558, 0.2542, 0.2892, 0.2967, 0.3308, 0.3592, 0.355, 0.3658, 0.39, 0.4, 0.4333, 0.4767, 0.4733, 0.5, 0.495, 0.49, 0.4892, 0.4842, 0.4667, 0.4667, 0.4542, 0.45, 0.4567, 0.4567, 0.425, 0.4208, 0.4183, 0.4275, 0.4283, 0.4317, 0.4317, 0.4433, 0.4408, 0.4283, 0.4308, 0.4275, 0.4342, 0.4292, 0.435, 0.4458, 0.44, 0.4133, 0.4375, 0.4375, 0.4367, 0.4217, 0.4342, 0.435, 0.4467, 0.4325, 0.4433, 0.43, 0.4167, 0.4192, 0.425, 0.425, 0.4133, 0.3642, 0.3608, 0.3808, 0.3733, 0.3733, 0.3883, 0.3742, 0.3792, 0.3883, 0.3983, 0.3958, 0.415, 0.4067, 0.4267, 0.4417, 0.4442, 0.48, 0.4817, 0.49, 0.485, 0.4692, 0.49, 0.5225, 0.5258, 0.5192, 0.5317, 0.5175, 0.4908, 0.4644, 0.438, 0.4115, 0.3851, 0.3587, 0.3323, 0.3058, 0.2833, 0.19, 0.1792, 0.1558, 0.14, 0.1408, 0.1467, 0.1467, 0.1475, 0.1433, 0.1408, 0.1442, 0.1417, 0.1333, 0.1233, 0.1042, 0.1, 0.0975, 0.1008, 0.0967, 0.0942, 0.0967, 0.0675, 0.0758, 0.0817, 0.0725, 0.08, 0.08, 0.075, 0.0708, 0.0792, 0.08, 0.0692, 0.0783, 0.0975, 0.1058, 0.1208, 0.1225, 0.1442, 0.1725, 0.1575, 0.1717, 0.2092, 0.2192, 0.225, 0.2333, 0.2492, 0.2708, 0.2842, 0.2625, 0.3142, 0.3333, 0.3342, 0.3642, 0.3725, 0.3875, 0.3833, 0.3958, 0.3783, 0.4183, 0.4267, 0.3833, 0.4317, 0.435, 0.3958, 0.4167, 0.4367, 0.4225, 0.4, 0.3983, 0.3567, 0.4275, 0.335, 0.2858, 0.3342, 0.3025, 0.23, 0.1367, 0.1725, 0.1017, 0.0975, 0.165, 0.1333, 0.1292, 0.1358, 0.085, 0.01, 0.0017, 0.0092, 0.0125, 0.0133, 0.0142, 0.0033, 0.0117, 0.0142, 0.0117, 0.0092, 0.005, 0.0008, 0.0067, 0.0033, 0.0017, 0.0075, 0.0125, 0.0117, 0.0125, 0.0142, 0.0117, 0.0133, 0.0117, 0.0117, 0.015, 0.0058, 0.0125, 0.0108, 0.0042, 0.0017, 0.0033, 0.0008, 0.0133, 0.0008, 0.0017, 0.0017, 0.0017, 0.0008, 0.0033, 0.0067, 0.0042, 0.0058, 0.0025, 0.0033, 0.0058, 0.0075, 0.005, 0.0075, 0.0092, 0.0017, 0.0033, 0.0058, 0.0033, 0.0025, 0.0025, 0.0017, 0.0025, 0.0017, 0.0025, 0.0025, 0.0042, 0.0008, 0.0025, 0.0033, 0.0025, 0.0017, 0.0042, 0.0017, 0.0008, 0.0017, 0.0017, 0.0008, 0.0033, 0.0025, 0.0008, 0.0017, 0.0042, 0.0, 0.0008, 0.0017, 0.0033, 0.0, 0.0, 0.0008, 0.0092, 0.0117, 0.0183, 0.0192, 0.015, 0.0133, 0.0225, 0.0167, 0.0158, 0.0217, 0.0167, 0.0167, 0.0317, 0.0367, 0.0417, 0.0333, 0.0617, 0.0567, 0.0717, 0.07, 0.0833, 0.0792, 0.08, 0.0825, 0.095, 0.1067, 0.1192, 0.125, 0.1358, 0.1375, 0.1467, 0.1475, 0.1617, 0.1625, 0.1767, 0.1833, 0.1925, 0.2033, 0.2017, 0.2033, 0.2025, 0.2025, 0.1958, 0.1817, 0.1675, 0.175, 0.1592, 0.1325, 0.135, 0.1233, 0.13, 0.1208, 0.0042, 0.0083, 0.0108, 0.0108, 0.0075, 0.0067, 0.0067, 0.0067, 0.0067, 0.0067, 0.0058, 0.0033, 0.0008, 0.0008, 0.0008, 0.0042, 0.0042, 0.0025, 0.0058, 0.005, 0.0092, 0.005, 0.0025, 0.005, 0.0142, 0.0308, 0.0608, 0.1067, 0.185, 0.2, 0.2325, 0.3108, 0.3392, 0.3433, 0.3817, 0.3875, 0.395, 0.3625, 0.44, 0.4367, 0.4567, 0.46, 0.4625, 0.4633, 0.4633, 0.4667, 0.4608, 0.4608, 0.4575, 0.4567, 0.4567, 0.4558, 0.4575, 0.4508, 0.4108, 0.3967, 0.3967, 0.3667, 0.3642, 0.365, 0.365, 0.3625, 0.3608, 0.3567, 0.3742, 0.3675], "legs": {"股票": [1.2884, 2.6499, -2.4946, 9.7486, -0.6755, -0.3196, -9.0385, -4.8668, -0.4268, 6.4652, 2.7847, 4.3549, 7.1525, 2.4205, 0.2375, 4.3149, -4.5816, 4.6611, 2.3678, -1.6731, 1.3445, -4.0292, 11.4356, -1.8619, 1.2938, -1.9443, 2.9368, 0.4883, -1.4868, 4.0847, -2.0469, 1.1756, 0.3459, 3.4048, 1.2276, 0.835, 1.3641, 2.1096, -2.4168, 2.6745, 0.2927, -0.4027, 3.7948, -0.7666, 2.069, -0.9545, 1.2095, 3.4002, -2.7148, -4.3599, 1.2823, 1.6418, -2.4505, 3.2826, 4.1007, -2.4448, 2.2456, -3.6417, 1.4843, 2.5933, 3.8958, 2.9512, 2.9442, 3.9978, 2.3227, 3.3161, 0.2517, 4.22, -0.3574, 4.3888, 1.9265, 3.4039, 0.9267, 0.963, 1.4738, 2.579, 0.3822, -4.4185, 2.1092, 5.6294, 2.7576, 7.5582, -1.9807, 6.247, 0.7838, -4.1089, 5.97, 6.0885, 4.4804, 7.9568, -5.6023, 5.4761, -3.3392, 4.6288, 1.7174, 1.1064, 7.2122, 5.1211, 1.0061, -1.7192, 4.0621, -1.0648, -14.458, 6.4062, 8.1341, 6.0613, 5.7624, 4.1814, -3.1078, 4.0005, 3.8729, -2.3617, 5.5497, -3.1224, -0.4945, -2.7416, 6.3282, 2.0327, 5.8896, -5.0242, -1.8929, 9.7829, -3.0086, -2.0518, 2.4654, -1.5635, 6.2114, -5.2793, -0.4224, -7.884, 0.4895, 3.5475, -9.1178, -6.3352, 7.7707, 0.6703, -2.4341, -0.9841, -6.2606, -8.0751, 1.9068, 7.6708, 0.8761, -1.4596, -1.9281, 3.7607, -6.0631, -0.7364, -7.1233, -7.7955, 0.6572, -10.8686, 8.8019, 5.8858, -5.8744, -2.6198, -1.5006, 0.9713, 8.2369, 5.2683, 1.2761, 1.7631, 1.95, -1.062, 5.6574, 0.8799, 5.2442, 1.8356, 1.3898, -1.5086, -1.5699, 1.3721, 1.945, -3.31, 0.4047, 1.0829, 1.5278, 4.0463, 3.4028, -2.4378, 2.1046, -1.7706, -1.8968, 3.1821, 0.1419, 3.7188, -0.9123, 0.8095, -1.6671, 3.7822, 0.035, 2.6479, 0.2714, 1.2449, 1.3424, -2.8779, 0.1353, 0.6173, 2.3793, 2.5768, 3.2584, 1.902, 1.4027, 1.5123, -1.9561, 1.1187, 4.4298, 3.4893, -1.6612, -3.1006, 1.4988, 3.74, 1.5907, -4.1808, -0.6937, -5.9981, -3.2483, -0.4319, 4.8702, 1.2954, -8.4305, -0.8408, 1.4466, -8.9106, -16.7951, -7.1752, 1.0642, -8.4289, -10.6478, 8.7598, 9.5709, 5.5932, 0.1985, 7.5634, 3.6103, 3.7318, -1.8576, 5.9982, 1.9316, -3.5973, 3.0975, 6.0347, 1.5786, -7.9851, -5.2349, 7.0061, -4.514, 8.9241, 3.8052, 0.0126, 6.6832, 2.3701, 3.4259, 0.0398, 2.9615, -1.132, -1.6669, -2.0333, -5.4324, -7.0296, 10.9292, -0.2208, 1.0229, 4.4814, 4.3242, 3.2908, -0.6274, -6.0101, 4.1203, 1.3889, 2.2523, 2.5843, -1.8465, 0.5799, 0.9114, 5.1796, 1.3575, 3.7503, 1.9267, 2.339, -1.3428, 5.0886, -2.8961, 3.1358, 4.5967, 3.0474, 2.5318, -3.4576, 4.5746, 0.8404, 0.7391, 2.3476, 2.0656, -1.3792, 4.0004, -1.402, 2.4425, 2.6894, -0.2519, -3.002, 5.7474, -1.5816, 0.9595, 1.2859, -1.9359, 2.0952, -6.0334, -2.4744, 8.4355, 0.2973, -1.5772, -4.9623, -0.1349, 6.7837, 0.3878, 1.7957, 0.2592, 3.6868, 0.1405, 0.0187, -1.824, 3.7035, 1.9765, 1.8966, 3.9708, 0.1165, 1.0271, 1.4073, 0.6242, 2.0563, 0.3062, 2.0628, 2.3335, 3.067, 1.1118, 5.7254, -3.6856, -2.5414, 0.3837, 2.4082, 0.6154, 3.7215, 3.2584, 0.5692, -6.835, 2.0378, -9.029, 8.0135, 3.2109, 1.9431, 4.0489, -6.3548, 7.0477, 1.4373, -1.5841, 1.8711, 2.1659, 3.6299, 3.0183, -0.0392, -8.2319, -12.3513, 12.8194, 4.7627, 1.9888, 5.6385, 7.188, -3.7997, -2.6593, 10.9464, 3.8449, -1.0096, 2.7575, 4.3796, 5.3369, 0.6984, 2.3345, 2.3754, 3.0406, -4.6509, 7.0061, -0.6929, 4.4816, -5.1747, -2.9942, 3.713, -8.7202, 0.1834, -8.2544, 9.2204, -4.0781, -9.2099, 8.0961, 5.5885, -5.7615, 6.2834, -2.44, 3.6714, 1.5609, 0.4347, 6.6076, 3.2124, -1.5921, -4.7678, -2.1027, 9.1326, 4.5431, 1.6804, 5.3396, 3.2175, -4.0845, 4.9585, 3.5882, 1.2172, 2.4256, 2.1357, -0.9068, 5.8701, -2.3838, 2.7847, -1.3048, -5.6344, -0.6781, 6.2945, 5.0852, 2.2443, 2.0272, 3.65], "中债": [0.1025, -0.3408, -2.2042, 4.0533, 1.9917, 1.2275, -3.0533, 1.0383, 2.01, 3.6458, 2.0383, 1.0483, 0.7442, 0.4433, 0.8958, 0.3683, -0.6783, 0.9867, 3.5333, 3.2767, 0.6225, 1.2975, 5.64, -3.9408, 0.9092, -1.4192, 0.1033, 2.7342, 2.0358, 3.745, 1.31, 2.4267, -2.6942, -0.5583, 2.4542, 1.5108, 1.5003, 1.4897, 1.4791, 1.4685, 1.4579, 1.4473, 1.4368, 1.4262, 1.4156, -2.5475, 0.4858, 1.4608, -2.9, -4.1375, -1.6108, -0.2367, -0.6775, 2.2617, 0.0683, -2.6258, -0.79, -0.0992, 1.1842, 2.4533, 3.4833, 0.7517, 1.575, 6.3642, 1.2, -1.2825, 1.8125, 1.3483, 1.5642, 2.5275, 1.83, 0.315, -3.5083, -1.0642, -1.8717, -0.87, 1.4708, 0.0358, -0.6333, 2.38, 3.185, 2.8558, -2.27, -0.2142, 0.3192, -2.1533, 2.0767, 0.935, 1.7558, 4.2175, -1.8983, 2.1783, 2.61, 0.3367, 1.3133, 2.1292, -0.2142, 0.0933, 0.3975, 1.3733, 1.3633, 0.0033, 3.8333, 4.9958, -1.13, -0.3633, 1.07, 0.3125, -4.3367, 0.7408, -0.3875, -1.6533, -0.805, -0.3408, 0.0433, 1.0983, -0.4083, -0.6983, -1.51, -1.1875, 2.5067, 3.46, -0.9975, 0.0692, 2.4742, 0.4275, 2.8283, -0.0475, 0.7083, 2.6558, 3.1567, 0.7052, 0.7021, 0.699, 0.696, 0.6929, 0.6898, 0.6867, 1.455, 3.0183, 2.9142, -3.5642, -1.7958, 0.5533, 1.3017, -4.0333, 3.5158, 1.2317, 2.2725, 3.6017, 2.6658, 4.29, -1.2292, -2.9375, 4.2233, -1.145, 2.6208, -0.555, -0.0208, 4.1825, -0.9608, -6.8725, 0.1817, 4.7583, -2.6408, -0.3583, 1.2242, 0.9892, 1.8067, 1.415, -5.5725, -0.7825, 0.505, 1.1783, 3.1192, 0.0883, 0.9908, -2.4667, 1.3142, 0.4783, -1.6233, -0.7767, 2.6108, 1.6108, 0.7717, -2.6083, 2.2992, -1.9225, -1.5975, 0.6742, 1.0458, -0.6117, -0.2258, -1.5692, -0.7225, -0.185, 0.0467, 1.7758, 2.1358, 1.1417, 0.6083, 1.2808, -1.5042, -0.5083, 2.5767, 0.0025, 0.6067, -2.0208, -0.2692, 2.5883, 2.7142, 0.2133, 1.04, 5.2325, -0.1467, 4.1333, 1.9908, 0.8467, -3.21, -2.2717, 0.8317, 0.6758, 1.1217, 0.8125, 0.9567, 7.3242, 3.7958, -2.8442, -2.9608, 3.2992, -2.96, -2.475, -0.72, 0.6408, 1.0867, 1.0025, -0.1308, 2.4233, -5.0258, 2.6075, 0.4817, -1.4708, 1.4733, 3.035, 2.7042, 1.1017, 3.0417, 0.235, 0.3092, -1.8675, -3.945, 0.2258, -0.5992, -0.365, 2.0417, 2.3967, -0.7775, 3.2833, 4.1492, 1.105, -1.0058, 0.5067, 1.4775, 0.9375, -1.0217, -1.5342, 2.2342, 2.3608, -0.5142, 1.0675, -0.1433, -0.1408, -0.6633, 0.845, -0.9633, -1.4017, 1.015, 0.255, 1.0783, -3.2075, -2.9458, -0.1367, -1.6333, 1.8367, 0.6933, -0.9625, -2.45, 2.6042, 0.1775, -1.0975, 0.5667, 1.6125, -0.3533, -0.6475, 1.6117, -1.1042, 1.46, 1.3708, -0.4425, 3.7642, -2.3508, 0.9767, -0.4575, -0.3758, -1.42, 1.2225, 0.0858, 1.5867, -0.8292, -0.6683, -0.5842, 3.3242, 1.2642, -0.0233, -0.3217, -0.3167, 2.9133, 0.1075, -1.0925, 0.3458, -1.3817, -4.065, -0.3433, 0.2625, 0.5617, -0.0425, 1.085, 0.775, -0.7317, 0.4033, 1.3758, -1.4125, -0.345, -0.4142, 0.0425, -1.2308, -0.765, 0.8958, -1.5117, 1.0575, -0.1517, -0.6725, 1.0625, -1.2717, -0.055, 1.2983, 2.7117, 0.8092, -0.4725, 2.385, -0.1892, 2.815, 1.4358, -0.4533, 3.5283, -1.0842, 0.4292, -0.6992, -0.39, 2.9158, 3.335, 3.9742, 0.1058, 0.48, 0.1, 0.6242, -0.5075, 0.0233, -0.7267, 0.1817, 0.03, -0.645, -2.2125, -1.2125, 0.5267, 0.5967, -0.5342, 1.4225, -0.5425, -1.5108, -1.4183, 0.3983, -0.805, -0.87, -1.6092, -6.09, -2.9458, 1.4392, -1.8742, 1.4492, -4.4892, -5.6367, -1.1458, 2.7708, -0.3308, 2.7517, -4.25, 5.6258, 0.7675, -1.8625, -3.0383, 0.2242, 0.1508, -1.5717, -0.35, 3.5583, 3.8983, 0.0342, -2.5125, 0.5942, -3.1583, 1.7558, 1.6658, 3.5267, 2.6667, 1.8908, -3.7517, 0.4933, -0.9333, 0.7308, 2.0767, 1.0825, 2.4992, -1.875, 1.5992, -1.34, 2.9533, 0.2242]}};
+const C = {main:'#B23A1C', base:'#8A94A6', line:'#1F4E79', rule:'#E2DCCE', mute:'#8A8172', ink:'#1B1A17'};
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function T(zh, en){ return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh; }
+
+const ORD = ['股票', '中债'];
+const N = DATA.months.length, YEARS = N / 12;
+const R = {股票: DATA.legs['股票'], 中债: DATA.legs['中债']};
+const CASHMEAN = DATA.cash.reduce(function (a, b) { return a + b; }, 0) / N / 100;
+
+function weightsOf(eqPct){
+  const e = eqPct / 100;
+  return {股票: e, 中债: 1 - e};
+}
+
+function run(w0){
+  const r = new Array(N);
+  let w = Object.assign({}, w0), prev = null;
+  for (let i = 0; i < N; i++) {
+    const yr = DATA.months[i].slice(0, 4);
+    if (prev === null || yr !== prev) w = Object.assign({}, w0);
+    const x = {}; let ri = 0;
+    ORD.forEach(function (k) { x[k] = R[k][i] / 100; ri += w[k] * x[k]; });
+    r[i] = ri;
+    ORD.forEach(function (k) { w[k] = w[k] * (1 + x[k]) / (1 + ri); });
+    prev = yr;
+  }
+  const curve = [1];
+  for (let i = 0; i < N; i++) curve.push(curve[i] * (1 + r[i]));
+  let peak = -Infinity;
+  const dd = curve.map(function (v) { peak = Math.max(peak, v); return v / peak - 1; });
+  const ann = (Math.pow(curve[N], 1 / YEARS) - 1) * 100;
+  const mean = r.reduce(function (a, b) { return a + b; }, 0) / N;
+  const vol = Math.sqrt(r.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / (N - 1)) * Math.sqrt(12) * 100;
+  return {curve: curve, dd: dd, ann: ann, vol: vol,
+          ddmin: Math.min.apply(null, dd) * 100,
+          sharpe: (mean * 12 - CASHMEAN * 12) / (vol / 100)};
+}
+
+/* 轴范围固定：预先算出 0%–100% 全部曲线的包络，滑动时坐标轴不会跳 */
+const GRID = [];
+for (let q = 0; q <= 100; q += 5) GRID.push({q: q, res: run(weightsOf(q))});
+let lmin = Infinity, lmax = -Infinity, ddMin = 0;
+GRID.forEach(function (o) {
+  o.res.curve.forEach(function (v) { lmin = Math.min(lmin, Math.log(v)); lmax = Math.max(lmax, Math.log(v)); });
+  ddMin = Math.min(ddMin, o.res.ddmin / 100);
+});
+
+const BASE = run(weightsOf(60)).curve;
+const W = 900, H = 360, LP = 68, RP = 24;
+const TOP = {y: 34, h: 168}, BOT = {y: 254, h: 62};
+const X = function (i) { return LP + i / N * (W - LP - RP); };
+const Y = function (v) { return TOP.y + TOP.h - (Math.log(v) - lmin) / (lmax - lmin) * TOP.h; };
+const YD = function (v) { return BOT.y + (v / ddMin) * BOT.h; };
+
+const slider = document.getElementById('i-w');
+const playBtn = document.getElementById('i-play');
+const svg = document.getElementById('i-svg');
+
+let eqPct = 60;
+let current = run(weightsOf(60));
+let shown = current.curve.slice();
+let morphFrom = shown.slice(), morphTo = shown.slice(), morphT = 1, morphStart = 0;
+let tracerT = 1, playing = false, lastTs = 0, looping = false;
+
+function ease(t){ return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+function polyline(points, stroke, width, dash){
+  const a = {points: points.join(' '), fill: 'none', stroke: stroke, 'stroke-width': width};
+  if (dash) a['stroke-dasharray'] = dash;
+  return el('polyline', a);
+}
+
+function draw(){
+  svg.innerHTML = '';
+  svg.appendChild(polyline(BASE.map(function (v, i) { return X(i) + ',' + Y(v); }), C.base, 1.4, '4 4'));
+  svg.appendChild(polyline(shown.map(function (v, i) { return X(i) + ',' + Y(v); }), C.main, 2.1));
+  svg.appendChild(el('text', {x: LP, y: TOP.y - 12, 'font-size': 11, fill: C.mute},
+    T('组合净值（对数刻度，1990-01 = 1）；虚线 = 原版 60/40',
+      'portfolio value (log, Jan 1990 = 1); dashed = the original 60/40')));
+  [1, 2, 4, 8, 16, 32].forEach(function (v) {
+    if (Math.log(v) < lmin || Math.log(v) > lmax) return;
+    const y = Y(v);
+    svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: y, y2: y, stroke: C.rule, 'stroke-width': 0.8, 'stroke-dasharray': '3 4'}));
+    svg.appendChild(el('text', {x: LP - 8, y: y + 4, 'font-size': 10, fill: C.mute, 'text-anchor': 'end'}, v + 'x'));
+  });
+  const area = [X(0) + ',' + YD(0)];
+  shown.forEach(function (v, i) { area.push(X(i) + ',' + YD(current.dd[i])); });
+  area.push(X(N) + ',' + YD(0));
+  svg.appendChild(el('polygon', {points: area.join(' '), fill: 'rgba(31,78,121,0.13)', stroke: 'none'}));
+  svg.appendChild(polyline(shown.map(function (v, i) { return X(i) + ',' + YD(current.dd[i]); }), C.line, 1.6));
+  svg.appendChild(el('line', {x1: LP, x2: W - RP, y1: YD(0), y2: YD(0), stroke: C.rule, 'stroke-width': 1}));
+  svg.appendChild(el('text', {x: LP, y: BOT.y - 10, 'font-size': 11, fill: C.mute},
+    T('回撤（%，叠加显示）', 'drawdown (%, stacked below)')));
+  [0, 0.5, 1].forEach(function (f) {
+    const v = ddMin * f;
+    svg.appendChild(el('text', {x: LP - 8, y: YD(v) + 4, 'font-size': 10, fill: C.mute, 'text-anchor': 'end'},
+      Math.round(v * 100)));
+  });
+  [1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025].forEach(function (yr) {
+    let idx = 0;
+    for (let i = 0; i < N; i++) if (parseInt(DATA.months[i].slice(0, 4), 10) <= yr) idx = i + 1;
+    svg.appendChild(el('text', {x: X(idx), y: BOT.y + BOT.h + 16, 'font-size': 10, fill: C.mute, 'text-anchor': 'middle'}, yr));
+  });
+  const k = Math.round(tracerT * N);
+  const vx = X(k);
+  svg.appendChild(el('line', {x1: vx, x2: vx, y1: TOP.y - 4, y2: BOT.y + BOT.h, stroke: C.ink, 'stroke-width': 1, opacity: 0.35}));
+  if (k > 0) {
+    svg.appendChild(el('circle', {cx: vx, cy: Y(current.curve[k]), r: 4, fill: C.main, stroke: '#fff', 'stroke-width': 1.5}));
+    svg.appendChild(el('circle', {cx: vx, cy: YD(current.dd[k]), r: 3.2, fill: C.line, stroke: '#fff', 'stroke-width': 1.3}));
+  }
+  const mi = Math.max(0, Math.min(N - 1, k - 1));
+  document.getElementById('i-year').textContent = k === 0 ? DATA.months[0].slice(0, 4) : DATA.months[mi];
+  document.getElementById('i-val').textContent = current.curve[k].toFixed(2) + 'x';
+  document.getElementById('i-ddc').textContent = (current.dd[k] * 100).toFixed(1) + '%';
+}
+
+function stats(){
+  document.getElementById('i-wlab').textContent = eqPct + '%';
+  document.getElementById('i-ann').textContent = current.ann.toFixed(2) + '%';
+  document.getElementById('i-vol').textContent = current.vol.toFixed(1) + '%';
+  document.getElementById('i-dd').textContent = current.ddmin.toFixed(1) + '%';
+  document.getElementById('i-sh').textContent = current.sharpe.toFixed(2);
+}
+
+function loop(ts){
+  let need = false;
+  if (morphT < 1) {
+    morphT = Math.min(1, (ts - morphStart) / 340);
+    const e = ease(morphT);
+    shown = morphFrom.map(function (v, i) { return v + (morphTo[i] - v) * e; });
+    need = true;
+  }
+  if (playing) {
+    const dt = lastTs ? ts - lastTs : 16;
+    tracerT = Math.min(1, tracerT + dt / 9000);
+    if (tracerT >= 1) {
+      playing = false;
+      playBtn.innerHTML = '<span class="zh">▶ 重播</span><span class="en">▶ Replay</span>';
+    }
+    need = true;
+  }
+  lastTs = ts;
+  draw();
+  if (need) requestAnimationFrame(loop); else looping = false;
+}
+function ensure(){ if (!looping) { looping = true; lastTs = 0; requestAnimationFrame(loop); } }
+
+function setEquity(q, animate){
+  eqPct = q;
+  current = run(weightsOf(q));
+  if (animate === false) {
+    shown = current.curve.slice(); morphTo = shown.slice(); morphT = 1;
+  } else {
+    const e = ease(morphT);
+    morphFrom = shown.map(function (v, i) { return v + (morphTo[i] - v) * e; });
+    morphTo = current.curve.slice();
+    morphT = 0; morphStart = performance.now();
+  }
+  stats();
+  ensure();
+}
+
+slider.addEventListener('input', function (ev) { setEquity(parseInt(ev.target.value, 10), true); });
+document.getElementById('i-reset').addEventListener('click', function () {
+  slider.value = 60; setEquity(60, true); tracerT = 1; ensure();
+});
+playBtn.addEventListener('click', function () {
+  tracerT = 0; playing = true; lastTs = 0; ensure();
+  playBtn.innerHTML = '<span class="zh">⏸ 暂停</span><span class="en">⏸ Pause</span>';
+});
+new MutationObserver(function () {
+  playBtn.innerHTML = playing
+    ? '<span class="zh">⏸ 暂停</span><span class="en">⏸ Pause</span>'
+    : (tracerT >= 1 ? '<span class="zh">▶ 重播</span><span class="en">▶ Replay</span>'
+                    : '<span class="zh">▶ 播放这段历史</span><span class="en">▶ Play the history</span>');
+  draw();
+}).observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+
+stats();
+draw();
+</script>

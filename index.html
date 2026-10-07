@@ -338,6 +338,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nfeat .nflab i{font-style:normal;font-family:var(--f-body);font-size:12.5px;font-weight:600;
   letter-spacing:0;color:var(--mute);margin-left:8px}
 .nfgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.nfgrid>*:last-child:nth-child(odd){grid-column:1/-1}
 .nfcard{display:flex;flex-direction:column;gap:5px;padding:13px 14px;border:1px solid var(--line);
   border-radius:12px;background:#fff;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s}
 .nfcard:hover{text-decoration:none;transform:translateY(-2px);box-shadow:var(--sh2);border-color:var(--line2)}
@@ -912,7 +913,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="10">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
+          <div><b data-to="11">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1032,21 +1033,27 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">10 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">10 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">11 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">11 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
         <div class="nfeat rv">
-          <span class="nflab"><span class="zh">入门科普 · 先看这四篇</span><span class="en">Start here · four explainers</span><i><span class="zh">组合怎么分钱、黄金管不管用、VIX 该不该贪婪</span><span class="en">how a portfolio splits its money, whether gold hedges, whether high VIX means buy</span></i></span>
+          <span class="nflab"><span class="zh">入门科普 · 先看这五篇</span><span class="en">Start here · five explainers</span><i><span class="zh">配置怎么分钱、60/40 是不是最优、黄金管不管用、VIX 该不该贪婪</span><span class="en">how a portfolio splits its money, whether the 60/40 is best, whether gold hedges, whether high VIX means buy</span></i></span>
           <div class="nfgrid">
+            <a class="nfcard" href="notes/sixty-forty-variants/">
+              <span class="nfk"><span class="zh">配置基准</span><span class="en">The baseline</span></span>
+              <b><span class="zh">60/40 及其变体：最有名的配置规则经得起检验吗</span><span class="en">The 60/40, tested: does the most famous allocation rule hold up?</span></b>
+              <span class="nfs"><span class="zh">60% 这个数字比 40–50% 更差；崩在股债同跌上。</span><span class="en">Sixty percent is worse than 40–50% — and it breaks when both legs fall together.</span></span>
+              <span class="nfm">2026-10-07</span>
+            </a>
             <a class="nfcard" href="notes/permanent-portfolio/">
-              <span class="nfk"><span class="zh">配置入门</span><span class="en">Allocation basics</span></span>
+              <span class="nfk"><span class="zh">配置进阶</span><span class="en">Allocation, next step</span></span>
               <b><span class="zh">永久组合实测：四等分真的能应对任何环境吗</span><span class="en">The Permanent Portfolio, tested</span></b>
               <span class="nfs"><span class="zh">四等分资金＝等风险；但通胀那一格它没扛住。</span><span class="en">Equal money, nearly equal risk — but it failed the inflation test.</span></span>
               <span class="nfm">2026-10-05</span>
             </a>
             <a class="nfcard" href="notes/all-weather/">
-              <span class="nfk"><span class="zh">配置进阶</span><span class="en">Allocation, next step</span></span>
+              <span class="nfk"><span class="zh">风险均衡</span><span class="en">Risk balance</span></span>
               <b><span class="zh">全天候组合实测：不预测，真的能穿越周期吗</span><span class="en">All Weather, tested</span></b>
               <span class="nfs"><span class="zh">更稳，却没跑赢 60/40；风险其实压在长债上。</span><span class="en">Steadier than a 60/40, no better on return, with the risk sitting in bonds.</span></span>
               <span class="nfm">2026-10-04</span>
@@ -1066,6 +1073,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv is-feat">
+            <summary>
+              <span class="ntag">入门 · PORTFOLIO · 资产配置 · 2026-10-07</span>
+              <h4><a href="notes/sixty-forty-variants/"><span class="zh">60/40 及其变体：最有名的配置规则经得起检验吗</span><span class="en">The 60/40, tested: does the most famous allocation rule hold up?</span></a></h4>
+              <p class="nsum"><span class="zh">它是行业基准，但不是最优：40–50% 的夏普一样，最大回撤却小 5.5 个百分点。真正让它崩的是股债同跌。</span>
+              <span class="en">The industry benchmark, not the optimum: 40–50% earns the same Sharpe with a 5.5-point smaller drawdown. What actually breaks it is stocks and bonds falling together.</span></p>
+              <a class="go" href="notes/sixty-forty-variants/"><span class="zh">读全文（10 张图 · 可拖股票权重的交互）→</span><span class="en">Read the note (10 figures + interactive stock-weight slider) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">用 1990-01 至 2025-09 共 428 个月的美国数据回测：年化 <b>9.09%</b>、波动 9.1%、最大回撤 <b>−27.0%</b>、夏普 0.70，35.7 年终值 22.3 倍。但 60% 这个数字恰好落在最差的一段：夏普峰值在 40%，40–50% 是一条平台（0.72，回撤只 −21.5%）；<b>从 50% 加到 60%，回撤跳 5.5 个百分点，年化只多 0.6 个百分点</b>。归因很干净：股票贡献 7.08、中债 2.06，合计 9.14 对几何 9.09。</span>
+              <span class="en">428 monthly US observations from 1990-01 to 2025-09: <b>9.09%</b> a year, 9.1% volatility, a <b>−27.0%</b> drawdown, a 0.70 Sharpe and 22.3× terminal wealth over 35.7 years. Sixty percent sits in the worst stretch of the curve — the Sharpe peaks at 40%, and 40–50% is a plateau (0.72, drawdown only −21.5%). <b>Going from 50% to 60% adds 5.5 points of drawdown for 0.6 points of return.</b> The attribution is clean: stocks 7.08 and bonds 2.06, 9.14 against a 9.09 geometric.</span></p>
+              <p class="take"><span class="zh">真正让它失效的是股债同跌：全样本相关性 −0.04，但 CPI 高于 5% 的 33 个月里翻到 <b>+0.38</b>——2022 年两条腿各跌 18.1%，13.5% 的月份两条腿同时下跌。修补方案里最便宜的是把 10% 挪给黄金：夏普 <b>0.70 → 0.76</b>、回撤 −27.0% → −22.7%，代价是终值少 4.2%；加商品（0.72）和加现金（0.71）都不如它。1.5 倍杠杆把年化推到 11.75%，代价是回撤 −39.0%——<b>杠杆只放大结果，不改变夏普</b>。</span>
+              <span class="en">What breaks it is correlation: −0.04 over the full sample, but <b>+0.38</b> across the 33 months with CPI above 5%. Both legs lost 18.1% in 2022, and 13.5% of all months saw both fall. The cheapest repair is shifting 10% into gold — Sharpe <b>0.70 → 0.76</b>, drawdown −27.0% → −22.7%, at a 4.2% cost to terminal wealth; commodities (0.72) and cash (0.71) are worse. Levering 1.5× lifts the return to 11.75% and the drawdown to −39.0% — <b>leverage scales the outcome, not the Sharpe</b>.</span></p>
+            </div>
+          </details>
 
           <details class="nitem rv">
             <summary>

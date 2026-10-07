@@ -3,7 +3,14 @@
   <title>Aylon · Notes</title>
   <link>https://aayloo.github.io/notes/</link>
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
-  <lastBuildDate>2026-10-05</lastBuildDate>
+  <lastBuildDate>2026-10-07</lastBuildDate>
+  <item>
+    <title>60/40 及其变体：最有名的配置规则经得起检验吗</title>
+    <link>https://aayloo.github.io/notes/sixty-forty-variants/</link>
+    <guid>https://aayloo.github.io/notes/sixty-forty-variants/</guid>
+    <pubDate>Wed, 07 Oct 2026 00:00:00 +0000</pubDate>
+    <description>用 1990-01 至 2025-09 共 428 个月的美国数据回测 60/40 及其变体。它年化 9.09%、波动 9.1%、最大回撤 −27.0%、夏普 0.70——而 60% 这个数字恰好落在最差的区间：40–50% 的夏普同为 0.72，最大回撤只有 −21.5%。它真正的失效场景是股债同跌：2022 年两条腿各跌 18.1%，全样本有 13.5% 的月份两条腿同时下跌，CPI 高于 5% 时相关性从 −0.04 翻到 +0.38。把 10% 挪给黄金是最便宜的修补（夏普 0.76、回撤 −22.7%，代价是终值少 4.2%）。含 10 张图表（其中 1 张可拖动股票权重）与 2 张附录表。</description>
+  </item>
   <item>
     <title>趋势跟踪实测：它是一份保险，不是一台发动机</title>
     <link>https://aayloo.github.io/notes/trend-following/</link>
