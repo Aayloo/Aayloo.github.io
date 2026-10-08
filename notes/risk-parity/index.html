@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>风险平价实测：风险被拍平了，收益没有跟上来 · Working Paper</title>
+<meta name="description" content="研究笔记：不按资金分配、按风险分配，这条原则经得起检验吗？用 1993-02 至 2025-09 共 392 个月的美国数据，把股票、长债、黄金、商品四条腿做成等风险贡献组合（每年 1 月按最近 36 个月协方差重解权重）：32.7 年年化 7.40%、波动 7.2%、最大回撤 −22.5%、夏普 0.69。机制确实成立——60/40 里 60% 的钱拿走 93.5% 的风险，风险平价把它拍到 27.3 / 21.7 / 24.5 / 26.6；但收益没有跟上来：它比 60/40 少 1.3 个百分点年化，甚至输给最笨的 25/25/25/25（夏普 0.73 对 0.69）。要补回这 1.3 个点就得上杠杆，而上了杠杆之后 2022 年它跌得比 60/40 更深。273 个滚动十年窗口里，它只有 98 个（36%）跑赢。含 10 张静态图表、1 张可拖动的交互图与 2 张附录表。">
+<meta property="og:title" content="风险平价实测：风险被拍平了，收益没有跟上来">
+<meta property="og:description" content="机制成立：60/40 里 60% 的钱拿走 93.5% 的风险，风险平价把它拍到 27/22/25/27。收益没跟上：7.40% 对 60/40 的 8.70%，甚至输给四等分。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/risk-parity/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-rp.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="风险平价实测——四条腿的权重与风险贡献，以及 1993 年以来的累计净值">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="风险平价实测：风险被拍平了，收益没有跟上来">
+<meta name="twitter:description" content="机制成立，收益没跟上：年化 7.40% 对 60/40 的 8.70%，273 个滚动十年窗口里只有 36% 跑赢。">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-rp.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/risk-parity/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+/* ===== 研究简报版式（Research Note） ===== */
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.1em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(27px,3.2vw,40px);line-height:1.16;color:var(--e-ink);margin:16px 0 0}
+.rn-tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;padding:0}
+.rn-tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--e-accent);border:1px solid var(--e-rule);border-radius:999px;padding:4px 11px;background:#fff}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:12px 0 0;max-width:720px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.vbox{background:#fff;border:1px solid var(--e-rule);padding:14px 14px 10px;margin-top:8px}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box}
+/* 窄屏：两栏网格必须允许收缩，否则列多的表格会把页面撑宽 */
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-family:var(--f-body);font-size:13px}
+.ctrl button,.ctrl select{font:inherit;padding:6px 10px;border:1px solid var(--e-rule);background:#fff;border-radius:4px;cursor:pointer}
+.ctrl button.primary{background:var(--e-accent);color:#fff;border-color:var(--e-accent)}
+.ctrl input[type=range]{flex:1;min-width:110px}
+.ctrl label{display:flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap}
+.vbox svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--e-rule)}
+.vstat{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--f-body);font-size:13px;color:#5A5347;margin-top:9px}
+.vstat b{font-family:var(--mono);font-size:19px;color:var(--e-ink)}
+.vstat2{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-body);font-size:12.6px;color:#8A8172;margin-top:6px}
+.vstat2 b{font-family:var(--mono);font-size:14px;color:var(--e-accent)}
+.appendix{border-top:2px solid var(--e-ink);margin-top:44px;padding-top:12px}
+.appendix>summary{cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--e-accent);margin-bottom:10px}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media print{
+  .ntop,#prog,.toc,.pager,.vbox .ctrl,footer,.badges{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+  .appendix{border-top:1pt solid #000}
+  .appendix>summary{display:none}
+  .appendix>*:not(summary){display:block!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+<div class="rn-masthead"><span><span class="zh">Working Paper · 研究工作稿</span><span class="en">Working Paper</span></span><span><span class="zh">2026-10-08 · v1.0 · 组合实测 04 · 资产配置</span><span class="en">2026-10-08 · v1.0 · Portfolio test 04 · Asset allocation</span></span></div>
+  <h1 class="rn-title"><span class="zh">风险平价实测：风险被拍平了，收益没有跟上来</span><span class="en">Risk parity, tested: the risk gets flattened, the return does not follow</span></h1>
+  <p class="rn-tags"><span><span class="zh">投资</span><span class="en">Investing</span></span><span><span class="zh">组合实测</span><span class="en">Backtest</span></span><span><span class="zh">资产配置</span><span class="en">Asset allocation</span></span></p>
+  <p class="rn-standfirst"><span class="zh">风险平价是一条几乎无可反驳的原则：不按资金分配，按风险分配。用 1993-02 至 2025-09 共 392 个月的美国数据，把四条腿（股票、长债、黄金、商品）每年 1 月按最近 36 个月协方差重解一次权重，32.7 年跑出来是年化 <b>7.40%</b>、波动 7.2%、最大回撤 −22.5%、夏普 0.69。<b>机制确实成立</b>——60/40 里 60% 的钱拿走 93.5% 的风险，而风险平价把四条腿的风险拍到 27.3 / 21.7 / 24.5 / 26.6。<b>但把风险拍平之后，收益没有跟上来</b>：它比 60/40 少 1.3 个百分点年化，甚至输给最笨的 25/25/25/25（夏普 0.73 对 0.69）；而要补回这 1.3 个点就得上杠杆，上了杠杆之后，2022 年它跌得比 60/40 还深。</span>
+  <span class="en">Risk parity is close to unarguable as a principle: allocate by risk, not by capital. On 392 monthly US observations from February 1993 to September 2025, re-solving an equal-risk-contribution portfolio across four legs (equities, long bonds, gold, commodities) every January from the trailing 36-month covariance, it returns <b>7.40%</b> a year with 7.2% volatility, a −22.5% maximum drawdown and a Sharpe ratio of 0.69 over 32.7 years. <b>The mechanism works</b> — in a 60/40, sixty per cent of the capital carries 93.5% of the risk, while risk parity holds the four legs at 27.3 / 21.7 / 24.5 / 26.6. <b>But flattening the risk does not bring the return with it</b>: it earns 1.3 points a year less than the 60/40, and loses even to the dumbest possible 25/25/25/25 (Sharpe 0.73 against 0.69). Closing that 1.3-point gap requires leverage — and with leverage, 2022 hurt more than the 60/40 it was trying to beat.</span></p>
+
+  <ul class="rn-findings">
+    <li><span class="zh">32.7 年：年化 <b>7.40%</b>、波动 7.2%、最大回撤 <b>−22.5%</b>、夏普 0.69，1 元变 10.3 元。同一份数据里 60/40 是 8.70% / 9.0% / −27.0% / 0.70（15.2 元），等权四资产 7.95% / 7.5% / −23.0% / <b>0.73</b>（12.2 元），全天候 7.61% / 7.5% / −21.7% / 0.68（11.0 元），纯股 10.80% / 14.8% / −50.9% / 0.60。</span>
+        <span class="en">Over 32.7 years: <b>7.40%</b> a year, 7.2% volatility, a <b>−22.5%</b> maximum drawdown, Sharpe 0.69, and one dollar becomes 10.3. In the same sample the 60/40 made 8.70% / 9.0% / −27.0% / 0.70 (15.2), equal-weighted four assets 7.95% / 7.5% / −23.0% / <b>0.73</b> (12.2), All Weather 7.61% / 7.5% / −21.7% / 0.68 (11.0) and all-equities 10.80% / 14.8% / −50.9% / 0.60.</span></li>
+    <li><span class="zh">机制是真的：四条腿的风险贡献是 <b>27.3 / 21.7 / 24.5 / 26.6</b>，离 25% 最远只差 2.3 个百分点；同样四条腿直接四等分则是 25.1 / 13.6 / 21.7 / <b>39.6</b>——商品一条腿吃掉四成风险。求解校验的偏差是 0.0。</span>
+        <span class="en">The mechanism is real: the four legs contribute <b>27.3 / 21.7 / 24.5 / 26.6</b> per cent of the risk, the furthest only 2.3 points from 25%, whereas simply quartering the same four legs gives 25.1 / 13.6 / 21.7 / <b>39.6</b> — commodities alone carrying four tenths of the risk. The solver's verification residual is 0.0.</span></li>
+    <li><span class="zh">但解出来的权重几乎就是四等分：平均离 25% 只有 <b>6.5 个百分点</b>，最大一次偏离 30.6 个百分点。而这 6.5 个百分点的偏离让它<b>输给了最笨的那个组合</b>——等权四资产的年化和夏普（7.95% / 0.73）都高于它（7.40% / 0.69）。</span>
+        <span class="en">Yet the solved weights are almost a quarter each: an average gap of just <b>6.5 percentage points</b> from 25%, with a single worst deviation of 30.6 points. And that 6.5-point gap is enough to <b>lose to the dumbest possible portfolio</b> — quartering the same four assets beats it on both return and Sharpe (7.95% / 0.73 against 7.40% / 0.69).</span></li>
+    <li><span class="zh">优势全部集中在 2003–2012：那十年 10.0% 对 60/40 的 6.9%；前十年 6.5% 对 9.5%，后十三年 6.1% 对 9.4%（同一段里长债是 <b>−0.5%</b>）。273 个滚动十年窗口里它只有 <b>98 个（36%）</b>跑赢，而"跑赢"与"长债还在赚钱"的相关系数是 <b>0.386</b>。</span>
+        <span class="en">The advantage is concentrated entirely in 2003–2012: 10.0% against the 60/40's 6.9%. The first decade is 6.5% against 9.5%, the last thirteen years 6.1% against 9.4% (with long bonds at <b>−0.5%</b> over that stretch). It beats the 60/40 in <b>98 of 273</b> rolling ten-year windows, 36%, and "beating it" correlates with "long bonds still paying" at <b>0.386</b>.</span></li>
+    <li><span class="zh">杠杆是绕不开的成本项：固定 1.5 倍、零融资成本能把年化从 7.40% 抬到 9.71%，但波动同比例抬到 10.75%，夏普一分不变（0.69）。换成可实施口径（逐年重设倍数、真实付融资成本），年化从 8.53%（零利差）掉到 <b>7.99%</b>（1% 利差），都低于 60/40 的 8.70%——<b>盈亏平衡的融资利差不存在</b>。</span>
+        <span class="en">Leverage is an unavoidable cost line: a constant 1.5x with zero funding cost lifts the return from 7.40% to 9.71%, but volatility rises proportionally to 10.75% and the Sharpe is unchanged at 0.69. Under an implementable convention — leverage reset annually, funding actually paid — the return falls from 8.53% at a zero spread to <b>7.99%</b> at a one-point spread, all of it below the 60/40's 8.70%. <b>The break-even funding spread does not exist.</b></span></li>
+  </ul>
+
+  <div class="rn-abstract">
+    <p class="zh"><b>摘要</b>本文检验一条被广泛接受的原则：组合应该按风险分配，而不是按资金分配。样本是 1993-02 至 2025-09 共 392 个月的美国月度数据，与《全天候组合实测》《永久组合实测》《60/40 及其变体》完全同一份公开数据管线。四条腿是股票、长债、黄金、商品；等风险贡献（ERC）权重每年 1 月用最近 36 个月协方差重解一次，年内随价格漂移。结果分三层：<b>机制成立</b>（四条腿的风险贡献被拍到 27/22/25/27，而 60/40 是 93.5/6.5）；<b>收益不成立</b>（年化 7.40%，比 60/40 低 1.3 个百分点，也不如四等分）；<b>优势是条件的</b>（全部来自 2003–2012 的长债牛市，滚动十年窗口里只有 36% 跑赢）。<b>边界</b>样本从 1993 年开始，不含 1970 年代；债券用收益率曲线合成而非基金净值；黄金是现货裸价；全部是美国资产，不扣交易成本与税。</p>
+    <p class="en"><b>Abstract</b>This paper tests a widely accepted principle: portfolios should be allocated by risk, not by capital. The sample is 392 monthly US observations from February 1993 to September 2025, on exactly the same public data pipeline as the All Weather, Permanent Portfolio and 60/40 notes. The four legs are equities, long bonds, gold and commodities; equal-risk-contribution (ERC) weights are re-solved each January from the trailing 36-month covariance and allowed to drift within the year. The result has three layers: <b>the mechanism holds</b> (the four legs' risk contributions land at 27/22/25/27, against 93.5/6.5 for a 60/40); <b>the return does not</b> (7.40% a year, 1.3 points below the 60/40 and behind a naive four-way split); and <b>the advantage is conditional</b> (all of it comes from the 2003–2012 bond bull market, with only 36% of rolling ten-year windows won). <b>Limits</b> the sample starts in 1993 and excludes the 1970s; bonds are synthesised from the yield curve rather than taken from fund NAVs; gold is spot without carry; everything is US, and transaction costs and taxes are ignored.</p>
+  </div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　风险平价 · 等风险贡献 · 资产配置 · 杠杆 · 融资成本 · 债券牛市</span><span class="en"><b>Keywords</b>　risk parity · equal risk contribution · asset allocation · leverage · funding cost · bond bull market</span></p>
+
+  <div class="split">
+    <div class="prose">
+
+    <h2 id="s1"><span class="num">01</span><span class="zh">它是什么</span><span class="en">What it is</span></h2>
+    <p class="zh">先说清楚三个经常被混着用的名字。<b>等风险贡献（ERC）</b>是一个数学条件：调整权重，让每条腿对组合方差的边际贡献相等。<b>风险平价</b>是这条条件加上资金约束后的做法——通常意味着低波动资产拿更多资金、高波动资产拿更少。<b>全天候</b>是桥水那条具体产品线，它按经济环境（增长与通胀的四种组合）分配风险，不等于四条腿各 25%。本文测的是第一个和第二个：一条可以完全写下来的规则。</p>
+    <p class="zh">它想解决的是一道很直观的缺口。把 60% 的钱放进股票、40% 放进债券，拿到的并不是 60/40 的收益结构，而是 60/40 的资金结构和<b>93.5/6.5 的风险结构</b>——股票那条腿的波动是债券的两倍多，60% 的钱自己就扛下了九成以上的风险。风险平价要做的，是把这道缺口补上：不再让资金比例相等，而让<b>每一条腿扛同样的风险</b>。</p>
+    <p class="zh">代价也藏在这个动作里。要把高波动资产的风险压到 25%，就得给它更少的资金；省下来的资金要买低波动资产，而那些资产的长期收益通常更低。于是<b>风险被拍平的同时，组合的收益也被一起拍下去了</b>。要把它补回来，只有一条路——加杠杆买整个组合。这就是为什么风险平价在实践里总是和杠杆绑在一起，也是本文要回答的第三个问题。</p>
+    <p class="zh">所以全文要回答的是三件事：（一）<b>风险真的被拍平了吗</b>？（二）拍平之后收益差多少，<b>能不能靠杠杆补回来</b>？（三）它的优势是规则本身带来的，还是特定时代给的？</p>
+    <p class="en">Three names get used interchangeably and should not be. <b>Equal risk contribution (ERC)</b> is a mathematical condition: move the weights until every leg contributes the same amount to portfolio variance. <b>Risk parity</b> is that condition plus a capital constraint — in practice, low-volatility assets get more of the money and high-volatility assets less. <b>All Weather</b> is Bridgewater's specific product line, which budgets risk across economic environments (the four combinations of growth and inflation) and is not a four-way split. This paper tests the first two: a rule that can be written down completely.</p>
+    <p class="en">It exists to close a specific gap. Put 60% of the money in equities and 40% in bonds and you do not get a 60/40 return structure, you get a 60/40 <i>capital</i> structure and a <b>93.5/6.5 risk</b> structure — equities are more than twice as volatile as the bond leg, so 60% of the capital carries more than ninety per cent of the risk on its own. Risk parity closes that gap: instead of equalising capital, it equalises <b>the risk each leg carries</b>.</p>
+    <p class="en">The cost hides in the same move. To hold a volatile asset at a quarter of the risk you must give it less capital, and the capital freed up buys low-volatility assets, which usually earn less over the long run. So <b>flattening the risk flattens the return along with it</b>. The only way to bring the return back is to lever the whole portfolio — which is why risk parity and leverage travel together in practice, and why it is the third question here.</p>
+    <p class="en">Three questions follow. (1) <b>Is the risk actually flattened?</b> (2) Once it is, how much return is given up, and <b>can leverage buy it back?</b> (3) Is the advantage a property of the rule, or of a particular era?</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 1 · 钱和风险是两件事</span><span class="en">Exhibit 1 · money and risk are not the same thing</span></div>
+      <img src="../assets/figs/rp-gap.svg" alt="60/40 与风险平价的资金权重与风险贡献对照">
+      <p class="ex-note zh">左边是 60/40：<b>60% 的钱扛着 93.5% 的风险</b>，债券那 40% 几乎是陪衬。右边是四条腿的等风险贡献解：资金权重 25.9% / 27.7% / 26.4% / 20.1%，风险贡献 27.3% / 21.7% / 24.5% / 26.6%——四格都停在 25% 附近。这张图里最值得注意的是<b>右边那条"资金权重"横条几乎就是四等分</b>：真正被平掉的是风险，而资金分配只是被动地跟过去。这也预告了后面的结果：如果解出来的权重离 25% 只有几个百分点，那么最笨的四等分也应该差不多。</p>
+      <p class="ex-note en">The left column is the 60/40: <b>60% of the capital carries 93.5% of the risk</b>, and the bond sleeve is nearly decoration. The right column is the four-leg equal-risk-contribution solution: weights of 25.9% / 27.7% / 26.4% / 20.1% and risk contributions of 27.3% / 21.7% / 24.5% / 26.6% — all four cells sitting near 25%. What is worth noticing is that <b>the right-hand "capital weight" bar is almost a four-way split</b>: the thing being equalised is the risk, and the capital allocation follows passively. That also foreshadows the result: if the solved weights sit only a few points away from 25%, the dumbest possible quartering should land in roughly the same place.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测的方差分解；风险贡献按每条腿的权重与边际风险计算，用全样本协方差与时变权重平均。</span><span class="en">Source: author's variance decomposition; risk contributions from each leg's weight and marginal risk, averaged over the full sample using time-varying weights.</span></p>
+    </div>
+
+    <h2 id="s2"><span class="num">02</span><span class="zh">数据与方法</span><span class="en">Data and method</span></h2>
+    <p class="zh">样本为 1993-02 至 2025-09 共 392 个月，32.7 年，与站上其他三篇组合实测完全同一份公开数据：股票＝标普 500 全收益；长债＝30 年期美国国债（按久期 15 用收益率曲线合成）；黄金＝LBMA 伦敦金价；商品＝世界银行商品价格指数；现金＝3 个月国库券。样本从 1993-02 而不是 1990-01 开始，是因为 ERC 需要 36 个月的回看窗口，而数据从 1990-01 起——前 36 个月只能用来估协方差，不能用来记账。</p>
+    <p class="zh">权重解法的口径写在下面三行里，因为它决定了后面所有数字：<b>每年 1 月</b>用最近 <b>36 个月</b>的样本协方差求一组等风险贡献权重；解出来的权重在<b>年内随价格漂移</b>，到次年 1 月重新解一次。这是站上「年度再平衡」的统一口径，和永久组合、60/40 两篇可以直接横向比较。求解的校验结果：四条腿的风险贡献为 [25%, 25%, 25%, 25%]，最大偏差 <b>0.0</b>。</p>
+    <p class="zh">杠杆部分用了两套口径，因为两者差别很大，而这个差别本身就是结论的一部分。<b>事后匹配</b>：把倍数定在 1.25 倍，让整段样本的波动刚好等于 60/40 的 9.0%——这是一把事后才拿得到的尺子，只用来问"风险调到同一刻度后会怎样"。<b>可实施</b>：逐年按目标波动 10% 重设倍数，倍数限制在 1.0 到 3.0 倍之间，全样本均值约 1.5 倍——这是真的能照着做的版本。两套口径的融资成本都按<b>3 个月国库券 + 利差</b>计，利差从 0 扫到 3%。</p>
+    <p class="en">The sample is 392 monthly US observations from February 1993 to September 2025 — 32.7 years — on exactly the same public data as the three other portfolio tests on this site: equities are the S&amp;P 500 total return; long bonds are 30-year Treasuries synthesised from the yield curve at duration 15; gold is the LBMA London price; commodities are the World Bank commodity price index; cash is the three-month T-bill. The sample starts in February 1993 rather than January 1990 because ERC needs a 36-month lookback, and the data begins in January 1990: the first 36 months can estimate a covariance matrix but cannot hold a position.</p>
+    <p class="en">Three lines define the weight rule, and they determine every number that follows: every <b>January</b>, solve for equal-risk-contribution weights from the trailing <b>36-month</b> sample covariance; those weights then <b>drift with prices within the year</b> and are re-solved the following January. This is the site's standard annual-rebalancing convention, directly comparable with the Permanent Portfolio and 60/40 notes. The solver's verification: the four legs' risk contributions come out at [25%, 25%, 25%, 25%] with a maximum deviation of <b>0.0</b>.</p>
+    <p class="en">Leverage is run two ways, because the gap between them is itself a result. <b>Ex-post matching</b>: fix the multiplier at 1.25x so that realised volatility over the whole sample equals the 60/40's 9.0% — a ruler you can only hold after the fact, used purely to ask "what happens at the same scale of risk". <b>Implementable</b>: reset the multiplier each year to a 10% volatility target, capped between 1.0x and 3.0x, averaging about 1.5x over the sample — something you could actually have run. Both pay funding of <b>three-month T-bills plus a spread</b>, with the spread swept from 0 to 3%.</p>
+    <h2 id="s3"><span class="num">03</span><span class="zh">第一层：32.7 年的成绩</span><span class="en">First layer: the thirty-two years</span></h2>
+    <p class="zh">先把整段样本摊开看。同一份数据、同一条再平衡口径，五个组合的排序是这样的：纯股 10.80% 的年化配 −50.9% 的回撤；60/40 是 8.70% 配 −27.0%；等权四资产 7.95% 配 −23.0%；全天候 7.61% 配 −21.7%；风险平价 <b>7.40% 配 −22.5%</b>。风险平价排在最后一位，而它引以为豪的风险指标只有一个能拿出来看：回撤比 60/40 浅 4.5 个百分点。</p>
+    <p class="zh">把这些数字换成钱更直观：<b>1 元在风险平价里长成 10.3 元，在 60/40 里长成 15.2 元</b>——少了将近三分之一。同一段时间里等权四资产是 12.2 元，只比风险平价多一点点风险，却多拿了两成终点。</p>
+    <p class="en">Start by laying the whole sample out. On the same data and the same rebalancing convention, the ranking is: all-equities at 10.80% a year against a −50.9% drawdown; the 60/40 at 8.70% against −27.0%; equal-weighted four assets at 7.95% against −23.0%; All Weather at 7.61% against −21.7%; and risk parity last at <b>7.40% against −22.5%</b>. The only risk number it can point to is a drawdown 4.5 points shallower than the 60/40's.</p>
+    <p class="en">In money: <b>one dollar compounds to 10.3 under risk parity and 15.2 under a 60/40</b> — about a third less. Equal-weighted four assets gets to 12.2 while taking almost the same risk, more than twenty per cent further than risk parity.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 2 · 1993-01 至 2025-09 的累计净值</span><span class="en">Exhibit 2 · cumulative value, January 1993 to September 2025</span></div>
+      <img src="../assets/figs/rp-curves.svg" alt="五个组合 1993 年以来的累计净值曲线">
+      <p class="ex-note zh">对数刻度下看得很清楚：风险平价那条线（最粗）的形状确实比 60/40 平——它的斜率更稳，中途没有出现过 −27% 那种坡。问题在终点：<b>它平,但它低</b>。32.7 年下来 1 元变 10.3 元，而 60/40 是 15.2 元、等权四资产 12.2 元、纯股 28.5 元。这条图上真正值得看的是两条线的间距随时间的变化：1993 到 2002 年风险平价一直贴着 60/40 的下方走，2003 到 2012 年它反超并且拉开，2013 年之后又被反超、并且这次差距一路扩大。</p>
+      <p class="ex-note en">On a log scale the shape is plain: the risk-parity line (the thickest one) is genuinely smoother, with no −27% slope in it. The problem is the endpoint — <b>it is flat, and it is low</b>. Over 32.7 years one dollar becomes 10.3, against 15.2 for the 60/40, 12.2 for a four-way split and 28.5 for equities. What is worth watching on this chart is how the gap moves: through 1993–2002 risk parity hugs the underside of the 60/40, from 2003 to 2012 it overtakes and pulls away, and after 2013 it is overtaken again — this time for good.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；数据与《全天候组合实测》同一份公开数据，1993-02 至 2025-09 共 392 个月，年度再平衡，不扣交易成本。</span><span class="en">Source: author's backtest; same public data as the All Weather note, 392 months from February 1993 to September 2025, annual rebalancing, before costs.</span></p>
+    </div>
+    <p class="zh">一个必须写下来的细节：风险平价在这段样本里<b>最大的那次回撤不是 2022 年，是 2008 年</b>——从 2008-05 的高点到 2009-02 的低点跌了 22.5%，和 60/40 的 −26.9% 是同一个窗口。原因是商品那条腿：2008 年商品指数跌了 38.6%，而它在组合里占两成资金。风险平价的浅回撤不来自"每条腿都很稳"，而来自"四条腿同时崩的时候少"——2008 年股票 −37.0%，长债 +32.8%，两条负相关的腿救了这个组合。</p>
+    <p class="en">One detail has to be written down: risk parity's worst drawdown in this sample is <b>not 2022, it is 2008</b> — 22.5% from the May 2008 peak to the February 2009 trough, the same window that took the 60/40 down 26.9%. The culprit is the commodity leg: the commodity index fell 38.6% in 2008 while carrying a fifth of the portfolio. Risk parity's shallow drawdown does not come from every leg being steady; it comes from the legs rarely breaking together — in 2008 equities fell 37.0% and long bonds rose 32.8%, and the two opposite movements rescued the portfolio.</p>
+
+    <h2 id="s4"><span class="num">04</span><span class="zh">第二层：解出来的权重</span><span class="en">Second layer: the weights that come out</span></h2>
+    <p class="zh">如果只看宣传，风险平价像是一个复杂的优化产品。所以第二步把它拆开：每年解出来的那组权重到底长什么样，以及它和"直接四等分"差多少。</p>
+    <p class="en">On the marketing, risk parity sounds like a complex optimised product. So the second step opens it up: what the weights actually look like each year, and how far they sit from a plain four-way split.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 3 · 每年 1 月解出来的目标权重</span><span class="en">Exhibit 3 · the target weights solved each January</span></div>
+      <img src="../assets/figs/rp-weights.svg" alt="风险平价四腿目标权重随时间变化的堆叠面积图">
+      <p class="ex-note zh">权重确实在动——32 次重估里没有一次解出正好 25/25/25/25。但动的幅度比想象中小得多：<b>平均离 25% 只有 6.5 个百分点</b>，最大的一次偏离是 30.6 个百分点。四条腿的平均权重是股票 25.9%、长债 27.7%、黄金 26.4%、<b>商品 20.1%</b>；商品被压得最低，恰恰因为它是四条腿里波动最高的那条（18.3%，股票是 14.8%）。换句话说，<b>这条规则做的全部事情，就是把资金从波动最高的资产挪一点给波动最低的资产</b>，而挪动的幅度只有几个百分点。</p>
+      <p class="ex-note en">The weights do move — not one of the 32 re-estimations lands on exactly 25/25/25/25. But they move far less than one might expect: an average of <b>6.5 percentage points</b> away from 25%, with a single worst deviation of 30.6 points. The four legs average 25.9% equities, 27.7% long bonds, 26.4% gold and <b>20.1% commodities</b>; commodities take the smallest share precisely because they are the most volatile leg (18.3% against 14.8% for equities). In other words <b>the entire rule amounts to shifting a few percentage points of capital out of the most volatile asset and into the least</b>.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；每年 1 月以最近 36 个月协方差求等风险贡献权重（ERC），白色虚线为 25%。</span><span class="en">Source: author's backtest; equal-risk-contribution weights solved each January from the trailing 36-month covariance, with the white dashed line at 25%.</span></p>
+    </div>
+    <p class="zh">把"资金"和"风险"并排放在一张图上，才是这篇文章的核心证据。下面这张图有四行，分别是风险平价、等权四资产、全天候和 60/40；每一行上面是资金权重，下面是它对应的风险贡献。</p>
+    <p class="en">Putting capital and risk side by side on one chart is the central evidence of this note. The chart below has four rows — risk parity, equal-weighted four assets, All Weather and the 60/40 — each showing capital weights on top and the matching risk contributions underneath.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 4 · 四个组合的资金权重与风险贡献</span><span class="en">Exhibit 4 · capital weights and risk contributions, four portfolios</span></div>
+      <img src="../assets/figs/rp-risk.svg" alt="四个组合的资金权重与风险贡献堆叠横条对照">
+      <p class="ex-note zh">四个组合的对比把话说完了。<b>60/40</b>：60.5% 的资金对 93.5% 的风险，几乎全部压在股票一条腿上。<b>等权四资产</b>：资金是 25.1 / 24.6 / 25.1 / 25.1，看起来最公道，风险却是 25.1 / 13.6 / 21.7 / <b>39.6</b>——商品一条腿拿走四成。风险平价：资金 25.9 / 27.7 / 26.4 / 20.1，风险 27.3 / 21.7 / 24.5 / 26.6，四格全部落在 25% 的 2.3 个百分点以内。<b>全天候</b>：资金 30.4 / 39.6 / 14.8 / 7.6 / 7.6，风险 32.5 / <b>52.4</b> / 10.1 / 2.8 / 2.1——它按经济环境分风险，不是按均等分风险，长债一条腿就占了一半以上。所以第一层答案是：<b>风险确实被拍平了，而且是这四个组合里唯一一个真正拍平的</b>。</p>
+      <p class="ex-note en">The comparison finishes the argument. <b>60/40</b>: 60.5% of the capital against 93.5% of the risk, essentially all of it in one leg. <b>Equal-weighted four assets</b>: capital at 25.1 / 24.6 / 25.1 / 25.1 looks fairest, but the risk is 25.1 / 13.6 / 21.7 / <b>39.6</b> — commodities alone take four tenths. Risk parity: capital at 25.9 / 27.7 / 26.4 / 20.1 and risk at 27.3 / 21.7 / 24.5 / 26.6, every cell inside 2.3 points of 25%. <b>All Weather</b>: capital at 30.4 / 39.6 / 14.8 / 7.6 / 7.6 and risk at 32.5 / <b>52.4</b> / 10.1 / 2.8 / 2.1 — it budgets risk by economic environment rather than equally, and long bonds alone carry more than half. So the first answer is: <b>the risk really is flattened, and this is the only one of the four portfolios that truly flattens it</b>.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；风险贡献按每条腿的权重与边际风险计算，用全样本协方差与时变权重平均；组合波动风险平价为 7.63%、等权四资产 7.61%、全天候 7.56%、60/40 为 9.17%。</span><span class="en">Source: author's backtest; risk contributions from each leg's weight and marginal risk, averaged over the full sample with time-varying weights; portfolio volatility is 7.63% for risk parity, 7.61% for the four-way split, 7.56% for All Weather and 9.17% for the 60/40.</span></p>
+    </div>
+    <p class="zh">但第二层的问题就藏在这张图里，而且比第一层的答案更锋利：<b>如果解出来的权重离 25% 只有 6.5 个百分点，那"解"这件事本身值多少钱？</b>答案在 Exhibit 2 已经给了——等权四资产用最笨的办法拿到 7.95% 和 0.73，两项都高于风险平价的 7.40% 和 0.69。这不是"差不多"，是<b>优化输给了不优化</b>：每年花力气估协方差、解非线性方程，最后比什么都不做少了半个多点的年化。等权四资产之所以赢，恰恰因为它的风险分配并不平均（商品占 39.6%），而那几条被过配的腿在这段样本里并没有更差。</p>
+    <p class="en">But the second layer's problem is hiding inside that same chart, and it is sharper than the first answer: <b>if the solved weights sit 6.5 points from 25%, what is the solving worth?</b> Exhibit 2 already answered — quartering the four legs returns 7.95% and a 0.73 Sharpe, both above risk parity's 7.40% and 0.69. This is not a tie; <b>the optimisation loses to the non-optimisation</b>. Estimating covariances and solving a nonlinear system every January costs more than half a point of annual return. The four-way split wins precisely because its risk budget is uneven — commodities take 39.6% — and, in this sample, the legs it overweights were not worse.</p>
+
+    <h2 id="s5"><span class="num">05</span><span class="zh">第三层：把风险调到同一个刻度</span><span class="en">Third layer: putting both portfolios on one risk scale</span></h2>
+    <p class="zh">到这里有一个合理的反驳：风险平价本来就不是为了在相同<b>资金</b>下比收益，它是为了在相同<b>风险</b>下比效率。所以第三步把所有组合放到一张风险—收益散点图上，再补一条 60/40 的等夏普线。</p>
+    <p class="en">At this point there is a fair objection: risk parity was never meant to beat anything at equal <i>capital</i>, only at equal <i>risk</i>. So the third step puts everything on one risk/return scatter and adds the 60/40's iso-Sharpe line.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 5 · 风险—收益平面与杠杆轨迹</span><span class="en">Exhibit 5 · the risk/return plane and the leverage track</span></div>
+      <img src="../assets/figs/rp-efficiency.svg" alt="五个组合的风险收益散点与风险平价加杠杆轨迹">
+      <p class="ex-note zh">虚线是风险平价按固定倍数加杠杆的轨迹（零融资成本下）：它和 60/40 的等夏普线（点线）几乎平行，但<b>一直压在下面</b>。零成本时两条线的夏普是 0.69 与 0.70——差得极小，小到没有统计意义，但它说明了杠杆能做什么、不能做什么：<b>杠杆可以把你在这条线上移动到任意波动刻度，但不能把线抬起来。</b>散点里橘红色那一点是"可实施"的杠杆版（逐年重设倍数，波动 10.7%、年化 8.26%），它比虚线低得多，因为逐年重设倍数和真实融资成本都在扣。右上角灰色那一点是纯股，它的位置说明另一件事：在这段样本里，单纯的股票暴露既不是最高效的点，也不是最差的点。</p>
+      <p class="ex-note en">The dashed line is risk parity levered at a constant multiple with zero funding cost. It runs almost parallel to the 60/40's iso-Sharpe line (the dotted line) but <b>always underneath it</b>: at zero cost the two Sharpes are 0.69 and 0.70, a difference too small to matter, and that is exactly the point — <b>leverage moves you anywhere along the line, but it cannot lift the line</b>. The orange point is the implementable levered version (multiplier reset annually, 10.7% volatility, 8.26% a year), sitting well below the dashed track because annual re-sizing and real funding costs both take a cut. The grey point in the top right is all-equities, and its position says something else: in this sample, plain equity exposure is neither the most efficient point nor the worst.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；无风险利率取 3.0%，杠杆情景的融资成本另行标注；纯股落在坐标区右上角之外，标注指向其实际位置。</span><span class="en">Source: author's backtest; risk-free rate set at 3.0%, with funding costs for the levered scenarios flagged separately; all-equities sits beyond the top-right corner of the plot, and the label points to its actual position.</span></p>
+    </div>
+    <p class="zh">然后是杠杆最诚实的那部分：让它真的付钱。下面左图是融资利差从 0 扫到 3% 时"可实施"版本的走势，右图是同一批情景的夏普。</p>
+    <p class="en">Then comes the most honest part of leverage: making it pay. The left panel below sweeps the funding spread from 0 to 3% for the implementable version, and the right panel shows the Sharpe ratio across the same scenarios.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 6 · 融资利差把杠杆版的收益一路吃掉</span><span class="en">Exhibit 6 · the funding spread eats the levered return</span></div>
+      <img src="../assets/figs/rp-cost.svg" alt="融资利差 0 至 3% 下杠杆版风险平价的年化收益与夏普比率">
+      <p class="ex-note zh">左图的深蓝虚线是 60/40 的年化 8.70%，右图是它的夏普 0.70。<b>即使在零融资成本那一点，杠杆版也追不上 8.70% 与 0.70</b>——零利差时是 8.53% 和 0.59。利差每加 0.5 个百分点，年化掉约 0.27 个百分点：0.5% 时 8.26%、1% 时 <b>7.99%</b>、2% 时 7.45%、3% 时 6.91%（夏普 0.45）。所以本文最锋利的一句结论出现在这里：<b>盈亏平衡的融资利差不存在。</b>通常大家争论"融资成本要多少才划算"，这里不需要争——不划算的地方不在利差，在于杠杆版的基线本身就比 60/40 低。</p>
+      <p class="ex-note en">The dark-blue dashed line on the left is the 60/40's 8.70% a year; on the right, its 0.70 Sharpe. <b>Even at the zero-funding-cost point the levered version does not reach either</b> — 8.53% and 0.59. Each half-point of spread costs about 0.27 points of annual return: 8.26% at 0.5%, <b>7.99%</b> at 1%, 7.45% at 2%, 6.91% at 3% (Sharpe 0.45). Which produces the sharpest single claim in this note: <b>the break-even funding spread does not exist.</b> The usual argument is about how much funding cost is tolerable; no argument is needed here, because the gap is not in the spread — it is in the baseline.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；杠杆版按目标波动 10% 逐年重设倍数（限制在 1.0–3.0 倍，均值约 1.5 倍），融资成本＝3 个月国库券 + 利差，未计追加保证金与强制平仓。</span><span class="en">Source: author's backtest; the levered portfolio resets its multiplier annually to a 10% volatility target (capped at 1.0–3.0x, averaging about 1.5x), funded at three-month T-bills plus the spread, with no margin calls or forced liquidation modelled.</span></p>
+    </div>
+    <p class="zh">还有一个更安静、但更彻底的数字，来自"事后匹配"那一版：把倍数定在 1.25 倍，让它的<b>波动正好等于 60/40 的 9.0%</b>，得到年化 8.43%、夏普 0.67、最大回撤 <b>−27.8%</b>。<b>把风险调到同一个刻度之后，风险平价的浅回撤也一起消失了</b>——−27.8% 比它想打败的 60/40 的 −27.0% 还深 0.8 个百分点。这是这篇文章里最反直觉的一个发现：回撤浅和收益低本来就是同一件事的两面，你不能只要前面那一面。</p>
+    <p class="en">There is a quieter but more complete number in the ex-post version: set the multiplier at 1.25x so that its <b>volatility is exactly the 60/40's 9.0%</b>, and it returns 8.43% a year with a 0.67 Sharpe and a <b>−27.8%</b> maximum drawdown. <b>Put both portfolios on one risk scale and risk parity's shallow drawdown disappears too</b> — −27.8% is 0.8 points deeper than the −27.0% of the 60/40 it set out to beat. This is the most counter-intuitive finding here: a shallower drawdown and a lower return are two faces of the same fact, and you cannot keep only the first.</p>
+    <h2 id="s6"><span class="num">06</span><span class="zh">优势来自哪个十年</span><span class="en">Which decade the edge came from</span></h2>
+    <p class="zh">把 32.7 年切成三段，方向每一段都不一样。<b>1993–2002</b>（119 个月）：风险平价年化 6.5%，60/40 是 9.5%，同一条长债腿 11.3%，是整个样本里最好的一条腿。<b>2003–2012</b>（120 个月）整个翻过来：风险平价 10.0%，60/40 6.9%，长债只剩 5.8%。<b>2013–2025</b>（153 个月）又翻回去：风险平价 6.1%，60/40 9.4%，长债是 −0.5%。</p>
+    <p class="en">Cut 32.7 years into three and the direction flips every time. <b>1993–2002</b> (119 months): risk parity 6.5% a year against the 60/40's 9.5%, with long bonds — its largest single holding — the best leg in the whole sample at 11.3%. <b>2003–2012</b> (120 months) reverses it entirely: risk parity 10.0%, the 60/40 6.9%, long bonds down to 5.8%. <b>2013–2025</b> (153 months) reverses back: risk parity 6.1%, the 60/40 9.4%, long bonds at −0.5%.</p>
+    <p class="zh">杠杆版在三段里是 5.9% / 11.2% / 7.8%。它没有改变这个形状，只是把每一段都放大了一点：顺风的那一段放大，逆风的那一段也放大。</p>
+    <p class="en">The levered version runs 5.9% / 11.2% / 7.8% across the same three stretches. It does not change the shape, it only scales each one: the tailwind and the headwind alike.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 7 · 优势全部落在 2003–2012 那一段</span><span class="en">Exhibit 7 · the entire edge sits in 2003–2012</span></div>
+      <img src="../assets/figs/rp-eras.svg" alt="三个十年区间里风险平价、杠杆版、60/40、纯股与长期国债的年化收益">
+      <p class="ex-note zh">每条实线的斜率是那个十年各自的年化收益。<b>要读的不是高度，是方向</b>：只有中间那一段，风险平价的斜率比 60/40 更陡；两头都是 60/40 更陡，而且后一段差距更大（6.1% 对 9.4%）。两条虚线说明了原因——长债从 11.3% 一路掉到 −0.5%，而风险平价恰好是那个把钱压在长债上最多的组合。</p>
+      <p class="ex-note en">The slope of each solid line is that decade's annualised return. <b>What matters is not the height but the direction</b>: only in the middle stretch does risk parity climb faster than the 60/40; both ends favour the 60/40, and the last one by more (6.1% against 9.4%). The two dashed lines explain why — long bonds fell from 11.3% a year to −0.5%, and risk parity is precisely the portfolio that leans hardest on them.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；三段区间各自独立计算，不等长（119 / 120 / 153 个月），不扣交易成本。</span><span class="en">Source: author's backtest; the three stretches are computed independently and are not equal in length (119 / 120 / 153 months), before costs.</span></p>
+    </div>
+    <p class="zh">再往里看一层，会看到一件比"债券拖累"更具体的事。下表是三个十年里四条腿各自跑出来的年化收益：</p>
+    <p class="en">One layer further in, something more specific than "bonds dragged" shows up. The table below is what each of the four legs actually earned in each decade:</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <caption><span class="zh">表 1｜三个十年里每条腿的年化收益（%）</span><span class="en">Table 1｜annualised return by leg, decade by decade (%)</span></caption>
+        <thead><tr>
+          <th><span class="zh">资产</span><span class="en">Asset</span></th>
+          <th>1993–2002</th><th>2003–2012</th><th>2013–2025</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="zh">股票</span><span class="en">Equities</span></td><td>9.3</td><td>7.1</td><td><b>15.0</b></td></tr>
+          <tr><td><span class="zh">长期国债</span><span class="en">Long bonds</span></td><td><b>11.3</b></td><td>5.8</td><td>−0.5</td></tr>
+          <tr><td><span class="zh">黄金</span><span class="en">Gold</span></td><td>0.1</td><td><b>17.6</b></td><td>6.3</td></tr>
+          <tr><td><span class="zh">商品</span><span class="en">Commodities</span></td><td>2.9</td><td><b>11.4</b></td><td>−2.0</td></tr>
+          <tr><td><span class="zh">风险平价</span><span class="en">Risk parity</span></td><td>6.5</td><td>10.0</td><td>6.1</td></tr>
+          <tr><td><span class="zh">60/40</span><span class="en">60/40</span></td><td>9.5</td><td>6.9</td><td>9.4</td></tr>
+        </tbody>
+      </table>
+      <p class="ex-src"><span class="zh">来源：本文回测；四行资产与两行组合用同一份月度数据、同一套区间。粗体是每列的最高值。</span><span class="en">Source: author's backtest; the four asset rows and the two portfolio rows use the same monthly data over the same windows. Bold marks the highest value in each column.</span></p>
+    </div>
+    <p class="zh">中间那十年，黄金 17.6%、商品 11.4%，是四条腿里最好的两条；风险平价在那十年平均把 <b>约 40% 的钱</b>放在这两条腿上（黄金 23.1% + 商品 16.7%），而 60/40 一股都没有。前十年和后十三年恰好相反：黄金只有 0.1% 和 6.3%，商品 2.9% 和 −2.0%，而这两条腿在组合里始终占着四成左右的钱。<b>所以风险平价的超额不是"分散"挣来的，是 2003–2012 那一轮贵金属与商品的大牛市挣来的</b>——一个由 36 个月协方差决定、事后看很像运气的事件。</p>
+    <p class="en">In the middle decade gold earned 17.6% and commodities 11.4%, the two best legs of the four, and risk parity held <b>about 40% of its money</b> in exactly those two (23.1% gold plus 16.7% commodities) while the 60/40 held none. The first and last stretches are the mirror image: gold at 0.1% and 6.3%, commodities at 2.9% and −2.0%, with the same four tenths of the portfolio parked there throughout. <b>The excess return was not earned by diversification; it was earned by the precious-metal and commodity run of 2003–2012</b> — an event chosen by a 36-month covariance, and in hindsight very close to luck.</p>
+    <p class="zh">把窗口从"十年"换成"任意一个滚动十年"，同一件事会更清楚。273 个滚动十年窗口里，风险平价只有 <b>98 个（35.9%）</b>跑赢 60/40；最好的一个是 2009-06 结束的那十年（超额 +6.25 个百分点），最差的是 2021-09 结束的那十年（超额 −5.08 个百分点）。横轴是同一个窗口里长期国债的年化收益：两者相关系数 0.386。它跑赢的窗口，几乎都发生在长债收益率还在往下走的那些年里。</p>
+    <p class="en">Swap "decade" for "any rolling ten years" and the same fact gets clearer. Of 273 rolling ten-year windows risk parity beat the 60/40 in only <b>98, or 35.9%</b>. The best ends in June 2009 (an excess of +6.25 points); the worst ends in September 2021 (−5.08 points). The horizontal axis is what long bonds earned in that same window, and the correlation is 0.386: the windows it won are almost all windows in which long-bond yields were still falling.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 8 · 它赢的那些十年，长债刚好都在涨</span><span class="en">Exhibit 8 · the decades it won are the ones where long bonds rose</span></div>
+      <img src="../assets/figs/rp-rolling.svg" alt="273 个滚动十年窗口里长期国债年化收益与风险平价相对 60/40 超额收益的散点与拟合线">
+      <p class="ex-note zh">每个点是一个滚动十年窗口。零线以上是跑赢。斜率 0.38 大致的意思是：同一个窗口里长债多涨 1 个百分点，风险平价的超额就多 0.38 个百分点。<b>这不是因果证明，但它足够说明"谁在挣钱"</b>——这一篇里风险平价的超额几乎可以写成"长债收益率的下行幅度"的一个函数。注意最左侧：即使长债年化是正的 2.4%，它仍然可以落后 5 个百分点。</p>
+      <p class="ex-note en">Each dot is one rolling ten-year window; above the zero line it won. A slope of 0.38 says roughly that one extra point of long-bond return in a window buys 0.38 points of excess for risk parity. <b>That is not a proof of causation, but it is enough to say who is earning the money</b>: in this sample the excess is close to a function of how far long-bond yields fell. Note the far left — with long bonds still earning +2.4% a year, it can lose by five points.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；窗口为 120 个月，逐个向前滚动，共 273 个；两端各留一个完整的十年。</span><span class="en">Source: author's backtest; 120-month windows rolled forward one month at a time, 273 in total.</span></p>
+    </div>
+    <h2 id="s7"><span class="num">07</span><span class="zh">四条腿一起跌的时候</span><span class="en">When all four legs fall together</span></h2>
+    <p class="zh">风险平价唯一依赖的假设是"四条腿不会同时坏"。这个假设最接近失效的一次是 2022 年。同一份数据里，股票与 10 年期国债的月度相关性在 32.7 年里是 −0.087：接近零，方向正确。但在 CPI 同比高于 5% 的 24 个月里，它翻成 <b>+0.419</b>；只看 2022 年，是 <b>+0.448</b>。</p>
+    <p class="en">The one assumption risk parity depends on is that the four legs will not fail at the same time. The closest it came to failing is 2022. Over the 32.7 years the monthly correlation between equities and ten-year Treasuries is −0.087: near zero, and of the right sign. Across the 24 months with year-on-year CPI above 5% it flips to <b>+0.419</b>; for 2022 alone it is <b>+0.448</b>.</p>
+    <p class="zh">那 24 个月里四条腿的表现可以直接列出来：股票年化 −3.3%（50% 的月份为正）、长债 −14.2%（42%）、黄金 −0.5%（46%）、商品 −6.3%（42%）。<b>四条腿里没有一条站在正号那一边</b>——注意黄金是 −0.5%，它没有保护任何东西，只是跌得少一点。</p>
+    <p class="en">Those 24 months can simply be listed: equities −3.3% a year (positive in 50% of months), long bonds −14.2% (42%), gold −0.5% (46%), commodities −6.3% (42%). <b>Not one of the four ends up on the positive side</b> — note gold at −0.5%: it protected nothing, it simply fell less.</p>
+    <p class="zh">2022 全年：风险平价 −15.2%，杠杆版 <b>−21.3%</b>，60/40 −18.1%，纯股 −18.1%，全天候 −20.0%，长债 −31.5%。只有黄金（+0.4%）和商品（+9.6%）是正的，而这两条腿在组合里合起来不到四成。从 2021-12 的高点到 2022-11 的低点，风险平价的回撤是 −17.9%。</p>
+    <p class="en">For calendar 2022: risk parity −15.2%, the levered version <b>−21.3%</b>, the 60/40 −18.1%, all-equities −18.1%, All Weather −20.0%, long bonds −31.5%. Only gold (+0.4%) and commodities (+9.6%) end positive, and together they are under four tenths of the portfolio. From the December 2021 peak to the November 2022 low, risk parity's drawdown is −17.9%.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 9 · 股债一起跌的时候，被拍平的风险会从每条腿上同时回来</span><span class="en">Exhibit 9 · when stocks and bonds fall together, the flattened risk comes back from every leg at once</span></div>
+      <img src="../assets/figs/rp-underwater.svg" alt="自 2020 年 1 月起，风险平价、杠杆版、60/40 与纯股相对各自历史高点的回撤路径">
+      <p class="ex-note zh">四条曲线都是各自相对历史高点的回撤，起点是 2020-01。灰色带是 2022 年。<b>这张图里最重要的一处对比不是深度，是两条蓝线的位置</b>：基础版（深蓝）在 2022 年最深处 −17.9%，比 60/40 的 −22.0% 浅；但杠杆版（橙色）比 60/40 更深，而且水下时间更长。同一个策略，加杠杆前后"浅回撤"这个卖点直接消失。</p>
+      <p class="ex-note en">All four lines are drawdowns from each portfolio's own high-water mark, starting January 2020; the grey band is 2022. <b>The comparison that matters here is not depth but the position of the two blue lines</b>: the unlevered version bottoms at −17.9%, shallower than the 60/40's −22.0%, while the levered version (orange) falls deeper than the 60/40 and stays underwater longer. One strategy, and leverage removes the "shallow drawdown" selling point outright.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；回撤按每条腿自己的历史高点计算，起点 2020-01 是为了让四条线共用同一段近期历史。</span><span class="en">Source: author's backtest; each drawdown is measured from that portfolio's own high-water mark, with the January 2020 start chosen so all four lines share one recent history.</span></p>
+    </div>
+    <p class="zh">把这一节压缩成一句：<b>分散有效的前提是"不同时坏"，而这个前提是一个关于宏观环境的判断，不是一个关于权重的判断。</b>当利率成为唯一的共同因子，四条腿会被推往同一个方向；这时风险平价和 60/40 的差别只剩"每一条腿都跌一点"，而不是"总有一条腿在涨"。</p>
+    <p class="en">Compressed to one sentence: <b>diversification only works when things do not break together, and that is a claim about the macro environment, not about weights.</b> When rates become the single common factor, all four legs are pushed the same way, and the difference between risk parity and a 60/40 shrinks to "every leg falls a little" instead of "one leg is always rising".</p>
+
+    <h2 id="s8"><span class="num">08</span><span class="zh">换个起点，再自己动手</span><span class="en">Change the start date, then run it yourself</span></h2>
+    <p class="zh">前面所有结论都建立在"从 1993-02 开始"这一个起点上。换六个起点，看六个组合的夏普，会看到一件让这个策略很难被推销的事：<b>起点能把风险平价从"比 60/40 好一点"变成"比 60/40 差一半"</b>。1998 起点它是 0.71，对 60/40 的 0.59，是六个起点里最好的一次；2013 起点它是 <b>0.33</b>，全场最低，而同一个起点上 60/40 是 0.62、纯股是 0.78。</p>
+    <p class="en">Every result so far rests on one start date, February 1993. Change it six ways and look at Sharpe ratios, and something awkward for anyone selling this strategy appears: <b>the start date can turn risk parity from "a bit better than the 60/40" into "half as good"</b>. From 1998 it is 0.71 against the 60/40's 0.59, its best showing of the six; from 2013 it is <b>0.33</b>, the lowest cell in the table, where the 60/40 scores 0.62 and all-equities 0.78.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 10 · 换个起点，排序就换一个样子</span><span class="en">Exhibit 10 · change the start and the ranking changes with it</span></div>
+      <img src="../assets/figs/rp-starts.svg" alt="六个起点下风险平价、杠杆版、等权四资产、全天候、60/40 与纯股的夏普比率热力图">
+      <p class="ex-note zh">每一格是一个"从某年 1 月开始持有到现在"的夏普。三个可以直接读出来的结论：<b>第一</b>，风险平价在六个起点里只在三个（1998、2003、2018）赢过 60/40，而且每次差距都在 0.04 以内；<b>第二</b>，最差的两次（2008 的 0.40、2013 的 0.33）都出现在<span class="zh">近十几年</span><span class="en">the recent era</span>，恰好也是这类策略在公开市场真正流行起来的时点；<b>第三</b>，等权四资产在同一张表里几乎每一格都不比风险平价差——那个不需要解任何矩阵的组合。</p>
+      <p class="ex-note en">Each cell is the Sharpe of a portfolio held from that January to today. Three things read off directly: <b>first</b>, risk parity beats the 60/40 at only three of six starts (1998, 2003, 2018), and each time by less than 0.04; <b>second</b>, its two worst cells (0.40 from 2008, 0.33 from 2013) both sit in the recent era — which is also when the strategy became popular in public markets; <b>third</b>, the equal-weighted four-asset portfolio is no worse than risk parity in almost every cell, and it needs no matrix solved at all.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；每组从该年 1 月持有至 2025-09，不扣成本；杠杆版按目标波动 10% 逐年重设倍数。</span><span class="en">Source: author's backtest; each start is held from that January to September 2025, before costs; the levered version resets annually to a 10% volatility target.</span></p>
+    </div>
+    <p class="zh">最后一步留给你自己。下面这张图不是回测，是一台可以转的旋钮：拖动杠杆倍数和融资利差，净值曲线与六个指标会实时重算。60/40 作为参照固定在灰色虚线上，基础版（不加杠杆）固定在浅色虚线上。</p>
+    <p class="en">The last step is yours. What follows is not a backtest but a dial: drag the leverage multiplier and the funding spread and the value curve plus six statistics are recomputed live. The 60/40 stays pinned on the grey dashed line, the unlevered version on the pale one.</p>
+    <div class="exhibit">
+      <div class="ex-label"><span class="zh">Exhibit 11 · 自己动手：把杠杆加上去，看它什么时候值</span><span class="en">Exhibit 11 · do it yourself: add leverage and watch when it pays</span></div>
+      <div class="vbox">
+        <div class="ctrl">
+          <label for="i-l"><span class="zh">杠杆倍数</span><span class="en">Leverage</span> <b id="i-llab">1.25×</b></label>
+          <input type="range" id="i-l" min="1" max="2" step="0.05" value="1.25" aria-label="leverage">
+        </div>
+        <div class="ctrl">
+          <label for="i-s"><span class="zh">融资利差</span><span class="en">Funding spread</span> <b id="i-slab">0.50%</b></label>
+          <input type="range" id="i-s" min="0" max="3" step="0.25" value="0.5" aria-label="funding spread">
+        </div>
+        <div class="ctrl">
+          <button type="button" id="i-play" class="primary"><span class="zh">▶ 播放这段历史</span><span class="en">▶ Play the history</span></button>
+          <button type="button" id="i-reset"><span class="zh">匹配 60/40 的波动</span><span class="en">Match the 60/40's risk</span></button>
+        </div>
+        <svg id="i-svg" viewBox="0 0 900 400" role="img" aria-label="杠杆版风险平价的净值与回撤"></svg>
+        <div class="vstat">
+          <span><span class="zh">年化</span><span class="en">Return</span> <b id="i-ann">–</b></span>
+          <span><span class="zh">波动</span><span class="en">Vol</span> <b id="i-vol">–</b></span>
+          <span><span class="zh">夏普</span><span class="en">Sharpe</span> <b id="i-sh">–</b></span>
+          <span><span class="zh">最大回撤</span><span class="en">Max DD</span> <b id="i-dd">–</b></span>
+          <span><span class="zh">最差 12 月</span><span class="en">Worst 12m</span> <b id="i-w12">–</b></span>
+          <span><span class="zh">1 元终值</span><span class="en">$1 grows to</span> <b id="i-val">–</b></span>
+        </div>
+        <div class="vstat2">
+          <span><span class="zh">游标</span><span class="en">Cursor</span> <b id="i-year">–</b></span>
+          <span><span class="zh">当时净值</span><span class="en">Value then</span> <b id="i-v">–</b></span>
+          <span><span class="zh">当时回撤</span><span class="en">Drawdown then</span> <b id="i-d">–</b></span>
+        </div>
+      </div>
+      <p class="ex-note zh">三个位置值得先试。<b>1.25 倍、利差 0.5%</b>：这是"事后匹配"那一版，波动正好压到 60/40 的 9.0%，年化 8.43%，而最大回撤 −27.8%，比 60/40 的 −27.0% 更深。<b>1.5 倍、利差 0.5%</b>：年化 8.26%，低于不杠杆的 60/40。<b>2.0 倍、利差 0</b>：年化 11.91%，波动 14.33%，夏普反而没有改善——杠杆只能在同一条线上滑动，不能把线抬起来。所有情景都假设你能在任意时点以"3 个月国库券 + 利差"融到资，且不会遇到追加保证金。</p>
+      <p class="ex-note en">Three positions are worth trying first. <b>1.25x with a 0.5% spread</b>: the "ex-post matched" version, with volatility pinned to the 60/40's 9.0%, returning 8.43% a year and drawing down −27.8%, deeper than the 60/40's −27.0%. <b>1.5x at 0.5%</b>: 8.26% a year, below the unlevered 60/40. <b>2.0x at zero cost</b>: 11.91% a year with 14.33% volatility and no better Sharpe — leverage slides you along the line, it cannot lift it. Every scenario assumes you can borrow at three-month T-bills plus the spread at any date, and never face a margin call.</p>
+      <p class="ex-src"><span class="zh">来源：本文回测；月度重算，杠杆收益＝L × 风险平价月收益 − (L−1) × (当月国库券收益 + 利差 ÷ 12)；未计税费、保证金与强平。</span><span class="en">Source: author's backtest, recomputed monthly: levered return = L x risk-parity monthly return − (L−1) x (that month's T-bill return + spread ÷ 12); taxes, margin and forced liquidation excluded.</span></p>
+    </div>
+
+    <h2 id="s9"><span class="num">09</span><span class="zh">结论：机制成立，收益不成立，优势有前提</span><span class="en">Conclusion: the mechanism holds, the return does not, the edge is conditional</span></h2>
+    <p class="zh">回到开头那个问题：不按资金分配、按风险分配，这条原则经得起检验吗。<b>答案分三层，而且三层方向不同。</b></p>
+    <p class="en">Back to the opening question: does "allocate by risk, not by capital" survive being tested? <b>The answer has three layers, and they point in different directions.</b></p>
+    <p class="zh"><b>第一层，机制成立，而且比宣传里更清楚。</b>60/40 里 60% 的钱拿走 93.5% 的风险，这是一句大多数人没算过、但一看就懂的话。风险平价把它拍到 27.3 / 21.7 / 24.5 / 26.6，离 25% 最远只差 2.3 个百分点，求解器给出的残差是 0.0。如果这是一篇只问"风险是否被拍平"的文章，到此就该结束并且是正面结论。</p>
+    <p class="en"><b>First, the mechanism holds, and more clearly than the marketing suggests.</b> In a 60/40, sixty per cent of the capital carries 93.5% of the risk — a sentence most people have never computed and immediately understand. Risk parity flattens that to 27.3 / 21.7 / 24.5 / 26.6, the furthest only 2.3 points from a quarter, with a solver residual of 0.0. If this piece only asked whether the risk gets flattened, it would end here, favourably.</p>
+    <p class="zh"><b>第二层，收益没有跟上来，而且不是差一点点。</b>32.7 年年化 7.40%，比 60/40 少 1.30 个百分点，1 元变 10.3 元对 15.2 元。更难解释的是它输给了最笨的那个组合：同样四条腿直接四等分，年化 7.95%、夏普 <b>0.73</b>，两项都更高。解出来的权重平均只离 25% 有 6.5 个百分点，而这 6.5 个百分点足以让它排名垫底——这件事本身说明，在两三百个观测上做协方差优化，优化的边际价值接近于零。</p>
+    <p class="en"><b>Second, the return does not follow, and not by a little.</b> 7.40% a year over 32.7 years, 1.30 points behind the 60/40, with one dollar becoming 10.3 against 15.2. Harder to explain is that it loses to the dumbest possible portfolio: quartering the same four legs returns 7.95% with a Sharpe of <b>0.73</b>, higher on both. The solved weights sit an average of just 6.5 points from a quarter, and those 6.5 points are enough to put it last — which by itself says the marginal value of covariance optimisation on a few hundred observations is close to zero.</p>
+    <p class="zh"><b>第三层，它的优势有明确的前提，而且前提不是"风险分散"。</b>三个十年里它输掉两个；273 个滚动十年窗口里只赢 98 个（35.9%）；赢的那些窗口与长债收益率下行相关 0.386。再看表 1：2003–2012 那十年，它把约 40% 的钱放在黄金（17.6%）和商品（11.4%）上——那是四条腿里最好的两条，也是 60/40 一股都没有的两条。<b>风险平价的超额来自那一轮贵金属与商品牛市，而不是来自"风险被拍平"这件事本身。</b>这个区别很重要：前者是一次事件，后者是一条原则。</p>
+    <p class="en"><b>Third, its edge comes with an explicit precondition, and that precondition is not "diversification".</b> It loses two of three decades; it wins 98 of 273 rolling ten-year windows, 35.9%; the windows it wins correlate 0.386 with the fall in long-bond yields. Table 1 again: in 2003–2012 it held roughly 40% of its money in gold (17.6%) and commodities (11.4%), the two best legs of the four and the two the 60/40 never owned. <b>The excess came from the precious-metal and commodity bull market, not from the act of flattening risk.</b> That distinction matters: one is an event, the other a principle.</p>
+    <p class="zh">于是唯一的出路只剩杠杆，而杠杆有自己的账。要追上 60/40 的 8.70%，用可实施口径按目标波动 10% 逐年重设倍数（平均约 1.5 倍），即便融资成本为零也只有 8.53%，夏普 0.59。<b>本文最锋利的一句结论在这里：盈亏平衡的融资利差不存在。</b>通常大家讨论"融资成本要多少才划算"，这里不需要讨论——不划算的地方不在利差，在基线。而如果强行匹配 60/40 的 9.0% 波动（1.25 倍），最大回撤变成 −27.8%，比它想打败的 60/40 的 −27.0% 还深 0.8 个百分点。<b>回撤浅和收益低本来就是同一件事的两面。</b></p>
+    <p class="en">Which leaves leverage as the only route, and leverage keeps its own books. To chase the 60/40's 8.70% with an implementable 10% volatility target reset annually (about 1.5x on average) returns 8.53% even at zero funding cost, with a Sharpe of 0.59. <b>The sharpest claim in this note sits here: the break-even funding spread does not exist.</b> The usual argument is about how much funding cost is tolerable; no argument is needed, because the problem is not the spread but the baseline. Force the volatility to match the 60/40's 9.0% (1.25x) and the maximum drawdown becomes −27.8%, 0.8 points deeper than the −27.0% it set out to beat. <b>A shallow drawdown and a low return are two faces of the same fact.</b></p>
+    <p class="zh">边界必须写清楚，因为它们全都朝着同一个方向。<b>第一</b>，样本从 1993-02 开始，不含 1970 年代——那正是股票与债券同跌、也是这套方法理论上最难受的十年，缺了这一段，本文的 −1.3 个百分点更像是乐观估计。<b>第二</b>，债券是用收益率曲线合成的（收益＝收益率 ÷ 12 − 久期 × 收益率变动），久期固定，忽略凸性，在 2020–2021 那种极低收益率下误差最大。<b>第三</b>，黄金是现货裸价、没有租金与仓储，商品是世界银行价格指数、不含展期收益。<b>第四</b>，杠杆情景是事后模拟，未计保证金、强平与融资额度。<b>第五</b>，不扣交易成本与税。</p>
+    <p class="en">The boundaries need stating, because they all lean the same way. <b>First</b>, the sample starts in February 1993 and excludes the 1970s — precisely the decade in which stocks and bonds fell together and this method should have been most uncomfortable; without it, the −1.3 points here is closer to an optimistic estimate. <b>Second</b>, bonds are synthesised from the yield curve (return = yield ÷ 12 − duration x change in yield), duration fixed and convexity ignored, so the error is largest in the ultra-low yields of 2020–2021. <b>Third</b>, gold is spot with no lease rate or storage cost, and commodities are a World Bank price index with no roll yield. <b>Fourth</b>, the leverage scenarios are simulated after the fact, with no margin, forced liquidation or borrowing limits. <b>Fifth</b>, no costs and no taxes.</p>
+    <p class="zh">如果只从这篇文章拿走一件事，拿走这个：<b>风险平价买到的是"风险被拍平"，不是"收益被改善"。</b>拍平风险确实有价值——60/40 把九成风险压在一条腿上，这件事本身值得修正。但它的价格就是少赚的那部分收益；而想用杠杆把收益买回来，就会把回撤一起买回来，并且买得更多。真正的问题不是"风险平价好不好"，而是"你能不能接受一条策略在连续两个十年里落后一个更简单的组合，并且在这个过程中继续执行它"。</p>
+    <p class="en">If you take one thing from this note, take this: <b>risk parity buys flattened risk, not improved return.</b> Flattening risk has real value — a 60/40 does put nine tenths of its risk on one leg, and that deserves correcting. But the price is exactly the return forgone, and buying the return back with leverage buys the drawdown back too, and then some. The real question is not whether risk parity is good; it is whether you can hold a strategy that trails a simpler portfolio for two consecutive decades, and keep executing it while it does.</p>
+    <p class="ex-note zh" style="margin-top:14px">下面是完整英文版、两张附录表与全部参考文献。</p>
+    <p class="ex-note en" style="margin-top:14px">Full English version, both appendix tables and the reference list follow below.</p>
+  </div>
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">它是什么</span><span class="en">What it is</span></a>
+      <a href="#s2">02 <span class="zh">数据与方法</span><span class="en">Data</span></a>
+      <a href="#s3">03 <span class="zh">32.7 年成绩</span><span class="en">32.7 years</span></a>
+      <a href="#s4">04 <span class="zh">解出来的权重</span><span class="en">The weights</span></a>
+      <a href="#s5">05 <span class="zh">调到同一刻度</span><span class="en">Same risk scale</span></a>
+      <a href="#s6">06 <span class="zh">优势来自哪个十年</span><span class="en">Which decade</span></a>
+      <a href="#s7">07 <span class="zh">四条腿一起跌</span><span class="en">All legs fall</span></a>
+      <a href="#s8">08 <span class="zh">起点与交互</span><span class="en">Starts &amp; try it</span></a>
+      <a href="#s9">09 <span class="zh">结论</span><span class="en">Conclusion</span></a>
+      <a href="#apx">附 <span class="zh">数据与方法</span><span class="en">Appendix</span></a>
+      <a href="#refs"><span class="zh">参考文献</span><span class="en">References</span></a>
+    </aside>
+  </div>
+
+  <div class="prose">
+
+    <section class="en" id="en-version" style="margin-top:40px">
+      <h2 style="border-top:2px solid var(--e-ink);padding-top:12px">English version</h2>
+      <p><b>Question.</b> Allocate by risk, not by capital. We test that principle on 392 monthly US observations from February 1993 to September 2025, on the same data pipeline as the All Weather and Permanent Portfolio notes. Four legs - equities, long bonds, gold, commodities - with equal-risk-contribution weights re-solved every January from the trailing 36-month covariance and allowed to drift within the year.</p>
+      <p><b>Result 1 - the mechanism works.</b> In a 60/40, sixty per cent of the capital carries 93.5% of the risk; risk parity flattens that to 27.3 / 21.7 / 24.5 / 26.6 per cent, the furthest only 2.3 points from a quarter, with a solver residual of 0.0. Simply quartering the same four legs gives 25.1 / 13.6 / 21.7 / <b>39.6</b> - commodities alone carrying four tenths of the risk. If the question were only whether risk gets flattened, the answer is yes and cleanly.</p>
+      <p><b>Result 2 - the return does not follow.</b> 7.40% a year over 32.7 years, 7.2% volatility, a −22.5% maximum drawdown, Sharpe 0.69, one dollar becoming 10.3. In the same sample the 60/40 returns 8.70% / 9.0% / −27.0% / 0.70 (15.2), All Weather 7.61% / 7.5% / −21.7% / 0.68, all-equities 10.80% / 14.8% / −50.9% / 0.60, and - the awkward one - an equal-weighted four-asset portfolio 7.95% / 7.5% / −23.0% / <b>0.73</b>, beating it on both return and Sharpe. The solved weights sit an average of 6.5 points from 25%, and that is enough to put the optimisation last.</p>
+      <p><b>Result 3 - the edge is an event, not the principle.</b> Split 32.7 years in three: 1993–2002 risk parity 6.5% against the 60/40's 9.5%; 2003–2012 it wins 10.0% against 6.9%; 2013–2025 it loses 6.1% against 9.4%. In the winning decade gold returned 17.6% and commodities 11.4% while risk parity held about 40% of its money there and the 60/40 held none; in the other two decades those same legs were the worst two, with the same four tenths of the portfolio parked in them. Of 273 rolling ten-year windows it wins 98, or 35.9%, and the excess correlates 0.386 with the fall in long-bond yields. <b>What it earned was a run in precious metals and commodities, not diversification.</b></p>
+      <p><b>Result 4 - leverage pays for itself, then doesn't.</b> Closing the 1.3-point gap needs leverage. Matching the 60/40's exact 9.0% volatility takes 1.25x and yields 8.43% a year with a −27.8% drawdown, 0.8 points deeper than the 60/40 it was beating on drawdown. An implementable 10% volatility target (about 1.5x on average) returns 8.53% at <b>zero</b> funding cost against the 60/40's 8.70%, falling to 8.26% at a 0.5% spread and 7.99% at 1%; the break-even spread does not exist, because the gap is in the baseline and not in the financing.</p>
+      <p><b>Result 5 - start dates decide the story.</b> From 1998 risk parity scores a 0.71 Sharpe against the 60/40's 0.59; from 2013 it scores 0.33 against 0.62, its worst cell and the very era in which the strategy went mainstream. From 2008 it scores 0.40 against 0.51. It beats the 60/40 at three of six start dates, each time by under 0.04.</p>
+      <p><b>Implication.</b> Risk parity buys flattened risk, not improved return. Flattening risk has genuine value, and it is priced in exactly the return forgone; buying that return back with leverage buys the drawdown back and more. Limitations: the sample starts in 1993 and excludes the 1970s; bonds are synthesised from the yield curve at fixed duration; gold is spot without carry and commodities an index without roll yield; the US only; no costs or taxes.</p>
+    </section>
+
+    <details class="appendix" id="apx">
+      <summary><span class="zh">附录 A · 数据、方法与全部口径</span><span class="en">Appendix A · data, method and every convention</span></summary>
+      <p class="zh"><b>数据。</b>与《全天候组合实测》《永久组合实测》《60/40 及其变体》同一条公开数据管线：股票＝标普 500 全收益（Yahoo Finance ^SP500TR，月度）；长债＝30 年期美国国债（按久期 15 用财政部收益率曲线合成）；黄金＝LBMA 伦敦金价月序列；商品＝世界银行商品价格指数；现金＝3 个月美国国库券；通胀＝美国 CPI-U（BLS）。</p>
+      <p class="en"><b>Data.</b> The same public pipeline as the All Weather, Permanent Portfolio and 60/40 notes: equities = S&amp;P 500 total return (Yahoo Finance ^SP500TR, monthly); long bonds = 30-year Treasuries synthesised from the US Treasury yield curve at a duration of 15; gold = LBMA London gold price, monthly; commodities = World Bank commodity price index; cash = 3-month US T-bills; inflation = US CPI-U (BLS).</p>
+      <p class="zh"><b>样本与起点。</b>1993-02 至 2025-09，共 392 个月（32.7 年）。起点不是选出来的：等风险贡献需要 36 个月的历史协方差，而站上的股票与债券数据从 1990-01 开始。第一次求解因此发生在 1993 年 1 月，第一次持有的月份是 1993-02。</p>
+      <p class="en"><b>Sample and start.</b> February 1993 to September 2025, 392 months (32.7 years). The start is not a choice: equal risk contribution needs a 36-month covariance history, and the site's equity and bond data begin in January 1990, so the first solve happens in January 1993 and the first month held is February 1993.</p>
+      <p class="zh"><b>做法。</b>四条腿各自的月收益按上面的口径计算。权重由等风险贡献目标解出：最小化各腿风险贡献与 1/N 的平方偏差，约束<b>权重全部非负且合计为 1</b>，不做空、不放大。每年 1 月用最近 36 个月的样本协方差重新求解，年内权重随价格漂移。组合月收益＝四条腿月收益的加权和，不扣交易成本与税。夏普按 3 个月国库券为无风险利率、月度超额收益年化计算；最大回撤按月度净值序列计算。</p>
+      <p class="en"><b>Method.</b> Each leg's monthly return is computed as above. Weights come from the equal-risk-contribution objective: minimise the squared deviation of each leg's risk contribution from 1/N, subject to <b>all weights non-negative and summing to one</b>, no shorts and no scaling. The solve is repeated every January on the trailing 36-month sample covariance, and weights drift with prices within the year. The portfolio's monthly return is the weighted sum of the four legs, before costs and taxes. Sharpe uses the 3-month T-bill as the risk-free rate on annualised monthly excess returns; maximum drawdown is measured on the monthly value series.</p>
+      <p class="zh"><b>求解校验。</b>四腿风险贡献解出为 25% / 25% / 25% / 25%，最大偏差 <b>0.0</b>，说明优化本身收敛到目标。注意这与"权重接近四等分"是两件事：目标是风险相等，而四条腿的波动相近，因此等风险的解自然接近等权。</p>
+      <p class="en"><b>Solver check.</b> The four risk contributions solve to 25% / 25% / 25% / 25% with a maximum residual of <b>0.0</b>, so the optimisation reaches its target. Note that this is a different statement from "the weights are nearly equal": the target is equal risk, and with four legs of similar volatility the equal-risk solution is naturally close to equal weight.</p>
+      <p class="zh"><b>杠杆的两套口径。</b>（1）<b>事后匹配</b>：倍数固定为 1.25 倍，取值依据是"让组合波动正好等于 60/40 的 9.0%"——一个只有事后才知道的数字，列出来是为了看风险刻度对齐后的结果。（2）<b>可实施</b>：每年 1 月按 10% 目标波动重设倍数，限制在 1.0–3.0 倍之间，全样本平均约 1.5 倍；这才是可以被执行的规则。两套口径的融资成本均按"3 个月国库券 + 利差"逐月计息，未计追加保证金与强制平仓。</p>
+      <p class="en"><b>Two leverage conventions.</b> (1) <b>Ex-post matched</b>: the multiplier is fixed at 1.25x, chosen because it makes volatility exactly equal the 60/40's 9.0% — a number only knowable after the fact, shown so the risk-matched comparison can be seen. (2) <b>Implementable</b>: the multiplier is reset each January to a 10% volatility target, capped at 1.0–3.0x and about 1.5x on average — the version that could actually have been run. Both fund monthly at three-month T-bills plus the spread, with no margin calls or forced liquidation.</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">附录表 A1｜全部被测组合（1993-02 至 2025-09，年度再平衡，不扣成本）</span><span class="en">Appendix Table A1｜every portfolio tested (Feb 1993 - Sep 2025, annual rebalancing, before costs)</span></caption>
+          <thead><tr>
+            <th><span class="zh">组合</span><span class="en">Portfolio</span></th>
+            <th><span class="zh">年化 %</span><span class="en">Return</span></th>
+            <th><span class="zh">波动 %</span><span class="en">Vol</span></th>
+            <th><span class="zh">夏普</span><span class="en">Sharpe</span></th>
+            <th><span class="zh">最大回撤 %</span><span class="en">Max DD</span></th>
+            <th><span class="zh">最差 12 月 %</span><span class="en">Worst 12m</span></th>
+            <th><span class="zh">最好 12 月 %</span><span class="en">Best 12m</span></th>
+            <th><span class="zh">1 元终值</span><span class="en">$1 grows to</span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td><b><span class="zh">风险平价</span><span class="en">Risk parity</span></b></td><td><b>7.40</b></td><td><b>7.2</b></td><td>0.69</td><td><b>−22.5</b></td><td>−20.1</td><td>24.8</td><td>10.3</td></tr>
+            <tr><td><span class="zh">等权四资产</span><span class="en">Equal-weight four</span></td><td>7.95</td><td>7.5</td><td><b>0.73</b></td><td>−23.0</td><td><b>−18.7</b></td><td>29.3</td><td>12.2</td></tr>
+            <tr><td><span class="zh">全天候</span><span class="en">All Weather</span></td><td>7.61</td><td>7.5</td><td>0.68</td><td>−21.7</td><td>−20.8</td><td>33.3</td><td>11.0</td></tr>
+            <tr><td><span class="zh">60/40</span><span class="en">60/40</span></td><td>8.70</td><td>9.0</td><td>0.70</td><td>−27.0</td><td>−24.0</td><td>36.2</td><td>15.2</td></tr>
+            <tr><td><span class="zh">纯股</span><span class="en">Equities</span></td><td>10.80</td><td>14.8</td><td>0.60</td><td>−50.9</td><td>−43.3</td><td><b>56.4</b></td><td><b>28.5</b></td></tr>
+            <tr><td><span class="zh">风险平价 · 杠杆（事后 1.25×，利差 0.5%）</span><span class="en">Risk parity levered (ex-post 1.25x, 0.5% spread)</span></td><td>8.43</td><td>9.0</td><td>0.67</td><td>−27.8</td><td>−25.0</td><td>29.9</td><td>14.1</td></tr>
+            <tr><td><span class="zh">风险平价 · 杠杆（可实施，均 1.5×，利差 0.5%）</span><span class="en">Risk parity levered (implementable, ~1.5x, 0.5% spread)</span></td><td>8.26</td><td>10.7</td><td>0.56</td><td>−30.5</td><td>−27.3</td><td>37.0</td><td>13.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="appendix">
+      <summary><span class="zh">附录 B · 五个容易被忽略的口径问题</span><span class="en">Appendix B · five conventions that are easy to overlook</span></summary>
+      <p class="zh"><b>一、36 个月的样本协方差就是全部的输入，而它很吵。</b>本文没有做协方差收缩，也没有加任何先验。这一行最标准的做法是 Ledoit–Wolf 收缩估计，本篇刻意不用，代价在数字上很清楚：<b>2021 年 1 月解出来的权重里，长债是 0.01%、黄金是 55.6%</b>；十二个月之后再解一次，这两个数字变成 43.5% 和 22.6%。全样本平均权重离 25% 只有 6.5 个百分点，而单一年份的最大偏离是 30.6 个百分点——噪声集中在个别年份，不在平均里。这也是本文"优化输给不优化"这个结论的机制解释。</p>
+      <p class="zh"><b>二、起点 1993 是数据限制，但它恰好切掉了 1970 年代。</b>1970 年代是股票与债券同跌、也是这套方法理论上最难看的十年。缺口的方向对本文不利地一致：真实的历史表现大概率比 −1.3 个百分点更差，而不是更好。</p>
+      <p class="zh"><b>三、再平衡口径与站上前三篇不完全相同。</b>《全天候组合实测》用的是"每月回到固定权重"；本篇用真正的年度再平衡（每年 1 月重置，年内漂移），与前两篇的可比性更高，也更接近实际做法。因此本文 60/40 的 8.70% 与《60/40 及其变体》的 9.09% 不能直接相比——那是样本区间（1993 起 vs 1990 起）与再平衡口径两处差异叠加的结果。</p>
+      <p class="zh"><b>四、强制非负权重，会把极端解截断在 0 上。</b>真实的等风险贡献组合允许很小的空头，本文强制权重非负。2021 年长债权重落在 0.01%，就是被这条约束按在边界上的结果；放开约束，那一年它会变成一笔小额做空长债。</p>
+      <p class="zh"><b>五、成本可以忽略，融资成本不能。</b>基础版是年度再平衡，权重年际平均只动 6.5 个百分点，交易成本量级可以忽略。杠杆版最大的单项成本是融资利差，本文按"3 个月国库券 + 利差"处理，属于偏乐观的假设——机构实际拆借通常更贵，而且本文完全没有计入保证金与强平风险。</p>
+      <p class="en"><b>One: the 36-month sample covariance is the entire input, and it is noisy.</b> No shrinkage, no prior. The standard fix in this field is the Ledoit–Wolf shrinkage estimator, deliberately not used here, and the price is visible: <b>in the January 2021 solve, long bonds receive 0.01% and gold 55.6%</b>; twelve months later the same two numbers are 43.5% and 22.6%. Across the sample the average weight sits only 6.5 points from a quarter, while the worst single year deviates by 30.6 points — the noise is concentrated in particular years, not in the average. This is the mechanism behind the note's central finding that optimisation lost to no optimisation.</p>
+      <p class="en"><b>Two: the 1993 start is a data constraint, and it removes the 1970s.</b> The 1970s are the decade in which stocks and bonds fell together and this method should look worst. The gap runs against the strategy, consistently: the true record is more likely worse than −1.3 points than better.</p>
+      <p class="en"><b>Three: the rebalancing convention is not identical to the three earlier notes.</b> The All Weather note resets to fixed weights every month; this one uses genuine annual rebalancing, which is closer to practice and more comparable with the two most recent notes. So this note's 8.70% for the 60/40 cannot be compared directly with the 9.09% in the 60/40 note: the sample window (1993 versus 1990) and the rebalancing convention both differ.</p>
+      <p class="en"><b>Four: forcing non-negative weights truncates extreme solves at zero.</b> A real equal-risk-contribution portfolio permits small shorts; here non-negative weights are imposed. The 0.01% long-bond weight in 2021 is that constraint biting at the boundary; without it, the solve would have taken a small short in long bonds that year.</p>
+      <p class="en"><b>Five: costs are negligible, funding costs are not.</b> The unlevered version rebalances annually and its weights move an average of 6.5 points a year, so trading costs are of negligible magnitude. The largest single cost in the levered version is the funding spread, treated here as three-month T-bills plus a spread — an optimistic assumption, since institutional borrowing is usually dearer, and margin and forced liquidation are excluded entirely.</p>
+    </details>
+
+    <div class="disclaimer">
+      <span class="zh"><b>免责声明。</b>本文为个人研究笔记，不构成投资建议。全部数字来自公开数据的回测，历史表现不代表未来收益；回测未计入交易成本、税费与汇率。文中提到的机构与策略名称仅为研究与引用用途，不代表作者或机构的立场。© 2026 Aylon，文字原创，引用请注明来源与链接。</span>
+      <span class="en"><b>Disclaimer.</b> This is a personal research note, not investment advice. All figures come from backtests on public data; past performance does not indicate future returns, and the backtests exclude transaction costs, taxes and FX. Firm and strategy names are referenced for research purposes only. © 2026 Aylon. Original text; please credit the source and link when quoting.</span>
+    </div>
+
+    <h2 id="refs" style="margin-top:38px"><span class="num"><span class="zh">参考文献</span><span class="en">References</span></span></h2>
+    <ol class="refs">
+      <li>Markowitz, H. (1952). Portfolio Selection. <i>The Journal of Finance</i>, 7(1), 77–91. <a href="https://doi.org/10.1111/j.1540-6261.1952.tb01525.x">doi.org/10.1111/j.1540-6261.1952.tb01525.x</a></li>
+      <li>Maillard, S., Roncalli, T., &amp; Teïletche, J. (2010). The Properties of Equally Weighted Risk Contribution Portfolios. <i>The Journal of Portfolio Management</i>, 36(4), 60–70. <a href="https://doi.org/10.3905/jpm.2010.36.4.060">doi.org/10.3905/jpm.2010.36.4.060</a></li>
+      <li>DeMiguel, V., Garlappi, L., &amp; Uppal, R. (2009). Optimal Versus Naive Diversification: How Inefficient Is the 1/N Portfolio Strategy? <i>Review of Financial Studies</i>, 22(5), 1915–1953. <a href="https://doi.org/10.1093/rfs/hhm075">doi.org/10.1093/rfs/hhm075</a></li>
+      <li>Ledoit, O., &amp; Wolf, M. (2004). Honey, I Shrunk the Sample Covariance Matrix. <i>The Journal of Portfolio Management</i>, 30(4), 110–119. <a href="https://doi.org/10.3905/jpm.2004.110">doi.org/10.3905/jpm.2004.110</a></li>
+      <li>Asness, C. S., Frazzini, A., &amp; Pedersen, L. H. (2012). Leverage Aversion and Risk Parity. <i>Financial Analysts Journal</i>, 68(1), 47–59. <a href="https://doi.org/10.2469/faj.v68.n1.1">doi.org/10.2469/faj.v68.n1.1</a></li>
+      <li>Arnott, R. D., Harvey, C. R., &amp; Markowitz, H. (2019). A Backtesting Protocol in the Era of Machine Learning. <i>Journal of Financial Data Science</i>, 1(1), 64–74. <a href="https://doi.org/10.3905/jfds.2019.1.064">doi.org/10.3905/jfds.2019.1.064</a></li>
+      <li><span class="zh">数据：Yahoo Finance ^SP500TR、美国财政部国债收益率曲线、LBMA 伦敦金价、世界银行商品价格指数、美国劳工统计局 CPI-U，访问日期 2026-10-05。</span><span class="en">Data: Yahoo Finance ^SP500TR, US Treasury yield curve, LBMA London gold price, World Bank commodity price index, BLS CPI-U, accessed 5 October 2026.</span></li>
+    </ol>
+
+    <nav class="pager" aria-label="pagination" style="margin-top:26px">
+      <a href="../sixty-forty-variants/">
+        <span class="k"><span class="zh">组合实测 03</span><span class="en">Portfolio test 03</span></span>
+        <span class="v"><span class="zh">← 60/40 及其变体</span><span class="en">← The 60/40 and its variants</span></span>
+      </a>
+      <a href="../">
+        <span class="k"><span class="zh">相关</span><span class="en">Related</span></span>
+        <span class="v"><span class="zh">全部笔记 →</span><span class="en">All notes →</span></span>
+      </a>
+    </nav>
+  </div>
+
+  <footer>
+    <div class="footin">
+<span>Working Paper v1.0 · © 2026 Aylon · Hong Kong</span>
+      <span class="spacer"></span>
+      <a href="../share-kit/"><span class="zh">分享图</span><span class="en">Share cards</span></a>
+      <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+      <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+      <a href="https://github.com/Aayloo">GitHub</a>
+    </div>
+  </footer>
+</div>
+<script src="../assets/site.js"></script>
+<script>
+const DATA = {"months": ["1993-02", "1993-03", "1993-04", "1993-05", "1993-06", "1993-07", "1993-08", "1993-09", "1993-10", "1993-11", "1993-12", "1994-01", "1994-02", "1994-03", "1994-04", "1994-05", "1994-06", "1994-07", "1994-08", "1994-09", "1994-10", "1994-11", "1994-12", "1995-01", "1995-02", "1995-03", "1995-04", "1995-05", "1995-06", "1995-07", "1995-08", "1995-09", "1995-10", "1995-11", "1995-12", "1996-01", "1996-02", "1996-03", "1996-04", "1996-05", "1996-06", "1996-07", "1996-08", "1996-09", "1996-10", "1996-11", "1996-12", "1997-01", "1997-02", "1997-03", "1997-04", "1997-05", "1997-06", "1997-07", "1997-08", "1997-09", "1997-10", "1997-11", "1997-12", "1998-01", "1998-02", "1998-03", "1998-04", "1998-05", "1998-06", "1998-07", "1998-08", "1998-09", "1998-10", "1998-11", "1998-12", "1999-01", "1999-02", "1999-03", "1999-04", "1999-05", "1999-06", "1999-07", "1999-08", "1999-09", "1999-10", "1999-11", "1999-12", "2000-01", "2000-02", "2000-03", "2000-04", "2000-05", "2000-06", "2000-07", "2000-08", "2000-09", "2000-10", "2000-11", "2000-12", "2001-01", "2001-02", "2001-03", "2001-04", "2001-05", "2001-06", "2001-07", "2001-08", "2001-09", "2001-10", "2001-11", "2001-12", "2002-01", "2002-02", "2002-03", "2002-04", "2002-05", "2002-06", "2002-07", "2002-08", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-04", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-03", "2004-04", "2004-05", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-02", "2005-03", "2005-04", "2005-05", "2005-06", "2005-07", "2005-08", "2005-09", "2005-10", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-06", "2006-07", "2006-08", "2006-09", "2006-10", "2006-11", "2006-12", "2007-01", "2007-02", "2007-03", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2007-10", "2007-11", "2007-12", "2008-01", "2008-02", "2008-03", "2008-04", "2008-05", "2008-06", "2008-07", "2008-08", "2008-09", "2008-10", "2008-11", "2008-12", "2009-01", "2009-02", "2009-03", "2009-04", "2009-05", "2009-06", "2009-07", "2009-08", "2009-09", "2009-10", "2009-11", "2009-12", "2010-01", "2010-02", "2010-03", "2010-04", "2010-05", "2010-06", "2010-07", "2010-08", "2010-09", "2010-10", "2010-11", "2010-12", "2011-01", "2011-02", "2011-03", "2011-04", "2011-05", "2011-06", "2011-07", "2011-08", "2011-09", "2011-10", "2011-11", "2011-12", "2012-01", "2012-02", "2012-03", "2012-04", "2012-05", "2012-06", "2012-07", "2012-08", "2012-09", "2012-10", "2012-11", "2012-12", "2013-01", "2013-02", "2013-03", "2013-04", "2013-05", "2013-06", "2013-07", "2013-08", "2013-09", "2013-10", "2013-11", "2013-12", "2014-01", "2014-02", "2014-03", "2014-04", "2014-05", "2014-06", "2014-07", "2014-08", "2014-09", "2014-10", "2014-11", "2014-12", "2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09"], "rp": [0.01317, 0.01678, 0.01061, 0.03373, 0.00488, 0.02089, 0.00552, -0.01818, 0.01957, -0.01106, 0.00677, 0.0237, -0.022, -0.02677, 0.00054, 0.01699, 0.00247, 0.02963, -0.00443, -0.01028, 0.00398, -0.00177, -0.00081, 0.02076, 0.01797, 0.0114, 0.02866, 0.02266, 0.00579, -0.00453, 0.00565, 0.01775, 0.00332, 0.02846, 0.02288, 0.01665, 0.00883, -0.00813, 0.00505, -0.00553, -0.01012, -0.00826, 0.00647, 0.02292, 0.02138, 0.02193, -0.00542, -0.00803, -0.02487, -0.01385, -0.00404, 0.02473, -0.00272, 0.00804, -0.01693, 0.01493, 0.00626, -0.01481, -0.0301, -0.00629, 0.02142, 0.00381, 0.02114, -0.01105, -0.00881, -0.00437, -0.04148, 0.0395, 0.0167, 0.00869, 0.0014, 0.01112, -0.03493, 0.01563, 0.02365, -0.01845, -0.01002, 0.00591, 0.01275, 0.02255, 0.06162, -0.00595, -0.00019, 0.00216, 0.03772, 0.01867, -0.03422, 0.01174, 0.03654, -0.00354, 0.02154, -5e-05, -0.00383, 0.00714, 0.00679, 0.00733, -0.02035, -0.0183, 0.02115, 0.02343, -0.00528, -0.01004, 0.01049, 0.00727, 0.00564, -0.03012, -0.01714, 0.00668, 0.02339, -0.00102, 0.02105, 0.01039, 0.00032, 0.0067, 0.02448, 0.03168, -0.00546, -0.0185, 0.04608, 0.02085, 0.02232, -0.03012, -0.01023, 0.06731, 0.00063, -0.03941, 0.02048, 0.02709, 0.01019, 0.0122, 0.04106, 0.02142, 0.0057, 0.01328, -0.03331, 0.00069, 0.00586, 0.00688, 0.02788, 0.00601, 0.03961, -0.00623, 0.01038, -0.00218, 0.00498, 0.02103, -0.00289, 0.00299, 0.02389, 0.00761, 0.03441, 0.00954, -0.01065, 0.00361, 0.03269, 0.03063, -0.00296, 0.00151, 0.04036, 0.01441, -0.03499, 0.03227, 0.01699, -0.02069, 0.00756, 0.03308, 0.00645, -0.00721, 0.01682, 0.00626, 0.03738, 0.00688, -0.00925, 0.00273, 0.0069, 0.03723, 0.03162, 0.02149, -0.00627, 0.00602, 0.00608, 0.02056, 0.00621, 0.0046, -0.02112, 0.00597, -0.02641, -0.05475, -0.11106, -0.0052, 0.03842, -0.04518, -0.02519, 0.03948, -0.00071, 0.02415, 0.01994, 0.01334, 0.03595, 0.01823, 0.01091, 0.05295, -0.01835, 0.00477, -0.00091, 0.01289, 0.02814, 0.00029, 0.01136, 0.01008, 0.026, 0.03063, 0.02607, 0.00214, 0.00461, 0.00218, 0.02062, 0.01601, 0.03558, 0.00767, -0.0065, 0.02634, 0.04661, 0.00642, -0.01747, 0.01672, -0.00686, 0.02054, 0.03142, -0.00681, -0.0013, -0.02322, -0.01141, 0.02159, 0.02125, 0.02361, -0.00894, -0.00126, -0.00917, 0.00341, 0.01109, 0.00221, -0.00016, -0.02623, -0.03185, 0.01122, -0.00979, 0.01917, 0.01587, -0.00322, -0.00639, 0.00608, 0.02661, 0.00247, 0.00086, 0.01768, 0.00497, -0.00855, 0.01668, -0.02624, 0.00393, 0.00269, -0.01527, -0.00138, 0.00937, -0.0143, 0.00435, 0.01001, -0.02383, -0.00613, -0.03717, 0.00159, 0.02666, -0.02244, -0.02128, -0.00771, 0.03894, 0.03826, 0.00716, 0.01989, 0.02777, 0.01641, -0.00315, -0.00236, -0.01757, -0.02617, 0.00247, 0.01425, 0.02435, -0.00807, 0.01665, 0.00172, -0.00659, 0.007, 0.02446, 0.00669, 0.00214, 0.01549, 0.00394, 0.02219, -0.02289, -0.00026, -0.0012, 0.01715, -0.00447, -0.00444, 0.00842, -0.00145, -0.01769, -0.00476, -0.01529, 0.0348, 0.01405, 0.02206, 0.01065, -0.00111, 0.02866, 0.01123, 0.02613, 0.0026, 0.00162, 0.00545, 0.0087, 0.03198, -0.00492, -0.03308, 0.01448, 0.0288, 0.02449, 0.04016, 0.02953, -0.01436, -0.01635, 0.02412, 0.02073, 0.0159, 0.01079, -0.01449, 0.02869, 0.04381, 0.01346, 0.00628, -0.00253, 0.00241, 0.04872, -0.00396, -0.00058, -0.00577, 0.00898, 0.01069, -0.05502, 0.00284, -0.01762, 0.00999, -0.03417, -0.08264, -0.01432, 0.0356, -0.01625, 0.03839, -0.04582, 0.03845, 0.03014, -0.02322, -0.01772, 0.0118, -0.00381, -0.01697, -0.0151, 0.0457, 0.03237, 0.00526, 0.00077, 0.0374, 0.01737, 0.00973, 0.01012, 0.02628, 0.01873, 0.01667, 0.00431, 0.00879, -0.01282, 0.02978, 0.02237, -0.00611, 0.0224, 0.00818, 0.03352, -0.0039, 0.01185, 0.03973], "cash": [0.00262, 0.00262, 0.00261, 0.00261, 0.0026, 0.0026, 0.0026, 0.00259, 0.00259, 0.00258, 0.00268, 0.00256, 0.00254, 0.00289, 0.00297, 0.00331, 0.00359, 0.00355, 0.00366, 0.0039, 0.004, 0.00433, 0.00477, 0.00473, 0.005, 0.00495, 0.0049, 0.00489, 0.00484, 0.00467, 0.00467, 0.00454, 0.0045, 0.00457, 0.00457, 0.00425, 0.00421, 0.00418, 0.00428, 0.00428, 0.00432, 0.00432, 0.00443, 0.00441, 0.00428, 0.00431, 0.00428, 0.00434, 0.00429, 0.00435, 0.00446, 0.0044, 0.00413, 0.00438, 0.00438, 0.00437, 0.00422, 0.00434, 0.00435, 0.00447, 0.00432, 0.00443, 0.0043, 0.00417, 0.00419, 0.00425, 0.00425, 0.00413, 0.00364, 0.00361, 0.00381, 0.00373, 0.00373, 0.00388, 0.00374, 0.00379, 0.00388, 0.00398, 0.00396, 0.00415, 0.00407, 0.00427, 0.00442, 0.00444, 0.0048, 0.00482, 0.0049, 0.00485, 0.00469, 0.0049, 0.00522, 0.00526, 0.00519, 0.00532, 0.00517, 0.00491, 0.00464, 0.00438, 0.00411, 0.00385, 0.00359, 0.00332, 0.00306, 0.00283, 0.0019, 0.00179, 0.00156, 0.0014, 0.00141, 0.00147, 0.00147, 0.00147, 0.00143, 0.00141, 0.00144, 0.00142, 0.00133, 0.00123, 0.00104, 0.001, 0.00098, 0.00101, 0.00097, 0.00094, 0.00097, 0.00068, 0.00076, 0.00082, 0.00072, 0.0008, 0.0008, 0.00075, 0.00071, 0.00079, 0.0008, 0.00069, 0.00078, 0.00098, 0.00106, 0.00121, 0.00122, 0.00144, 0.00172, 0.00158, 0.00172, 0.00209, 0.00219, 0.00225, 0.00233, 0.00249, 0.00271, 0.00284, 0.00263, 0.00314, 0.00333, 0.00334, 0.00364, 0.00373, 0.00387, 0.00383, 0.00396, 0.00378, 0.00418, 0.00427, 0.00383, 0.00432, 0.00435, 0.00396, 0.00417, 0.00437, 0.00422, 0.004, 0.00398, 0.00357, 0.00428, 0.00335, 0.00286, 0.00334, 0.00302, 0.0023, 0.00137, 0.00172, 0.00102, 0.00098, 0.00165, 0.00133, 0.00129, 0.00136, 0.00085, 0.0001, 2e-05, 9e-05, 0.00013, 0.00013, 0.00014, 3e-05, 0.00012, 0.00014, 0.00012, 9e-05, 5e-05, 1e-05, 7e-05, 3e-05, 2e-05, 7e-05, 0.00013, 0.00012, 0.00013, 0.00014, 0.00012, 0.00013, 0.00012, 0.00012, 0.00015, 6e-05, 0.00013, 0.00011, 4e-05, 2e-05, 3e-05, 1e-05, 0.00013, 1e-05, 2e-05, 2e-05, 2e-05, 1e-05, 3e-05, 7e-05, 4e-05, 6e-05, 3e-05, 3e-05, 6e-05, 7e-05, 5e-05, 7e-05, 9e-05, 2e-05, 3e-05, 6e-05, 3e-05, 3e-05, 3e-05, 2e-05, 3e-05, 2e-05, 3e-05, 3e-05, 4e-05, 1e-05, 3e-05, 3e-05, 3e-05, 2e-05, 4e-05, 2e-05, 1e-05, 2e-05, 2e-05, 1e-05, 3e-05, 3e-05, 1e-05, 2e-05, 4e-05, 0.0, 1e-05, 2e-05, 3e-05, 0.0, 0.0, 1e-05, 9e-05, 0.00012, 0.00018, 0.00019, 0.00015, 0.00013, 0.00022, 0.00017, 0.00016, 0.00022, 0.00017, 0.00017, 0.00032, 0.00037, 0.00042, 0.00033, 0.00062, 0.00057, 0.00072, 0.0007, 0.00083, 0.00079, 0.0008, 0.00082, 0.00095, 0.00107, 0.00119, 0.00125, 0.00136, 0.00138, 0.00147, 0.00147, 0.00162, 0.00163, 0.00177, 0.00183, 0.00193, 0.00203, 0.00202, 0.00203, 0.00203, 0.00203, 0.00196, 0.00182, 0.00168, 0.00175, 0.00159, 0.00133, 0.00135, 0.00123, 0.0013, 0.00121, 4e-05, 8e-05, 0.00011, 0.00011, 7e-05, 7e-05, 7e-05, 7e-05, 7e-05, 7e-05, 6e-05, 3e-05, 1e-05, 1e-05, 1e-05, 4e-05, 4e-05, 3e-05, 6e-05, 5e-05, 9e-05, 5e-05, 3e-05, 5e-05, 0.00014, 0.00031, 0.00061, 0.00107, 0.00185, 0.002, 0.00233, 0.00311, 0.00339, 0.00343, 0.00382, 0.00387, 0.00395, 0.00362, 0.0044, 0.00437, 0.00457, 0.0046, 0.00463, 0.00463, 0.00463, 0.00467, 0.00461, 0.00461, 0.00458, 0.00457, 0.00457, 0.00456, 0.00458, 0.00451, 0.00411, 0.00397, 0.00397, 0.00367, 0.00364, 0.00365, 0.00365, 0.00362, 0.00361, 0.00357, 0.00374, 0.00367], "ref": [0.01419, 0.01861, -0.00863, 0.02182, 0.00765, 0.00353, 0.02822, 0.00126, 0.018, -0.01609, 0.00915, 0.02624, -0.02788, -0.04272, 0.00138, 0.00912, -0.01769, 0.02886, 0.02544, -0.02513, 0.01103, -0.02333, 0.01371, 0.02537, 0.03731, 0.02074, 0.02405, 0.04922, 0.01878, 0.01508, 0.00848, 0.03112, 0.00372, 0.03674, 0.0189, 0.02168, -0.00815, 0.00188, 0.00212, 0.01305, 0.00776, -0.02797, 0.01082, 0.04433, 0.02912, 0.05856, -0.02082, 0.03663, 0.00605, -0.03358, 0.04457, 0.04131, 0.03477, 0.06603, -0.04291, 0.0428, -0.01224, 0.03044, 0.01572, 0.01516, 0.04224, 0.03184, 0.00779, -0.00568, 0.03038, -0.00666, -0.07581, 0.0581, 0.04251, 0.03508, 0.03967, 0.02634, -0.03588, 0.02736, 0.02252, -0.02099, 0.03184, -0.02127, -0.00299, -0.01338, 0.03804, 0.01051, 0.03276, -0.0349, -0.00091, 0.07126, -0.02192, -0.01181, 0.02469, -0.00735, 0.04788, -0.03119, 0.00059, -0.03364, 0.01705, 0.02411, -0.05255, -0.03394, 0.04688, 0.0068, -0.01124, -0.00271, -0.02935, -0.03077, 0.02389, 0.02263, -0.00337, -0.00654, -0.0062, 0.00544, -0.0229, 0.00085, -0.03157, -0.02715, 0.01611, -0.03598, 0.03597, 0.01521, -0.01098, -0.0203, 0.00163, 0.0034, 0.04853, 0.04844, 0.00407, -0.01545, 0.01309, 0.01023, 0.02575, 0.00443, 0.03838, 0.01497, 0.01556, -0.00342, -0.03195, 0.00519, 0.01382, -0.01571, 0.01486, 0.0068, 0.01312, 0.01434, 0.02597, -0.01271, 0.00587, -0.01375, -0.00091, 0.02536, 0.00399, 0.0113, 0.00353, -0.00288, -0.0164, 0.02554, 0.00427, 0.01344, 0.00076, 0.00144, 0.00549, -0.01856, 0.00101, 0.01064, 0.02285, 0.0202, 0.02239, 0.01667, 0.00307, 0.00704, -0.00165, 0.00665, 0.02888, 0.01316, -0.0113, -0.00912, 0.01983, 0.02325, 0.01374, -0.00494, -0.00467, -0.01946, -0.01023, 0.00128, 0.01308, -0.00207, -0.0461, -0.0018, 0.01304, -0.04642, -0.08557, 0.00254, 0.02562, -0.06195, -0.07463, 0.06387, 0.04285, 0.02426, -0.00145, 0.04991, 0.02711, 0.02775, -0.01263, 0.04752, -0.00439, -0.01115, 0.02012, 0.02966, 0.01537, -0.03677, -0.01915, 0.04421, -0.0131, 0.05078, 0.02329, -0.00766, 0.02333, 0.01512, 0.01836, -0.00116, 0.02608, 0.00217, -0.01319, 0.00055, -0.01547, -0.0354, 0.05563, 0.00086, 0.01215, 0.03064, 0.0223, 0.01461, 0.00426, -0.02873, 0.0229, 0.01265, 0.01334, 0.01555, -0.01407, 0.00679, 0.00209, 0.02547, 0.01226, 0.02409, 0.01608, 0.00266, -0.01921, 0.03223, -0.0246, 0.02683, 0.03248, 0.01696, 0.00897, -0.01033, 0.02751, 0.00057, 0.0067, 0.02054, 0.01104, -0.01093, 0.0306, -0.01286, 0.02061, 0.0218, -0.00325, -0.00296, 0.02376, -0.00566, 0.00388, 0.00622, -0.01732, 0.01749, -0.03616, -0.00808, 0.04543, -0.00088, -0.01184, -0.01648, 0.00453, 0.039, 0.00099, 0.00938, 0.01323, 0.02229, -0.00351, 0.00148, -0.01649, 0.00615, 0.01097, 0.01243, 0.0262, 0.00055, 0.0105, 0.01162, 0.001, 0.01423, 0.00712, 0.00736, 0.01332, 0.01787, 0.00727, 0.02943, -0.02565, -0.01198, -0.00373, 0.01875, 0.00315, 0.0201, 0.02425, -0.0012, -0.04326, 0.01752, -0.04511, 0.05132, 0.01798, 0.02109, 0.02455, -0.02996, 0.04869, 0.00727, 0.00313, 0.00739, 0.01513, 0.02019, 0.01784, 0.01143, -0.03524, -0.05234, 0.06738, 0.02842, 0.01161, 0.03464, 0.03942, -0.02256, -0.01861, 0.06448, 0.02344, -0.00864, 0.00765, 0.02204, 0.03528, 0.00661, 0.01288, 0.02034, 0.01764, -0.03558, 0.04011, -0.00325, 0.02687, -0.03453, -0.02425, -0.00347, -0.06467, 0.00692, -0.05652, 0.05923, -0.04245, -0.07762, 0.04264, 0.04481, -0.03661, 0.04871, -0.03149, 0.04429, 0.0125, -0.00461, 0.02898, 0.0213, -0.00972, -0.03618, -0.01459, 0.07062, 0.04311, 0.01022, 0.02229, 0.02227, -0.0374, 0.03761, 0.02883, 0.02054, 0.02514, 0.02046, -0.01953, 0.0393, -0.01878, 0.01963, 0.00031, -0.02926, 0.00656, 0.02801, 0.03662, 0.00811, 0.0239, 0.02301]};
+const C = {main:'#B23A1C', base:'#8A94A6', line:'#1F4E79', rule:'#E2DCCE', mute:'#8A8172', ink:'#1B1A17'};
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function T(zh, en){ return document.documentElement.getAttribute('data-lang') === 'en' ? en : zh; }
+
+const N = DATA.months.length, YEARS = N / 12;
+const RP = DATA.rp, CASH = DATA.cash, REF = DATA.ref;
+const CASHMEAN = CASH.reduce(function (a, b) { return a + b; }, 0) / N;
+
+function levReturns(L, spread){
+  const r = new Array(N);
+  for (let i = 0; i < N; i++) r[i] = L * RP[i] - (L - 1) * (CASH[i] + spread / 100 / 12);
+  return r;
+}
+
+function stats(r){
+  const curve = [1];
+  for (let i = 0; i < N; i++) curve.push(curve[i] * (1 + r[i]));
+  let peak = -Infinity;
+  const dd = curve.map(function (v) { peak = Math.max(peak, v); return v / peak - 1; });
+  const mean = r.reduce(function (a, b) { return a + b; }, 0) / N;
+  const vol = Math.sqrt(r.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / (N - 1)) * Math.sqrt(12);
+  let w12 = Infinity;
+  for (let i = 12; i <= N; i++) {
+    let c = 1;
+    for (let j = i - 12; j < i; j++) c *= 1 + r[j];
+    if (c - 1 < w12) w12 = c - 1;
+  }
+  return {curve: curve, dd: dd, ann: (Math.pow(curve[N], 1 / YEARS) - 1) * 100,
+          vol: vol * 100, sharpe: (mean * 12 - CASHMEAN * 12) / vol,
+          ddmin: Math.min.apply(null, dd) * 100, w12: w12 * 100};
+}
+
+/* 轴范围固定：先把杠杆 × 利差网格全部算出来，滑动时坐标轴不会跳 */
+const GRID = [];
+[1, 1.25, 1.5, 1.75, 2].forEach(function (L) {
+  [0, 3].forEach(function (spread) { GRID.push(stats(levReturns(L, spread))); });
+});
+let lmin = Infinity, lmax = -Infinity, ddMin = 0;
+GRID.forEach(function (o) {
+  o.curve.forEach(function (v) { lmin = Math.min(lmin, Math.log(v)); lmax = Math.max(lmax, Math.log(v)); });
+  ddMin = Math.min(ddMin, o.ddmin / 100);
+});
+
+const BASE = stats(RP.slice());
+const REFS = stats(REF.slice());
+
+const W = 900, H = 400, LP = 74, RIGHT = 26;
+const TOP = {y: 40, h: 178}, BOT = {y: 278, h: 74};
+const X = function (i) { return LP + i / N * (W - LP - RIGHT); };
+const Y = function (v) { return TOP.y + TOP.h - (Math.log(v) - lmin) / (lmax - lmin) * TOP.h; };
+const YD = function (v) { return BOT.y + (v / ddMin) * BOT.h; };
+
+const svg = document.getElementById('i-svg');
+const levSlider = document.getElementById('i-l');
+const spSlider = document.getElementById('i-s');
+const playBtn = document.getElementById('i-play');
+
+let L = 1.25, sp = 0.5;
+let cur = stats(levReturns(L, sp));
+let shown = cur.curve.slice();
+let morphFrom = shown.slice(), morphTo = shown.slice(), morphT = 1, morphStart = 0;
+let tracerT = 1, playing = false, lastTs = 0, looping = false;
+
+function ease(t){ return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+function polyline(points, stroke, width, dash){
+  const a = {points: points.join(' '), fill: 'none', stroke: stroke, 'stroke-width': width};
+  if (dash) a['stroke-dasharray'] = dash;
+  return el('polyline', a);
+}
+
+function draw(){
+  svg.innerHTML = '';
+  svg.appendChild(polyline(REFS.curve.map(function (v, i) { return X(i) + ',' + Y(v); }), C.base, 1.5, '5 4'));
+  svg.appendChild(polyline(BASE.curve.map(function (v, i) { return X(i) + ',' + Y(v); }), '#C3CBD6', 1.3, '2 4'));
+  svg.appendChild(polyline(shown.map(function (v, i) { return X(i) + ',' + Y(v); }), C.main, 2.2));
+  svg.appendChild(el('text', {x: LP, y: TOP.y - 16, 'font-size': 11.5, fill: C.mute},
+    T('净值（对数刻度，1993-02 = 1）；灰虚线 = 60/40，浅虚线 = 不加杠杆的风险平价',
+      'value (log scale, Feb 1993 = 1); grey dashed = 60/40, pale dashed = unlevered risk parity')));
+  [1, 2, 4, 8, 16, 32].forEach(function (v) {
+    if (Math.log(v) < lmin || Math.log(v) > lmax) return;
+    const y = Y(v);
+    svg.appendChild(el('line', {x1: LP, x2: W - RIGHT, y1: y, y2: y, stroke: C.rule, 'stroke-width': 0.8, 'stroke-dasharray': '3 4'}));
+    svg.appendChild(el('text', {x: LP - 9, y: y + 4, 'font-size': 10, fill: C.mute, 'text-anchor': 'end'}, v + 'x'));
+  });
+  const area = [X(0) + ',' + YD(0)];
+  shown.forEach(function (v, i) { area.push(X(i) + ',' + YD(cur.dd[i])); });
+  area.push(X(N) + ',' + YD(0));
+  svg.appendChild(el('polygon', {points: area.join(' '), fill: 'rgba(178,58,28,0.14)', stroke: 'none'}));
+  svg.appendChild(polyline(REFS.dd.map(function (v, i) { return X(i) + ',' + YD(v); }), C.base, 1.2, '5 4'));
+  svg.appendChild(polyline(shown.map(function (v, i) { return X(i) + ',' + YD(cur.dd[i]); }), C.main, 1.7));
+  svg.appendChild(el('line', {x1: LP, x2: W - RIGHT, y1: YD(0), y2: YD(0), stroke: C.rule, 'stroke-width': 1}));
+  svg.appendChild(el('text', {x: LP, y: BOT.y - 12, 'font-size': 11.5, fill: C.mute},
+    T('回撤（%，叠加显示）', 'drawdown (%, stacked below)')));
+  [0, 0.5, 1].forEach(function (f) {
+    const v = ddMin * f;
+    svg.appendChild(el('text', {x: LP - 9, y: YD(v) + 4, 'font-size': 10, fill: C.mute, 'text-anchor': 'end'},
+      Math.round(v * 100) + '%'));
+  });
+  [1995, 2000, 2005, 2010, 2015, 2020, 2025].forEach(function (yr) {
+    let idx = 0;
+    for (let i = 0; i < N; i++) if (parseInt(DATA.months[i].slice(0, 4), 10) <= yr) idx = i + 1;
+    svg.appendChild(el('text', {x: X(idx), y: BOT.y + BOT.h + 18, 'font-size': 10, fill: C.mute, 'text-anchor': 'middle'}, yr));
+  });
+  const k = Math.round(tracerT * N);
+  const vx = X(k);
+  svg.appendChild(el('line', {x1: vx, x2: vx, y1: TOP.y - 6, y2: BOT.y + BOT.h, stroke: C.ink, 'stroke-width': 1, opacity: 0.32}));
+  if (k > 0) {
+    svg.appendChild(el('circle', {cx: vx, cy: Y(cur.curve[k]), r: 4, fill: C.main, stroke: '#fff', 'stroke-width': 1.5}));
+    svg.appendChild(el('circle', {cx: vx, cy: YD(cur.dd[k]), r: 3.2, fill: C.main, stroke: '#fff', 'stroke-width': 1.3}));
+  }
+  const mi = Math.max(0, Math.min(N - 1, k - 1));
+  document.getElementById('i-year').textContent = k === 0 ? DATA.months[0] : DATA.months[mi];
+  document.getElementById('i-v').textContent = cur.curve[k].toFixed(2) + 'x';
+  document.getElementById('i-d').textContent = (cur.dd[k] * 100).toFixed(1) + '%';
+}
+
+function statline(){
+  document.getElementById('i-llab').textContent = L.toFixed(2) + '×';
+  document.getElementById('i-slab').textContent = sp.toFixed(2) + '%';
+  document.getElementById('i-ann').textContent = cur.ann.toFixed(2) + '%';
+  document.getElementById('i-vol').textContent = cur.vol.toFixed(1) + '%';
+  document.getElementById('i-sh').textContent = cur.sharpe.toFixed(2);
+  document.getElementById('i-dd').textContent = cur.ddmin.toFixed(1) + '%';
+  document.getElementById('i-w12').textContent = cur.w12.toFixed(1) + '%';
+  document.getElementById('i-val').textContent = cur.curve[N].toFixed(2) + 'x';
+}
+
+function loop(ts){
+  let need = false;
+  if (morphT < 1) {
+    morphT = Math.min(1, (ts - morphStart) / 340);
+    const e = ease(morphT);
+    shown = morphFrom.map(function (v, i) { return v + (morphTo[i] - v) * e; });
+    need = true;
+  }
+  if (playing) {
+    const dt = lastTs ? ts - lastTs : 16;
+    tracerT = Math.min(1, tracerT + dt / 9000);
+    if (tracerT >= 1) {
+      playing = false;
+      playBtn.innerHTML = '<span class="zh">▶ 重播</span><span class="en">▶ Replay</span>';
+    }
+    need = true;
+  }
+  lastTs = ts;
+  draw();
+  if (need) requestAnimationFrame(loop); else looping = false;
+}
+function ensure(){ if (!looping) { looping = true; lastTs = 0; requestAnimationFrame(loop); } }
+
+function apply(animate){
+  cur = stats(levReturns(L, sp));
+  if (animate === false) {
+    shown = cur.curve.slice(); morphTo = shown.slice(); morphT = 1;
+  } else {
+    const e = ease(morphT);
+    morphFrom = shown.map(function (v, i) { return v + (morphTo[i] - v) * e; });
+    morphTo = cur.curve.slice();
+    morphT = 0; morphStart = performance.now();
+  }
+  statline();
+  ensure();
+}
+
+levSlider.addEventListener('input', function (ev) { L = parseFloat(ev.target.value); apply(true); });
+spSlider.addEventListener('input', function (ev) { sp = parseFloat(ev.target.value); apply(true); });
+document.getElementById('i-reset').addEventListener('click', function () {
+  L = 1.25; sp = 0.5; levSlider.value = '1.25'; spSlider.value = '0.5';
+  apply(true); tracerT = 1; ensure();
+});
+playBtn.addEventListener('click', function () {
+  tracerT = 0; playing = true; lastTs = 0; ensure();
+  playBtn.innerHTML = '<span class="zh">⏸ 暂停</span><span class="en">⏸ Pause</span>';
+});
+new MutationObserver(function () {
+  playBtn.innerHTML = playing
+    ? '<span class="zh">⏸ 暂停</span><span class="en">⏸ Pause</span>'
+    : (tracerT >= 1 ? '<span class="zh">▶ 重播</span><span class="en">▶ Replay</span>'
+                    : '<span class="zh">▶ 播放这段历史</span><span class="en">▶ Play the history</span>');
+  draw();
+}).observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+
+statline();
+draw();
+</script>

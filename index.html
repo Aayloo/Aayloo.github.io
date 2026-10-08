@@ -913,7 +913,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="11">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
+          <div><b data-to="12">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1033,7 +1033,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">11 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">11 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">12 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">12 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
@@ -1073,6 +1073,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">PORTFOLIO · 资产配置 · 2026-10-08</span>
+              <h4><a href="notes/risk-parity/"><span class="zh">风险平价实测：风险被拍平了，收益没有跟上来</span><span class="en">Risk parity, tested: the risk gets flattened, the return does not follow</span></a></h4>
+              <p class="nsum"><span class="zh">按风险分配而不是按资金分配——机制确实成立，代价是收益。它没跑赢 60/40，也没赢过最笨的四等分。</span>
+              <span class="en">Allocate by risk instead of by money: the mechanism works, the return does not. It beats neither a 60/40 nor a naive four-way split.</span></p>
+              <a class="go" href="notes/risk-parity/"><span class="zh">读全文（11 张图 · 可拖杠杆与融资成本的交互）→</span><span class="en">Read the note (11 figures + interactivity) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">用 1993-02 至 2025-09 共 392 个月的美国数据，把股票、长债、黄金、商品四条腿做成等风险贡献组合（每年 1 月按最近 36 个月协方差重解权重）：年化 <b>7.40%</b>、波动 7.2%、最大回撤 <b>−22.5%</b>、夏普 0.69，32.7 年 1 元变 10.3 元。同期 60/40 是 8.70% / −27.0% / 0.70，四等分四资产是 7.95% / 夏普 <b>0.73</b>——它确实更平，但更平不等于更高。</span>
+              <span class="en">392 monthly US observations from 1993-02 to 2025-09 turn stocks, long bonds, gold and commodities into an equal-risk-contribution portfolio: <b>7.40%</b> a year, 7.2% volatility, a <b>−22.5%</b> drawdown, a 0.69 Sharpe and 10.3× over 32.7 years. Over the same window a 60/40 earned 8.70% with a −27.0% drawdown, and a naive four-way split earned 7.95% with a <b>0.73</b> Sharpe. Flatter, yes — not higher.</span></p>
+              <p class="take"><span class="zh">机制本身是干净的：60/40 里 60% 的钱扛着 <b>93.5%</b> 的风险，等风险贡献解把它拍到 27.3 / 21.7 / 24.5 / 26.6。代价藏在别处——解出来的权重平均只离 25% 约 6.5 个百分点，所以「优化」输给了不优化；要补回那 1.3 个百分点就得上杠杆，而把融资利差压到 0，1.5 倍版年化 8.53% 仍追不平 60/40 的 8.70%，2022 年反而跌得更深（−21.3% 对 −18.1%）。<b>273 个滚动十年窗口里它只赢 98 个</b>，优势几乎全在 2003–2012 那一段。</span>
+              <span class="en">The mechanism itself is clean: 60% of a 60/40&#39;s money carries <b>93.5%</b> of its risk, and the equal-risk solution flattens that to 27.3 / 21.7 / 24.5 / 26.6. The cost hides elsewhere — the solved weights sit only about 6.5 points away from 25%, which is why optimising loses to not optimising. Buying the missing 1.3 points back needs leverage, and even at a zero funding spread a 1.5× version earns 8.53%, still short of the 60/40&#39;s 8.70%, while falling further in 2022 (−21.3% against −18.1%). <b>Of 273 rolling ten-year windows it wins only 98</b>, with the edge concentrated in 2003–2012.</span></p>
+            </div>
+          </details>
 
           <details class="nitem rv is-feat">
             <summary>
