@@ -5,7 +5,7 @@
     "base_url": "https://aayloo.github.io/notes/",
     "personal_site": "https://aayloo.github.io/",
     "github": "https://github.com/Aayloo",
-    "updated": "2026-10-05",
+    "updated": "2026-10-07",
     "tagline_zh": "前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。",
     "tagline_en": "Reading notes on frontier technology. Facts, inferences and opinions kept apart — every number carries a source."
   },
@@ -40,22 +40,29 @@
     }
   },
   "starter_band": {
-    "label_zh": "入门科普 · 先看这四篇",
-    "label_en": "Start here · four explainers",
-    "note_zh": "读不下去就从这几篇开始：组合怎么分钱、黄金到底管不管用、VIX 该不该贪婪。",
-    "note_en": "If the list looks long, start here: how a portfolio splits its money, whether gold actually hedges, and whether high VIX means buy.",
+    "label_zh": "入门科普 · 先看这五篇",
+    "label_en": "Start here · five explainers",
+    "note_zh": "读不下去就从这几篇开始：配置怎么分钱、60/40 是不是最优、黄金到底管不管用、VIX 该不该贪婪。",
+    "note_en": "If the list looks long, start here: how a portfolio splits its money, whether the 60/40 is actually best, whether gold hedges, and whether high VIX means buy.",
     "items": [
       {
+        "slug": "sixty-forty-variants",
+        "kicker_zh": "配置基准",
+        "kicker_en": "The baseline",
+        "blurb_zh": "最有名的配置规则：60% 这个数字比 40–50% 更差，崩在股债同跌。",
+        "blurb_en": "The most famous rule — 60% is worse than 40–50%, and it breaks when stocks and bonds fall together."
+      },
+      {
         "slug": "permanent-portfolio",
-        "kicker_zh": "配置入门",
-        "kicker_en": "Allocation basics",
+        "kicker_zh": "配置进阶",
+        "kicker_en": "Allocation, next step",
         "blurb_zh": "四等分资金＝等风险；但通胀那一格它没扛住。",
         "blurb_en": "Equal money, nearly equal risk — but it failed the inflation test."
       },
       {
         "slug": "all-weather",
-        "kicker_zh": "配置进阶",
-        "kicker_en": "Allocation, next step",
+        "kicker_zh": "风险均衡",
+        "kicker_en": "Risk balance",
         "blurb_zh": "更稳，却没跑赢 60/40；风险其实压在长债上。",
         "blurb_en": "Steadier than a 60/40, no better on return, with the risk sitting in bonds."
       },
@@ -76,6 +83,25 @@
     ]
   },
   "notes": [
+    {
+      "slug": "sixty-forty-variants",
+      "title_zh": "60/40 及其变体：最有名的配置规则经得起检验吗",
+      "title_en": "The 60/40, tested: does the most famous allocation rule hold up?",
+      "tags": [
+        "starter",
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-07",
+      "updated": "2026-10-07",
+      "version": "v1.0",
+      "minutes": 17,
+      "summary_zh": "用 1990-01 至 2025-09 共 428 个月的美国数据回测 60/40 及其变体。它年化 9.09%、波动 9.1%、最大回撤 −27.0%、夏普 0.70——而 60% 这个数字恰好落在最差的区间：40–50% 的夏普同为 0.72，最大回撤只有 −21.5%。它真正的失效场景是股债同跌：2022 年两条腿各跌 18.1%，全样本有 13.5% 的月份两条腿同时下跌，CPI 高于 5% 时相关性从 −0.04 翻到 +0.38。把 10% 挪给黄金是最便宜的修补（夏普 0.76、回撤 −22.7%，代价是终值少 4.2%）。含 10 张图表（其中 1 张可拖动股票权重）与 2 张附录表。",
+      "summary_en": "428 monthly US observations from 1990-01 to 2025-09 test the 60/40 and its variants: 9.09% a year, 9.1% volatility, a −27.0% maximum drawdown and a 0.70 Sharpe. Sixty percent sits in the worst part of the curve — a 40/60 or 50/50 has the same 0.72 Sharpe with a −21.5% drawdown. What breaks it is stocks and bonds falling together: both legs lost 18.1% in 2022, 13.5% of all months saw both fall, and the correlation flips from −0.04 to +0.38 once CPI is above 5%. Shifting 10% into gold is the cheapest repair (Sharpe 0.76, drawdown −22.7%, at a 4.2% cost to terminal wealth).",
+      "path": "sixty-forty-variants/",
+      "featured": true
+    },
     {
       "slug": "trend-following",
       "title_zh": "趋势跟踪实测：它是一份保险，不是一台发动机",

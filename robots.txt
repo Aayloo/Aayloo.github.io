@@ -1,0 +1,6 @@
+# https://aayloo.github.io/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://aayloo.github.io/sitemap.xml
+Sitemap: https://aayloo.github.io/notes/sitemap.xml
