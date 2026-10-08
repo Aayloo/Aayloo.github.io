@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-10-08</lastBuildDate>
   <item>
+    <title>1/N 打败最优化：八条腿、九个组合、三十三年</title>
+    <link>https://aayloo.github.io/notes/one-over-n/</link>
+    <guid>https://aayloo.github.io/notes/one-over-n/</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>用 1990-02 至 2025-09 共 428 个月（样本外 392 个月）的美国数据，把 1/N 等权与八个组合优化器放在同一套规则下重跑。1/N 年化 5.88%、波动 6.4%、最大回撤 −25.1%、夏普 0.54；八个优化器里三个赢（风险平价 ERC 0.65、最大夏普·收缩 0.58、逆波动率 0.57）、一个打平、四个输。样本内预期夏普平均 1.74 的最大夏普组合，实际拿到 0.54——与什么都不算的等权完全相同，九个方法里预期与实现的相关性最好只有 0.04。收缩估计能把最小方差从 0.11 修到 0.38，修不到 1/N 之上；换估计窗口（12–120 个月）与换资产数（2–8 条腿）都不改变排序。优化器的价值是条件性的：2008 年最小方差只跌 0.7%（1/N 跌 24.6%），高通胀三年里八个优化器只有一个赚钱。含 11 张图表（其中 1 张可拖估计窗口）与 4 张表。</description>
+  </item>
+  <item>
     <title>风险平价实测：风险被拍平了，收益没有跟上来</title>
     <link>https://aayloo.github.io/notes/risk-parity/</link>
     <guid>https://aayloo.github.io/notes/risk-parity/</guid>

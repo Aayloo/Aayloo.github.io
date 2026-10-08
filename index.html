@@ -913,7 +913,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="12">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
+          <div><b data-to="14">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1033,7 +1033,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">12 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">12 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">13 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">13 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
@@ -1073,6 +1073,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">METHOD · 组合构建 · 2026-10-08</span>
+              <h4><a href="notes/one-over-n/"><span class="zh">1/N 打败最优化：八条腿、九个组合、三十三年</span><span class="en">1/N beats the optimiser: eight legs, nine portfolios, thirty-three years</span></a></h4>
+              <p class="nsum"><span class="zh">样本内预期夏普 1.74 的最优化组合，实际拿到 0.54——和什么都不算的等权一模一样。</span>
+              <span class="en">The portfolio that promised a 1.74 Sharpe delivered 0.54 — exactly what equal weighting earned for estimating nothing.</span></p>
+              <a class="go" href="notes/one-over-n/"><span class="zh">读全文（11 张图 · 可拖估计窗口的交互）→</span><span class="en">Read the note (11 figures + interactivity) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">用 1990-02 至 2025-09 共 428 个月（样本外 392 个月）的美国数据，把 1/N 等权与八个优化器放在同一套规则下重跑：1/N 年化 <b>5.88%</b>、波动 6.4%、最大回撤 −25.1%、夏普 <b>0.54</b>，1 元变 6.47 元。<b>八个优化器里三个赢、一个打平、四个输</b>，而它没有估任何一个参数。</span>
+              <span class="en">428 monthly US observations from 1990-02 to 2025-09 (392 out of sample) re-run 1/N against eight optimisers on one set of rules: <b>5.88%</b> a year, 6.4% volatility, a −25.1% drawdown, a <b>0.54</b> Sharpe and 6.47× over the period. <b>Three optimisers beat it, one ties and four lose</b> — and it estimates nothing at all.</span></p>
+              <p class="take"><span class="zh">最锋利的一处在这里：样本最大夏普组合每年 1 月都算出一个平均 <b>1.74</b> 的夏普，实际拿到 0.54；九个方法里「预期」与「实现」的相关性最好只有 0.04。<b>它不是因为算错，而是因为假设历史会重演。</b>收缩估计能把最小方差从 0.11 修到 0.38，修不到 1/N 之上；换估计窗口（12–120 个月）、换资产数（2–8 条腿）都不改变排序。优化器的价值是条件性的——2008 年最小方差只跌 0.7%（1/N 跌 24.6%），而高通胀那三年八个优化器里只有一个赚到钱。</span>
+              <span class="en">The sharpest point sits here: sample max-Sharpe computed an average <b>1.74</b> Sharpe every January and delivered 0.54; across nine methods the best promise-to-delivery correlation is 0.04. <b>It is not miscalculating — it is assuming the history repeats.</b> Shrinkage lifts minimum variance from 0.11 to 0.38 but not past 1/N, and neither the estimation window (12–120 months) nor the number of legs (2–8) changes the ordering. The optimiser&#39;s value is conditional: minimum variance lost 0.7% in 2008 against 1/N&#39;s 24.6%, while in three years of high inflation only one of the eight made money.</span></p>
+            </div>
+          </details>
 
           <details class="nitem rv">
             <summary>
