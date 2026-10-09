@@ -913,7 +913,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="14">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
+          <div><b data-to="15">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1033,7 +1033,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">13 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">13 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">14 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">14 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
@@ -1073,6 +1073,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">LIABILITY · 负债与配置 · 2026-10-09</span>
+              <h4><a href="notes/liability-driven/"><span class="zh">负债驱动的资产配置：换一个分母，排序就变了</span><span class="en">Liability-driven allocation: change the denominator and the ranking changes</span></a></h4>
+              <p class="nsum"><span class="zh">资产端夏普垫底的组合，funding ratio 最大回撤只有 −2.4%——换成盈余端的尺子，排序整个换了一遍。</span>
+              <span class="en">The worst portfolio on asset Sharpe drew its funding ratio down only 2.4% — change the ruler to surplus and the ranking is rewritten.</span></p>
+              <a class="go" href="notes/liability-driven/"><span class="zh">读全文（9 张图 · 可拖股票权重与久期目标的交互）→</span><span class="en">Read the note (9 figures + interactivity) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">把一笔 20 年期定额年金（按当月 10 年期美国国债收益率折现，修正久期样本均值 <b>9.00 年</b>）当作负债，用 1993-02 至 2025-09 共 392 个月的美国数据检验七个组合。资产端夏普第一的 1/N 等权（0.71）在盈余端排第六；资产端垫底的久期匹配（<b>0.26</b>）盈余波动只有 <b>2.15%</b>、funding ratio 最大回撤只有 <b>−2.4%</b>。</span>
+              <span class="en">A 20-year level annuity (discounted at the 10-year Treasury yield, average modified duration <b>9.00 years</b>) becomes the liability for seven portfolios over 392 monthly US observations from 1993-02 to 2025-09. The best asset-only portfolio, 1/N at a 0.71 Sharpe, ranks sixth on surplus; the worst, duration matching at <b>0.26</b>, runs <b>2.15%</b> surplus volatility and a <b>−2.4%</b> maximum funding-ratio drawdown.</span></p>
+              <p class="take"><span class="zh">机制上，久期缺口与盈余波动是一条 <b>U 形曲线</b>：资产久期 0 年时 7.54%，调到 9 年（等于负债久期）降到 2.19%，再加久期重新上升。利率动 2 个百分点，缺口 −9 年的纯股组合 funding ratio 动 <b>18%</b>；久期匹配是 0。而可承受的风险随 funding ratio 系统性放宽：<b>100% 时连 5% 的跌破容忍度都只允许 0% 股票，115% 时才允许 55%</b>。同一个久期匹配组合的资产端回撤是 −30.1%——资产跌三成，盈余只跌 2.4%。</span>
+              <span class="en">Mechanically, the duration gap and surplus volatility trace a <b>U</b>: 7.54% at zero asset duration, 2.19% at nine years — the liability's own duration — and rising again beyond. A two-point rate move shifts an all-equity portfolio&#39;s funding ratio by <b>18%</b> against zero for duration matching. And the tolerable risk budget widens systematically with the funding ratio: <b>at 100% even a 5% shortfall tolerance permits 0% equities; 55% needs 115%</b>. The same duration-matched portfolio drew 30.1% down in assets while its surplus fell 2.4%.</span></p>
+            </div>
+          </details>
 
           <details class="nitem rv">
             <summary>

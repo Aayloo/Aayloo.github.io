@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-10-08</lastBuildDate>
   <item>
+    <title>负债驱动的资产配置：换一个分母，排序就变了</title>
+    <link>https://aayloo.github.io/notes/liability-driven/</link>
+    <guid>https://aayloo.github.io/notes/liability-driven/</guid>
+    <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+    <description>把一笔 20 年期定额年金（按当月 10 年期美国国债收益率折现、修正久期均值 9.00 年）当作负债，用 1993-02 至 2025-09 共 392 个月的美国数据检验七个组合。资产端夏普第一的 1/N 等权（0.71）在盈余端排第六；资产端垫底的久期匹配（0.26）盈余波动只有 2.15%、funding ratio 最大回撤只有 −2.4%。久期缺口与盈余波动是一条 U 形曲线，最低点在资产久期等于负债久期处（7.54% → 2.19%）。利率动 2 个百分点，缺口 −9 年的纯股组合 funding ratio 动 18%。可承受的风险随 funding ratio 系统性放宽：100% 时连 5% 的跌破容忍度都只能持有 0% 股票，115% 时可以持有 55%。含 9 张图表、1 张可拖股票权重与久期目标的交互图与 4 张表。</description>
+  </item>
+  <item>
     <title>1/N 打败最优化：八条腿、九个组合、三十三年</title>
     <link>https://aayloo.github.io/notes/one-over-n/</link>
     <guid>https://aayloo.github.io/notes/one-over-n/</guid>
