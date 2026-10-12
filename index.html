@@ -913,7 +913,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="15">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
+          <div><b data-to="16">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1033,7 +1033,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
       <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">14 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">14 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">15 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">15 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
@@ -1073,6 +1073,23 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
           </div>
         </div>
         <!-- /NOTES:STARTER:BAND -->
+
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag">REBALANCING · 组合构建 · 2026-10-12</span>
+              <h4><a href="notes/rebalancing/"><span class="zh">再平衡实测：每年值多少个基点，容差带该设多宽</span><span class="en">Rebalancing, tested: how many basis points a year, and how wide a band</span></a></h4>
+              <p class="nsum"><span class="zh">再平衡每年多赚 0.9 个百分点，也每年放弃 0.9 个百分点——看你拿哪把尺子量。</span>
+              <span class="en">Rebalancing earns 0.9 points a year and gives up 0.9 points a year — depending on which ruler you use.</span></p>
+              <a class="go" href="notes/rebalancing/"><span class="zh">读全文（9 张图 · 可拖容差带的交互）→</span><span class="en">Read the note (9 figures + interactivity) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">用 1993-02 至 2025-09 共 392 个月的美国数据、8 条资产腿、4 个目标组合（2 / 4 / 8 / 8 条腿）与 8 种再平衡政策。分散化收益确实存在，而且与 Booth–Fama 的公式几乎完全吻合：60/40 理论 <b>0.35%</b> 对实测 <b>0.33%</b>，1/N 八腿 <b>0.85%</b> 对 <b>0.88%</b>，且随腿数上升。</span>
+              <span class="en">392 monthly US observations from 1993-02 to 2025-09, eight asset legs, four target portfolios (two, four, eight and eight legs) and eight rebalancing policies. The diversification return is real and matches the Booth–Fama formula almost exactly: <b>0.35%</b> predicted against <b>0.33%</b> measured for a 60/40, <b>0.85%</b> against <b>0.88%</b> for 1/N — rising with the number of legs.</span></p>
+              <p class="take"><span class="zh">但同一份数据里，<b>不再平衡</b>比月频再平衡的年化高出 <b>0.45–1.17 个百分点</b>，因为不复权时权重会漂到赢家身上——60/40 三十三年后 <b>91.9% 是股票</b>。而按夏普排，<b>年度再平衡在四个组合里全部胜出</b>（0.69 对 0.65、0.79 对 0.73、0.60 对 0.56、0.64 对 0.58）。成本不是主角：放大十倍只再多损失 4–42 个基点；容差带从 1% 拉到 28% 换手单调下降，却没有一致的最优宽度。</span>
+              <span class="en">But over the same data <b>buy-and-hold</b> beats monthly rebalancing by <b>0.45 to 1.17 points a year</b>, because an untouched portfolio drifts into its winners — a 60/40 ends the sample <b>91.9% equities</b>. Ranked by Sharpe, <b>annual rebalancing wins in all four portfolios</b> (0.69 against 0.65, 0.79 against 0.73, 0.60 against 0.56, 0.64 against 0.58). Cost is not the story: ten times the cost gives up only another 4–42 basis points, and widening the band from 1% to 28% lowers turnover monotonically without producing a consistent optimum.</span></p>
+            </div>
+          </details>
 
           <details class="nitem rv">
             <summary>

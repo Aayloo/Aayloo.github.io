@@ -5,6 +5,13 @@
   <description>前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。</description>
   <lastBuildDate>2026-10-08</lastBuildDate>
   <item>
+    <title>再平衡实测：每年值多少个基点，容差带该设多宽</title>
+    <link>https://aayloo.github.io/notes/rebalancing/</link>
+    <guid>https://aayloo.github.io/notes/rebalancing/</guid>
+    <pubDate>Mon, 12 Oct 2026 00:00:00 +0000</pubDate>
+    <description>「再平衡能提高长期收益」一半对一半错。用 1993-02 至 2025-09 共 392 个月的美国数据、8 条腿、4 个目标组合（2/4/8/8 条腿）与 8 种再平衡政策：分散化收益与 Booth–Fama 公式几乎完全吻合（60/40 理论 0.35% 对实测 0.33%，1/N 八腿 0.85% 对 0.88%），且随腿数上升；但同一份数据里不再平衡比月频再平衡的年化高 0.45–1.17 个百分点——60/40 三十年后漂到 91.9% 是股票。按夏普排，年度再平衡在四个组合里全部胜出。成本从 1 倍放大到 10 倍只再多损失 4–42 个基点；容差带从 1% 拉到 28% 换手单调下降，溢价却没有一致最优宽度。含 9 张图表、1 张可拖带宽的交互图与 4 张表。</description>
+  </item>
+  <item>
     <title>负债驱动的资产配置：换一个分母，排序就变了</title>
     <link>https://aayloo.github.io/notes/liability-driven/</link>
     <guid>https://aayloo.github.io/notes/liability-driven/</guid>
