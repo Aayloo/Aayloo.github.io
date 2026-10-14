@@ -1,7 +1,7 @@
 # aayloo.github.io
 
-个人网站源码 —— 数据科学家 · 量化策略师 · AI 工程师
-Personal site — Data Scientist · Quantitative Strategist · AI Engineer
+个人网站源码 —— 数据科学家 · 量化分析师 · AI 工程师
+Personal site — Data Scientist · Quantitative Analyst · AI Engineer
 
 **网站地址：<https://aayloo.github.io/>**
 
