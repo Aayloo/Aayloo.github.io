@@ -33,10 +33,10 @@ body{
   --bg:#FAFAF7;--card:#FFFFFF;--card2:#F5F7F4;
   --line:#E4E8EE;--line2:#CFD7E2;
   --ink:#111A28;--ink2:#4A5A72;--mute:#64748C;
-  --teal:#0E9F87;--teal2:#E3F5F1;
+  --teal:#0E9F87;--teal2:#E3F5F1;--teal-ink:#0A7A66;
   --violet:#6D4AEF;--violet2:#EDE9FE;
   --blue:#2F6FE4;--blue2:#E6EEFD;
-  --amber:#D9821A;--amber2:#FBF0DF;
+  --amber:#D9821A;--amber2:#FBF0DF;--amber-ink:#9A5A10;
   --mono:ui-monospace,"Cascadia Mono","Segoe UI Mono",Consolas,monospace;
   --sh1:0 1px 2px rgba(17,26,40,.05),0 1px 3px rgba(17,26,40,.04);
   --sh2:0 12px 32px rgba(17,26,40,.12);
@@ -74,7 +74,7 @@ nav.stuck{border-bottom-color:var(--line);box-shadow:0 6px 20px rgba(17,26,40,.0
 .navin::-webkit-scrollbar{display:none}
 nav.stuck .navin{height:50px}
 .brand{font-family:var(--mono);font-weight:800;font-size:14px;color:var(--ink);margin-right:16px;white-space:nowrap}
-.brand i{font-style:normal;color:var(--amber)}
+.brand i{font-style:normal;color:var(--amber-ink)}
 .navin .lk{padding:7px 11px;border-radius:8px;font-size:13.5px;font-weight:600;color:var(--ink2);white-space:nowrap}
 .navin .lk:hover{background:rgba(17,26,40,.05);color:var(--ink);text-decoration:none}
 .spacer{flex:1}
@@ -114,7 +114,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .avatar:hover img{transform:scale(1.12) rotate(3deg)}
 .herotext{flex:1 1 340px;min-width:0}
 .hello{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--amber);margin:0 0 10px}
+  text-transform:uppercase;color:var(--amber-ink);margin:0 0 10px}
 .hero h1{font-size:clamp(32px,4.6vw,48px);font-weight:800;color:var(--ink);line-height:1.1;
   letter-spacing:-.03em;margin:0 0 8px}
 .hero .role{font-size:clamp(17px,2vw,21px);font-weight:800;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em}
@@ -133,7 +133,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 
 /* section head */
 .sh{padding:44px 0 14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.sh .no{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--teal);letter-spacing:.1em}
+.sh .no{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--teal-ink);letter-spacing:.1em}
 .sh h2{font-size:clamp(21px,2.4vw,27px);font-weight:800;color:var(--ink);letter-spacing:-.025em;margin:0}
 .sh .hint{margin-left:auto;font-size:12.5px;color:var(--mute)}
 
@@ -150,7 +150,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .pillar .ph{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .pillar .glyph{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto}
 .pillar h4{margin:0;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
-.pillar .psum{margin:0 0 15px;font-size:13.5px;line-height:1.75;color:var(--ink2)}
+.pillar .psum{margin:0 0 15px;font-size:14.5px;line-height:1.68;color:var(--ink2)}
 .pillar .pl2{display:block;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.06em;
   color:var(--mute);margin-bottom:8px}
 .pints{margin:0;padding:0;list-style:none;display:grid;gap:2px}
@@ -186,11 +186,11 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 @media (prefers-reduced-motion:reduce){.card,.card:hover{transition:none;transform:none}}
 .card .idx{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--mute);letter-spacing:.1em}
 .card h4{margin:9px 0 7px;font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.015em}
-.card p{margin:0;font-size:13.5px;line-height:1.72;color:var(--ink2);flex:1}
+.card p{margin:0;font-size:14.5px;line-height:1.66;color:var(--ink2);flex:1}
 .card .tech{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
 .card .tech span{font-family:var(--mono);font-size:10.5px;color:var(--ink2);background:var(--card2);
   border:1px solid var(--line);padding:2px 7px;border-radius:5px}
-.card .go{margin-top:14px;font-size:12.5px;font-weight:700;color:var(--teal);display:inline-flex;align-items:center;gap:6px}
+.card .go{margin-top:14px;font-size:12.5px;font-weight:700;color:var(--teal-ink);display:inline-flex;align-items:center;gap:6px}
 .track.ml .card .go{color:var(--violet)}
 .card .go svg{width:13px;height:13px;transition:transform .2s}
 .card .go:hover svg{transform:translate(2px,-2px)}
@@ -294,7 +294,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .xpi:hover::before{transform:scale(1.25)}
 .xpi .when{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--mute);letter-spacing:.06em}
 .xpi .role{font-size:15px;font-weight:800;color:var(--ink);margin:3px 0 4px}
-.xpi p{margin:0;font-size:13.5px;line-height:1.72;color:var(--ink2);max-width:72ch}
+.xpi p{margin:0;font-size:14.5px;line-height:1.66;color:var(--ink2);max-width:72ch}
 
 /* notes */
 .nlead{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:16px;
@@ -306,16 +306,18 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nitem>summary{list-style:none;cursor:pointer;display:block;padding:17px 22px;position:relative}
 .nitem>summary::-webkit-details-marker{display:none}
 .nitem>summary:focus-visible{outline:2px solid var(--teal);outline-offset:-2px}
+/* 2026-10-16：展开/收起缓动（高度 0 → 实测高度 → auto，由脚本驱动） */
+.nitem.anim>.nbody{overflow:hidden;transition:height .24s cubic-bezier(.2,.7,.2,1),opacity .2s ease}
 .ntag{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.1em;
   color:var(--teal);margin-bottom:7px}
 .nitem h4{margin:0 0 6px;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.015em;padding-right:34px}
-.nsum{margin:0;font-size:13.5px;line-height:1.72;color:var(--ink2);max-width:78ch;padding-right:34px}
+.nsum{margin:0;font-size:14.5px;line-height:1.66;color:var(--ink2);max-width:64ch;padding-right:34px}
 .nchev{position:absolute;right:22px;top:24px;width:10px;height:10px;border-right:2px solid var(--mute);
   border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .nitem[open] .nchev{transform:rotate(-135deg)}
 .nitem h4 a{color:inherit;text-decoration:none}
-.nitem h4 a:hover{color:var(--teal)}
-.nitem .go{display:inline-block;margin-top:7px;font-size:12.5px;font-weight:800;color:var(--teal);text-decoration:none}
+.nitem h4 a:hover{color:var(--teal-ink)}
+.nitem .go{display:inline-block;margin-top:7px;font-size:12.5px;font-weight:800;color:var(--teal-ink);text-decoration:none}
 .nitem .go:hover{text-decoration:underline}
 .librow{border:1px dashed var(--line2);border-radius:14px;padding:18px 20px;background:var(--card2);
   display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -325,13 +327,13 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .librow .go{font-size:13.5px;font-weight:800;color:var(--teal);text-decoration:none;white-space:nowrap}
 .librow .go:hover{text-decoration:underline}
 .nbody{padding:16px 22px 20px;border-top:1px solid var(--line)}
-.nbody p{margin:0 0 11px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
-.nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:13.5px;line-height:1.8;color:var(--ink2);max-width:80ch}
+.nbody p{margin:0 0 12px;font-size:14.5px;line-height:1.72;color:var(--ink2);max-width:64ch}
+.nbody ol,.nbody ul{margin:0 0 12px;padding-left:20px;font-size:14.5px;line-height:1.72;color:var(--ink2);max-width:64ch}
 .nbody li{margin-bottom:7px}
 .nbody b{color:var(--ink)}
 .nbody p:last-child,.nbody ol:last-child{margin-bottom:0}
 .nbody .take{margin:0;background:var(--teal2);border-left:3px solid var(--teal);border-radius:0 10px 10px 0;
-  padding:10px 14px;font-size:13.5px;line-height:1.75;color:#0B5A4C;max-width:80ch}
+  padding:11px 15px;font-size:14.5px;line-height:1.68;color:#0A5346;max-width:64ch}
 /* notes: 入门科普精选带 */
 .nfeat{margin:6px 0 16px;padding:16px 18px 18px;border:1px solid var(--line);border-radius:16px;
   background:linear-gradient(180deg,var(--card),var(--card2));box-shadow:var(--sh1)}
@@ -344,11 +346,11 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .nfcard{display:flex;flex-direction:column;gap:5px;padding:13px 14px;border:1px solid var(--line);
   border-radius:12px;background:#fff;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s}
 .nfcard:hover{text-decoration:none;transform:translateY(-2px);box-shadow:var(--sh2);border-color:var(--line2)}
-.nfcard .nfk{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--teal)}
+.nfcard .nfk{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--teal-ink)}
 .nfcard b{font-family:var(--f-head);font-size:15px;color:var(--ink);line-height:1.35}
-.nfcard .nfs{font-size:13px;line-height:1.7;color:var(--ink2)}
+.nfcard .nfs{font-size:14px;line-height:1.66;color:var(--ink2)}
 .nfcard .nfm{font-family:var(--mono);font-size:10.5px;color:var(--mute);margin-top:auto;padding-top:4px}
-.nitem.is-feat .ntag{color:var(--amber)}
+.nitem.is-feat .ntag{color:var(--amber-ink)}
 @media (max-width:560px){.nfgrid{grid-template-columns:1fr}}
 
 
@@ -356,7 +358,7 @@ aside.toc a.on{color:var(--teal);border-left-color:var(--teal)}
 .contact{margin-top:8px;background:var(--card);border:1px solid var(--line);border-radius:18px;
   padding:26px 28px;box-shadow:var(--sh1);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .contact h3{margin:0 0 5px;font-size:18px;color:var(--ink);letter-spacing:-.01em}
-.contact p{margin:0;font-size:13.5px;color:var(--ink2);max-width:54ch}
+.contact p{margin:0;font-size:14.5px;line-height:1.66;color:var(--ink2);max-width:54ch}
 .links{display:flex;gap:9px;flex-wrap:wrap}
 .links a{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;
   padding:10px 16px;border-radius:10px;border:1px solid var(--line2);background:#fff;color:var(--ink);
@@ -608,9 +610,9 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
   <div class="navin">
     <span class="brand">Aylon<i>.</i></span>
     <a class="lk" href="#about"><span class="zh">关于</span><span class="en">About</span></a>
+    <a class="lk" href="#background"><span class="zh">经历</span><span class="en">Background</span></a>
     <a class="lk" href="#work"><span class="zh">项目</span><span class="en">Projects</span></a>
     <a class="lk" href="#skills"><span class="zh">技能</span><span class="en">Skills</span></a>
-    <a class="lk" href="#background"><span class="zh">经历</span><span class="en">Background</span></a>
     <a class="lk" href="#notes"><span class="zh">笔记</span><span class="en">Notes</span></a>
     <span class="spacer"></span>
     <div class="lang" role="group" aria-label="language">
@@ -626,9 +628,9 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
     <aside class="toc" aria-label="sections">
       <p class="tl"><span class="zh">目录</span><span class="en">On this page</span></p>
       <a href="#about" class="on"><span class="zh">关于我</span><span class="en">About</span></a>
+      <a href="#background"><span class="zh">经历</span><span class="en">Background</span></a>
       <a href="#work"><span class="zh">项目</span><span class="en">Projects</span></a>
       <a href="#skills"><span class="zh">技能</span><span class="en">Skills</span></a>
-      <a href="#background"><span class="zh">经历</span><span class="en">Background</span></a>
       <a href="#notes"><span class="zh">笔记</span><span class="en">Notes</span></a>
       <a href="#contact"><span class="zh">联系</span><span class="en">Contact</span></a>
     </aside>
@@ -727,9 +729,35 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 
       </section>
 
-      <!-- work -->
+      <!-- background -->
+      <section id="background">
+        <div class="sh"><span class="no">02</span><h2><span class="shin"><span class="zh">经历</span><span class="en">Background</span></span></h2>
+          <span class="hint"><span class="zh">按时间倒序</span><span class="en">Most recent first</span></span></div>
+        <div class="xp">
+        <div class="xpi rv" style="--ac:var(--blue)">
+          <div class="when"><span class="zh">2026 — 现在</span><span class="en">2026 — Present</span></div>
+          <div class="role"><span class="zh">建模 · 数据科学家</span><span class="en">Modelling &middot; Data Scientist</span></div>
+          <p><span class="zh">数据管道与模型评估、AI Agent 与评测框架、自动化交付 —— 把研究原型做成可复现、可追溯的流程。</span>
+          <span class="en">Data pipelines and model evaluation, AI agents and evaluation frameworks, automated delivery — turning prototypes into reproducible, auditable processes.</span></p>
+        </div>
+        <div class="xpi rv" style="--ac:var(--violet)">
+          <div class="when"><span class="zh">2024</span><span class="en">2024</span></div>
+          <div class="role"><span class="zh">量化实习</span><span class="en">Quantitative Internship</span></div>
+          <p><span class="zh">风险计量、策略测试与组合优化 —— 用数据回答「这条策略在压力下还成立吗」。</span>
+          <span class="en">Risk measurement, strategy testing and portfolio optimisation — answering whether a strategy still holds under stress.</span></p>
+        </div>
+        <div class="xpi rv" style="--ac:var(--teal)">
+          <div class="when"><span class="zh">在校期间</span><span class="en">During studies</span></div>
+          <div class="role"><span class="zh">研究助理</span><span class="en">Research Assistant</span></div>
+          <p><span class="zh">参与学术研究项目，负责数据整理与实证分析；有论文发表。</span>
+          <span class="en">Worked on academic research projects covering data preparation and empirical analysis; one paper published.</span></p>
+        </div>
+      </div>
+      </section>
+
+<!-- work -->
       <section id="work">
-        <div class="sh"><span class="no">02</span><h2><span class="shin"><span class="zh">项目</span><span class="en">Projects</span></span></h2>
+        <div class="sh"><span class="no">03</span><h2><span class="shin"><span class="zh">项目</span><span class="en">Projects</span></span></h2>
           <span class="hint"><span class="zh">公开仓库 · 可复现</span><span class="en">Public repos · all reproducible</span></span></div>
         <div class="flow" id="flow">
           <div class="fsteps" id="stations">
@@ -909,7 +937,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
 
       <!-- skills -->
       <section id="skills">
-        <div class="sh"><span class="no">03</span><h2><span class="shin"><span class="zh">技能</span><span class="en">Skills</span></span></h2>
+        <div class="sh"><span class="no">04</span><h2><span class="shin"><span class="zh">技能</span><span class="en">Skills</span></span></h2>
           <span class="hint"><span class="zh">三幕 · 每行都能点开看</span><span class="en">Three acts · every row is a link</span></span></div>
 
         <div class="numband" id="numband">
@@ -1006,33 +1034,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         </div>
       </section>
 
-      <!-- background -->
-      <section id="background">
-        <div class="sh"><span class="no">04</span><h2><span class="shin"><span class="zh">经历</span><span class="en">Background</span></span></h2>
-          <span class="hint"><span class="zh">按时间倒序</span><span class="en">Most recent first</span></span></div>
-        <div class="xp">
-        <div class="xpi rv" style="--ac:var(--blue)">
-          <div class="when"><span class="zh">2026 — 现在</span><span class="en">2026 — Present</span></div>
-          <div class="role"><span class="zh">建模 · 数据科学家</span><span class="en">Modelling &middot; Data Scientist</span></div>
-          <p><span class="zh">数据管道与模型评估、AI Agent 与评测框架、自动化交付 —— 把研究原型做成可复现、可追溯的流程。</span>
-          <span class="en">Data pipelines and model evaluation, AI agents and evaluation frameworks, automated delivery — turning prototypes into reproducible, auditable processes.</span></p>
-        </div>
-        <div class="xpi rv" style="--ac:var(--violet)">
-          <div class="when"><span class="zh">2024</span><span class="en">2024</span></div>
-          <div class="role"><span class="zh">量化实习</span><span class="en">Quantitative Internship</span></div>
-          <p><span class="zh">风险计量、策略测试与组合优化 —— 用数据回答「这条策略在压力下还成立吗」。</span>
-          <span class="en">Risk measurement, strategy testing and portfolio optimisation — answering whether a strategy still holds under stress.</span></p>
-        </div>
-        <div class="xpi rv" style="--ac:var(--teal)">
-          <div class="when"><span class="zh">在校期间</span><span class="en">During studies</span></div>
-          <div class="role"><span class="zh">研究助理</span><span class="en">Research Assistant</span></div>
-          <p><span class="zh">参与学术研究项目，负责数据整理与实证分析；有论文发表。</span>
-          <span class="en">Worked on academic research projects covering data preparation and empirical analysis; one paper published.</span></p>
-        </div>
-      </div>
-      </section>
-
-      <!-- notes -->
+            <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
           <span class="hint"><span class="zh">15 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">15 notes · newest first · tap a title to expand</span></span></div>
@@ -1936,6 +1938,43 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
   })();
 
   apply(read());
+})();
+</script>
+<script>
+/* 2026-10-16 优化：折叠目录展开/收起加缓动。
+   做法是先把 details 打开量出真实高度，再从 0 过渡到该高度，结束后把内联高度清掉回到 auto；
+   prefers-reduced-motion 时整段不执行，保留浏览器原生行为。 */
+(function(){
+  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  var items = document.querySelectorAll("details.nitem");
+  if(!items.length) return;
+  Array.prototype.forEach.call(items, function(d){
+    var panel = d.querySelector(".nbody"), sum = d.querySelector("summary");
+    if(!panel || !sum) return;
+    d.classList.add("anim");
+    var busy = false, DUR = 250;
+    sum.addEventListener("click", function(e){
+      e.preventDefault();
+      if(busy) return;
+      busy = true;
+      if(d.open){
+        panel.style.height = panel.getBoundingClientRect().height + "px";
+        void panel.offsetHeight;
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        window.setTimeout(function(){ d.open = false; panel.style.height = ""; panel.style.opacity = ""; busy = false; }, DUR);
+      } else {
+        d.open = true;
+        var h = panel.scrollHeight;
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        void panel.offsetHeight;
+        panel.style.height = h + "px";
+        panel.style.opacity = "1";
+        window.setTimeout(function(){ panel.style.height = ""; panel.style.opacity = ""; busy = false; }, DUR);
+      }
+    });
+  });
 })();
 </script>
 </body>
