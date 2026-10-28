@@ -18,8 +18,7 @@ Personal site — Data Scientist · Quantitative Analyst · AI Engineer
 .
 ├── index.html          整个网站（结构 + 样式 + 交互脚本），中英双语
 ├── assets/
-│   ├── psyduck.png     站点图标 / 头像
-│   └── tutorial-preview.png 教程项目预览图
+│   └── psyduck.png     站点图标 / 头像
 └── README.md           本文件
 ```
 
@@ -43,7 +42,7 @@ python -m http.server 8000
 
 - 站内仅包含公开内容：研究方向、公开项目与技能概览
 - 不含任何雇主机密、内部工作数据或未公开材料
-- 当前精选公开项目：[Data Science Workflow Tutorial](https://aayloo.github.io/data-science-crisp-dm-tutorial/)
+- 公开项目代码在 [quant-research-hub](https://github.com/Aayloo/quant-research-hub)
 
 ## License
 
