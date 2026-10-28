@@ -3074,6 +3074,281 @@
       .edu-details { grid-template-columns: 1fr; }
       .edu-details dt { margin-top: 7px; }
     }
+
+    /* Final typography system: Geist for Latin, Noto Sans SC for Chinese */
+    @font-face {
+      font-family: "Geist";
+      src: url("assets/fonts/geist-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Geist";
+      src: url("assets/fonts/geist-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Geist";
+      src: url("assets/fonts/geist-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Geist";
+      src: url("assets/fonts/geist-700.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Noto Sans SC";
+      src: url("assets/fonts/noto-sans-sc-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Noto Sans SC";
+      src: url("assets/fonts/noto-sans-sc-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Noto Sans SC";
+      src: url("assets/fonts/noto-sans-sc-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    body {
+      color: #111820;
+      font-family: "Geist", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    h1, h2, h3, .brand, .button, .profile-nav a, .blog-card h3 {
+      font-family: "Geist", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+    }
+
+    .hero h1 {
+      font-size: clamp(46px, 4.5vw, 61px);
+      font-weight: 600;
+      line-height: 1.01;
+      letter-spacing: -.048em;
+    }
+
+    .hero-role {
+      margin-top: 22px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .profile-nav {
+      gap: 1px;
+      margin-top: 31px;
+    }
+
+    .profile-nav a {
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 7px;
+      padding: 7px 0;
+      color: #50606e;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .035em;
+    }
+
+    .profile-nav a span:first-child {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--teal-dark);
+      background: rgba(255, 255, 255, .8);
+      font-family: "Geist", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      transition: color .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .profile-nav a:hover span:first-child,
+    .profile-nav a.active span:first-child {
+      color: white;
+      border-color: var(--teal);
+      background: var(--teal);
+    }
+
+    .section-label {
+      color: #566575;
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .065em;
+      line-height: 1.55;
+    }
+
+    .section-label span {
+      margin-bottom: 8px;
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .09em;
+    }
+
+    .section-head h2,
+    .blog-card h3 {
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-weight: 600;
+    }
+
+    .right-intro {
+      color: #344453;
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: clamp(23px, 2.65vw, 34px);
+      font-weight: 400;
+      line-height: 1.55;
+      letter-spacing: -.03em;
+    }
+
+    .xp-card p,
+    .blog-card p,
+    .edu-details,
+    .toolkit-drawer > p {
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 13px;
+      line-height: 1.72;
+    }
+
+    .xp-tech span {
+      padding: 6px 9px;
+      color: #465767;
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .xp-tech img {
+      width: 15px;
+      height: 15px;
+    }
+
+    .xp-skill-label {
+      color: #6d7c89;
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .1em;
+    }
+
+    .edu-degree {
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .edu-meta,
+    .edu-details {
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 12px;
+    }
+
+    .edu-details dt {
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 9px;
+      letter-spacing: .08em;
+    }
+
+    .toolkit-signal span,
+    .toolkit-workflow span {
+      font-family: "Geist", "Noto Sans SC", sans-serif;
+      font-size: 10px;
+    }
+
+    .toolkit-section-label {
+      font-family: "Geist", "Noto Sans SC", sans-serif !important;
+      font-size: 9px !important;
+    }
+
+    html[data-lang="zh"] .hero h1,
+    html[data-lang="zh"] .section-head h2,
+    html[data-lang="zh"] .right-intro,
+    html[data-lang="zh"] .blog-card h3 {
+      letter-spacing: -.02em;
+    }
+
+    .blog-grid.single {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-card.featured {
+      min-height: 300px;
+      padding: 32px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 93% 8%, rgba(14, 159, 135, .10), transparent 15rem),
+        #fff;
+    }
+
+    .blog-card.featured::before {
+      width: 42px;
+      height: 42px;
+      top: -21px;
+      right: -21px;
+    }
+
+    .blog-card.featured h3 {
+      max-width: 720px;
+      margin-top: 30px;
+      font-size: clamp(26px, 3.2vw, 38px);
+      line-height: 1.18;
+    }
+
+    .blog-card.featured p {
+      max-width: 720px;
+      margin-top: 13px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .blog-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 22px;
+    }
+
+    .blog-topics span {
+      padding: 6px 9px;
+      border: 1px solid rgba(17, 26, 40, .08);
+      border-radius: 999px;
+      color: var(--ink-2);
+      background: rgba(255, 255, 255, .76);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .blog-card.featured:hover .blog-topics span {
+      color: white;
+      border-color: rgba(255, 255, 255, .35);
+      background: rgba(255, 255, 255, .10);
+    }
+
+    @media (max-width: 760px) {
+      .blog-card.featured {
+        min-height: 280px;
+        padding: 24px;
+      }
+      .blog-card.featured h3 { font-size: 25px; }
+    }
   </style>
 </head>
 <body>
@@ -3381,123 +3656,26 @@
       </div>
     </section>
 
-    <section class="section" id="skills">
-      <div class="section-head reveal">
-        <p class="section-label"><span>03 / TECH SKILLS</span>Methods and tools</p>
-        <div>
-          <h2 data-en="Tech Stack." data-zh="技术栈。">Tech Stack.</h2>
-          <p data-en="Explore a 3D skill deck. Hover, click or press a letter key to inspect the method and its supporting evidence." data-zh="浏览 3D 技能键盘；悬停、点击或按字母键查看方法及对应证据。">Explore a 3D skill deck. Hover, click or press a letter key to inspect the method and its supporting evidence.</p>
-        </div>
-      </div>
-
-      <div class="skills-shell reveal">
-        <div class="skill-stage" id="skillStage">
-          <div class="skill-stage-head" id="skillStageHead">
-            <b>QUANT / DATA / AI</b>
-            <span class="ready-dot"><i></i><span data-en="Loading 3D keyboard" data-zh="3D 键盘加载中">Loading 3D keyboard</span></span>
-          </div>
-          <canvas id="skillCanvas" tabindex="0" aria-label="Interactive 3D quantitative skills keyboard"></canvas>
-          <div class="skill-stage-loading" id="skillStageLoading" data-en="Building 3D skill deck…" data-zh="正在构建 3D 技能键盘…">Building 3D skill deck…</div>
-          <div class="skills-grid skill-fallback" id="skillFallback" aria-label="Skill keyboard fallback">
-          <button class="skill-card" type="button" data-skill="factor" aria-pressed="true" style="--accent:var(--teal);--accent-soft:var(--teal-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 4-6"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="7" r="1"/></svg></span>
-            <strong data-en="Factor Research" data-zh="因子研究">Factor Research</strong><small>Quant research</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="validation" aria-pressed="false" style="--accent:var(--teal);--accent-soft:var(--teal-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 7.8 7.5 9.5 4.4-1.7 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span>
-            <strong data-en="Signal Validation" data-zh="信号验证">Signal Validation</strong><small>Out-of-sample</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="portfolio" aria-pressed="false" style="--accent:var(--teal);--accent-soft:var(--teal-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v9h9"/><path d="M20 12a8 8 0 1 1-8-9"/><path d="M12 12 5.4 16.8"/></svg></span>
-            <strong data-en="Portfolio Construction" data-zh="组合构建">Portfolio Construction</strong><small>Optimisation</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="backtesting" aria-pressed="false" style="--accent:var(--blue);--accent-soft:var(--blue-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/><path d="M4 4v4h4"/></svg></span>
-            <strong data-en="Backtesting & Costs" data-zh="回测与成本">Backtesting &amp; Costs</strong><small>Execution-aware</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="risk" aria-pressed="false" style="--accent:var(--blue);--accent-soft:var(--blue-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 17a8 8 0 0 1 16 0"/><path d="m12 17 3-5"/><path d="M5 20h14"/><circle cx="12" cy="17" r="1"/></svg></span>
-            <strong data-en="Risk & Attribution" data-zh="风险与归因">Risk &amp; Attribution</strong><small>Return decomposition</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="allocation" aria-pressed="false" style="--accent:var(--blue);--accent-soft:var(--blue-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 17 8 4 8-4"/></svg></span>
-            <strong>SAA / TAA</strong><small>Multi-asset</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="timeseries" aria-pressed="false" style="--accent:var(--violet);--accent-soft:var(--violet-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3l2-5 4 10 3-7 2 2h4"/><path d="M3 19h18"/></svg></span>
-            <strong data-en="Time Series" data-zh="时间序列">Time Series</strong><small>Statistics</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="python" aria-pressed="false" style="--accent:#3776ab;--accent-soft:#e8f0f8">
-            <span class="skill-icon masked"><img src="assets/icons/python.svg" alt=""></span>
-            <strong>Python</strong><small>Research engineering</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="pandas" aria-pressed="false" style="--accent:#6d4aef;--accent-soft:#f0edff">
-            <span class="skill-icon masked"><img src="assets/icons/pandas.svg" alt=""></span>
-            <strong>pandas / NumPy</strong><small>Data & factor panels</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="pytorch" aria-pressed="false" style="--accent:#d5652a;--accent-soft:#fbede5">
-            <span class="skill-icon masked"><img src="assets/icons/pytorch.svg" alt=""></span>
-            <strong>PyTorch</strong><small>Sequence models</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="agents" aria-pressed="false" style="--accent:var(--violet);--accent-soft:var(--violet-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="m8 8.3 8 0M7.7 9.2l3 6.5M16.3 9.2l-3 6.5"/></svg></span>
-            <strong data-en="LLM Agents" data-zh="LLM Agent">LLM Agents</strong><small>Workflow orchestration</small><span class="skill-arrow">↗</span>
-          </button>
-          <button class="skill-card" type="button" data-skill="evaluation" aria-pressed="false" style="--accent:var(--amber);--accent-soft:var(--amber-soft)">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
-            <strong data-en="Evaluation" data-zh="评测">Evaluation</strong><small>Model reliability</small><span class="skill-arrow">↗</span>
-          </button>
-          </div>
-          <div class="skill-stage-readout" aria-live="polite">
-            <div><small data-en="Selected key" data-zh="当前技能">Selected key</small><strong id="canvasSkillName">Factor Research</strong></div>
-            <span data-en="Hover · click · press Q–C" data-zh="悬停 · 点击 · 按 Q–C">Hover · click · press Q–C</span>
-          </div>
-        </div>
-
-        <aside class="skill-detail" aria-live="polite">
-          <div class="detail-meta"><span data-en="Selected capability" data-zh="当前能力">Selected capability</span><span id="skillCount">01 / 12</span></div>
-          <div class="selected-icon" id="selectedSkillIcon">
-            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 4-6"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="7" r="1"/></svg></span>
-          </div>
-          <h3 id="skillTitle">Factor Research</h3>
-          <p id="skillCopy">Built diagnostics, cross-sectional validation and baseline tests before combining signals.</p>
-          <a class="evidence-link" id="skillProof" href="https://aayloo.github.io/notes/factor-screening/" target="_blank" rel="noreferrer"><span data-en="Open supporting evidence" data-zh="查看对应证据">Open supporting evidence</span> ↗</a>
-        </aside>
-      </div>
-    </section>
-
     <section class="section" id="blog">
       <div class="section-head reveal">
-        <p class="section-label"><span>03 / BLOG</span>Allocation research</p>
+        <p class="section-label"><span>03 / BLOG</span>Data science workflow</p>
         <div>
-          <h2 data-en="Allocation research." data-zh="配置研究。">Allocation research.</h2>
-          <p data-en="Selected notes on asset allocation, portfolio construction, risk and validation." data-zh="关于资产配置、组合构建、风险与验证的精选研究。">Selected notes on asset allocation, portfolio construction, risk and validation.</p>
+          <h2 data-en="From business question to model." data-zh="从业务问题到模型。">From business question to model.</h2>
+          <p data-en="A practical guide to applying CRISP-DM through a reproducible, evidence-led workflow." data-zh="用可复现、以证据为导向的工作流实践 CRISP-DM。">A practical guide to applying CRISP-DM through a reproducible, evidence-led workflow.</p>
         </div>
       </div>
 
-      <div class="blog-grid">
-        <a class="blog-card reveal" style="--delay:.02s" href="https://aayloo.github.io/notes/sixty-forty-variants/" target="_blank" rel="noreferrer">
-          <div class="blog-top"><span class="blog-no">01</span><span class="blog-tag">Portfolio baseline</span></div>
-          <h3 data-en="The 60/40, tested: does the most famous allocation rule hold up?" data-zh="60/40 实测：最有名的配置规则真的成立吗？">The 60/40, tested: does the most famous allocation rule hold up?</h3>
-          <p data-en="A stronger Sharpe plateau sits below 60% equities, while the real vulnerability appears when stocks and bonds fall together." data-zh="夏普更高的区间其实低于 60% 股票；真正脆弱的是股债同时下跌。">A stronger Sharpe plateau sits below 60% equities, while the real vulnerability appears when stocks and bonds fall together.</p>
-          <span class="blog-arrow">↗</span>
-        </a>
-        <a class="blog-card reveal" style="--delay:.08s" href="https://aayloo.github.io/notes/liability-driven/" target="_blank" rel="noreferrer">
-          <div class="blog-top"><span class="blog-no">02</span><span class="blog-tag">Liability-aware</span></div>
-          <h3 data-en="Liability-driven allocation: change the denominator and the ranking changes" data-zh="负债驱动配置：换一个分母，排序就变了">Liability-driven allocation: change the denominator and the ranking changes</h3>
-          <p data-en="Measuring risk against surplus instead of assets materially changes which portfolio looks appropriate." data-zh="把风险从资产端改到盈余端衡量，合适的组合排序会明显改变。">Measuring risk against surplus instead of assets materially changes which portfolio looks appropriate.</p>
-          <span class="blog-arrow">↗</span>
-        </a>
-        <a class="blog-card reveal" style="--delay:.14s" href="https://aayloo.github.io/notes/risk-parity/" target="_blank" rel="noreferrer">
-          <div class="blog-top"><span class="blog-no">03</span><span class="blog-tag">Risk allocation</span></div>
-          <h3 data-en="Risk parity, tested: flatter risk does not automatically mean higher return" data-zh="风险平价实测：风险更平不等于收益更高">Risk parity, tested: flatter risk does not automatically mean higher return</h3>
-          <p data-en="The mechanism works, but the realised weights stay close to a naive allocation and the return advantage is conditional." data-zh="机制成立，但实际权重接近朴素配置，收益优势也是有条件的。">The mechanism works, but the realised weights stay close to a naive allocation and the return advantage is conditional.</p>
-          <span class="blog-arrow">↗</span>
-        </a>
-        <a class="blog-card reveal" style="--delay:.20s" href="https://aayloo.github.io/notes/one-over-n/" target="_blank" rel="noreferrer">
-          <div class="blog-top"><span class="blog-no">04</span><span class="blog-tag">Validation</span></div>
-          <h3 data-en="1/N versus the optimiser: when in-sample precision becomes out-of-sample noise" data-zh="1/N 对比优化器：样本内精度如何变成样本外噪声">1/N versus the optimiser: when in-sample precision becomes out-of-sample noise</h3>
-          <p data-en="A 1.74 in-sample Sharpe delivered 0.54 out of sample. Most of the gap came from estimation assumptions, not optimisation code." data-zh="样本内 1.74 的夏普，样本外只有 0.54；差距主要来自估计假设，而不是优化代码。">A 1.74 in-sample Sharpe delivered 0.54 out of sample. Most of the gap came from estimation assumptions, not optimisation code.</p>
+      <div class="blog-grid single">
+        <a class="blog-card featured reveal" style="--delay:.04s" href="https://aayloo.github.io/data-science-crisp-dm-tutorial/?v=20261028-6" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">01 / FEATURED</span><span class="blog-tag">Data science workflow</span></div>
+          <h3 data-en="Data Science Workflow · CRISP-DM Tutorial" data-zh="数据科学工作流 · CRISP-DM 教程">Data Science Workflow · CRISP-DM Tutorial</h3>
+          <p data-en="A hands-on guide that turns a business question into a reproducible, evaluated data-science decision through the six CRISP-DM phases and three case labs." data-zh="通过六个 CRISP-DM 阶段和三个案例实验，把业务问题转化为可复现、可评估的数据科学决策。">A hands-on guide that turns a business question into a reproducible, evaluated data-science decision through the six CRISP-DM phases and three case labs.</p>
+          <div class="blog-topics">
+            <span data-en="Business understanding" data-zh="业务理解">Business understanding</span>
+            <span data-en="Data preparation" data-zh="数据准备">Data preparation</span>
+            <span data-en="Evaluation" data-zh="模型评估">Evaluation</span>
+            <span data-en="Deployment" data-zh="部署">Deployment</span>
+          </div>
           <span class="blog-arrow">↗</span>
         </a>
       </div>
@@ -3613,8 +3791,6 @@
         button.setAttribute("aria-pressed", String(button.dataset.lang === lang));
       });
       storeLanguage(lang);
-      updateSkill(selectedSkill);
-      window.update3DKeyboardLanguage?.();
     }
 
     function updateSkill(key) {
