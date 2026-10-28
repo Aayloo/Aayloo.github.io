@@ -1,0 +1,4023 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aylon — data science, applied AI and quantitative research across systematic signals, portfolios and risk.">
+  <meta name="color-scheme" content="light">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Aylon · Quantitative Research">
+  <meta property="og:description" content="Data science, applied AI and quantitative research across signals, portfolios, risk and attribution.">
+  <meta property="og:image" content="https://aayloo.github.io/profile/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Aylon · Quantitative Research</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230e9f87'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial' font-size='32' font-weight='700' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+  <style>
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-700.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-800.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #fafaf7;
+      --paper: #ffffff;
+      --paper-soft: #f5f7f4;
+      --ink: #111a28;
+      --ink-2: #4a5a72;
+      --mute: #8494aa;
+      --line: #e4e8ee;
+      --line-strong: #cfd7e2;
+      --teal: #0e9f87;
+      --teal-dark: #087d6a;
+      --teal-soft: #e3f5f1;
+      --blue: #2f6fe4;
+      --blue-soft: #e6eefd;
+      --violet: #6d4aef;
+      --violet-soft: #ede9fe;
+      --amber: #d9821a;
+      --amber-soft: #fbf0df;
+      --shadow: 0 18px 48px rgba(17, 26, 40, .09);
+      --shadow-soft: 0 10px 28px rgba(17, 26, 40, .065);
+      --radius: 20px;
+      --nav: 72px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 88% 5%, rgba(109, 74, 239, .08), transparent 29rem),
+        radial-gradient(circle at 8% 31%, rgba(14, 159, 135, .07), transparent 27rem),
+        var(--bg);
+      font-family: "Manrope", "Aptos", "Segoe UI Variable Text", "Segoe UI", "Noto Sans SC", "PingFang SC", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .26;
+      background-image: radial-gradient(rgba(14, 159, 135, .25) .55px, transparent .55px);
+      background-size: 24px 24px;
+      mask-image: linear-gradient(to bottom, black, transparent 62%);
+    }
+
+    ::selection { color: white; background: var(--teal); }
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      z-index: 200;
+      width: var(--progress, 0%);
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--blue), var(--violet));
+    }
+
+    .cursor-aura {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 90;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate3d(-50%, -50%, 0);
+      background: radial-gradient(circle, rgba(14, 159, 135, .12), rgba(47, 111, 228, .045) 45%, transparent 68%);
+      transition: opacity .25s ease;
+      will-change: transform;
+    }
+
+    .click-ripple {
+      position: fixed;
+      z-index: 220;
+      width: 18px;
+      height: 18px;
+      margin: -9px 0 0 -9px;
+      border: 1.5px solid var(--teal);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: click-ripple .65s cubic-bezier(.2, .7, .3, 1) forwards;
+    }
+
+    @keyframes click-ripple {
+      to { opacity: 0; transform: scale(9); }
+    }
+
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(228, 232, 238, .85);
+      background: rgba(250, 250, 247, .88);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      width: min(1180px, calc(100% - 44px));
+      min-height: var(--nav);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: white;
+      background: linear-gradient(145deg, #16ad95, var(--teal-dark));
+      box-shadow: 0 8px 22px rgba(14, 159, 135, .20);
+      font: 700 14px/1 "Cascadia Mono", Consolas, monospace;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1.8vw, 24px);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 9px 2px;
+      color: var(--ink-2);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 3px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--teal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .2s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+    .nav-tools {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-2);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .github-link:hover { color: var(--teal); }
+
+    .locale {
+      display: flex;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+    }
+
+    .locale button {
+      border: 0;
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--mute);
+      background: transparent;
+      font: 700 9px/1 "Cascadia Mono", Consolas, monospace;
+      cursor: pointer;
+    }
+
+    .locale button[aria-pressed="true"] { color: white; background: var(--teal); }
+
+    main {
+      width: min(1180px, calc(100% - 44px));
+      margin: 0 auto;
+    }
+
+    section[id] { scroll-margin-top: calc(var(--nav) + 18px); }
+
+    .hero {
+      min-height: calc(100vh - var(--nav));
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(350px, .88fr);
+      align-items: center;
+      gap: clamp(42px, 7vw, 92px);
+      padding: 78px 0 68px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--teal-dark);
+      font-family: "Cascadia Mono", Consolas, monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(50px, 6.4vw, 84px);
+      font-weight: 800;
+      line-height: .98;
+      letter-spacing: -.065em;
+    }
+
+    .hero h1 em {
+      color: var(--teal);
+      font-style: normal;
+    }
+
+    .hero-role {
+      margin: 23px 0 0;
+      color: var(--ink);
+      font-size: clamp(17px, 2vw, 21px);
+      font-weight: 700;
+      letter-spacing: -.025em;
+    }
+
+    .hero-role span { margin: 0 .42em; color: var(--teal); }
+
+    .hero-copy {
+      max-width: 640px;
+      margin: 17px 0 0;
+      color: var(--ink-2);
+      font-size: 16px;
+      line-height: 1.76;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 23px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink-2);
+      background: rgba(255, 255, 255, .72);
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    .pill::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 29px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 750;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { color: white; background: var(--teal); box-shadow: 0 11px 26px rgba(14, 159, 135, .18); }
+    .button.primary:hover { background: var(--teal-dark); }
+    .button.ghost { color: var(--ink); border-color: var(--line-strong); background: var(--paper); }
+    .button.ghost:hover { color: var(--teal-dark); border-color: var(--teal); }
+    .button svg { width: 15px; height: 15px; }
+
+    .hero-visual {
+      position: relative;
+      min-height: 470px;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero-orbit {
+      position: absolute;
+      width: 410px;
+      max-width: 95%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(14, 159, 135, .18);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 44px rgba(109, 74, 239, .025),
+        0 0 0 88px rgba(14, 159, 135, .02);
+    }
+
+    .hero-orbit::before {
+      content: "";
+      position: absolute;
+      top: 38px;
+      right: 61px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--violet);
+      box-shadow: 0 0 0 9px rgba(109, 74, 239, .09);
+    }
+
+    .research-card {
+      position: relative;
+      width: min(390px, 91%);
+      padding: 22px;
+      border: 1px solid rgba(17, 26, 40, .08);
+      border-radius: 21px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 30px 70px rgba(17, 26, 40, .13);
+    }
+
+    .research-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(14, 159, 135, .07), transparent 42%, rgba(109, 74, 239, .06));
+    }
+
+    .card-kicker {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--mute);
+      font: 650 9px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .card-kicker b { color: var(--teal-dark); }
+
+    .signal-chart {
+      position: relative;
+      height: 190px;
+      margin-top: 18px;
+      border-radius: 13px;
+      background:
+        linear-gradient(rgba(74, 90, 114, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 90, 114, .07) 1px, transparent 1px),
+        var(--paper-soft);
+      background-size: 32px 32px;
+    }
+
+    .signal-chart svg { position: absolute; inset: 14px; width: calc(100% - 28px); height: calc(100% - 28px); }
+
+    .research-facts {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-top: 11px;
+    }
+
+    .research-fact {
+      padding: 10px;
+      border-radius: 9px;
+      background: var(--paper-soft);
+      color: var(--mute);
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .research-fact b {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .section {
+      position: relative;
+      padding: 88px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 175px minmax(0, 1fr);
+      gap: 44px;
+      margin-bottom: 40px;
+      align-items: start;
+    }
+
+    .section-label {
+      margin: 5px 0 0;
+      color: var(--mute);
+      font: 650 10px/1.5 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .section-label span {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--teal);
+      font-size: 9px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(33px, 4.2vw, 52px);
+      font-weight: 750;
+      line-height: 1.08;
+      letter-spacing: -.045em;
+    }
+
+    .section-head p {
+      max-width: 650px;
+      margin: 10px 0 0;
+      color: var(--ink-2);
+      font-size: 14px;
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .xp-card {
+      position: relative;
+      display: flex;
+      min-height: 286px;
+      flex-direction: column;
+      padding: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow-soft);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .xp-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 24px 0;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: var(--accent, var(--teal));
+      transform: scaleX(.24);
+      transform-origin: left;
+      transition: transform .24s ease;
+    }
+
+    .xp-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(14, 159, 135, .25);
+      box-shadow: var(--shadow);
+    }
+
+    .xp-card:hover::after { transform: scaleX(1); }
+
+    .xp-period {
+      color: var(--accent, var(--teal));
+      font: 700 9px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .06em;
+    }
+
+    .xp-card h3 {
+      margin: 23px 0 0;
+      color: var(--ink);
+      font-size: 19px;
+      font-weight: 750;
+      line-height: 1.35;
+      letter-spacing: -.025em;
+    }
+
+    .xp-org {
+      margin: 6px 0 0;
+      color: var(--ink-2);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .xp-card p {
+      margin: 16px 0 0;
+      color: var(--ink-2);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .tag {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--ink-2);
+      background: var(--paper-soft);
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .edu-card {
+      display: grid;
+      grid-template-columns: 98px minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+      min-height: 210px;
+      padding: 27px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .edu-logo {
+      width: 88px;
+      height: 88px;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .edu-logo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: grayscale(1) contrast(1.18);
+    }
+
+    .edu-card h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 19px;
+      font-weight: 750;
+      letter-spacing: -.025em;
+    }
+
+    .edu-degree {
+      margin: 6px 0 0;
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .edu-meta {
+      margin: 10px 0 0;
+      color: var(--mute);
+      font-size: 11px;
+    }
+
+    .skills-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(270px, .55fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .skill-card {
+      --mx: 50%;
+      --my: 50%;
+      --accent: var(--teal);
+      --accent-soft: var(--teal-soft);
+      position: relative;
+      display: flex;
+      min-height: 142px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 17px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 0 6px 18px rgba(17, 26, 40, .04);
+      cursor: pointer;
+      text-align: left;
+      transform-style: preserve-3d;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .skill-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle 100px at var(--mx) var(--my), var(--accent-soft), transparent 70%);
+      transition: opacity .18s ease;
+    }
+
+    .skill-card:hover::before, .skill-card[aria-pressed="true"]::before { opacity: .92; }
+
+    .skill-card:hover {
+      border-color: color-mix(in srgb, var(--accent) 34%, var(--line));
+      box-shadow: 0 13px 30px rgba(17, 26, 40, .09);
+    }
+
+    .skill-card[aria-pressed="true"] {
+      border-color: color-mix(in srgb, var(--accent) 55%, white);
+      box-shadow: 0 14px 36px rgba(17, 26, 40, .10);
+    }
+
+    .skill-icon {
+      position: relative;
+      z-index: 1;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .skill-icon svg { width: 21px; height: 21px; }
+
+    .skill-icon.masked {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .skill-icon.masked i {
+      display: block;
+      width: 23px;
+      height: 23px;
+      background: currentColor;
+      mask: var(--icon) center / contain no-repeat;
+      -webkit-mask: var(--icon) center / contain no-repeat;
+    }
+
+    .skill-card strong {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-top: 19px;
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .skill-card small {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-top: 3px;
+      color: var(--mute);
+      font: 600 8px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .075em;
+      text-transform: uppercase;
+    }
+
+    .skill-card .skill-arrow {
+      position: absolute;
+      z-index: 1;
+      right: 15px;
+      bottom: 14px;
+      color: var(--accent);
+      font-size: 14px;
+      opacity: .5;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .skill-card:hover .skill-arrow { opacity: 1; transform: translate(2px, -2px); }
+
+    .skill-detail {
+      position: sticky;
+      top: calc(var(--nav) + 18px);
+      min-height: 292px;
+      padding: 25px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 100% 0, rgba(14, 159, 135, .09), transparent 15rem),
+        var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .skill-detail::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 90px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+    }
+
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--mute);
+      font: 650 9px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .detail-meta span:last-child { color: var(--teal-dark); }
+
+    .skill-detail h3 {
+      margin: 32px 0 0;
+      color: var(--ink);
+      font-size: 25px;
+      font-weight: 750;
+      line-height: 1.16;
+      letter-spacing: -.035em;
+    }
+
+    .skill-detail p {
+      min-height: 70px;
+      margin: 12px 0 0;
+      color: var(--ink-2);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .evidence-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 17px;
+      color: var(--teal-dark);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .evidence-link:hover { color: var(--blue); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 19px;
+    }
+
+    .project-card {
+      position: relative;
+      display: flex;
+      min-height: 410px;
+      flex-direction: column;
+      padding: 25px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow-soft);
+      transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(14, 159, 135, .26);
+      box-shadow: var(--shadow);
+    }
+
+    .project-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--mute);
+      font: 650 9px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .project-meta span:first-child { color: var(--teal-dark); }
+
+    .project-card h3 {
+      margin: 23px 0 0;
+      color: var(--ink);
+      font-size: 24px;
+      font-weight: 750;
+      line-height: 1.2;
+      letter-spacing: -.035em;
+    }
+
+    .project-card p {
+      margin: 10px 0 0;
+      color: var(--ink-2);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .project-visual {
+      position: relative;
+      height: 150px;
+      margin-top: 21px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background:
+        linear-gradient(rgba(74, 90, 114, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 90, 114, .055) 1px, transparent 1px),
+        #fbfdfc;
+      background-size: 26px 26px;
+      overflow: hidden;
+    }
+
+    .flow {
+      position: absolute;
+      inset: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+    }
+
+    .flow-node {
+      display: grid;
+      width: 29%;
+      height: 84px;
+      place-items: center;
+      border: 1px solid rgba(14, 159, 135, .18);
+      border-radius: 9px;
+      color: var(--teal-dark);
+      background: rgba(255, 255, 255, .93);
+      box-shadow: 0 7px 18px rgba(17, 26, 40, .05);
+      font: 700 8px/1.45 "Cascadia Mono", Consolas, monospace;
+      text-align: center;
+    }
+
+    .flow-node:nth-child(3) { transform: translateY(11px); }
+    .flow-arrow { color: var(--mute); font-size: 14px; }
+
+    .agent-map {
+      position: absolute;
+      inset: 19px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .agent-node {
+      display: grid;
+      min-height: 70px;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: radial-gradient(circle at 35% 30%, #7f5df2, #5b3ed8 65%, #3f2aa4);
+      box-shadow: 0 9px 20px rgba(109, 74, 239, .18);
+      font: 650 8px/1.35 "Cascadia Mono", Consolas, monospace;
+      text-align: center;
+    }
+
+    .agent-node:nth-child(2) { transform: translateY(16px); background: radial-gradient(circle at 35% 30%, #28b9a1, #0e9f87 65%, #087d6a); }
+
+    .project-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: auto;
+      padding-top: 21px;
+      color: var(--teal-dark);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .project-link svg { width: 14px; height: 14px; transition: transform .2s ease; }
+    .project-link:hover svg { transform: translate(3px, -3px); }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 28px 0 38px;
+      border-top: 1px solid var(--line);
+      color: var(--mute);
+      font-size: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+    }
+
+    .footer a {
+      color: var(--ink-2);
+      text-decoration: none;
+    }
+
+    .footer a:hover { color: var(--teal); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .55s ease, transform .55s ease;
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 66px; }
+      .hero-visual { width: min(480px, 100%); min-height: 440px; margin: 0 auto; }
+      .experience-grid { grid-template-columns: repeat(2, 1fr); }
+      .experience-grid .xp-card:last-child { grid-column: 1 / -1; min-height: 240px; }
+      .skills-shell { grid-template-columns: 1fr; }
+      .skill-detail { position: static; min-height: 230px; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-inner, main { width: min(100% - 32px, 680px); }
+      .nav-links, .github-link { display: none; }
+      .hero { padding: 48px 0 56px; gap: 28px; }
+      .hero h1 { font-size: clamp(44px, 13vw, 62px); }
+      .hero-visual { min-height: 380px; }
+      .research-card { width: min(355px, 94%); }
+      .hero-orbit { width: 330px; }
+      .section { padding: 62px 0; }
+      .section-head { display: block; margin-bottom: 29px; }
+      .section-label { margin-bottom: 12px; }
+      .experience-grid, .education-grid, .projects-grid { grid-template-columns: 1fr; }
+      .experience-grid .xp-card:last-child { grid-column: auto; }
+      .xp-card { min-height: 245px; }
+      .edu-card { grid-template-columns: 74px minmax(0, 1fr); padding: 21px; gap: 18px; }
+      .edu-logo { width: 66px; height: 66px; padding: 10px; border-radius: 16px; }
+      .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .skill-card { min-height: 132px; }
+      .project-card { min-height: 380px; }
+      .footer { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 440px) {
+      .actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .button { padding: 0 11px; }
+      .hero-visual { min-height: 335px; }
+      .signal-chart { height: 160px; }
+      .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .skill-card { min-height: 118px; padding: 15px; }
+      .edu-card { grid-template-columns: 1fr; }
+      .edu-logo { width: 60px; height: 60px; }
+    }
+
+    @media (hover: none), (prefers-reduced-motion: reduce) {
+      .cursor-aura { display: none; }
+      .skill-card { transform: none !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    /* Greeting and interactive research visual */
+    .hero h1 {
+      font-size: clamp(48px, 6vw, 78px);
+      line-height: 1.02;
+    }
+
+    .wave-emoji {
+      display: inline-block;
+      transform-origin: 72% 72%;
+      animation: wave 1.8s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+      0%, 60%, 100% { transform: rotate(0); }
+      10% { transform: rotate(13deg); }
+      20% { transform: rotate(-9deg); }
+      30% { transform: rotate(11deg); }
+      40% { transform: rotate(-7deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    .greeting-sub {
+      max-width: 650px;
+      margin: 20px 0 0;
+      color: var(--ink-2);
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.55;
+      letter-spacing: -.025em;
+    }
+
+    .signal-chart {
+      overflow: hidden;
+      cursor: crosshair;
+    }
+
+    #signalArea {
+      opacity: 0;
+      animation: chart-grow .8s .45s ease forwards;
+    }
+
+    #signalPath {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: draw-signal 1.35s .25s cubic-bezier(.25, .7, .2, 1) forwards;
+    }
+
+    @keyframes draw-signal { to { stroke-dashoffset: 0; } }
+    @keyframes chart-grow { to { opacity: 1; } }
+
+    .chart-crosshair {
+      position: absolute;
+      top: 14px;
+      bottom: 14px;
+      left: 50%;
+      width: 1px;
+      opacity: 0;
+      background: linear-gradient(to bottom, transparent, rgba(14, 159, 135, .7), transparent);
+      pointer-events: none;
+      transition: opacity .18s ease;
+    }
+
+    .chart-dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      margin: -6px 0 0 -6px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      opacity: 0;
+      background: var(--teal);
+      box-shadow: 0 0 0 7px rgba(14, 159, 135, .14), 0 4px 14px rgba(14, 159, 135, .28);
+      pointer-events: none;
+      transition: opacity .18s ease;
+    }
+
+    .signal-chart:hover .chart-crosshair,
+    .signal-chart:hover .chart-dot { opacity: 1; }
+
+    .chart-dot.pulse { animation: dot-pulse .55s ease-out; }
+
+    @keyframes dot-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(14, 159, 135, .35); }
+      100% { box-shadow: 0 0 0 24px rgba(14, 159, 135, 0); }
+    }
+
+    .chart-readout {
+      position: absolute;
+      top: 11px;
+      right: 11px;
+      z-index: 2;
+      padding: 5px 8px;
+      border: 1px solid rgba(14, 159, 135, .15);
+      border-radius: 7px;
+      color: var(--teal-dark);
+      background: rgba(255, 255, 255, .86);
+      font: 650 8px/1.3 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .06em;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Naresh-style central experience timeline */
+    .experience-grid {
+      position: relative;
+      display: block;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .experience-grid::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: 8px;
+      bottom: 8px;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--line-strong) 6%, var(--line-strong) 94%, transparent);
+      transform: translateX(-50%);
+    }
+
+    .xp-card {
+      width: calc(50% - 34px);
+      min-height: 262px;
+      margin-bottom: 26px;
+      background: rgba(255, 255, 255, .96);
+    }
+
+    .xp-card:nth-child(odd) { margin-right: auto; }
+    .xp-card:nth-child(even) { margin-left: auto; }
+
+    .xp-card::before {
+      content: "";
+      position: absolute;
+      top: 32px;
+      width: 12px;
+      height: 12px;
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+      background: var(--accent, var(--teal));
+      box-shadow: 0 0 0 1px var(--line-strong);
+    }
+
+    .xp-card:nth-child(odd)::before { right: -41px; }
+    .xp-card:nth-child(even)::before { left: -41px; }
+
+    .xp-card:hover {
+      transform: translateY(-4px) scale(1.008);
+    }
+
+    /* Colour-aware DeveloperFolio education cards */
+    .education-grid {
+      gap: 24px;
+    }
+
+    .edu-card {
+      position: relative;
+      min-height: 235px;
+      border-radius: 14px;
+      background: #fff;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .edu-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--edu-accent, var(--teal)), transparent);
+      transform: scaleX(.25);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+
+    .edu-card:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--edu-accent, var(--teal)) 30%, var(--line));
+      box-shadow: var(--shadow);
+    }
+
+    .edu-card:hover::after { transform: scaleX(1); }
+    .edu-card:first-child { --edu-accent: #cc8d2a; }
+    .edu-card:last-child { --edu-accent: #003e74; }
+
+    .edu-logo {
+      width: 104px;
+      height: 104px;
+      padding: 10px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 10px 26px rgba(17, 26, 40, .11);
+    }
+
+    .edu-logo img {
+      filter: none;
+      object-fit: contain;
+    }
+
+    .edu-card:nth-child(2) .edu-logo {
+      border: 1px solid rgba(0, 62, 116, .12);
+      background: #f6f9fc;
+    }
+
+    /* Naresh-style skills stage */
+    .skills-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.52fr) minmax(270px, .48fr);
+      gap: 20px;
+    }
+
+    .skill-stage {
+      position: relative;
+      min-height: 570px;
+      overflow: hidden;
+      isolation: isolate;
+      border: 1px solid rgba(14, 159, 135, .17);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(14, 159, 135, .18), transparent 22rem),
+        radial-gradient(circle at 12% 85%, rgba(109, 74, 239, .12), transparent 22rem),
+        linear-gradient(145deg, #131b27, #0e141e);
+      box-shadow: 0 25px 60px rgba(17, 26, 40, .20);
+    }
+
+    .skill-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .17;
+      background-image:
+        linear-gradient(rgba(130, 215, 201, .16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(130, 215, 201, .16) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    }
+
+    .skill-stage-head {
+      position: absolute;
+      z-index: 4;
+      inset: 17px 19px auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: #8493a8;
+      font: 650 8px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .skill-stage-head b { color: #80ddce; }
+    .skill-stage-head .ready-dot { color: #a8b1bf; }
+
+    .skill-stage-head i {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: #e7b45e;
+    }
+
+    .skill-stage-head.ready i { background: #6fe0c9; box-shadow: 0 0 0 4px rgba(111, 224, 201, .09); }
+
+    #skillCanvas {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 570px;
+      border: 0;
+      outline: 0;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    #skillCanvas:focus-visible { box-shadow: inset 0 0 0 2px rgba(111, 224, 201, .7); }
+    #skillCanvas:active { cursor: grabbing; }
+
+    .skill-stage-loading {
+      position: absolute;
+      z-index: 3;
+      inset: 50% auto auto 50%;
+      color: #b8c1cf;
+      transform: translate(-50%, -50%);
+      font: 650 9px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .skill-stage-readout {
+      position: absolute;
+      z-index: 4;
+      inset: auto 20px 17px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      pointer-events: none;
+    }
+
+    .skill-stage-readout small {
+      display: block;
+      color: #7f8b9d;
+      font: 650 8px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+
+    .skill-stage-readout strong {
+      display: block;
+      max-width: 360px;
+      overflow: hidden;
+      margin-top: 4px;
+      color: #fff;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .skill-stage-readout span:last-child {
+      color: #8493a8;
+      font: 650 8px/1.5 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .06em;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .skill-fallback {
+      position: absolute;
+      z-index: 5;
+      inset: 76px 18px 74px;
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      align-content: center;
+    }
+
+    .skill-fallback.show { display: grid; }
+    .skill-fallback .skill-card { min-height: 80px; background: #1f2939; color: white; border-color: #354258; }
+    .skill-fallback .skill-card small { color: #93a1b5; }
+
+    .skill-detail {
+      min-height: 320px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(14, 159, 135, .09), transparent 16rem),
+        #fff;
+    }
+
+    .selected-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 13px;
+      color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .selected-icon .skill-icon {
+      width: 30px;
+      height: 30px;
+      background: transparent;
+    }
+
+    .selected-icon .skill-icon i { width: 29px; height: 29px; }
+    .selected-icon .skill-icon svg { width: 25px; height: 25px; }
+    .skill-fallback { display: none !important; }
+    .skill-fallback.show { display: grid !important; }
+
+    @media (max-width: 1000px) {
+      .skills-shell { grid-template-columns: 1fr; }
+      .skill-detail { position: static; min-height: 240px; }
+    }
+
+    @media (max-width: 780px) {
+      .experience-grid::before { left: 10px; transform: none; }
+      .xp-card,
+      .xp-card:nth-child(odd),
+      .xp-card:nth-child(even) {
+        width: calc(100% - 34px);
+        margin-left: 34px;
+        margin-right: 0;
+      }
+      .xp-card::before,
+      .xp-card:nth-child(odd)::before,
+      .xp-card:nth-child(even)::before {
+        left: -30px;
+        right: auto;
+      }
+      .edu-logo { width: 78px; height: 78px; }
+      .skill-stage, #skillCanvas { min-height: 470px; }
+      .skill-stage-readout span:last-child { display: none; }
+    }
+
+    @media (max-width: 520px) {
+      .hero h1 { font-size: 39px; }
+      .greeting-sub { font-size: 16px; }
+      .skill-stage, #skillCanvas { min-height: 405px; }
+      .skill-stage-readout strong { font-size: 16px; }
+      .skill-fallback { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    /* Final typography, toolkit, education and writing refinements */
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/inter-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/inter-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/inter-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/montserrat-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/montserrat-700.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/fonts/montserrat-800.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI Variable Text", "Segoe UI", "Noto Sans SC", "PingFang SC", sans-serif;
+    }
+
+    h1, h2, h3, .brand, .nav-links a, .button, .project-card h3, .blog-card h3 {
+      font-family: "Montserrat", "Segoe UI Variable Display", "Segoe UI", "Noto Sans SC", sans-serif;
+    }
+
+    .hero h1 {
+      font-weight: 800;
+      letter-spacing: -.058em;
+    }
+
+    .greeting-sub {
+      max-width: 620px;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    .social-rail {
+      position: fixed;
+      z-index: 95;
+      left: 19px;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .social-rail::after {
+      content: "";
+      width: 1px;
+      height: 88px;
+      margin-top: 2px;
+      background: var(--line-strong);
+    }
+
+    .social-rail a {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink-2);
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 6px 16px rgba(17, 26, 40, .06);
+      transition: color .2s ease, transform .2s ease, border-color .2s ease;
+    }
+
+    .social-rail a:hover {
+      color: var(--teal);
+      border-color: rgba(14, 159, 135, .35);
+      transform: translateY(-3px);
+    }
+
+    .social-rail svg { width: 17px; height: 17px; }
+
+    .toolbelt {
+      position: relative;
+      margin: 36px 0 0 50%;
+      padding: 26px 28px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .88);
+      box-shadow: var(--shadow-soft);
+      transform: translateX(-50%);
+      width: min(900px, 100%);
+    }
+
+    .toolbelt-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .toolbelt-head strong {
+      color: var(--ink);
+      font-family: "Montserrat", "Segoe UI", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .toolbelt-head span {
+      color: var(--mute);
+      font: 600 9px/1.4 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .tool-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+    }
+
+    .tool {
+      --tool: var(--ink-2);
+      position: relative;
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--tool);
+      background: #fff;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .tool::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 7px);
+      padding: 5px 7px;
+      border-radius: 6px;
+      color: white;
+      background: var(--ink);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 4px);
+      transition: opacity .16s ease, transform .16s ease;
+      white-space: nowrap;
+      font: 600 8px/1.2 "Cascadia Mono", Consolas, monospace;
+    }
+
+    .tool:hover {
+      z-index: 2;
+      border-color: color-mix(in srgb, var(--tool) 40%, var(--line));
+      box-shadow: 0 9px 22px rgba(17, 26, 40, .10);
+      transform: translateY(-4px) scale(1.04);
+    }
+
+    .tool:hover::after { opacity: 1; transform: translate(-50%, 0); }
+
+    .tool i {
+      display: block;
+      width: 24px;
+      height: 24px;
+      background: currentColor;
+      mask: var(--icon) center / contain no-repeat;
+      -webkit-mask: var(--icon) center / contain no-repeat;
+    }
+
+    .education-grid {
+      align-items: stretch;
+    }
+
+    .edu-card {
+      display: flex;
+      min-height: 330px;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 28px;
+    }
+
+    .edu-logo {
+      flex: 0 0 auto;
+      width: 114px;
+      height: 82px;
+      padding: 8px;
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .edu-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .edu-card:nth-child(2) .edu-logo {
+      width: 144px;
+      height: 80px;
+      border-color: rgba(0, 62, 116, .12);
+      background: #fff;
+    }
+
+    .edu-card h3 { font-size: 21px; }
+    .edu-degree { font-size: 13px; }
+    .edu-meta { line-height: 1.7; }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .blog-card {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      min-height: 255px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--ink);
+      background: #fff;
+      box-shadow: 0 14px 42px rgba(17, 26, 40, .09);
+      text-decoration: none;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .blog-card::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -19px;
+      right: -19px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--teal);
+      transform: scale(1);
+      transform-origin: 50% 50%;
+      transition: transform .48s ease-out;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 50px rgba(17, 26, 40, .14);
+    }
+
+    .blog-card:hover::before { transform: scale(28); }
+    .blog-card:hover, .blog-card:hover .blog-tag, .blog-card:hover p, .blog-card:hover .blog-no { color: white; }
+
+    .blog-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .blog-no {
+      color: var(--teal);
+      font: 700 9px/1.3 "Cascadia Mono", Consolas, monospace;
+    }
+
+    .blog-tag {
+      color: var(--mute);
+      font: 650 8px/1.3 "Cascadia Mono", Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .blog-card h3 {
+      max-width: 92%;
+      margin: 27px 0 0;
+      font-size: clamp(19px, 2vw, 24px);
+      font-weight: 700;
+      line-height: 1.28;
+      letter-spacing: -.03em;
+    }
+
+    .blog-card p {
+      margin: 11px 0 0;
+      color: var(--ink-2);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .blog-arrow {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      margin-top: auto;
+      align-self: flex-end;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--teal);
+      transition: color .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .blog-card:hover .blog-arrow { color: white; border-color: rgba(255,255,255,.55); transform: translate(3px,-3px); }
+
+    @media (max-width: 1000px) {
+      .social-rail { display: none; }
+      .edu-card { min-height: 290px; }
+    }
+
+    @media (max-width: 760px) {
+      .toolbelt { margin-top: 28px; padding: 21px; }
+      .tool { width: 43px; height: 43px; }
+      .edu-card { min-height: 0; }
+      .edu-logo, .edu-card:nth-child(2) .edu-logo { width: 108px; height: 72px; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-card { min-height: 235px; }
+    }
+
+    /* Brittany-style split profile layout */
+    .nav-wrap { display: none; }
+
+    main {
+      width: min(1340px, calc(100% - 56px));
+      display: grid;
+      grid-template-columns: minmax(330px, 38%) minmax(0, 1fr);
+      column-gap: clamp(48px, 7vw, 96px);
+      align-items: start;
+    }
+
+    .hero {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      grid-column: 1;
+      grid-row: 1 / span 4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 66px 0 58px;
+    }
+
+    .hero > div:first-child { width: 100%; }
+    .hero-visual { display: none; }
+
+    .hero h1 {
+      max-width: 430px;
+      font-size: clamp(48px, 5vw, 68px);
+      line-height: .98;
+    }
+
+    .hero-role {
+      max-width: 430px;
+      margin-top: 18px;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .greeting-sub {
+      max-width: 430px;
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .hero-tags { max-width: 440px; margin-top: 19px; }
+    .hero .actions { margin-top: 23px; }
+
+    .profile-nav {
+      display: grid;
+      gap: 2px;
+      margin-top: 34px;
+    }
+
+    .profile-nav a {
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 6px 0;
+      color: var(--mute);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+      transition: color .2s ease, transform .2s ease;
+    }
+
+    .profile-nav a span {
+      color: #a9b2c0;
+      font: 600 9px/1.2 "Cascadia Mono", Consolas, monospace;
+    }
+
+    .profile-nav a:hover, .profile-nav a.active { color: var(--ink); transform: translateX(4px); }
+    .profile-nav a:hover span, .profile-nav a.active span { color: var(--teal); }
+
+    .profile-locale {
+      width: fit-content;
+      margin-top: 18px;
+    }
+
+    .section {
+      grid-column: 2;
+      padding: 72px 0 78px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section:first-of-type { border-top: 0; }
+
+    .section-head {
+      display: block;
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      margin-bottom: 10px;
+      color: var(--teal-dark);
+    }
+
+    .section-head h2 {
+      font-size: clamp(31px, 3.5vw, 45px);
+      font-weight: 700;
+    }
+
+    .section-head p { margin-top: 8px; }
+
+    .social-rail {
+      left: max(16px, calc((100vw - 1340px) / 2 - 48px));
+    }
+
+    .experience-grid { max-width: none; }
+    .xp-card { width: calc(50% - 27px); }
+    .xp-card:nth-child(odd)::before { right: -34px; }
+    .xp-card:nth-child(even)::before { left: -34px; }
+
+    @media (max-width: 1020px) {
+      main {
+        width: min(100% - 48px, 880px);
+        display: block;
+      }
+      .hero {
+        position: relative;
+        min-height: auto;
+        padding: 58px 0 50px;
+      }
+      .section { border-top: 1px solid var(--line); }
+      .social-rail { display: none; }
+      .profile-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      main { width: min(100% - 32px, 680px); }
+      .hero { padding-top: 48px; }
+      .profile-nav { margin-top: 28px; }
+      .section { padding: 58px 0 66px; }
+      .experience-grid::before { display: none; }
+      .xp-card,
+      .xp-card:nth-child(odd),
+      .xp-card:nth-child(even) {
+        width: 100%;
+        margin-left: 0;
+      }
+      .xp-card::before,
+      .xp-card:nth-child(odd)::before,
+      .xp-card:nth-child(even)::before { display: none; }
+    }
+
+    /* Final editorial typography and simplified left rail */
+    @font-face {
+      font-family: "Instrument Sans";
+      src: url("assets/fonts/instrument-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Sans";
+      src: url("assets/fonts/instrument-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Sans";
+      src: url("assets/fonts/instrument-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Sans";
+      src: url("assets/fonts/instrument-700.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "IBM Plex Sans";
+      src: url("assets/fonts/plex-sans-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "IBM Plex Sans";
+      src: url("assets/fonts/plex-sans-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "IBM Plex Sans";
+      src: url("assets/fonts/plex-sans-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    body {
+      font-family: "IBM Plex Sans", "Segoe UI Variable Text", "Segoe UI", "Noto Sans SC", sans-serif;
+      font-size: 15px;
+    }
+
+    h1, h2, h3, .brand, .button, .profile-nav a, .skill-detail h3, .blog-card h3 {
+      font-family: "Instrument Sans", "Segoe UI Variable Display", "Segoe UI", "Noto Sans SC", sans-serif;
+    }
+
+    .hero {
+      justify-content: center;
+      padding: 58px 0;
+    }
+
+    .hero .eyebrow {
+      margin-bottom: 16px;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 10px;
+      letter-spacing: .14em;
+    }
+
+    .hero h1 {
+      max-width: 390px;
+      font-size: clamp(44px, 4.7vw, 64px);
+      font-weight: 600;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .hero-role {
+      max-width: 390px;
+      margin-top: 20px;
+      font-family: "Instrument Sans", sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.6;
+      letter-spacing: -.012em;
+    }
+
+    .hero-role .role-text {
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .hero-role .role-dot {
+      margin: 0 .4em;
+      color: var(--teal);
+      font-weight: 400;
+    }
+    .greeting-sub, .hero-tags, .hero .actions, .profile-nav { display: none; }
+
+    .profile-locale {
+      margin-top: 24px;
+      border-color: #dce2e8;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .social-rail {
+      left: 18px;
+      gap: 12px;
+    }
+
+    .social-rail::before {
+      content: "CONTACT";
+      position: absolute;
+      bottom: calc(100% + 13px);
+      color: var(--mute);
+      font: 600 8px/1 "IBM Plex Sans", sans-serif;
+      letter-spacing: .13em;
+      writing-mode: vertical-rl;
+    }
+
+    .intro-section {
+      padding-top: 86px;
+      border-top: 0;
+    }
+
+    .right-intro {
+      max-width: 760px;
+      margin: 0;
+      color: var(--ink-2);
+      font-family: "Instrument Sans", sans-serif;
+      font-size: clamp(24px, 3vw, 37px);
+      font-weight: 400;
+      line-height: 1.42;
+      letter-spacing: -.035em;
+    }
+
+    .right-intro strong { color: var(--ink); font-weight: 600; }
+
+    .right-intro .accent {
+      color: var(--teal-dark);
+      font-weight: 600;
+    }
+
+    .right-intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .section {
+      padding-top: 66px;
+      padding-bottom: 74px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(34px, 3.8vw, 48px);
+      font-weight: 600;
+      letter-spacing: -.04em;
+    }
+
+    .section-head p, .xp-card p, .skill-detail p, .blog-card p {
+      font-family: "IBM Plex Sans", sans-serif;
+    }
+
+    .xp-card h3, .edu-card h3 {
+      font-family: "Instrument Sans", sans-serif;
+      font-weight: 600;
+    }
+
+    .education-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .edu-card {
+      display: flex;
+      min-height: 275px;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 18px;
+      padding: 26px;
+    }
+
+    .edu-logo {
+      width: 118px;
+      height: 76px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .edu-card:nth-child(2) .edu-logo {
+      width: 142px;
+      height: 74px;
+      border-color: var(--line);
+      background: #fff;
+    }
+
+    .edu-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .edu-card h3 { font-size: 22px; }
+    .edu-degree { font-size: 14px; }
+    .edu-meta { font-size: 12px; }
+
+    .edu-extra {
+      display: grid;
+      gap: 6px;
+      margin-top: 4px;
+      color: var(--ink-2);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .edu-extra span {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .edu-extra span::before {
+      content: "";
+      flex: 0 0 5px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--edu-accent, var(--teal));
+    }
+
+    .tool {
+      width: 48px;
+      height: 48px;
+      padding: 11px;
+    }
+
+    .tool img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .xp-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: auto;
+      padding-top: 18px;
+    }
+
+    .xp-tech span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 7px;
+      color: var(--ink-2);
+      background: var(--paper-soft);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .xp-tech img {
+      width: 13px;
+      height: 13px;
+      object-fit: contain;
+    }
+
+    .xp-tech svg { width: 13px; height: 13px; color: var(--accent, var(--teal)); }
+
+    .skill-icon.masked i { display: none; }
+    .skill-icon.masked img {
+      display: block;
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+
+    .blog-grid { gap: 16px; }
+    .blog-card { min-height: 245px; padding: 25px; }
+    .blog-card h3 { font-size: 22px; font-weight: 600; }
+    .blog-card p { font-size: 12px; }
+
+    @media (max-width: 1020px) {
+      .social-rail { display: none; }
+      .intro-section { padding-top: 54px; }
+    }
+
+    @media (max-width: 720px) {
+      .hero h1 { font-size: 43px; }
+      .hero-role { font-size: 15px; }
+      .intro-section { padding-top: 42px; }
+      .right-intro { font-size: 24px; }
+      .edu-card { min-height: 0; }
+    }
+
+    /* Simplified profile rail and slide-out toolkit */
+    .social-rail { display: none; }
+
+    .hero .eyebrow {
+      max-width: 310px;
+      line-height: 1.55;
+    }
+
+    .hero h1 {
+      max-width: 330px;
+      font-size: clamp(48px, 5vw, 66px);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .hero-role {
+      display: grid;
+      gap: 2px;
+      max-width: 320px;
+      margin-top: 22px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .hero-role .role-text { display: block; white-space: nowrap; }
+    .hero-role .role-dot { display: none; }
+
+    .profile-contact {
+      display: grid;
+      gap: 8px;
+      width: fit-content;
+      margin-top: 29px;
+    }
+
+    .profile-contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--mute);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 500;
+      transition: color .2s ease, transform .2s ease;
+    }
+
+    .profile-contact a:hover {
+      color: var(--teal-dark);
+      transform: translateX(3px);
+    }
+
+    .profile-contact svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .toolkit-trigger {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+      margin-top: 28px;
+      padding: 19px 21px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--ink);
+      background:
+        linear-gradient(110deg, rgba(14, 159, 135, .06), transparent 42%),
+        #fff;
+      box-shadow: var(--shadow-soft);
+      text-align: left;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .toolkit-trigger:hover {
+      transform: translateY(-3px);
+      border-color: rgba(14, 159, 135, .3);
+      box-shadow: var(--shadow);
+    }
+
+    .toolkit-trigger strong {
+      display: block;
+      font-family: "Instrument Sans", sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .toolkit-trigger small {
+      display: block;
+      margin-top: 4px;
+      color: var(--mute);
+      font-size: 11px;
+    }
+
+    .toolkit-trigger-icons {
+      display: flex;
+      align-items: center;
+      padding-left: 11px;
+    }
+
+    .toolkit-trigger-icons img {
+      width: 29px;
+      height: 29px;
+      margin-left: -9px;
+      padding: 5px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(17, 26, 40, .1);
+      object-fit: contain;
+    }
+
+    .toolkit-trigger-arrow {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--teal-dark);
+      font-size: 14px;
+    }
+
+    .toolkit-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 290;
+      opacity: 0;
+      visibility: hidden;
+      background: rgba(17, 26, 40, .26);
+      backdrop-filter: blur(4px);
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .motion-off .toolkit-backdrop,
+    .motion-off .toolkit-drawer { transition: none !important; }
+
+    .toolkit-drawer {
+      position: fixed;
+      z-index: 300;
+      inset: 0 0 0 auto;
+      width: min(460px, 92vw);
+      padding: 31px;
+      overflow-y: auto;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 90% 3%, rgba(14, 159, 135, .09), transparent 18rem),
+        #fbfcfa;
+      box-shadow: -20px 0 70px rgba(17, 26, 40, .16);
+      transform: translateX(104%);
+      visibility: hidden;
+      transition: transform .38s cubic-bezier(.22, .72, .25, 1), visibility .38s ease;
+    }
+
+    body.toolkit-open { overflow: hidden; }
+    body.toolkit-open .toolkit-backdrop { opacity: 1; visibility: visible; }
+    body.toolkit-open .toolkit-drawer { transform: translateX(0); visibility: visible; }
+
+    .toolkit-drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .toolkit-drawer-head .eyebrow { margin: 0; }
+
+    .toolkit-close {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink-2);
+      background: #fff;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .toolkit-close:hover { color: var(--teal-dark); border-color: var(--teal); }
+
+    .toolkit-drawer h3 {
+      margin: 31px 0 0;
+      font-size: 34px;
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -.04em;
+    }
+
+    .toolkit-drawer > p {
+      margin: 12px 0 0;
+      color: var(--ink-2);
+      font-size: 13px;
+      line-height: 1.72;
+    }
+
+    .toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .toolkit-item {
+      display: flex;
+      min-height: 96px;
+      align-items: center;
+      gap: 13px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }
+
+    .toolkit-item img {
+      flex: 0 0 31px;
+      width: 31px;
+      height: 31px;
+      object-fit: contain;
+    }
+
+    .toolkit-item b {
+      display: block;
+      font-family: "Instrument Sans", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .toolkit-item span {
+      display: block;
+      margin-top: 3px;
+      color: var(--mute);
+      font-size: 9px;
+      line-height: 1.45;
+    }
+
+    #skills { display: none !important; }
+
+    @media (max-width: 1020px) {
+      .hero-role { font-size: 15px; }
+      .profile-contact { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+    }
+
+    @media (max-width: 520px) {
+      .hero h1 { font-size: 44px; }
+      .hero-role { max-width: 300px; }
+      .toolkit-trigger { grid-template-columns: 1fr auto; padding: 17px; }
+      .toolkit-trigger-icons { display: none; }
+      .toolkit-drawer { width: 100vw; padding: 24px; }
+      .toolkit-grid { grid-template-columns: 1fr 1fr; }
+      .toolkit-item { min-height: 88px; padding: 11px; }
+    }
+
+    /* Product-launch polish: final type scale and interaction details */
+    @font-face {
+      font-family: "Sora";
+      src: url("assets/fonts/sora-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Sora";
+      src: url("assets/fonts/sora-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Sora";
+      src: url("assets/fonts/sora-700.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    h1, h2, h3, .brand, .button, .profile-nav a, .skill-detail h3, .blog-card h3 {
+      font-family: "Sora", "Segoe UI Variable Display", "Segoe UI", "Noto Sans SC", sans-serif;
+    }
+
+    body {
+      font-family: "IBM Plex Sans", "Segoe UI Variable Text", "Segoe UI", "Noto Sans SC", sans-serif;
+      color: #101820;
+    }
+
+    .hero h1 {
+      max-width: 380px;
+      font-size: clamp(46px, 4.6vw, 62px);
+      font-weight: 600;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .hero-role {
+      margin-top: 24px;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .hero-role .role-text { white-space: nowrap; }
+
+    .profile-contact {
+      gap: 11px;
+      margin-top: 32px;
+    }
+
+    .profile-contact a {
+      gap: 11px;
+      color: #596574;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .profile-contact svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .section-head h2,
+    .blog-card h3 {
+      font-family: "Sora", "Segoe UI", sans-serif;
+      font-weight: 600;
+    }
+
+    .right-intro {
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: clamp(23px, 2.8vw, 35px);
+      font-weight: 500;
+      line-height: 1.5;
+      letter-spacing: -.035em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      filter: blur(4px);
+      transition:
+        opacity .72s cubic-bezier(.22, .72, .25, 1),
+        transform .72s cubic-bezier(.22, .72, .25, 1),
+        filter .72s ease;
+      transition-delay: var(--delay, 0s);
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    .xp-card {
+      transition: opacity .72s ease, transform .72s ease, filter .72s ease, box-shadow .24s ease, border-color .24s ease;
+    }
+
+    .xp-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .xp-skill-block {
+      display: grid;
+      gap: 7px;
+      margin-top: 17px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .xp-skill-block + .xp-skill-block { margin-top: 11px; }
+
+    .xp-skill-label {
+      color: var(--mute);
+      font: 600 8px/1.35 "IBM Plex Sans", sans-serif;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .xp-tech span {
+      border: 1px solid rgba(17, 26, 40, .07);
+      background: #f7f9f8;
+    }
+
+    .xp-tech.capabilities span {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      border-color: transparent;
+    }
+
+    .xp-tech.capabilities span::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .education-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .edu-card {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      align-items: start;
+      gap: 34px;
+      min-height: 240px;
+      padding: 27px 28px;
+      border-radius: 18px;
+      background:
+        linear-gradient(150deg, rgba(14, 159, 135, .025), transparent 46%),
+        #fff;
+    }
+
+    .edu-logo {
+      display: grid;
+      width: 180px;
+      height: 126px;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      perspective: 500px;
+    }
+
+    .edu-card:nth-child(2) .edu-logo {
+      width: 180px;
+      height: 100px;
+      border: 0;
+      background: transparent;
+    }
+
+    .edu-logo img {
+      max-width: 100%;
+      max-height: 100%;
+      filter: drop-shadow(0 16px 16px rgba(17, 26, 40, .18));
+      transform: rotateX(5deg) rotateY(-8deg) translateZ(8px);
+      animation: logo-float 5.5s ease-in-out infinite;
+      transition: transform .4s cubic-bezier(.22, .72, .25, 1), filter .4s ease;
+    }
+
+    .edu-card:hover .edu-logo img {
+      filter: drop-shadow(0 20px 22px rgba(17, 26, 40, .25));
+      transform: rotateX(0) rotateY(0) translate3d(0, -7px, 20px);
+    }
+
+    @keyframes logo-float {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -5px; }
+    }
+
+    .edu-card:nth-child(2) .edu-logo img {
+      filter: drop-shadow(0 14px 15px rgba(0, 62, 116, .22));
+    }
+
+    .edu-body { min-width: 0; }
+    .edu-card h3 { margin: 0; font-size: 23px; }
+    .edu-degree { margin-top: 6px; }
+    .edu-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 12px;
+      color: var(--ink-2);
+      font-size: 11px;
+    }
+
+    .edu-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .edu-meta span::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--edu-accent, var(--teal));
+    }
+
+    .edu-details {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 7px 15px;
+      margin-top: 17px;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .edu-details dt {
+      color: var(--mute);
+      font: 600 8px/1.7 "IBM Plex Sans", sans-serif;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .edu-details dd {
+      margin: 0;
+      color: var(--ink-2);
+    }
+
+    /* Interactive Naifrog from timerring/codex-pet-naiwa (MIT) */
+    .pet-widget {
+      position: fixed;
+      z-index: 250;
+      right: 22px;
+      bottom: 14px;
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      pointer-events: none;
+    }
+
+    .pet-bubble {
+      max-width: 220px;
+      margin-bottom: 54px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px 12px 4px 12px;
+      color: var(--ink-2);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 12px 30px rgba(17, 26, 40, .10);
+      opacity: 0;
+      transform: translateY(5px) scale(.97);
+      transition: opacity .2s ease, transform .2s ease;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .pet-widget:hover .pet-bubble,
+    .pet-widget.talking .pet-bubble {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .pet-button {
+      width: 104px;
+      height: 113px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      pointer-events: auto;
+      cursor: pointer;
+      filter: drop-shadow(0 15px 17px rgba(11, 18, 32, .22));
+      transition: transform .25s cubic-bezier(.22, .72, .25, 1);
+    }
+
+    .pet-button:hover { transform: translateY(-5px) rotate(-2deg); }
+    .pet-button:active { transform: translateY(1px) scale(.97); }
+    .pet-button:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; border-radius: 40%; }
+    .pet-button img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+    @media (max-width: 760px) {
+      .edu-card {
+        grid-template-columns: 1fr;
+        gap: 7px;
+        padding: 22px;
+      }
+      .edu-logo, .edu-card:nth-child(2) .edu-logo {
+        width: 145px;
+        height: 86px;
+      }
+      .edu-details { grid-template-columns: 1fr; gap: 3px; }
+      .edu-details dt { margin-top: 6px; }
+      .pet-widget { right: 10px; bottom: 8px; }
+      .pet-button { width: 82px; height: 89px; }
+      .pet-bubble { max-width: 175px; margin-bottom: 42px; font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .edu-logo img { animation: none; }
+      .reveal { filter: none; }
+    }
+
+    /* Latest education first */
+    .edu-card:first-child { --edu-accent: #003e74; }
+    .edu-card:last-child { --edu-accent: #cc8d2a; }
+    .edu-card:first-child .edu-logo {
+      width: 180px;
+      height: 88px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .edu-card:last-child .edu-logo {
+      width: 180px;
+      height: 126px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .edu-card:first-child .edu-logo img {
+      filter: drop-shadow(0 15px 17px rgba(0, 62, 116, .24));
+    }
+    .edu-card:last-child .edu-logo img {
+      filter: drop-shadow(0 15px 17px rgba(204, 141, 42, .18));
+    }
+
+    .toolkit-signal {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 20px;
+    }
+
+    .toolkit-signal span {
+      padding: 5px 8px;
+      border-radius: 7px;
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .toolkit-section-label {
+      margin: 24px 0 10px;
+      color: var(--mute) !important;
+      font: 600 8px/1.4 "IBM Plex Sans", sans-serif !important;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .toolkit-workflow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .toolkit-workflow span {
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 800px;
+      color: var(--ink-2);
+      background: #fff;
+      font-size: 9px;
+    }
+
+    .edu-card:first-child .edu-logo,
+    .edu-card:last-child .edu-logo,
+    .edu-logo {
+      width: 180px;
+      height: 90px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .edu-card:first-child .edu-logo img,
+    .edu-card:last-child .edu-logo img,
+    .edu-logo img {
+      width: 165px;
+      height: 68px;
+      object-fit: contain;
+    }
+
+    @media (max-width: 760px) {
+      .edu-card .edu-logo,
+      .edu-card:first-child .edu-logo,
+      .edu-card:last-child .edu-logo {
+        width: 150px;
+        height: 82px;
+      }
+      .edu-card .edu-logo img {
+        width: 140px;
+        height: 64px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+  <div class="cursor-aura" aria-hidden="true"></div>
+  <aside class="social-rail" aria-label="External links">
+    <a href="https://github.com/Aayloo" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.93.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.1 8.65 21 10.6 21 13.5V21h-4v-6.6c0-1.57-.56-2.64-1.96-2.64-1.07 0-1.7.72-1.98 1.41-.1.25-.13.6-.13.94V21H9V9Z"/></svg>
+    </a>
+    <a href="https://aayloo.github.io/notes/" target="_blank" rel="noreferrer" aria-label="Research notes" title="Research notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v18H7.5A2.5 2.5 0 0 0 5 22V4.5Z"/><path d="M5 18.5A2.5 2.5 0 0 1 7.5 16H19M9 6h6M9 10h5"/></svg>
+    </a>
+  </aside>
+
+  <div class="toolkit-backdrop" id="toolkitBackdrop" aria-hidden="true"></div>
+  <aside class="toolkit-drawer" id="toolkitDrawer" role="dialog" aria-modal="true" aria-labelledby="toolkitTitle" aria-hidden="true" tabindex="-1">
+    <div class="toolkit-drawer-head">
+      <p class="eyebrow" data-en="Technical capability" data-zh="技术能力">Technical capability</p>
+      <button class="toolkit-close" id="toolkitClose" type="button" aria-label="Close research toolkit">×</button>
+    </div>
+    <h3 id="toolkitTitle" data-en="Quant research toolkit." data-zh="量化研究工具栈。">Quant research toolkit.</h3>
+    <p data-en="A workflow built for systematic signal research, portfolio construction, risk analysis and model validation." data-zh="面向系统化信号研究、组合构建、风险分析与模型验证的工作流。">A workflow built for systematic signal research, portfolio construction, risk analysis and model validation.</p>
+    <div class="toolkit-signal">
+      <span>Factor research</span><span>Portfolio construction</span><span>Backtesting</span><span>Risk & attribution</span><span>Time series</span><span>Model validation</span>
+    </div>
+    <p class="toolkit-section-label" data-en="Core tools" data-zh="核心工具">Core tools</p>
+    <div class="toolkit-grid">
+      <div class="toolkit-item"><img src="assets/icons/python.svg" alt=""><div><b>Python</b><span data-en="Research pipelines" data-zh="研究流水线">Research pipelines</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/jupyter.svg" alt=""><div><b>Jupyter</b><span data-en="Analysis & walkthroughs" data-zh="分析与过程展示">Analysis &amp; walkthroughs</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/pandas.svg" alt=""><div><b>pandas</b><span data-en="Factor panels & cleaning" data-zh="因子面板与清洗">Factor panels &amp; cleaning</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/numpy.svg" alt=""><div><b>NumPy</b><span data-en="Numerical research" data-zh="数值研究">Numerical research</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/scikitlearn.svg" alt=""><div><b>scikit-learn</b><span data-en="Baselines & validation" data-zh="基线与验证">Baselines &amp; validation</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/pytorch.svg" alt=""><div><b>PyTorch</b><span data-en="Sequence models" data-zh="序列模型">Sequence models</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/git.svg" alt=""><div><b>Git</b><span data-en="Versioned research" data-zh="版本化研究">Versioned research</span></div></div>
+      <div class="toolkit-item"><img src="assets/icons/latex.svg" alt=""><div><b>LaTeX</b><span data-en="Research write-ups" data-zh="研究报告写作">Research write-ups</span></div></div>
+    </div>
+    <p class="toolkit-section-label" data-en="Quant workflow" data-zh="量化工作流">Quant workflow</p>
+    <div class="toolkit-workflow">
+      <span>Signal diagnostics</span>
+      <span>Out-of-sample validation</span>
+      <span>Portfolio optimisation</span>
+      <span>Transaction costs</span>
+      <span>Risk attribution</span>
+      <span>Reproducible research</span>
+    </div>
+  </aside>
+
+  <header class="nav-wrap">
+    <div class="nav-inner">
+      <a class="brand" href="#about"><span class="brand-mark">A/</span><span>Aylon</span></a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about" class="active" data-en="About" data-zh="关于">About</a>
+        <a href="#experience" data-en="Experience" data-zh="经历">Experience</a>
+        <a href="#education" data-en="Education" data-zh="教育">Education</a>
+        <a href="#skills" data-en="Tech skills" data-zh="技术能力">Tech skills</a>
+        <a href="#blog" data-en="Blog" data-zh="博客">Blog</a>
+      </nav>
+      <div class="nav-tools">
+        <a class="github-link" href="https://github.com/Aayloo" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <div class="locale" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="about">
+      <div>
+        <p class="eyebrow reveal" data-en="Hong Kong · Data, AI & Quantitative Research" data-zh="香港 · 数据、AI 与量化研究">Hong Kong · Data, AI &amp; Quantitative Research</p>
+        <h1 class="reveal" data-en="Hi, I'm Aylon &lt;span class='wave-emoji'&gt;👋&lt;/span&gt;" data-zh="你好，我是 Aylon &lt;span class='wave-emoji'&gt;👋&lt;/span&gt;">Hi, I'm Aylon <span class="wave-emoji">👋</span></h1>
+        <p class="hero-role reveal">
+          <span class="role-text" data-en="Data Scientist" data-zh="数据科学家">Data Scientist</span><span class="role-dot">·</span>
+          <span class="role-text" data-en="Quantitative Analyst" data-zh="量化分析师">Quantitative Analyst</span><span class="role-dot">·</span>
+          <span class="role-text" data-en="Applied AI Engineer" data-zh="应用 AI 工程师">Applied AI Engineer</span>
+        </p>
+        <p class="greeting-sub reveal" data-en="I build reproducible multi-asset research across signals, portfolio construction, risk and attribution — with applied AI where it makes the research process more rigorous." data-zh="构建覆盖信号、组合构建、风险与归因的可复现多资产研究，并把应用 AI 用在真正提升研究严谨性的环节。">I build reproducible multi-asset research across signals, portfolio construction, risk and attribution — with applied AI where it makes the research process more rigorous.</p>
+        <div class="hero-tags reveal">
+          <span class="pill" data-en="Multi-asset allocation" data-zh="多资产配置">Multi-asset allocation</span>
+          <span class="pill" data-en="Signal validation" data-zh="信号验证">Signal validation</span>
+          <span class="pill" data-en="Auditable AI systems" data-zh="可审计 AI 系统">Auditable AI systems</span>
+        </div>
+        <div class="actions reveal">
+          <a class="button primary" href="#blog">
+            <span data-en="View selected work" data-zh="查看精选项目">View selected work</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+          <a class="button ghost" href="https://aayloo.github.io/notes/" target="_blank" rel="noreferrer">
+            <span data-en="Research archive" data-zh="研究档案">Research archive</span>
+          </a>
+        </div>
+        <nav class="profile-nav" aria-label="Profile sections">
+          <a href="#experience"><span>01</span><span data-en="Experience" data-zh="经历">Experience</span></a>
+          <a href="#education"><span>02</span><span data-en="Education" data-zh="教育">Education</span></a>
+          <a href="#blog"><span>03</span><span data-en="Blog" data-zh="博客">Blog</span></a>
+        </nav>
+        <div class="locale profile-locale" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+        <div class="profile-contact" aria-label="Contact links">
+          <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05C20.1 8.65 21 10.6 21 13.5V21h-4v-6.6c0-1.57-.56-2.64-1.96-2.64-1.07 0-1.7.72-1.98 1.41-.1.25-.13.6-.13.94V21H9V9Z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/Aayloo" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.36 1.09 2.93.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://aayloo.github.io/notes/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v18H7.5A2.5 2.5 0 0 0 5 22V4.5Z"/><path d="M5 18.5A2.5 2.5 0 0 1 7.5 16H19M9 6h6M9 10h5"/></svg>
+            <span data-en="Research notes" data-zh="研究笔记">Research notes</span>
+          </a>
+        </div>
+      </div>
+
+      <aside class="hero-visual reveal" aria-hidden="true">
+        <div class="hero-orbit"></div>
+        <div class="research-card">
+          <div class="card-kicker"><b>RESEARCH PIPELINE</b><span>INTERACTIVE SCHEMATIC</span></div>
+          <div class="signal-chart">
+            <svg viewBox="0 0 320 150" fill="none">
+              <defs>
+                <linearGradient id="signalFill" x1="160" y1="28" x2="160" y2="150" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0E9F87" stop-opacity=".22"/>
+                  <stop offset="1" stop-color="#0E9F87" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path id="signalArea" d="M4 123 C38 118 44 89 72 98 C101 108 111 68 141 78 C173 89 185 47 214 58 C243 68 264 23 316 20 L316 150 L4 150 Z" fill="url(#signalFill)"/>
+              <path id="signalPath" pathLength="1" d="M4 123 C38 118 44 89 72 98 C101 108 111 68 141 78 C173 89 185 47 214 58 C243 68 264 23 316 20" stroke="#0E9F87" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="141" cy="78" r="4" fill="#2F6FE4"/>
+              <circle cx="214" cy="58" r="4" fill="#6D4AEF"/>
+              <circle cx="316" cy="20" r="5" fill="#0E9F87"/>
+            </svg>
+            <div class="chart-crosshair" id="chartCrosshair" aria-hidden="true"></div>
+            <span class="chart-dot" id="chartDot" aria-hidden="true"></span>
+            <span class="chart-readout" id="chartReadout">MOVE TO EXPLORE</span>
+          </div>
+          <div class="research-facts">
+            <div class="research-fact"><b>01</b>VALIDATE</div>
+            <div class="research-fact"><b>02</b>ALLOCATE</div>
+            <div class="research-fact"><b>03</b>ATTRIBUTE</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section intro-section" id="intro">
+      <div class="reveal">
+        <p class="section-label"><span>ABOUT</span>Research profile</p>
+        <p class="right-intro" data-en="I work across data science, applied AI and quantitative research. I build reproducible data and modelling workflows, design agentic systems with evaluation and auditability, and test investment ideas from signal validation through portfolio construction, costs and attribution." data-zh="我的工作横跨数据科学、应用 AI 与量化研究：构建可复现的数据和建模流程，设计带评测与可审计能力的 Agent 系统，并把投资想法从信号验证一路推进到组合构建、成本与归因。">I work across data science, applied AI and quantitative research. I build reproducible data and modelling workflows, design agentic systems with evaluation and auditability, and test investment ideas from signal validation through portfolio construction, costs and attribution.</p>
+        <div class="right-intro-meta">
+          <span class="pill" data-en="Data Science" data-zh="数据科学">Data Science</span>
+          <span class="pill" data-en="Applied AI" data-zh="应用 AI">Applied AI</span>
+          <span class="pill" data-en="Quantitative Research" data-zh="量化研究">Quantitative Research</span>
+          <span class="pill" data-en="Research Engineering" data-zh="研究工程">Research Engineering</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="section-head reveal">
+        <p class="section-label"><span>01 / EXPERIENCE</span>Current and research roles</p>
+        <div>
+          <h2 data-en="Experience." data-zh="经历。">Experience.</h2>
+          <p data-en="My research and professional journey." data-zh="我的研究与职业经历。">My research and professional journey.</p>
+        </div>
+      </div>
+      <div class="experience-grid">
+        <article class="xp-card reveal" style="--accent:var(--teal);--delay:.02s">
+          <span class="xp-period">2026 — PRESENT</span>
+          <h3 data-en="Modelling & Data Scientist" data-zh="建模及数据科学家">Modelling &amp; Data Scientist</h3>
+          <p class="xp-org" data-en="Insurance Group" data-zh="保险集团">Insurance Group</p>
+          <p data-en="Build reproducible data pipelines, model evaluation workflows and auditable AI systems for financial processes." data-zh="为金融流程构建可复现的数据管道、模型评估工作流与可审计 AI 系统。">Build reproducible data pipelines, model evaluation workflows and auditable AI systems for financial processes.</p>
+          <div class="xp-skill-block">
+            <span class="xp-skill-label" data-en="Tech stack" data-zh="技术栈">Tech stack</span>
+            <div class="xp-tech">
+              <span><img src="assets/icons/python.svg" alt="">Python</span>
+              <span><img src="assets/icons/pandas.svg" alt="">pandas</span>
+              <span><img src="assets/icons/numpy.svg" alt="">NumPy</span>
+              <span><img src="assets/icons/jupyter.svg" alt="">Jupyter</span>
+              <span><img src="assets/icons/scikitlearn.svg" alt="">scikit-learn</span>
+              <span><img src="assets/icons/pytorch.svg" alt="">PyTorch</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M6 6l2 2m8 8 2 2M18 6l-2 2M8 16l-2 2"/><circle cx="12" cy="12" r="3"/></svg>LLM APIs</span>
+              <span><img src="assets/icons/git.svg" alt="">Git</span>
+            </div>
+          </div>
+          <div class="xp-skill-block">
+            <span class="xp-skill-label" data-en="Capabilities" data-zh="能力">Capabilities</span>
+            <div class="xp-tech capabilities">
+              <span data-en="Data pipelines" data-zh="数据流水线">Data pipelines</span>
+              <span data-en="Model evaluation" data-zh="模型评估">Model evaluation</span>
+              <span data-en="AI systems" data-zh="AI 系统">AI systems</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="xp-card reveal" style="--accent:var(--blue);--delay:.11s">
+          <span class="xp-period">2024 — 2026</span>
+          <h3 data-en="Research / Teaching Assistant" data-zh="研究 / 教学助理">Research / Teaching Assistant</h3>
+          <p class="xp-org" data-en="The Hong Kong Polytechnic University · Faculty of Business" data-zh="香港理工大学 · 商学院">The Hong Kong Polytechnic University · Faculty of Business</p>
+          <p data-en="Supported empirical research, data preparation and teaching delivery across quantitative and business analytics work." data-zh="支持量化与商业分析方向的实证研究、数据准备和教学工作。">Supported empirical research, data preparation and teaching delivery across quantitative and business analytics work.</p>
+          <div class="xp-skill-block">
+            <span class="xp-skill-label" data-en="Tech stack" data-zh="技术栈">Tech stack</span>
+            <div class="xp-tech">
+              <span><img src="assets/icons/python.svg" alt="">Python</span>
+              <span><img src="assets/icons/pandas.svg" alt="">pandas</span>
+              <span><img src="assets/icons/numpy.svg" alt="">NumPy</span>
+              <span><img src="assets/icons/scikitlearn.svg" alt="">scikit-learn</span>
+              <span><img src="assets/icons/jupyter.svg" alt="">Jupyter</span>
+              <span><img src="assets/icons/latex.svg" alt="">LaTeX</span>
+              <span><img src="assets/icons/git.svg" alt="">Git</span>
+            </div>
+          </div>
+          <div class="xp-skill-block">
+            <span class="xp-skill-label" data-en="Capabilities" data-zh="能力">Capabilities</span>
+            <div class="xp-tech capabilities">
+              <span data-en="Empirical research" data-zh="实证研究">Empirical research</span>
+              <span data-en="Data preparation" data-zh="数据准备">Data preparation</span>
+              <span data-en="Teaching" data-zh="教学">Teaching</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="xp-card reveal" style="--accent:var(--violet);--delay:.20s">
+          <span class="xp-period">2022 — 2024</span>
+          <h3 data-en="Project Researcher" data-zh="项目研究员">Project Researcher</h3>
+          <p class="xp-org" data-en="Imperial College London · Department of Physics" data-zh="帝国理工学院 · 物理系">Imperial College London · Department of Physics</p>
+          <p data-en="Contributed to applied research involving quantitative analysis, computational methods and evidence-led problem solving." data-zh="参与应用研究，涉及量化分析、计算方法与基于证据的问题解决。">Contributed to applied research involving quantitative analysis, computational methods and evidence-led problem solving.</p>
+          <div class="xp-skill-block">
+            <span class="xp-skill-label" data-en="Tech stack" data-zh="技术栈">Tech stack</span>
+            <div class="xp-tech">
+              <span><img src="assets/icons/python.svg" alt="">Python</span>
+              <span><img src="assets/icons/numpy.svg" alt="">NumPy</span>
+              <span><img src="assets/icons/pandas.svg" alt="">pandas</span>
+              <span><img src="assets/icons/pytorch.svg" alt="">PyTorch</span>
+              <span><img src="assets/icons/jupyter.svg" alt="">Jupyter</span>
+              <span><img src="assets/icons/latex.svg" alt="">LaTeX</span>
+            </div>
+          </div>
+          <div class="xp-skill-block">
+            <span class="xp-skill-label" data-en="Capabilities" data-zh="能力">Capabilities</span>
+            <div class="xp-tech capabilities">
+              <span data-en="Quantitative analysis" data-zh="量化分析">Quantitative analysis</span>
+              <span data-en="Computational modelling" data-zh="计算建模">Computational modelling</span>
+              <span data-en="Applied research" data-zh="应用研究">Applied research</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <button class="toolkit-trigger reveal" id="toolkitTrigger" type="button" aria-controls="toolkitDrawer" aria-expanded="false">
+        <span>
+          <small data-en="TOOLS & CAPABILITIES" data-zh="工具与技术能力">TOOLS &amp; CAPABILITIES</small>
+          <strong data-en="Open research toolkit" data-zh="打开研究工具栈">Open research toolkit</strong>
+          <small data-en="Python, Jupyter, pandas, NumPy and more" data-zh="Python、Jupyter、pandas、NumPy 等">Python, Jupyter, pandas, NumPy and more</small>
+        </span>
+        <span class="toolkit-trigger-icons" aria-hidden="true">
+          <img src="assets/icons/python.svg" alt="">
+          <img src="assets/icons/jupyter.svg" alt="">
+          <img src="assets/icons/pandas.svg" alt="">
+          <img src="assets/icons/numpy.svg" alt="">
+        </span>
+        <span class="toolkit-trigger-arrow" aria-hidden="true">→</span>
+      </button>
+    </section>
+
+    <section class="section" id="education">
+      <div class="section-head reveal">
+        <p class="section-label"><span>02 / EDUCATION</span>Academic foundation</p>
+        <div>
+          <h2 data-en="Education." data-zh="教育背景。">Education.</h2>
+          <p data-en="Formal training in mathematics, analytical reasoning and applied technical work." data-zh="数学、分析推理与应用技术训练。">Formal training in mathematics, analytical reasoning and applied technical work.</p>
+        </div>
+      </div>
+      <div class="education-grid">
+        <article class="edu-card reveal" style="--delay:.12s">
+          <div class="edu-logo"><img src="assets/schools/imperial-official-transparent.png" alt="Imperial College London logo" width="509" height="71"></div>
+          <div class="edu-body">
+            <h3>Imperial College London</h3>
+            <p class="edu-degree" data-en="MSc Security and Resilience" data-zh="安全与韧性硕士">MSc Security and Resilience</p>
+            <div class="edu-meta"><span>10/2022 — 06/2024</span><span>London, United Kingdom</span></div>
+            <dl class="edu-details">
+              <dt data-en="Research direction" data-zh="研究方向">Research direction</dt>
+              <dd data-en="Risk assessment · Cyber security · Systems resilience" data-zh="风险评估 · 网络安全 · 系统韧性">Risk assessment · Cyber security · Systems resilience</dd>
+            </dl>
+          </div>
+        </article>
+        <article class="edu-card reveal" style="--delay:.03s">
+          <div class="edu-logo"><img src="assets/schools/reading.svg" alt="University of Reading coat of arms" width="1685" height="2044"></div>
+          <div class="edu-body">
+            <h3>University of Reading</h3>
+            <p class="edu-degree" data-en="BSc Mathematics and Applied Mathematics" data-zh="数学与应用数学本科">BSc Mathematics and Applied Mathematics</p>
+            <div class="edu-meta"><span>09/2018 — 06/2022</span><span>Reading, United Kingdom</span></div>
+            <dl class="edu-details">
+              <dt data-en="Research direction" data-zh="研究方向">Research direction</dt>
+              <dd data-en="Probability · Mathematical statistics · Stochastic processes · Optimisation" data-zh="概率论 · 数理统计 · 随机过程 · 优化">Probability · Mathematical statistics · Stochastic processes · Optimisation</dd>
+            </dl>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="section-head reveal">
+        <p class="section-label"><span>03 / TECH SKILLS</span>Methods and tools</p>
+        <div>
+          <h2 data-en="Tech Stack." data-zh="技术栈。">Tech Stack.</h2>
+          <p data-en="Explore a 3D skill deck. Hover, click or press a letter key to inspect the method and its supporting evidence." data-zh="浏览 3D 技能键盘；悬停、点击或按字母键查看方法及对应证据。">Explore a 3D skill deck. Hover, click or press a letter key to inspect the method and its supporting evidence.</p>
+        </div>
+      </div>
+
+      <div class="skills-shell reveal">
+        <div class="skill-stage" id="skillStage">
+          <div class="skill-stage-head" id="skillStageHead">
+            <b>QUANT / DATA / AI</b>
+            <span class="ready-dot"><i></i><span data-en="Loading 3D keyboard" data-zh="3D 键盘加载中">Loading 3D keyboard</span></span>
+          </div>
+          <canvas id="skillCanvas" tabindex="0" aria-label="Interactive 3D quantitative skills keyboard"></canvas>
+          <div class="skill-stage-loading" id="skillStageLoading" data-en="Building 3D skill deck…" data-zh="正在构建 3D 技能键盘…">Building 3D skill deck…</div>
+          <div class="skills-grid skill-fallback" id="skillFallback" aria-label="Skill keyboard fallback">
+          <button class="skill-card" type="button" data-skill="factor" aria-pressed="true" style="--accent:var(--teal);--accent-soft:var(--teal-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 4-6"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="7" r="1"/></svg></span>
+            <strong data-en="Factor Research" data-zh="因子研究">Factor Research</strong><small>Quant research</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="validation" aria-pressed="false" style="--accent:var(--teal);--accent-soft:var(--teal-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 7.8 7.5 9.5 4.4-1.7 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span>
+            <strong data-en="Signal Validation" data-zh="信号验证">Signal Validation</strong><small>Out-of-sample</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="portfolio" aria-pressed="false" style="--accent:var(--teal);--accent-soft:var(--teal-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v9h9"/><path d="M20 12a8 8 0 1 1-8-9"/><path d="M12 12 5.4 16.8"/></svg></span>
+            <strong data-en="Portfolio Construction" data-zh="组合构建">Portfolio Construction</strong><small>Optimisation</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="backtesting" aria-pressed="false" style="--accent:var(--blue);--accent-soft:var(--blue-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/><path d="M4 4v4h4"/></svg></span>
+            <strong data-en="Backtesting & Costs" data-zh="回测与成本">Backtesting &amp; Costs</strong><small>Execution-aware</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="risk" aria-pressed="false" style="--accent:var(--blue);--accent-soft:var(--blue-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 17a8 8 0 0 1 16 0"/><path d="m12 17 3-5"/><path d="M5 20h14"/><circle cx="12" cy="17" r="1"/></svg></span>
+            <strong data-en="Risk & Attribution" data-zh="风险与归因">Risk &amp; Attribution</strong><small>Return decomposition</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="allocation" aria-pressed="false" style="--accent:var(--blue);--accent-soft:var(--blue-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 17 8 4 8-4"/></svg></span>
+            <strong>SAA / TAA</strong><small>Multi-asset</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="timeseries" aria-pressed="false" style="--accent:var(--violet);--accent-soft:var(--violet-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h3l2-5 4 10 3-7 2 2h4"/><path d="M3 19h18"/></svg></span>
+            <strong data-en="Time Series" data-zh="时间序列">Time Series</strong><small>Statistics</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="python" aria-pressed="false" style="--accent:#3776ab;--accent-soft:#e8f0f8">
+            <span class="skill-icon masked"><img src="assets/icons/python.svg" alt=""></span>
+            <strong>Python</strong><small>Research engineering</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="pandas" aria-pressed="false" style="--accent:#6d4aef;--accent-soft:#f0edff">
+            <span class="skill-icon masked"><img src="assets/icons/pandas.svg" alt=""></span>
+            <strong>pandas / NumPy</strong><small>Data & factor panels</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="pytorch" aria-pressed="false" style="--accent:#d5652a;--accent-soft:#fbede5">
+            <span class="skill-icon masked"><img src="assets/icons/pytorch.svg" alt=""></span>
+            <strong>PyTorch</strong><small>Sequence models</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="agents" aria-pressed="false" style="--accent:var(--violet);--accent-soft:var(--violet-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="m8 8.3 8 0M7.7 9.2l3 6.5M16.3 9.2l-3 6.5"/></svg></span>
+            <strong data-en="LLM Agents" data-zh="LLM Agent">LLM Agents</strong><small>Workflow orchestration</small><span class="skill-arrow">↗</span>
+          </button>
+          <button class="skill-card" type="button" data-skill="evaluation" aria-pressed="false" style="--accent:var(--amber);--accent-soft:var(--amber-soft)">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+            <strong data-en="Evaluation" data-zh="评测">Evaluation</strong><small>Model reliability</small><span class="skill-arrow">↗</span>
+          </button>
+          </div>
+          <div class="skill-stage-readout" aria-live="polite">
+            <div><small data-en="Selected key" data-zh="当前技能">Selected key</small><strong id="canvasSkillName">Factor Research</strong></div>
+            <span data-en="Hover · click · press Q–C" data-zh="悬停 · 点击 · 按 Q–C">Hover · click · press Q–C</span>
+          </div>
+        </div>
+
+        <aside class="skill-detail" aria-live="polite">
+          <div class="detail-meta"><span data-en="Selected capability" data-zh="当前能力">Selected capability</span><span id="skillCount">01 / 12</span></div>
+          <div class="selected-icon" id="selectedSkillIcon">
+            <span class="skill-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 4-6"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="7" r="1"/></svg></span>
+          </div>
+          <h3 id="skillTitle">Factor Research</h3>
+          <p id="skillCopy">Built diagnostics, cross-sectional validation and baseline tests before combining signals.</p>
+          <a class="evidence-link" id="skillProof" href="https://aayloo.github.io/notes/factor-screening/" target="_blank" rel="noreferrer"><span data-en="Open supporting evidence" data-zh="查看对应证据">Open supporting evidence</span> ↗</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="blog">
+      <div class="section-head reveal">
+        <p class="section-label"><span>03 / BLOG</span>Allocation research</p>
+        <div>
+          <h2 data-en="Allocation research." data-zh="配置研究。">Allocation research.</h2>
+          <p data-en="Selected notes on asset allocation, portfolio construction, risk and validation." data-zh="关于资产配置、组合构建、风险与验证的精选研究。">Selected notes on asset allocation, portfolio construction, risk and validation.</p>
+        </div>
+      </div>
+
+      <div class="blog-grid">
+        <a class="blog-card reveal" style="--delay:.02s" href="https://aayloo.github.io/notes/sixty-forty-variants/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">01</span><span class="blog-tag">Portfolio baseline</span></div>
+          <h3 data-en="The 60/40, tested: does the most famous allocation rule hold up?" data-zh="60/40 实测：最有名的配置规则真的成立吗？">The 60/40, tested: does the most famous allocation rule hold up?</h3>
+          <p data-en="A stronger Sharpe plateau sits below 60% equities, while the real vulnerability appears when stocks and bonds fall together." data-zh="夏普更高的区间其实低于 60% 股票；真正脆弱的是股债同时下跌。">A stronger Sharpe plateau sits below 60% equities, while the real vulnerability appears when stocks and bonds fall together.</p>
+          <span class="blog-arrow">↗</span>
+        </a>
+        <a class="blog-card reveal" style="--delay:.08s" href="https://aayloo.github.io/notes/liability-driven/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">02</span><span class="blog-tag">Liability-aware</span></div>
+          <h3 data-en="Liability-driven allocation: change the denominator and the ranking changes" data-zh="负债驱动配置：换一个分母，排序就变了">Liability-driven allocation: change the denominator and the ranking changes</h3>
+          <p data-en="Measuring risk against surplus instead of assets materially changes which portfolio looks appropriate." data-zh="把风险从资产端改到盈余端衡量，合适的组合排序会明显改变。">Measuring risk against surplus instead of assets materially changes which portfolio looks appropriate.</p>
+          <span class="blog-arrow">↗</span>
+        </a>
+        <a class="blog-card reveal" style="--delay:.14s" href="https://aayloo.github.io/notes/risk-parity/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">03</span><span class="blog-tag">Risk allocation</span></div>
+          <h3 data-en="Risk parity, tested: flatter risk does not automatically mean higher return" data-zh="风险平价实测：风险更平不等于收益更高">Risk parity, tested: flatter risk does not automatically mean higher return</h3>
+          <p data-en="The mechanism works, but the realised weights stay close to a naive allocation and the return advantage is conditional." data-zh="机制成立，但实际权重接近朴素配置，收益优势也是有条件的。">The mechanism works, but the realised weights stay close to a naive allocation and the return advantage is conditional.</p>
+          <span class="blog-arrow">↗</span>
+        </a>
+        <a class="blog-card reveal" style="--delay:.20s" href="https://aayloo.github.io/notes/one-over-n/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">04</span><span class="blog-tag">Validation</span></div>
+          <h3 data-en="1/N versus the optimiser: when in-sample precision becomes out-of-sample noise" data-zh="1/N 对比优化器：样本内精度如何变成样本外噪声">1/N versus the optimiser: when in-sample precision becomes out-of-sample noise</h3>
+          <p data-en="A 1.74 in-sample Sharpe delivered 0.54 out of sample. Most of the gap came from estimation assumptions, not optimisation code." data-zh="样本内 1.74 的夏普，样本外只有 0.54；差距主要来自估计假设，而不是优化代码。">A 1.74 in-sample Sharpe delivered 0.54 out of sample. Most of the gap came from estimation assumptions, not optimisation code.</p>
+          <span class="blog-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 Aylon · Hong Kong</span>
+      <span class="footer-links">
+        <a href="https://github.com/Aayloo" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://aayloo.github.io/notes/" target="_blank" rel="noreferrer">Research notes</a>
+      </span>
+    </footer>
+  </main>
+
+  <div class="pet-widget" id="petWidget">
+    <div class="pet-bubble" id="petBubble" role="status" aria-live="polite">
+      <span data-en="Hi — click me while you explore." data-zh="嗨，探索时可以点我。">Hi — click me while you explore.</span>
+    </div>
+    <button class="pet-button" id="petButton" type="button" aria-label="Interact with the Naifrog pet">
+      <img id="petImage" src="assets/pet/idle.png" alt="Animated Naifrog research pet">
+    </button>
+  </div>
+
+  <script>
+    const skillData = {
+      factor: {
+        en: ["Factor Research", "Built diagnostics, cross-sectional validation and baseline tests before combining signals."],
+        zh: ["因子研究", "在合成信号之前，先完成诊断、横截面验证与基线比较。"]
+      },
+      validation: {
+        en: ["Signal Validation", "Walk-forward tests, out-of-sample checks and explicit retention of null results."],
+        zh: ["信号验证", "使用 walk-forward、样本外检验，并保留不成立的结论。"]
+      },
+      portfolio: {
+        en: ["Portfolio Construction", "Weight limits, risk budgets and constrained allocation translated into testable portfolios."],
+        zh: ["组合构建", "把权重上限、风险预算与约束转化为可检验的组合。"]
+      },
+      backtesting: {
+        en: ["Backtesting & Costs", "Cost-aware tests with turnover, drift and implementation assumptions made visible."],
+        zh: ["回测与成本", "把换手、权重漂移与实施假设显式纳入成本后回测。"]
+      },
+      risk: {
+        en: ["Risk & Attribution", "Decompose return and risk against a clear baseline, including where the result fails."],
+        zh: ["风险与归因", "相对清晰基准拆解收益与风险，并记录结论失效的情形。"]
+      },
+      allocation: {
+        en: ["SAA / TAA", "Multi-asset allocation built around regime, risk contribution and portfolio constraints."],
+        zh: ["SAA / TAA", "围绕市场状态、风险贡献与组合约束研究多资产配置。"]
+      },
+      timeseries: {
+        en: ["Time Series", "Stationarity, estimation and walk-forward design for financial time-series evidence."],
+        zh: ["时间序列", "面向金融时间序列的平稳性、估计与 walk-forward 验证设计。"]
+      },
+      python: {
+        en: ["Python", "Reproducible research pipelines with clear data contracts and runnable project structure."],
+        zh: ["Python", "构建可复现研究流水线，并明确数据契约与项目结构。"]
+      },
+      pandas: {
+        en: ["pandas / NumPy", "Data alignment, cleaning and cross-sectional factor panels for systematic research."],
+        zh: ["pandas / NumPy", "处理数据对齐、清洗与系统化研究中的横截面因子面板。"]
+      },
+      pytorch: {
+        en: ["PyTorch", "Sequence-model experiments with baseline comparison and disciplined validation."],
+        zh: ["PyTorch", "进行时序模型实验，并进行基线比较与严谨验证。"]
+      },
+      agents: {
+        en: ["LLM Agents", "Typed outputs, tool use and auditable orchestration designed for research workflows."],
+        zh: ["LLM Agent", "面向研究工作流的结构化输出、工具调用与可审计编排。"]
+      },
+      evaluation: {
+        en: ["Evaluation", "Task-level metrics, regression checks and evaluation design for AI workflows."],
+        zh: ["评测", "为 AI 工作流设计任务级指标、回归检查与评测方案。"]
+      }
+    };
+
+    const evidence = {
+      factor: "https://aayloo.github.io/notes/factor-screening/",
+      validation: "https://aayloo.github.io/notes/one-over-n/",
+      portfolio: "https://aayloo.github.io/notes/cost-of-constraints/",
+      backtesting: "https://aayloo.github.io/notes/rebalancing/",
+      risk: "https://aayloo.github.io/notes/risk-parity/",
+      allocation: "https://aayloo.github.io/notes/all-weather/",
+      timeseries: "https://aayloo.github.io/notes/factor-screening/",
+      python: "https://github.com/Aayloo",
+      pandas: "https://aayloo.github.io/notes/factor-screening/",
+      pytorch: "https://aayloo.github.io/notes/one-over-n/",
+      agents: "https://github.com/Aayloo/insurance-am-agent",
+      evaluation: "https://github.com/Aayloo/insurance-am-agent"
+    };
+
+    const order = Object.keys(skillData);
+    let currentLang = "en";
+    let selectedSkill = "factor";
+
+    function readLanguage() {
+      try { return localStorage.getItem("profile-language") || "en"; }
+      catch { return "en"; }
+    }
+
+    function storeLanguage(lang) {
+      try { localStorage.setItem("profile-language", lang); }
+      catch {}
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+      document.documentElement.dataset.lang = lang;
+      document.querySelectorAll("[data-en][data-zh]").forEach(element => {
+        element.innerHTML = element.dataset[lang];
+      });
+      document.querySelectorAll(".locale button").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.lang === lang));
+      });
+      storeLanguage(lang);
+      updateSkill(selectedSkill);
+      window.update3DKeyboardLanguage?.();
+    }
+
+    function updateSkill(key) {
+      selectedSkill = key;
+      const data = skillData[key][currentLang];
+      document.querySelectorAll(".skill-card").forEach(card => {
+        card.setAttribute("aria-pressed", String(card.dataset.skill === key));
+      });
+      const selectedCard = document.querySelector(`.skill-card[data-skill="${key}"]`);
+      const selectedIcon = selectedCard?.querySelector(".skill-icon");
+      if (selectedIcon) document.getElementById("selectedSkillIcon").innerHTML = selectedIcon.outerHTML;
+      document.getElementById("skillTitle").textContent = data[0];
+      document.getElementById("skillCopy").textContent = data[1];
+      document.getElementById("skillProof").href = evidence[key];
+      document.getElementById("skillCount").textContent = `${String(order.indexOf(key) + 1).padStart(2, "0")} / 12`;
+      document.getElementById("canvasSkillName").textContent = data[0];
+      window.update3DSelection?.(key);
+    }
+
+    document.querySelectorAll(".locale button").forEach(button => {
+      button.addEventListener("click", () => applyLanguage(button.dataset.lang));
+    });
+
+    document.querySelectorAll(".skill-card").forEach(card => {
+      card.addEventListener("click", () => updateSkill(card.dataset.skill));
+      card.addEventListener("pointermove", event => {
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        card.style.setProperty("--mx", `${x}px`);
+        card.style.setProperty("--my", `${y}px`);
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches && matchMedia("(hover: hover)").matches) {
+          const rx = ((y / rect.height) - .5) * -3.2;
+          const ry = ((x / rect.width) - .5) * 3.2;
+          card.style.transform = `perspective(650px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+        }
+      });
+      card.addEventListener("pointerleave", () => { card.style.transform = ""; });
+    });
+
+    const toolkitTrigger = document.getElementById("toolkitTrigger");
+    const toolkitDrawer = document.getElementById("toolkitDrawer");
+    const toolkitBackdrop = document.getElementById("toolkitBackdrop");
+    const toolkitClose = document.getElementById("toolkitClose");
+    let toolkitReturnFocus = null;
+
+    function openToolkit() {
+      toolkitReturnFocus = document.activeElement;
+      document.body.classList.add("toolkit-open");
+      toolkitTrigger.setAttribute("aria-expanded", "true");
+      toolkitDrawer.setAttribute("aria-hidden", "false");
+      toolkitDrawer.style.visibility = "visible";
+      toolkitDrawer.style.transform = "translateX(0)";
+      toolkitBackdrop.style.visibility = "visible";
+      toolkitBackdrop.style.opacity = "1";
+      toolkitClose.focus();
+    }
+
+    function closeToolkit() {
+      document.body.classList.remove("toolkit-open");
+      toolkitTrigger.setAttribute("aria-expanded", "false");
+      toolkitDrawer.setAttribute("aria-hidden", "true");
+      toolkitDrawer.style.transform = "translateX(104%)";
+      toolkitDrawer.style.visibility = "hidden";
+      toolkitBackdrop.style.opacity = "0";
+      toolkitBackdrop.style.visibility = "hidden";
+      if (toolkitReturnFocus instanceof HTMLElement) toolkitReturnFocus.focus();
+    }
+
+    toolkitTrigger.addEventListener("click", openToolkit);
+    toolkitClose.addEventListener("click", closeToolkit);
+    toolkitBackdrop.addEventListener("click", closeToolkit);
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape" && document.body.classList.contains("toolkit-open")) closeToolkit();
+    });
+    if (new URLSearchParams(location.search).has("toolkit")) {
+      document.body.classList.add("motion-off");
+      openToolkit();
+    }
+
+    const petWidget = document.getElementById("petWidget");
+    const petButton = document.getElementById("petButton");
+    const petImage = document.getElementById("petImage");
+    const petBubble = document.getElementById("petBubble");
+    const petMessages = {
+      en: [
+        "Click a toolkit tile to see the tools behind the research.",
+        "The allocation notes are linked in the Blog section.",
+        "Thanks for stopping by — scroll slowly, the details reveal themselves."
+      ],
+      zh: [
+        "点击右侧的研究工具栈，查看研究背后的工具。",
+        "配置研究文章都在 Blog 区域。",
+        "谢谢来访，慢慢向下滚动，内容会逐步出现。"
+      ]
+    };
+    let petMessageIndex = 0;
+    let petStateTimer = null;
+    let petBubbleTimer = null;
+
+    function setPetState(state, fallbackDelay = 0) {
+      clearTimeout(petStateTimer);
+      petImage.src = `assets/pet/${state}.png`;
+      if (fallbackDelay) {
+        petStateTimer = setTimeout(() => { petImage.src = "assets/pet/idle.png"; }, fallbackDelay);
+      }
+    }
+
+    petButton.addEventListener("pointerenter", () => setPetState("waving", 1300));
+    petButton.addEventListener("pointerleave", () => {
+      clearTimeout(petStateTimer);
+      petStateTimer = setTimeout(() => { petImage.src = "assets/pet/idle.png"; }, 450);
+    });
+    petButton.addEventListener("click", () => {
+      setPetState("jumping", 1400);
+      const messages = petMessages[currentLang] || petMessages.en;
+      petBubble.querySelector("span").textContent = messages[petMessageIndex % messages.length];
+      petMessageIndex += 1;
+      petWidget.classList.add("talking");
+      clearTimeout(petBubbleTimer);
+      petBubbleTimer = setTimeout(() => petWidget.classList.remove("talking"), 4200);
+    });
+
+    const chart = document.querySelector(".signal-chart");
+    const signalPath = document.getElementById("signalPath");
+    const chartCrosshair = document.getElementById("chartCrosshair");
+    const chartDot = document.getElementById("chartDot");
+    const chartReadout = document.getElementById("chartReadout");
+
+    chart.addEventListener("pointermove", event => {
+      const rect = chart.getBoundingClientRect();
+      const fraction = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
+      const point = signalPath.getPointAtLength(signalPath.getTotalLength() * fraction);
+      chartCrosshair.style.left = `${fraction * 100}%`;
+      chartDot.style.left = `${fraction * 100}%`;
+      chartDot.style.top = `${point.y / 150 * 100}%`;
+      chartReadout.textContent = `PIPELINE ${String(Math.round(fraction * 100)).padStart(2, "0")}%`;
+    }, { passive: true });
+
+    chart.addEventListener("pointerdown", () => {
+      chartDot.classList.remove("pulse");
+      void chartDot.offsetWidth;
+      chartDot.classList.add("pulse");
+    });
+
+    const shortcuts = { KeyQ: "factor", KeyW: "validation", KeyE: "portfolio", KeyR: "backtesting", KeyT: "risk", KeyY: "allocation", KeyA: "timeseries", KeyS: "python", KeyD: "pandas", KeyZ: "pytorch", KeyX: "agents", KeyC: "evaluation" };
+    const capLabels = {
+      factor: { en: "FACTOR", zh: "因子研究" },
+      validation: { en: "VALIDATE", zh: "信号验证" },
+      portfolio: { en: "PORTFOLIO", zh: "组合构建" },
+      backtesting: { en: "BACKTEST", zh: "回测成本" },
+      risk: { en: "RISK", zh: "风险归因" },
+      allocation: { en: "SAA / TAA", zh: "大类配置" },
+      timeseries: { en: "TIME SERIES", zh: "时间序列" },
+      python: { en: "PYTHON", zh: "Python" },
+      pandas: { en: "PANDAS", zh: "数据工具" },
+      pytorch: { en: "PYTORCH", zh: "深度学习" },
+      agents: { en: "AGENTS", zh: "Agent" },
+      evaluation: { en: "EVALUATE", zh: "模型评测" }
+    };
+    const capColors = ["#0e9f87", "#20ad96", "#2f6fe4", "#3e7eea", "#5475df", "#6d4aef", "#825eea", "#3776ab", "#8061ef", "#d5652a", "#7454e8", "#d9821a"];
+
+    function initSkillKeyboard() {
+      const canvas = document.getElementById("skillCanvas");
+      const stage = document.getElementById("skillStage");
+      const loading = document.getElementById("skillStageLoading");
+      const fallback = document.getElementById("skillFallback");
+      const status = document.getElementById("skillStageHead");
+      if (!canvas || !window.THREE || !THREE.GLTFLoader || !window.KEYCAPS_GLB_BASE64) {
+        showFallback();
+        return;
+      }
+
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+      } catch {
+        showFallback();
+        return;
+      }
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.65));
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.setClearColor(0x000000, 0);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-5, 5, 5, -5, .1, 100);
+      camera.position.set(-9, 9.6, 9);
+      camera.lookAt(0, .58, 0);
+      scene.add(new THREE.HemisphereLight(0xf7fffd, 0x101720, 1.35));
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 2.15);
+      keyLight.position.set(-6, 10, -4);
+      keyLight.castShadow = true;
+      keyLight.shadow.mapSize.set(1024, 1024);
+      scene.add(keyLight);
+
+      const fill = new THREE.PointLight(0x0e9f87, 1.15, 22);
+      fill.position.set(7, 4, 8);
+      scene.add(fill);
+
+      const board = new THREE.Group();
+      scene.add(board);
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(18, 18), new THREE.ShadowMaterial({ color: 0x050c12, opacity: .3 }));
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -.04;
+      floor.receiveShadow = true;
+      board.add(floor);
+
+      const entries = [];
+      const targets = [];
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2(9, 9);
+      const sound = {
+        press: new Audio("assets/sounds/press.mp3"),
+        release: new Audio("assets/sounds/release.mp3")
+      };
+      let ready = false;
+      let hovered = null;
+      let pressed = null;
+      let visible = true;
+
+      function playSound(kind) {
+        try {
+          const clip = sound[kind].cloneNode();
+          clip.volume = .16;
+          clip.play().catch(() => {});
+        } catch {}
+      }
+
+      function drawCap(entry) {
+        const label = capLabels[entry.key][currentLang] || capLabels[entry.key].en;
+        const ctx = entry.context;
+        ctx.clearRect(0, 0, 512, 256);
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgba(255,255,255,.95)";
+        ctx.font = label.length > 9 ? '700 38px "Montserrat", "Segoe UI", sans-serif' : '750 47px "Montserrat", "Segoe UI", sans-serif';
+        ctx.fillText(label, 256, 134, 430);
+        ctx.textAlign = "left";
+        ctx.fillStyle = "rgba(255,255,255,.48)";
+        ctx.font = '650 21px "Cascadia Mono", Consolas, monospace';
+        ctx.fillText(Object.keys(shortcuts)[entry.index].replace("Key", ""), 28, 39);
+        entry.texture.needsUpdate = true;
+      }
+
+      function makeCap(key, index, geometry) {
+        const material = new THREE.MeshStandardMaterial({
+          color: new THREE.Color(capColors[index]),
+          roughness: .35,
+          metalness: .04,
+          emissive: new THREE.Color(capColors[index]),
+          emissiveIntensity: 0
+        });
+        const group = new THREE.Group();
+        const baseY = 1.29117;
+        group.position.set((index % 6 - 2.5) * 1.04468, baseY, (Math.floor(index / 6) - .5) * 1.04468);
+        const cap = new THREE.Mesh(geometry, material);
+        cap.castShadow = true;
+        cap.receiveShadow = true;
+        cap.userData.skillKey = key;
+        group.add(cap);
+
+        const surface = document.createElement("canvas");
+        surface.width = 512;
+        surface.height = 256;
+        const texture = new THREE.CanvasTexture(surface);
+        texture.encoding = THREE.sRGBEncoding;
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        const entry = { key, index, group, material, texture, context: surface.getContext("2d"), baseY };
+        drawCap(entry);
+
+        const labelMesh = new THREE.Mesh(
+          new THREE.PlaneGeometry(.82, .41),
+          new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, side: THREE.DoubleSide })
+        );
+        labelMesh.rotation.x = -Math.PI / 2;
+        labelMesh.position.y = .136;
+        labelMesh.renderOrder = 4;
+        group.add(labelMesh);
+        board.add(group);
+        entries.push(entry);
+        targets.push(cap);
+      }
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        const aspect = rect.width / rect.height;
+        const view = rect.width < 600 ? 4.75 : 4.15;
+        camera.left = -view * aspect;
+        camera.right = view * aspect;
+        camera.top = view;
+        camera.bottom = -view;
+        camera.updateProjectionMatrix();
+        renderer.setSize(rect.width, rect.height, false);
+      }
+
+      function showFallback() {
+        loading.style.display = "none";
+        fallback.classList.add("show");
+        canvas.style.display = "none";
+        status.classList.remove("ready");
+        status.querySelector(".ready-dot span").textContent = currentLang === "zh" ? "使用平面技能卡" : "Using fallback grid";
+      }
+
+      function pick(event) {
+        if (!ready) return null;
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+        const hit = raycaster.intersectObjects(targets, false)[0];
+        return hit?.object.userData.skillKey || null;
+      }
+
+      canvas.addEventListener("pointermove", event => {
+        hovered = pick(event);
+        canvas.style.cursor = hovered ? "pointer" : "grab";
+        if (hovered) document.getElementById("canvasSkillName").textContent = (skillData[hovered][currentLang] || skillData[hovered].en)[0];
+      });
+
+      canvas.addEventListener("pointerleave", () => {
+        hovered = null;
+        pressed = null;
+      });
+
+      canvas.addEventListener("pointerdown", event => {
+        const key = pick(event);
+        if (!key) return;
+        event.preventDefault();
+        pressed = key;
+        hovered = key;
+        updateSkill(key);
+        playSound("press");
+      });
+
+      const release = () => {
+        if (pressed) playSound("release");
+        pressed = null;
+      };
+      canvas.addEventListener("pointerup", release);
+      canvas.addEventListener("pointercancel", release);
+
+      window.addEventListener("keydown", event => {
+        if (event.defaultPrevented || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+        if (event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable='true']")) return;
+        const section = document.getElementById("skills").getBoundingClientRect();
+        if (section.bottom < 0 || section.top > innerHeight) return;
+        const key = shortcuts[event.code];
+        if (!key) return;
+        event.preventDefault();
+        pressed = key;
+        updateSkill(key);
+        playSound("press");
+      });
+
+      window.addEventListener("keyup", event => {
+        if (pressed && shortcuts[event.code] === pressed) release();
+      });
+
+      window.update3DSelection = key => {
+        if (!ready) return;
+        for (const entry of entries) {
+          if (entry.key === key) entry.material.emissiveIntensity = Math.max(.24, entry.material.emissiveIntensity);
+        }
+      };
+
+      window.update3DKeyboardLanguage = () => {
+        entries.forEach(drawCap);
+        if (ready) status.querySelector(".ready-dot span").textContent = currentLang === "zh" ? "3D 键盘已就绪" : "3D keyboard ready";
+      };
+
+      function reveal() {
+        ready = true;
+        loading.style.display = "none";
+        status.classList.add("ready");
+        status.querySelector(".ready-dot span").textContent = currentLang === "zh" ? "3D 键盘已就绪" : "3D keyboard ready";
+        updateSkill(selectedSkill);
+        entries.forEach((entry, index) => {
+          entry.group.position.y = entry.baseY + 1.05;
+          entry.group.visible = false;
+          setTimeout(() => { entry.group.visible = true; }, 120 + index * 55);
+        });
+      }
+
+      function fail(error) {
+        console.warn("3D skill keyboard unavailable", error);
+        showFallback();
+      }
+
+      function animate(time) {
+        if (visible && ready) {
+          for (const entry of entries) {
+            const active = entry.key === pressed;
+            const hover = entry.key === hovered;
+            const selected = entry.key === selectedSkill;
+            const target = entry.baseY + (active ? -.43 : hover ? .13 : selected ? .025 : 0);
+            entry.group.position.y += (target - entry.group.position.y) * .2;
+            const glow = active ? .88 : hover ? .55 : selected ? .24 : 0;
+            entry.material.emissiveIntensity += (glow - entry.material.emissiveIntensity) * .18;
+          }
+          if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            board.rotation.y = Math.sin(time * .00035) * .03;
+            board.rotation.x = Math.sin(time * .00028) * .014;
+          }
+        }
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+
+      new ResizeObserver(resize).observe(canvas);
+      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { rootMargin: "180px" }).observe(canvas);
+      resize();
+      requestAnimationFrame(animate);
+
+      try {
+        const binary = atob(window.KEYCAPS_GLB_BASE64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        const loader = new THREE.GLTFLoader();
+        loader.parse(bytes.buffer, "", gltf => {
+          gltf.scene.updateMatrixWorld(true);
+          let capSource = null;
+          const caseSources = [];
+          gltf.scene.traverse(object => {
+            if (!object.isMesh) return;
+            const name = (object.name || object.parent?.name || "").toLowerCase();
+            if (name.includes("keycap")) capSource = object;
+            else if (name.includes("case")) caseSources.push(object);
+          });
+          if (!capSource || !caseSources.length) return fail(new Error("Unknown keyboard model"));
+
+          const caseMaterial = new THREE.MeshStandardMaterial({ color: 0x17212c, roughness: .62, metalness: .08 });
+          caseSources.forEach(source => {
+            const mesh = new THREE.Mesh(source.geometry, caseMaterial);
+            mesh.applyMatrix4(source.matrixWorld);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            board.add(mesh);
+          });
+          order.forEach((key, index) => makeCap(key, index, capSource.geometry));
+          reveal();
+        }, fail);
+      } catch (error) {
+        fail(error);
+      }
+    }
+
+    const aura = document.querySelector(".cursor-aura");
+    let pointerX = -400;
+    let pointerY = -400;
+    let auraX = -400;
+    let auraY = -400;
+    let auraRunning = false;
+
+    function animateAura() {
+      auraX += (pointerX - auraX) * .1;
+      auraY += (pointerY - auraY) * .1;
+      aura.style.transform = `translate3d(${auraX - 130}px, ${auraY - 130}px, 0)`;
+      if (Math.abs(pointerX - auraX) + Math.abs(pointerY - auraY) > .25) {
+        requestAnimationFrame(animateAura);
+      } else {
+        auraRunning = false;
+      }
+    }
+
+    window.addEventListener("pointermove", event => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      aura.style.opacity = "1";
+      if (!auraRunning) {
+        auraRunning = true;
+        requestAnimationFrame(animateAura);
+      }
+    }, { passive: true });
+
+    window.addEventListener("pointerleave", () => { aura.style.opacity = "0"; });
+
+    window.addEventListener("pointerdown", event => {
+      const ripple = document.createElement("span");
+      ripple.className = "click-ripple";
+      ripple.style.left = `${event.clientX}px`;
+      ripple.style.top = `${event.clientY}px`;
+      document.body.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+    }, { passive: true });
+
+    const progress = document.querySelector(".progress");
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.setProperty("--progress", `${max > 0 ? scrollY / max * 100 : 0}%`);
+    }
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("on");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12 });
+      document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+
+      const links = [...document.querySelectorAll(".nav-links a, .profile-nav a")];
+      const navObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            links.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`));
+          }
+        });
+      }, { rootMargin: "-35% 0px -56%" });
+      document.querySelectorAll("main section[id]").forEach(section => navObserver.observe(section));
+    } else {
+      document.querySelectorAll(".reveal").forEach(element => element.classList.add("on"));
+    }
+
+    applyLanguage(["en", "zh"].includes(readLanguage()) ? readLanguage() : "en");
+    if (new URLSearchParams(location.search).has("preview")) {
+      document.querySelectorAll(".reveal").forEach(element => element.classList.add("on"));
+    }
+  </script>
+</body>
+</html>
