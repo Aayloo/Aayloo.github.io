@@ -1,6 +1,6 @@
 # Third-party assets
 
-- Sora and IBM Plex Sans fonts: Google Fonts — SIL Open Font License 1.1.
+- Instrument Serif, DM Sans, Noto Serif SC and Noto Sans SC fonts: Google Fonts — SIL Open Font License 1.1.
 - Python, Jupyter, pandas, NumPy, scikit-learn, PyTorch, Git and LaTeX SVG marks: https://github.com/simple-icons/simple-icons — project assets under CC0; trademarks belong to their respective owners.
 - University of Reading arms: Wikimedia Commons, `University of Reading arms.svg`; wordmark reference from https://www.reading.ac.uk/
 - Imperial College London logo: https://www.imperial.ac.uk/

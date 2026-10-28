@@ -3349,6 +3349,146 @@
       }
       .blog-card.featured h3 { font-size: 25px; }
     }
+
+    /* Editorial typography and numbered interactions removed */
+    @font-face {
+      font-family: "Instrument Serif";
+      src: url("assets/fonts/instrument-serif-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Instrument Serif";
+      src: url("assets/fonts/instrument-serif-italic-400.ttf") format("truetype");
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "DM Sans";
+      src: url("assets/fonts/dm-sans-400.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "DM Sans";
+      src: url("assets/fonts/dm-sans-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "DM Sans";
+      src: url("assets/fonts/dm-sans-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Noto Serif SC";
+      src: url("assets/fonts/noto-serif-sc-500.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Noto Serif SC";
+      src: url("assets/fonts/noto-serif-sc-600.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    body {
+      font-family: "DM Sans", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    h1, h2, h3, .blog-card h3 {
+      font-family: "Instrument Serif", "Noto Serif SC", Georgia, serif;
+      font-weight: 400;
+    }
+
+    .brand, .button, .nav-links a, .profile-contact a, .xp-card, .edu-card,
+    .blog-card p, .toolkit-trigger, .toolkit-drawer {
+      font-family: "DM Sans", "Noto Sans SC", "Microsoft YaHei UI", sans-serif;
+    }
+
+    .hero h1 {
+      max-width: 360px;
+      font-size: clamp(54px, 5.4vw, 72px);
+      font-weight: 400;
+      line-height: .98;
+      letter-spacing: -.035em;
+    }
+
+    .hero-role {
+      display: grid;
+      gap: 1px;
+      margin-top: 25px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .hero-role .role-text { white-space: nowrap; }
+
+    .profile-nav,
+    .section-label { display: none !important; }
+
+    .right-intro {
+      font-family: "DM Sans", "Noto Sans SC", sans-serif;
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 500;
+      line-height: 1.48;
+      letter-spacing: -.034em;
+    }
+
+    .section-head {
+      margin-bottom: 31px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(42px, 4.5vw, 60px);
+      font-weight: 400;
+      line-height: 1.04;
+      letter-spacing: -.03em;
+    }
+
+    .section-head p {
+      max-width: 660px;
+      margin-top: 11px;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .xp-card h3,
+    .edu-card h3 {
+      font-family: "DM Sans", "Noto Sans SC", sans-serif;
+      font-weight: 600;
+      letter-spacing: -.025em;
+    }
+
+    .blog-card h3 {
+      font-weight: 400;
+      letter-spacing: -.02em;
+    }
+
+    .blog-card.featured h3 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.12;
+    }
+
+    html[data-lang="zh"] .hero h1,
+    html[data-lang="zh"] .section-head h2,
+    html[data-lang="zh"] .blog-card h3 {
+      font-weight: 500;
+      letter-spacing: -.015em;
+    }
   </style>
 </head>
 <body>
