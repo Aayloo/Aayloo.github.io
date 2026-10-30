@@ -98,7 +98,7 @@
       "updated": "2026-10-30",
       "version": "v1.0",
       "minutes": 14,
-      "figures": 5,
+      "figures": 6,
       "summary_zh": "一个公开多资产影子组合的完整研究案例：8 个 ETF、221 个月、月度再平衡和 10 bps 换手成本。L1 TAA 年化 5.20%，同期 60/40 为 8.43%——基准赢了；但冻结政策、风险贡献、收益归因和负结果留痕，构成一套可复核的投资流程。三只权益占资金 40%、贡献约 61% 的模型风险。",
       "summary_en": "A public multi-asset shadow portfolio: eight ETFs, 221 months, monthly rebalancing and 10 bps turnover costs. L1 TAA earned 5.20% a year against 8.43% for a 60/40 — the benchmark won. The durable output is the auditable process: a frozen policy, risk contribution, return attribution and retained negative results. Equities hold 40% of capital but drive roughly 61% of model risk.",
       "path": "l1-shadow-portfolio/",

@@ -177,7 +177,13 @@
         </table>
       </div>
       <div class="exhibit">
-        <div class="ex-label"><span class="zh">图 2 · 回撤路径</span><span class="en">Figure 2 · drawdown path</span></div>
+        <div class="ex-label"><span class="zh">图 2 · 全样本风险与收益定位</span><span class="en">Figure 2 · full-sample risk and return</span></div>
+        <img src="../assets/figs/l1-risk-return.png" alt="Annualised return and volatility for L1 SAA, L1 TAA, 60/40 and equal weight">
+        <p class="ex-note"><span class="zh">这张图把上表压缩成一个直观判断：60/40 位于更高的收益位置，但不是最低波动；L1 TAA 在最左侧，以更低风险换取更低收益。三条组合点彼此接近也提醒我们，样本结果不足以证明长期优势，更不能把一次回测当作 alpha。</span><span class="en">The chart compresses the table into one visual judgement: the 60/40 sits higher on return but is not the lowest-volatility portfolio; L1 TAA sits furthest left, trading lower risk for lower return. The proximity of three portfolios is also a warning: one sample does not establish a durable advantage, let alone alpha.</span></p>
+        <p class="ex-src"><span class="zh">来源：L1 项目公开结果；年化收益和波动均由同一组月度净收益计算。</span><span class="en">Source: public L1 results; CAGR and volatility are calculated from the same monthly net-return series.</span></p>
+      </div>
+      <div class="exhibit">
+        <div class="ex-label"><span class="zh">图 3 · 回撤路径</span><span class="en">Figure 3 · drawdown path</span></div>
         <img src="../assets/figs/l1-drawdown.png" alt="Drawdown paths for the L1 portfolios and benchmarks">
         <p class="ex-note"><span class="zh">L1 TAA 的最大回撤为 −23.32%，略浅于 60/40 的 −25.56%。这不是充分证据说明趋势规则更安全；它只是这段样本的一个结果，且两个组合的回撤窗口并不完全由同一个风险源决定。</span><span class="en">L1 TAA's maximum drawdown is −23.32%, modestly shallower than −25.56% for the 60/40. This is not sufficient evidence that the trend rule is safer; it is one result in one sample, and the two portfolios are not exposed to exactly the same risk drivers.</span></p>
         <p class="ex-src"><span class="zh">来源：L1 项目公开结果；回撤按月末净值计算。</span><span class="en">Source: public L1 results; drawdowns calculated from month-end NAV.</span></p>
@@ -186,7 +192,7 @@
       <h2 id="s4"><span class="num">04</span><span class="zh">当前配置</span><span class="en">Current allocation</span></h2>
       <p><span class="zh">截至 2026-10-30，三条权益趋势信号全部为正：SPY 14.65%、VEA 14.82%、EEM 16.19%。所以本月没有触发权益减仓，实际权重与政策权重非常接近；差异主要来自价格漂移和最近一次再平衡。</span><span class="en">As of 30 October 2026, all three equity trend signals are positive: SPY 14.65%, VEA 14.82% and EEM 16.19%. No equity reduction is active, so live paper weights remain close to policy. Differences come mainly from price drift and the latest rebalance.</span></p>
       <div class="exhibit">
-        <div class="ex-label"><span class="zh">图 3 · 政策权重与当期权重</span><span class="en">Figure 3 · policy and current weights</span></div>
+        <div class="ex-label"><span class="zh">图 4 · 政策权重与当期权重</span><span class="en">Figure 4 · policy and current weights</span></div>
         <img src="../assets/figs/l1-allocation.png" alt="Policy and current allocation of the eight asset sleeves">
         <p class="ex-note"><span class="zh">当前 SPY 20.11%、VEA 9.95%、EEM 9.36%、IEF 20.43%、LQD 15.31%、GLD 9.64%、DBC 5.20%、BIL 10.00%。列表本身就是决策留痕：同一个版本下，任何权重变化都应能追溯到规则或价格漂移。</span><span class="en">Current weights are SPY 20.11%, VEA 9.95%, EEM 9.36%, IEF 20.43%, LQD 15.31%, GLD 9.64%, DBC 5.20% and BIL 10.00%. The list is itself a decision record: within one policy version, every weight change should trace back to a rule or to price drift.</span></p>
         <p class="ex-src"><span class="zh">来源：L1 项目 <code>latest_weights.csv</code>；月末复核快照。</span><span class="en">Source: L1 <code>latest_weights.csv</code>; month-end review snapshot.</span></p>
@@ -195,7 +201,7 @@
       <h2 id="s5"><span class="num">05</span><span class="zh">风险贡献</span><span class="en">Risk contribution</span></h2>
       <p><span class="zh">只看资金权重会漏掉最重要的信息。三类权益占资金 40%，却贡献约 61% 的模型方差。SPY 一个资产就贡献 27.46%，超过其 20% 的资金权重；IEF 和 LQD 各约 13%，黄金约 13.90%。DBC 的风险贡献为 −1.07%，说明它与组合其余部分存在分散效应，但这不等于它一定改善收益。</span><span class="en">Capital weights miss the most important information. Equities hold 40% of capital but contribute about 61% of model variance. SPY alone contributes 27.46%, above its 20% capital weight; IEF and LQD each contribute roughly 13%, and gold 13.90%. DBC's risk contribution is −1.07%, evidence of a diversification effect — not proof that it improves return.</span></p>
       <div class="exhibit">
-        <div class="ex-label"><span class="zh">图 4 · 风险贡献占比</span><span class="en">Figure 4 · share of model risk</span></div>
+        <div class="ex-label"><span class="zh">图 5 · 风险贡献占比</span><span class="en">Figure 5 · share of model risk</span></div>
         <img src="../assets/figs/l1-risk-contribution.png" alt="Model risk contribution by asset sleeve">
         <p class="ex-note"><span class="zh">风险归因的作用不是让配置“看起来更稳”，而是回答：如果模型波动率上升，究竟是哪一条资产腿在推动？在这个组合里，答案首先来自权益。</span><span class="en">The purpose of risk attribution is not to make an allocation look safer. It answers a concrete question: when model volatility rises, which sleeve is driving it? Here the first answer is equity.</span></p>
         <p class="ex-src"><span class="zh">来源：L1 项目公开结果；基于最近 36 个月协方差矩阵与当期权重。</span><span class="en">Source: public L1 results; based on the latest 36-month covariance matrix and current weights.</span></p>
@@ -204,7 +210,7 @@
       <h2 id="s6"><span class="num">06</span><span class="zh">收益归因</span><span class="en">Return attribution</span></h2>
       <p><span class="zh">年度收益贡献拆开后，SPY 是最大的单一来源（2.11 个百分点），其次是黄金 0.94、LQD 0.64、IEF 0.59；VEA 与 EEM 分别贡献 0.47 和 0.40。八条腿的算术贡献合计约 5.41 个百分点，与 5.20% 的几何年化接近但不相等；差异来自复利和再平衡路径。</span><span class="en">Annual return attribution makes SPY the largest single source at 2.11 percentage points, followed by gold at 0.94, LQD at 0.64 and IEF at 0.59; VEA and EEM contribute 0.47 and 0.40. The arithmetic sleeve contributions sum to roughly {pc(contribution_sum)}, close to but not equal to the 5.20% geometric CAGR; compounding and the rebalance path explain the gap.</span></p>
       <div class="exhibit">
-        <div class="ex-label"><span class="zh">图 5 · 各资产腿的年化收益贡献</span><span class="en">Figure 5 · annualised contribution by sleeve</span></div>
+        <div class="ex-label"><span class="zh">图 6 · 各资产腿的年化收益贡献</span><span class="en">Figure 6 · annualised contribution by sleeve</span></div>
         <img src="../assets/figs/l1-return-attribution.png" alt="Annualised return contribution by asset sleeve">
         <p class="ex-note"><span class="zh">收益归因与风险归因必须一起读：黄金的风险贡献高，收益贡献也高；权益的风险贡献最高，但收益贡献集中在 SPY；商品在当前快照中提供分散效应，却没有成为主要收益来源。</span><span class="en">Return and risk attribution must be read together: gold has both high risk and high return contribution; equity carries the most risk but its return is concentrated in SPY; commodities diversify the current snapshot without becoming a major return source.</span></p>
         <p class="ex-src"><span class="zh">来源：L1 项目公开结果；按 L1 TAA 月度资产贡献平均后年化。</span><span class="en">Source: public L1 results; monthly L1 TAA sleeve contributions, averaged and annualised.</span></p>
@@ -241,7 +247,7 @@
       </div>
 
       <div class="cta">
-        <b><span class="zh">打开完整研究案例：代码、五张图与投资备忘录</span><span class="en">Open the full research case: code, five charts and investment memo</span></b>
+        <b><span class="zh">打开完整研究案例：代码、七张图与投资备忘录</span><span class="en">Open the full research case: code, seven charts and investment memo</span></b>
         <a href="https://aayloo.github.io/l1-multi-asset-shadow/"><span class="zh">查看完整案例 →</span><span class="en">View the case study →</span></a>
       </div>
 
