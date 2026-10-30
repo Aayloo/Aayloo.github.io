@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从观点到组合：基准赢了，流程留下了什么？ · Research Note</title>
+<meta name="description" content="一个公开多资产影子组合的完整研究案例：SAA/TAA、交易成本、风险贡献、收益归因与决策治理。结论很诚实——60/40 基准赢了，留下的是可复现流程。">
+<meta property="og:title" content="从观点到组合：基准赢了，流程留下了什么？">
+<meta property="og:description" content="L1 公开影子组合：40% 权益资金承担约 61% 模型风险；同期 60/40 跑赢。保留负结果，比包装 alpha 更有研究价值。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aayloo.github.io/notes/l1-shadow-portfolio/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-l1-shadow-portfolio.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="L1 multi-asset shadow portfolio research note">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From Views to Weights: the benchmark won">
+<meta name="twitter:description" content="A public paper portfolio that reports the benchmark loss, risk concentration and the governance process that survives.">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-l1-shadow-portfolio.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/l1-shadow-portfolio/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.08em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(28px,3.4vw,43px);line-height:1.14;color:var(--e-ink);margin:16px 0 0}
+.rn-tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;padding:0}
+.rn-tags span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--e-accent);border:1px solid var(--e-rule);border-radius:999px;padding:4px 11px;background:#fff}
+.rn-standfirst{font-size:16.5px;line-height:1.75;color:#4A453C;margin:12px 0 0;max-width:760px}
+.rn-findings{list-style:none;padding:0;margin:20px 0 0;border-top:1px solid var(--e-rule)}
+.rn-findings li{position:relative;padding:9px 0 9px 20px;border-bottom:1px solid var(--e-rule);font-size:15.6px;line-height:1.7}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:9px;color:var(--e-accent);font-size:10px}
+.rn-abstract{background:var(--paper2);border:1px solid var(--e-rule);border-left:3px solid var(--e-accent);
+  padding:16px 20px;margin:22px 0 0;font-size:15.4px;line-height:1.78}
+.rn-abstract b{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:#8A8172;margin-right:6px}
+.rn-kws{font-size:13.4px;color:#8A8172;margin:10px 0 0}
+.metric-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0 0}
+.metric{border:1px solid var(--e-rule);background:#fff;padding:13px 14px}
+.metric b{display:block;font-family:var(--mono);font-size:21px;line-height:1.2;color:var(--e-ink)}
+.metric span{display:block;font-size:12px;line-height:1.55;color:#8A8172;margin-top:6px}
+.exhibit{margin:30px 0 34px}
+.ex-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--e-accent);border-top:1px solid var(--e-rule);padding-top:8px;margin-bottom:8px}
+.ex-note{font-size:13.2px;line-height:1.68;color:#5A5347;margin:8px 0 0}
+.ex-src{font-size:12.2px;color:#8A8172;margin:6px 0 0}
+.exhibit img{width:100%;background:#fff;border:1px solid var(--e-rule);padding:10px;box-sizing:border-box;cursor:zoom-in}
+.split>.prose{min-width:0}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;min-width:620px;border-collapse:collapse}
+.tbl th,.tbl td{text-align:right;white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl caption{font-family:var(--f-body);font-size:13px;color:#8A8172;text-align:left;padding:0 0 10px}
+.callout p{margin:.45em 0}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:24px 0}
+.decision-card{border:1px solid var(--e-rule);background:#FFFDF8;padding:16px 18px}
+.decision-card b{display:block;color:var(--e-ink);margin-bottom:5px}
+.decision-card span{display:block;font-family:var(--f-body);font-size:13.2px;line-height:1.65;color:#6A6255}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
+  margin:38px 0 8px;padding:22px 24px;background:#1B1A17;color:#fff}
+.cta b{font-family:var(--e-serif);font-size:19px;color:#fff}
+.cta a{display:inline-block;padding:10px 14px;border:1px solid rgba(255,255,255,.5);color:#fff;text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+.cta a:hover{background:#fff;color:#1B1A17;text-decoration:none}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+@media(max-width:900px){
+  .split{grid-template-columns:minmax(0,1fr)}
+  .metric-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .metric-strip,.decision-grid{grid-template-columns:1fr}
+  .prose{font-size:16.4px}
+}
+@media print{
+  .ntop,#prog,.toc,.pager,footer,.cta{display:none!important}
+  body{font-size:10.5pt;background:#fff}
+  .exhibit,.rn-abstract,table{break-inside:avoid}
+  .rn-title{font-size:20pt}
+}
+</style>
+</head>
+
+<body>
+<div id="prog"></div>
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="rn-masthead">
+    <span><span class="zh">研究案例 · 多资产组合</span><span class="en">Research case · multi-asset</span></span>
+    <span>2026-10-30 · v1.0 · L1 PAPER PORTFOLIO</span>
+  </div>
+  <h1 class="rn-title">
+    <span class="zh">从观点到组合：基准赢了，流程留下了什么？</span>
+    <span class="en">From Views to Weights: the benchmark won. What survives is the process.</span>
+  </h1>
+  <p class="rn-tags">
+    <span><span class="zh">资产配置</span><span class="en">Asset allocation</span></span>
+    <span><span class="zh">风险归因</span><span class="en">Risk attribution</span></span>
+    <span><span class="zh">数据工程</span><span class="en">Data engineering</span></span>
+  </p>
+  <p class="rn-standfirst">
+    <span class="zh">一个公开的多资产影子组合，从冻结策略、月度调仓到风险贡献和收益归因，走完了完整研究闭环。<b>同期 60/40 是赢家</b>：5.86% 的静态配置和 5.20% 的趋势增强组合，都没有追上 60/40 的 8.43%。但这个项目真正留下的不是“跑赢基准”的故事，而是一套<b>能被复核、能被否决、也能被继续维护</b>的投资流程。</span>
+    <span class="en">A public multi-asset shadow portfolio runs the full research loop: frozen policy, monthly rebalancing, risk contribution and return attribution. <b>The 60/40 wins</b>: both the 5.86% strategic portfolio and the 5.20% trend overlay trail its 8.43% annual return. What the project leaves behind is not a winning-alpha story, but an investment process that can be audited, rejected and maintained.</span>
+  </p>
+
+  <ul class="rn-findings">
+    <li><span class="zh"><b>基准赢了。</b>2008-06 至 2026-10 的 221 个月里，60/40 年化 8.43%、夏普 0.894；L1 TAA 年化 5.20%、夏普 0.703。</span><span class="en"><b>The benchmark won.</b> Across 221 months from June 2008 to October 2026, the 60/40 earned 8.43% a year with a 0.894 Sharpe; L1 TAA earned 5.20% with 0.703.</span></li>
+    <li><span class="zh"><b>趋势层降低了波动，没有提高收益。</b>权益趋势为 10 个月收益符号；当期三条权益腿全为正，因此战术组合接近战略配置。</span><span class="en"><b>The trend overlay lowered volatility, not return.</b> The signal is the sign of the trailing ten-month equity return; all three equity signals are positive, so the tactical portfolio remains near strategic weights.</span></li>
+    <li><span class="zh"><b>资金权重不等于风险权重。</b>三类权益占资金的 40%，却贡献约 61% 的模型方差。</span><span class="en"><b>Capital weights are not risk weights.</b> The three equity sleeves hold 40% of capital but drive about 61% of model variance.</span></li>
+    <li><span class="zh"><b>研究可信度来自治理。</b>策略版本冻结、调仓规则预先写明、负结果保留，并在下一次月末复核前不追溯修改。</span><span class="en"><b>Research credibility comes from governance.</b> The policy is versioned, the rebalance rule is written in advance, negative results are retained, and the record is never edited retrospectively.</span></li>
+  </ul>
+
+  <div class="rn-abstract">
+    <p>
+      <span class="zh"><b>摘要</b>本文展示 L1 公开多资产影子组合：8 个美国上市 ETF、HKD 计价、月度再平衡、10 bps 单边换手成本假设，并用 10 个月权益趋势做有限战术覆盖。评价期为 2008-06 至 2026-10，共 221 个月。L1 SAA 年化 5.86%，L1 TAA 年化 5.20%；同期 60/40 代理组合年化 8.43%、夏普 0.894。结果显示分散化和趋势规则没有创造超额收益，但把“观点 → 权重 → 风险 → 归因 → 决策记录”的过程变成可复现系统。</span>
+      <span class="en"><b>Abstract</b>This note presents the public L1 multi-asset shadow portfolio: eight US-listed ETFs, HKD reporting, monthly rebalancing, a 10 bps one-way turnover cost assumption and a bounded ten-month equity trend overlay. The evaluation covers 221 months from June 2008 to October 2026. L1 SAA earned 5.86% a year and L1 TAA 5.20%; a 60/40 proxy earned 8.43% with a 0.894 Sharpe. Diversification and trend did not generate excess return. Their contribution was to turn “view → weight → risk → attribution → decision record” into a reproducible system.</span>
+    </p>
+  </div>
+  <p class="rn-kws"><span class="zh"><b>关键词</b>　SAA · TAA · 影子组合 · 风险贡献 · 收益归因 · 回测治理</span><span class="en"><b>Keywords</b>　SAA · TAA · shadow portfolio · risk contribution · return attribution · backtest governance</span></p>
+
+  <div class="metric-strip">
+    <div class="metric"><b>221</b><span><span class="zh">个月评价期</span><span class="en">months evaluated</span></span></div>
+    <div class="metric"><b>5.20%</b><span><span class="zh">L1 TAA 年化</span><span class="en">L1 TAA CAGR</span></span></div>
+    <div class="metric"><b>61%</b><span><span class="zh">权益风险贡献</span><span class="en">equity risk share</span></span></div>
+    <div class="metric"><b>0</b><span><span class="zh">真实资金 / PnL</span><span class="en">real money / PnL</span></span></div>
+  </div>
+
+  <div class="split">
+    <div class="prose">
+      <h2 id="s1"><span class="num">01</span><span class="zh">投资问题</span><span class="en">The investment question</span></h2>
+      <p><span class="zh">这个项目不试图证明某个信号一定赚钱。它回答一个更接近资产配置前台的问题：<b>给定一套明确的政策权重、风险约束和调仓规则，组合每个月应该如何从观点走到仓位，又如何在事后解释结果？</b></span><span class="en">This project does not try to prove that a signal must make money. It answers a question closer to an allocation desk: <b>given explicit policy weights, risk constraints and rebalancing rules, how should a portfolio move from views to positions each month, and how should the result be explained afterwards?</b></span></p>
+      <p><span class="zh">因此，项目把研究分成四层：战略配置（SAA）、有限战术覆盖（TAA）、组合执行与成本、风险与收益归因。这个顺序也是买方投资流程的基本接口：观点不能直接变成交易，交易不能脱离风险预算，结果不能只报收益。</span><span class="en">The research therefore separates four layers: strategic allocation (SAA), a bounded tactical overlay (TAA), execution and costs, and risk and return attribution. That is also the basic buy-side interface: a view cannot become a trade directly, a trade cannot escape the risk budget, and results cannot be reported through return alone.</span></p>
+      <div class="callout">
+        <p><span class="zh"><b>为什么它适合作为转型作品？</b>它同时展示资产配置、Python 工程、回测纪律和投资备忘录写作，而且使用公开数据，不依赖任何内部材料。</span><span class="en"><b>Why is it useful as a transition project?</b> It demonstrates asset allocation, Python engineering, backtest discipline and investment memo writing in one place — using public data only.</span></p>
+      </div>
+
+      <h2 id="s2"><span class="num">02</span><span class="zh">研究设计</span><span class="en">Research design</span></h2>
+      <p><span class="zh">政策组合把资金分成 40% 权益、35% 固定收益与信用、10% 黄金、5% 商品和 10% 短债。所有资产都用美国上市 ETF 作为公开代理，把美元收益按 USD/HKD 换算成 HKD；没有汇率对冲。</span><span class="en">The policy portfolio allocates 40% to equities, 35% to fixed income and credit, 10% to gold, 5% to commodities and 10% to bills. Every asset uses a US-listed ETF as a public proxy. USD returns are translated into HKD using USD/HKD, with no FX hedge.</span></p>
+      <p><span class="zh">调仓频率为月度。权益趋势只看截至上个月末的 10 个月收益：信号为正则维持政策权重，为负则把该权益腿减半，并把释放出的资金转入短债。每次换手按 10 bps 计成本。政策在 2026-10-30 冻结为 <code>policy_v1</code>，之后若改变规则，必须生成新版本。</span><span class="en">Rebalancing is monthly. The equity trend signal uses only the trailing ten-month return through the prior month-end: a positive signal keeps the policy weight; a negative signal halves that sleeve and moves the proceeds to bills. Every unit of turnover costs 10 bps. The policy was frozen as <code>policy_v1</code> on 30 October 2026; any later rule change requires a new version.</span></p>
+      <p><span class="zh"><b>评价口径：</b>L1 SAA 始终按政策权重运行；L1 TAA 加入趋势覆盖；60/40 代理组合是 60% SPY + 40% IEF；等权组合是八个资产各 12.5%。所有比较使用同一评价期和同一成本口径。</span><span class="en"><b>Evaluation set:</b> L1 SAA always follows policy weights; L1 TAA adds the trend overlay; the 60/40 proxy is 60% SPY and 40% IEF; equal weight gives all eight assets 12.5%. All comparisons use the same period and cost convention.</span></p>
+
+      <h2 id="s3"><span class="num">03</span><span class="zh">全样本结果</span><span class="en">Full-sample result</span></h2>
+      <div class="exhibit">
+        <div class="ex-label"><span class="zh">图 1 · 累计净值与回撤</span><span class="en">Figure 1 · cumulative value and drawdown</span></div>
+        <img src="../assets/figs/l1-performance.png" alt="Cumulative performance of L1 SAA, L1 TAA, 60/40 and equal weight">
+        <p class="ex-note"><span class="zh">60/40 的终值明显高于两个 L1 组合。趋势覆盖降低了波动，但没有改变落后于权益占比较高的基准这一事实。</span><span class="en">The 60/40 compounds to a materially higher terminal value. The trend overlay lowers volatility, but it does not change the fact that the portfolio trails a benchmark with a larger equity allocation.</span></p>
+        <p class="ex-src"><span class="zh">来源：L1 项目公开结果，2008-06 至 2026-10；月度再平衡并按 10 bps 成本计费。</span><span class="en">Source: public L1 results, June 2008 to October 2026; monthly rebalancing with a 10 bps cost assumption.</span></p>
+      </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 1 · 同一评价期、同一成本口径下的组合结果</span><span class="en">Table 1 · portfolio results under one period and one cost convention</span></caption>
+          <thead><tr>
+            <th><span class="zh">组合</span><span class="en">Portfolio</span></th>
+            <th><span class="zh">年化</span><span class="en">CAGR</span></th>
+            <th><span class="zh">波动</span><span class="en">Volatility</span></th>
+            <th><span class="zh">夏普</span><span class="en">Sharpe</span></th>
+            <th><span class="zh">最大回撤</span><span class="en">Max drawdown</span></th>
+          </tr></thead>
+          <tbody><tr><td>L1 SAA</td><td>5.86%</td><td>8.68%</td><td>0.702</td><td>-23.32%</td></tr><tr><td>L1 TAA</td><td>5.20%</td><td>7.64%</td><td>0.703</td><td>-23.32%</td></tr><tr><td>60/40 proxy</td><td>8.43%</td><td>9.60%</td><td>0.894</td><td>-25.56%</td></tr><tr><td>Equal weight</td><td>5.23%</td><td>9.40%</td><td>0.590</td><td>-27.87%</td></tr></tbody>
+        </table>
+      </div>
+      <div class="exhibit">
+        <div class="ex-label"><span class="zh">图 2 · 回撤路径</span><span class="en">Figure 2 · drawdown path</span></div>
+        <img src="../assets/figs/l1-drawdown.png" alt="Drawdown paths for the L1 portfolios and benchmarks">
+        <p class="ex-note"><span class="zh">L1 TAA 的最大回撤为 −23.32%，略浅于 60/40 的 −25.56%。这不是充分证据说明趋势规则更安全；它只是这段样本的一个结果，且两个组合的回撤窗口并不完全由同一个风险源决定。</span><span class="en">L1 TAA's maximum drawdown is −23.32%, modestly shallower than −25.56% for the 60/40. This is not sufficient evidence that the trend rule is safer; it is one result in one sample, and the two portfolios are not exposed to exactly the same risk drivers.</span></p>
+        <p class="ex-src"><span class="zh">来源：L1 项目公开结果；回撤按月末净值计算。</span><span class="en">Source: public L1 results; drawdowns calculated from month-end NAV.</span></p>
+      </div>
+
+      <h2 id="s4"><span class="num">04</span><span class="zh">当前配置</span><span class="en">Current allocation</span></h2>
+      <p><span class="zh">截至 2026-10-30，三条权益趋势信号全部为正：SPY 14.65%、VEA 14.82%、EEM 16.19%。所以本月没有触发权益减仓，实际权重与政策权重非常接近；差异主要来自价格漂移和最近一次再平衡。</span><span class="en">As of 30 October 2026, all three equity trend signals are positive: SPY 14.65%, VEA 14.82% and EEM 16.19%. No equity reduction is active, so live paper weights remain close to policy. Differences come mainly from price drift and the latest rebalance.</span></p>
+      <div class="exhibit">
+        <div class="ex-label"><span class="zh">图 3 · 政策权重与当期权重</span><span class="en">Figure 3 · policy and current weights</span></div>
+        <img src="../assets/figs/l1-allocation.png" alt="Policy and current allocation of the eight asset sleeves">
+        <p class="ex-note"><span class="zh">当前 SPY 20.11%、VEA 9.95%、EEM 9.36%、IEF 20.43%、LQD 15.31%、GLD 9.64%、DBC 5.20%、BIL 10.00%。列表本身就是决策留痕：同一个版本下，任何权重变化都应能追溯到规则或价格漂移。</span><span class="en">Current weights are SPY 20.11%, VEA 9.95%, EEM 9.36%, IEF 20.43%, LQD 15.31%, GLD 9.64%, DBC 5.20% and BIL 10.00%. The list is itself a decision record: within one policy version, every weight change should trace back to a rule or to price drift.</span></p>
+        <p class="ex-src"><span class="zh">来源：L1 项目 <code>latest_weights.csv</code>；月末复核快照。</span><span class="en">Source: L1 <code>latest_weights.csv</code>; month-end review snapshot.</span></p>
+      </div>
+
+      <h2 id="s5"><span class="num">05</span><span class="zh">风险贡献</span><span class="en">Risk contribution</span></h2>
+      <p><span class="zh">只看资金权重会漏掉最重要的信息。三类权益占资金 40%，却贡献约 61% 的模型方差。SPY 一个资产就贡献 27.46%，超过其 20% 的资金权重；IEF 和 LQD 各约 13%，黄金约 13.90%。DBC 的风险贡献为 −1.07%，说明它与组合其余部分存在分散效应，但这不等于它一定改善收益。</span><span class="en">Capital weights miss the most important information. Equities hold 40% of capital but contribute about 61% of model variance. SPY alone contributes 27.46%, above its 20% capital weight; IEF and LQD each contribute roughly 13%, and gold 13.90%. DBC's risk contribution is −1.07%, evidence of a diversification effect — not proof that it improves return.</span></p>
+      <div class="exhibit">
+        <div class="ex-label"><span class="zh">图 4 · 风险贡献占比</span><span class="en">Figure 4 · share of model risk</span></div>
+        <img src="../assets/figs/l1-risk-contribution.png" alt="Model risk contribution by asset sleeve">
+        <p class="ex-note"><span class="zh">风险归因的作用不是让配置“看起来更稳”，而是回答：如果模型波动率上升，究竟是哪一条资产腿在推动？在这个组合里，答案首先来自权益。</span><span class="en">The purpose of risk attribution is not to make an allocation look safer. It answers a concrete question: when model volatility rises, which sleeve is driving it? Here the first answer is equity.</span></p>
+        <p class="ex-src"><span class="zh">来源：L1 项目公开结果；基于最近 36 个月协方差矩阵与当期权重。</span><span class="en">Source: public L1 results; based on the latest 36-month covariance matrix and current weights.</span></p>
+      </div>
+
+      <h2 id="s6"><span class="num">06</span><span class="zh">收益归因</span><span class="en">Return attribution</span></h2>
+      <p><span class="zh">年度收益贡献拆开后，SPY 是最大的单一来源（2.11 个百分点），其次是黄金 0.94、LQD 0.64、IEF 0.59；VEA 与 EEM 分别贡献 0.47 和 0.40。八条腿的算术贡献合计约 5.41 个百分点，与 5.20% 的几何年化接近但不相等；差异来自复利和再平衡路径。</span><span class="en">Annual return attribution makes SPY the largest single source at 2.11 percentage points, followed by gold at 0.94, LQD at 0.64 and IEF at 0.59; VEA and EEM contribute 0.47 and 0.40. The arithmetic sleeve contributions sum to roughly {pc(contribution_sum)}, close to but not equal to the 5.20% geometric CAGR; compounding and the rebalance path explain the gap.</span></p>
+      <div class="exhibit">
+        <div class="ex-label"><span class="zh">图 5 · 各资产腿的年化收益贡献</span><span class="en">Figure 5 · annualised contribution by sleeve</span></div>
+        <img src="../assets/figs/l1-return-attribution.png" alt="Annualised return contribution by asset sleeve">
+        <p class="ex-note"><span class="zh">收益归因与风险归因必须一起读：黄金的风险贡献高，收益贡献也高；权益的风险贡献最高，但收益贡献集中在 SPY；商品在当前快照中提供分散效应，却没有成为主要收益来源。</span><span class="en">Return and risk attribution must be read together: gold has both high risk and high return contribution; equity carries the most risk but its return is concentrated in SPY; commodities diversify the current snapshot without becoming a major return source.</span></p>
+        <p class="ex-src"><span class="zh">来源：L1 项目公开结果；按 L1 TAA 月度资产贡献平均后年化。</span><span class="en">Source: public L1 results; monthly L1 TAA sleeve contributions, averaged and annualised.</span></p>
+      </div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <caption><span class="zh">表 2 · 资产、权重与归因快照（2026-10-30）</span><span class="en">Table 2 · asset, weight and attribution snapshot (30 October 2026)</span></caption>
+          <thead><tr>
+            <th><span class="zh">资产腿</span><span class="en">Sleeve</span></th>
+            <th><span class="zh">政策</span><span class="en">Policy</span></th>
+            <th><span class="zh">当期</span><span class="en">Current</span></th>
+            <th><span class="zh">风险贡献</span><span class="en">Risk</span></th>
+            <th><span class="zh">收益贡献</span><span class="en">Return</span></th>
+          </tr></thead>
+          <tbody><tr><td>SPY · US large-cap equity</td><td>20.00%</td><td>20.11%</td><td>27.46%</td><td>2.11%</td></tr><tr><td>VEA · Developed ex-US equity</td><td>10.00%</td><td>9.95%</td><td>16.70%</td><td>0.47%</td></tr><tr><td>EEM · Emerging-market equity</td><td>10.00%</td><td>9.36%</td><td>16.72%</td><td>0.40%</td></tr><tr><td>IEF · US 7-10 year Treasury</td><td>20.00%</td><td>20.43%</td><td>13.09%</td><td>0.59%</td></tr><tr><td>LQD · US investment-grade credit</td><td>15.00%</td><td>15.31%</td><td>13.02%</td><td>0.64%</td></tr><tr><td>GLD · Gold</td><td>10.00%</td><td>9.64%</td><td>13.90%</td><td>0.94%</td></tr><tr><td>DBC · Broad commodities</td><td>5.00%</td><td>5.20%</td><td>-1.07%</td><td>0.09%</td></tr><tr><td>BIL · US 1-3 month Treasury bills</td><td>10.00%</td><td>10.00%</td><td>0.19%</td><td>0.17%</td></tr></tbody>
+        </table>
+      </div>
+
+      <h2 id="s7"><span class="num">07</span><span class="zh">决策流程</span><span class="en">Decision process</span></h2>
+      <p><span class="zh">这个 L1 项目对转型买方最有价值的部分，不是结果本身，而是它把“什么时候允许改变决策”写清楚了。固定规则可以减少事后解释；版本化管理则允许策略演化，但不允许悄悄重写历史。</span><span class="en">The most transferable part of L1 is not the result. It is the explicit answer to “when is the decision allowed to change?” Fixed rules reduce post-hoc explanation; versioning permits evolution without silently rewriting history.</span></p>
+      <div class="decision-grid">
+        <div class="decision-card"><b><span class="zh">每月复核</span><span class="en">Monthly review</span></b><span><span class="zh">用上个月末前可见的数据更新信号、漂移权重和风险快照。</span><span class="en">Update signals, drifted weights and the risk snapshot using information available through the prior month-end.</span></span></div>
+        <div class="decision-card"><b><span class="zh">负信号动作</span><span class="en">Negative signal</span></b><span><span class="zh">若某权益腿 10 个月趋势为负，将该腿减半，资金转入 BIL。</span><span class="en">If a sleeve's ten-month equity trend is negative, halve the sleeve and move the proceeds to BIL.</span></span></div>
+        <div class="decision-card"><b><span class="zh">政策变更</span><span class="en">Policy change</span></b><span><span class="zh">创建新版本，写明原因与生效日，不追溯修改旧记录。</span><span class="en">Create a new version, document the reason and effective date, and never rewrite the old record.</span></span></div>
+        <div class="decision-card"><b><span class="zh">结果留痕</span><span class="en">Result retention</span></b><span><span class="zh">保留基准获胜、趋势未增厚收益等负结果，不做叙事性筛选。</span><span class="en">Retain the benchmark win and the failure of trend to add return; do not select only the flattering evidence.</span></span></div>
+      </div>
+      <p><span class="zh">对买方研究岗位，这四点比一个漂亮的回测曲线更接近真实工作：组合经理会追问结论何时失效、数据何时可见、成本如何计入、策略变了以后旧业绩怎么处理。L1 把这些问题的答案变成了代码、配置和月度记录。</span><span class="en">For a buy-side research role, these four controls are closer to real work than a pretty backtest. A portfolio manager will ask when the conclusion breaks, what information was visible, how costs entered and what happens to old performance after a rule change. L1 turns those answers into code, configuration and a monthly record.</span></p>
+
+      <h2 id="s8"><span class="num">08</span><span class="zh">局限与结论</span><span class="en">Limits and conclusion</span></h2>
+      <p><span class="zh"><b>这不是实盘，也没有真实 PnL。</b>所有结果来自公开 ETF 数据的纸面组合。它不证明个人具备管理真实资金的能力，也不构成投资建议。</span><span class="en"><b>This is not a live portfolio and contains no real PnL.</b> All results come from a paper portfolio using public ETF data. They do not prove capability to manage real money and are not investment advice.</span></p>
+      <p><span class="zh">其他限制包括：资产池只有美国上市 ETF；HKD 换算未对冲；未建模市场冲击、税费和券商执行；60/40 只是简化代理；样本期只有一段宏观环境；趋势规则只有有限参数和一次政策冻结。未来的更新必须增加滚动样本、替代资产池、成本敏感性和完整的版本记录。</span><span class="en">Other limits include a US-listed ETF universe, unhedged HKD translation, no market-impact, tax or broker-execution model, a simplified 60/40 proxy, one macro sample and a trend rule with limited parameter variation and a single policy freeze. Future updates need rolling samples, alternative universes, cost sensitivity and a complete version history.</span></p>
+      <div class="callout co-warn">
+        <p><span class="zh"><b>结论不是“这个策略值得投”。</b>结论是：这套流程足以让一个观点被检验、被否决，并继续产生可比较的月度记录。对早期转型者，诚实报告负结果本身就是可验证的研究能力。</span><span class="en"><b>The conclusion is not “this strategy deserves capital.”</b> It is that the process can test a view, reject it and keep producing comparable monthly evidence. For an early-career transition, reporting a negative result honestly is itself a verifiable research skill.</span></p>
+      </div>
+
+      <div class="cta">
+        <b><span class="zh">打开完整研究案例：代码、五张图与投资备忘录</span><span class="en">Open the full research case: code, five charts and investment memo</span></b>
+        <a href="https://aayloo.github.io/l1-multi-asset-shadow/"><span class="zh">查看完整案例 →</span><span class="en">View the case study →</span></a>
+      </div>
+
+      <h2 id="refs"><span class="num"><span class="zh">延伸阅读</span><span class="en">Further reading</span></span></h2>
+      <ol class="refs">
+        <li>Markowitz, H. (1952). Portfolio Selection. <i>The Journal of Finance</i>, 7(1), 77–91. <a href="https://doi.org/10.1111/j.1540-6261.1952.tb01525.x">doi.org/10.1111/j.1540-6261.1952.tb01525.x</a></li>
+        <li>Ibbotson, R. G., &amp; Kaplan, P. D. (2000). Does Asset Allocation Policy Explain 40, 90, or 100 Percent of Performance? <i>Financial Analysts Journal</i>, 56(1), 26–33. <a href="https://doi.org/10.2469/faj.v56.n1.2327">doi.org/10.2469/faj.v56.n1.2327</a></li>
+        <li>Moskowitz, T. J., Ooi, Y. H., &amp; Pedersen, L. H. (2012). Time Series Momentum. <i>Journal of Financial Economics</i>, 104(2), 228–250. <a href="https://doi.org/10.1016/j.jfineco.2011.11.003">doi.org/10.1016/j.jfineco.2011.11.003</a></li>
+        <li>Arnott, R. D., Harvey, C. R., &amp; Markowitz, H. (2019). A Backtesting Protocol in the Era of Machine Learning. <i>Journal of Financial Data Science</i>, 1(1), 64–74. <a href="https://doi.org/10.3905/jfds.2019.1.064">doi.org/10.3905/jfds.2019.1.064</a></li>
+        <li><span class="zh">数据与代码：L1 公开项目，<a href="https://github.com/Aayloo/l1-multi-asset-shadow">github.com/Aayloo/l1-multi-asset-shadow</a>，访问日期 2026-10-30。</span><span class="en">Data and code: public L1 project, <a href="https://github.com/Aayloo/l1-multi-asset-shadow">github.com/Aayloo/l1-multi-asset-shadow</a>, accessed 30 October 2026.</span></li>
+      </ol>
+
+      <div class="disclaimer">
+        <span class="zh"><b>免责声明。</b>本文为个人研究记录，不构成投资建议。L1 是纸面研究组合，不含真实资金、真实 PnL 或任何机构内部数据。历史结果不代表未来收益；公开 ETF 代理、未对冲汇率和不完整执行建模均会限制结论。© 2026 Aylon，引用请注明来源与链接。</span>
+        <span class="en"><b>Disclaimer.</b> This is a personal research record, not investment advice. L1 is a paper portfolio with no real money, real PnL or internal institutional data. Past results do not imply future returns; public ETF proxies, unhedged FX and incomplete execution modelling all limit the conclusions. © 2026 Aylon. Please credit the source and link when quoting.</span>
+      </div>
+
+      <nav class="pager" aria-label="pagination" style="margin-top:26px">
+        <a href="../"><span class="k"><span class="zh">全部笔记</span><span class="en">All notes</span></span><span class="v"><span class="zh">← Notes</span><span class="en">← Notes</span></span></a>
+        <a href="https://aayloo.github.io/l1-multi-asset-shadow/"><span class="k"><span class="zh">研究案例</span><span class="en">Research case</span></span><span class="v"><span class="zh">完整代码与图表 →</span><span class="en">Full code and charts →</span></span></a>
+      </nav>
+    </div>
+
+    <aside class="toc" aria-label="contents">
+      <div class="ttl"><span class="zh">目录</span><span class="en">Contents</span></div>
+      <a href="#s1">01 <span class="zh">投资问题</span><span class="en">The question</span></a>
+      <a href="#s2">02 <span class="zh">研究设计</span><span class="en">Design</span></a>
+      <a href="#s3">03 <span class="zh">全样本结果</span><span class="en">Results</span></a>
+      <a href="#s4">04 <span class="zh">当前配置</span><span class="en">Allocation</span></a>
+      <a href="#s5">05 <span class="zh">风险贡献</span><span class="en">Risk</span></a>
+      <a href="#s6">06 <span class="zh">收益归因</span><span class="en">Attribution</span></a>
+      <a href="#s7">07 <span class="zh">决策流程</span><span class="en">Process</span></a>
+      <a href="#s8">08 <span class="zh">局限与结论</span><span class="en">Limits</span></a>
+      <a href="#refs"><span class="zh">延伸阅读</span><span class="en">Reading</span></a>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="footin">
+    <span>Research Note v1.0 · © 2026 Aylon · Hong Kong</span>
+    <span class="spacer"></span>
+    <a href="https://github.com/Aayloo/l1-multi-asset-shadow">GitHub</a>
+    <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+    <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
