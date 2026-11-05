@@ -3289,6 +3289,10 @@
       grid-template-columns: 1fr;
     }
 
+    .blog-grid > .blog-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+
     .blog-card.featured {
       min-height: 300px;
       padding: 32px;
@@ -3798,24 +3802,66 @@
 
     <section class="section" id="blog">
       <div class="section-head reveal">
-        <p class="section-label"><span>03 / BLOG</span>Data science workflow</p>
+        <p class="section-label"><span>03 / BLOG</span>Research &amp; practical guides</p>
         <div>
-          <h2 data-en="From business question to model." data-zh="从业务问题到模型。">From business question to model.</h2>
-          <p data-en="A practical guide to applying CRISP-DM through a reproducible, evidence-led workflow." data-zh="用可复现、以证据为导向的工作流实践 CRISP-DM。">A practical guide to applying CRISP-DM through a reproducible, evidence-led workflow.</p>
+          <h2 data-en="Research notes, allocation and practical guides." data-zh="研究笔记、资产配置与实践指南。">Research notes, allocation and practical guides.</h2>
+          <p data-en="Public work on multi-asset allocation, portfolio implementation and reproducible research — plus a practical data-science workflow." data-zh="公开研究覆盖多资产配置、组合执行与可复现研究，并附一套可实践的数据科学工作流。">Public work on multi-asset allocation, portfolio implementation and reproducible research — plus a practical data-science workflow.</p>
         </div>
       </div>
 
       <div class="blog-grid single">
-        <a class="blog-card featured reveal" style="--delay:.04s" href="https://aayloo.github.io/data-science-crisp-dm-tutorial/?v=20261028-6" target="_blank" rel="noreferrer">
-          <div class="blog-top"><span class="blog-no">01 / FEATURED</span><span class="blog-tag">Data science workflow</span></div>
+        <a class="blog-card featured reveal" style="--delay:.04s" href="https://aayloo.github.io/notes/asset-allocation-map/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">01 / FEATURED</span><span class="blog-tag">Asset allocation</span></div>
+          <h3 data-en="Asset allocation is not one answer." data-zh="资产配置不是一道选择题。">Asset allocation is not one answer.</h3>
+          <p data-en="A research map from benchmarks and risk allocation to implementation and governance: 60/40, Permanent Portfolio, All Weather, risk parity, 1/N, rebalancing, constraints, liability-driven allocation and L1." data-zh="一条从基准、风险分配到执行与治理的研究路径：60/40、永久组合、全天候、风险平价、1/N、再平衡、约束、负债驱动配置与 L1。">A research map from benchmarks and risk allocation to implementation and governance: 60/40, Permanent Portfolio, All Weather, risk parity, 1/N, rebalancing, constraints, liability-driven allocation and L1.</p>
+          <div class="blog-topics">
+            <span data-en="SAA / TAA" data-zh="SAA / TAA">SAA / TAA</span>
+            <span data-en="Risk allocation" data-zh="风险分配">Risk allocation</span>
+            <span data-en="Portfolio construction" data-zh="组合构建">Portfolio construction</span>
+            <span data-en="Attribution" data-zh="归因">Attribution</span>
+          </div>
+          <span class="blog-arrow">↗</span>
+        </a>
+      </div>
+
+      <div class="blog-grid">
+        <a class="blog-card reveal" style="--delay:.06s" href="https://aayloo.github.io/notes/sixty-forty-variants/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">02 / PORTFOLIO</span><span class="blog-tag">The baseline</span></div>
+          <h3 data-en="The 60/40, tested" data-zh="60/40 实测">The 60/40, tested</h3>
+          <p data-en="The most famous allocation rule breaks when stocks and bonds fall together. A 40–50% equity weight had a better drawdown in the sample." data-zh="最有名的配置规则会在股债同跌时失效；样本里 40–50% 的权益权重反而有更浅的回撤。">The most famous allocation rule breaks when stocks and bonds fall together. A 40–50% equity weight had a better drawdown in the sample.</p>
+          <div class="blog-topics"><span data-en="60/40" data-zh="60/40">60/40</span><span data-en="Correlation" data-zh="相关性">Correlation</span><span data-en="Drawdown" data-zh="回撤">Drawdown</span></div>
+          <span class="blog-arrow">↗</span>
+        </a>
+
+        <a class="blog-card reveal" style="--delay:.08s" href="https://aayloo.github.io/notes/all-weather/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">03 / PORTFOLIO</span><span class="blog-tag">Risk balance</span></div>
+          <h3 data-en="All Weather, tested" data-zh="全天候组合实测">All Weather, tested</h3>
+          <p data-en="Steadier than a 60/40, but not environment-neutral: long bonds carried more than half of the model risk." data-zh="比 60/40 更稳，但没有做到环境中性：长债承担了超过一半的模型风险。">Steadier than a 60/40, but not environment-neutral: long bonds carried more than half of the model risk.</p>
+          <div class="blog-topics"><span data-en="Regimes" data-zh="经济环境">Regimes</span><span data-en="Duration" data-zh="久期">Duration</span><span data-en="Risk contribution" data-zh="风险贡献">Risk contribution</span></div>
+          <span class="blog-arrow">↗</span>
+        </a>
+
+        <a class="blog-card reveal" style="--delay:.10s" href="https://aayloo.github.io/notes/risk-parity/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">04 / PORTFOLIO</span><span class="blog-tag">Equal risk</span></div>
+          <h3 data-en="Risk parity, tested" data-zh="风险平价实测">Risk parity, tested</h3>
+          <p data-en="Equalising risk makes the risk distribution cleaner, but the return and leverage trade-offs remain visible." data-zh="把风险拍平可以改善风险分布，但收益与杠杆的取舍仍然存在。">Equalising risk makes the risk distribution cleaner, but the return and leverage trade-offs remain visible.</p>
+          <div class="blog-topics"><span data-en="Risk budget" data-zh="风险预算">Risk budget</span><span data-en="Leverage" data-zh="杠杆">Leverage</span><span data-en="Sharpe" data-zh="夏普">Sharpe</span></div>
+          <span class="blog-arrow">↗</span>
+        </a>
+
+        <a class="blog-card reveal" style="--delay:.12s" href="https://aayloo.github.io/notes/l1-shadow-portfolio/" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">05 / CASE STUDY</span><span class="blog-tag">From view to weight</span></div>
+          <h3 data-en="L1: the benchmark won. The process remains." data-zh="L1：基准赢了，流程留下了什么？">L1: the benchmark won. The process remains.</h3>
+          <p data-en="An end-to-end multi-asset shadow portfolio: SAA, a trend overlay, costs, risk contribution, return attribution and frozen decision rules." data-zh="一个完整的多资产影子组合案例：SAA、趋势覆盖、成本、风险贡献、收益归因与冻结的决策规则。">An end-to-end multi-asset shadow portfolio: SAA, a trend overlay, costs, risk contribution, return attribution and frozen decision rules.</p>
+          <div class="blog-topics"><span data-en="8 ETFs" data-zh="8 个 ETF">8 ETFs</span><span data-en="221 months" data-zh="221 个月">221 months</span><span data-en="Negative result retained" data-zh="保留负结果">Negative result retained</span></div>
+          <span class="blog-arrow">↗</span>
+        </a>
+
+        <a class="blog-card reveal" style="--delay:.14s" href="https://aayloo.github.io/data-science-crisp-dm-tutorial/?v=20261028-6" target="_blank" rel="noreferrer">
+          <div class="blog-top"><span class="blog-no">06 / PRACTICAL GUIDE</span><span class="blog-tag">Data science workflow</span></div>
           <h3 data-en="Data Science Workflow · CRISP-DM Tutorial" data-zh="数据科学工作流 · CRISP-DM 教程">Data Science Workflow · CRISP-DM Tutorial</h3>
           <p data-en="A hands-on guide that turns a business question into a reproducible, evaluated data-science decision through the six CRISP-DM phases and three case labs." data-zh="通过六个 CRISP-DM 阶段和三个案例实验，把业务问题转化为可复现、可评估的数据科学决策。">A hands-on guide that turns a business question into a reproducible, evaluated data-science decision through the six CRISP-DM phases and three case labs.</p>
-          <div class="blog-topics">
-            <span data-en="Business understanding" data-zh="业务理解">Business understanding</span>
-            <span data-en="Data preparation" data-zh="数据准备">Data preparation</span>
-            <span data-en="Evaluation" data-zh="模型评估">Evaluation</span>
-            <span data-en="Deployment" data-zh="部署">Deployment</span>
-          </div>
+          <div class="blog-topics"><span data-en="Business understanding" data-zh="业务理解">Business understanding</span><span data-en="Data preparation" data-zh="数据准备">Data preparation</span><span data-en="Evaluation" data-zh="模型评估">Evaluation</span><span data-en="Deployment" data-zh="部署">Deployment</span></div>
           <span class="blog-arrow">↗</span>
         </a>
       </div>
