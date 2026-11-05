@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>资产配置不是一道选择题：从 60/40 到全天候，再到 L1 · Research Map</title>
+<meta name="description" content="资产配置专题入口：60/40、永久组合、全天候、风险平价、1/N、再平衡、约束、负债驱动、趋势跟踪与 L1 影子组合。">
+<meta property="og:title" content="资产配置不是一道选择题">
+<meta property="og:description" content="把资产配置研究拆成四层：基准、风险、执行与治理。阅读顺序、关键结论和全部文章入口。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aayloo.github.io/notes/asset-allocation-map/">
+<meta property="og:site_name" content="Aylon Notes">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:image" content="https://aayloo.github.io/notes/assets/share/og-site.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="Asset allocation research map">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Asset allocation is not one answer">
+<meta name="twitter:description" content="From 60/40 and All Weather to implementation, attribution and the L1 shadow portfolio.">
+<meta name="twitter:image" content="https://aayloo.github.io/notes/assets/share/og-site.png">
+<link rel="canonical" href="https://aayloo.github.io/notes/asset-allocation-map/">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/editorial.css">
+<style>
+.rn-masthead{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;border-bottom:2px solid var(--e-ink);padding:26px 0 8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--e-accent)}
+.rn-masthead span:last-child{color:#8A8172;letter-spacing:.08em}
+.rn-title{font-family:var(--e-serif);font-size:clamp(30px,4vw,48px);line-height:1.1;color:var(--e-ink);margin:16px 0 0;max-width:960px}
+.rn-standfirst{font-size:17px;line-height:1.8;color:#4A453C;margin:15px 0 0;max-width:820px}
+.rn-findings{list-style:none;padding:0;margin:22px 0 0;border-top:1px solid var(--e-rule);max-width:900px}
+.rn-findings li{position:relative;padding:10px 0 10px 21px;border-bottom:1px solid var(--e-rule);font-size:15.7px;line-height:1.72}
+.rn-findings li::before{content:"●";position:absolute;left:0;top:10px;color:var(--e-accent);font-size:10px}
+.series-kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0 0}
+.series-kpi div{border:1px solid var(--e-rule);background:#fff;padding:14px 15px}
+.series-kpi b{display:block;font-family:var(--mono);font-size:23px;color:var(--e-ink);line-height:1.15}
+.series-kpi span{display:block;font-size:12.2px;line-height:1.55;color:#8A8172;margin-top:6px}
+.series-group{margin:42px 0 50px;scroll-margin-top:74px}
+.sg-head{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:start;border-top:2px solid var(--e-ink);padding-top:12px;margin-bottom:16px}
+.sg-num{font-family:var(--mono);font-size:14px;color:var(--e-accent);padding-top:4px}
+.sg-head h2{font-size:24px;line-height:1.25;margin:0}
+.sg-head p{margin:5px 0 0;color:#6A6255;font-size:14px;line-height:1.68;max-width:760px}
+.strategy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.strategy-card{display:flex;flex-direction:column;gap:7px;min-height:172px;border:1px solid var(--e-rule);background:#FFFDF8;padding:17px 18px;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s}
+.strategy-card:hover{text-decoration:none;transform:translateY(-2px);box-shadow:0 10px 26px rgba(28,26,22,.09);border-color:#B9AD98}
+.sc-k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--e-accent)}
+.strategy-card b{font-family:var(--e-serif);font-size:19px;line-height:1.3;color:var(--e-ink)}
+.sc-s{font-size:13.5px;line-height:1.7;color:#5A5347}
+.sc-a{font-family:var(--mono);font-size:11.5px;color:var(--e-accent);margin-top:auto;padding-top:5px}
+.judgement{border-left:3px solid var(--e-accent);background:var(--paper2);padding:18px 21px;margin:30px 0;font-size:15.6px;line-height:1.78}
+.judgement b{color:var(--e-ink)}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin:34px 0 8px;padding:22px 24px;background:#1B1A17;color:#fff}
+.cta b{font-family:var(--e-serif);font-size:19px;color:#fff;max-width:720px}
+.cta a{display:inline-block;padding:10px 14px;border:1px solid rgba(255,255,255,.5);color:#fff;text-decoration:none;font-family:var(--mono);font-size:12px}
+.cta a:hover{background:#fff;color:#1B1A17;text-decoration:none}
+.disclaimer{font-size:12.4px;line-height:1.7;color:#8A8172;border-top:1px solid var(--e-rule);margin-top:26px;padding-top:12px}
+.split>.prose{min-width:0}
+@media(max-width:900px){.split{grid-template-columns:minmax(0,1fr)}.series-kpi{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.strategy-grid,.series-kpi{grid-template-columns:1fr}.sg-head{grid-template-columns:38px minmax(0,1fr)}.rn-title{font-size:31px}}
+@media print{.ntop,#prog,.toc,.pager,footer,.cta{display:none!important}body{background:#fff}.strategy-card,.judgement{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav class="ntop" aria-label="site">
+  <div class="navin">
+    <span class="brand">Aylon<i>.</i><small>Notes</small></span>
+    <a class="lk" href="../"><span class="zh">笔记目录</span><span class="en">Notes</span></a>
+    <a class="lk" href="../about/"><span class="zh">写作原则</span><span class="en">How I write</span></a>
+    <a class="lk" href="../glossary/"><span class="zh">术语表</span><span class="en">Glossary</span></a>
+    <span class="spacer"></span>
+    <a class="lk" href="https://aayloo.github.io/"><span class="zh">← 个人站</span><span class="en">← Main site</span></a>
+    <div class="lang" role="group" aria-label="language">
+      <button type="button" data-v="en">EN</button>
+      <button type="button" data-v="zh" aria-selected="true">中文</button>
+    </div>
+  </div>
+</nav>
+<main class="wrap">
+  <div class="rn-masthead">
+    <span><span class="zh">专题入口 · 资产配置</span><span class="en">Research map · asset allocation</span></span>
+    <span>2026-11-05 · v1.0 · 10 STUDIES</span>
+  </div>
+  <h1 class="rn-title"><span class="zh">资产配置不是一道选择题：从 60/40 到全天候，再到 L1</span><span class="en">Asset allocation is not one answer: from 60/40 to All Weather and L1</span></h1>
+  <p class="rn-standfirst"><span class="zh">这不是“哪个组合最好”的排行榜。60/40、永久组合、全天候、风险平价、1/N 和趋势覆盖各自解决的问题不同。真正决定结果的，是<b>风险如何分配、规则如何执行、约束和成本如何处理，以及结果能否被归因和复核</b>。</span><span class="en">This is not a league table of portfolios. The 60/40, Permanent Portfolio, All Weather, risk parity, 1/N and trend overlays solve different problems. What decides the outcome is <b>how risk is allocated, how rules are implemented, how constraints and costs are handled, and whether results can be attributed and audited</b>.</span></p>
+  <ul class="rn-findings">
+    <li><span class="zh"><b>基准不是策略，是尺子。</b>60/40 足够简单，但会在股债同跌时失效；没有统一基准，所谓“更好配置”无法判断。</span><span class="en"><b>A benchmark is a yardstick, not a strategy.</b> The 60/40 is simple and breaks when stocks and bonds fall together; without it, “better allocation” cannot be measured.</span></li>
+    <li><span class="zh"><b>资金权重不等于风险权重。</b>权益常在组合里承担远超其资金占比的风险，而全天候也可能把风险集中到长债。</span><span class="en"><b>Capital weights are not risk weights.</b> Equities often carry more risk than their capital share, while All Weather can concentrate risk in duration.</span></li>
+    <li><span class="zh"><b>越复杂不等于越好。</b>1/N 在多项测试中击败复杂优化器，说明估计误差和约束落地往往比公式更重要。</span><span class="en"><b>More complex is not better by default.</b> 1/N beats many optimisers, showing that estimation error and implementation often dominate the formula.</span></li>
+    <li><span class="zh"><b>专题已经足够，但必须从文章集合升级成决策地图。</b>现有内容已覆盖基准、替代方案、风险、执行和负结果；缺的是一个统一入口和 L1 这种端到端案例。</span><span class="en"><b>The series is already sufficient, but it needs to become a decision map.</b> It covers benchmarks, alternatives, risk, implementation and negative results; what was missing was one entry point and an end-to-end case such as L1.</span></li>
+  </ul>
+  <div class="series-kpi">
+    <div><b>4</b><span><span class="zh">层决策：基准 / 风险 / 执行 / 治理</span><span class="en">decision layers: benchmark / risk / execution / governance</span></span></div>
+    <div><b>10</b><span><span class="zh">篇研究，一条阅读路径</span><span class="en">studies in one reading path</span></span></div>
+    <div><b>221</b><span><span class="zh">L1 月的影子组合记录</span><span class="en">months in the L1 shadow record</span></span></div>
+    <div><b>0</b><span><span class="zh">真实资金；所有结果均已披露限制</span><span class="en">real money; every result discloses its limits</span></span></div>
+  </div>
+
+  <div class="split">
+    <div class="prose">
+      <section class="series-group" id="g01">
+  <div class="sg-head">
+    <span class="sg-num">01</span>
+    <div>
+      <h2><span class="zh">先选尺子</span><span class="en">Choose the yardstick</span></h2>
+      <p><span class="zh">不要先问哪个组合最好，先问它要和什么比较、替谁承担风险。</span><span class="en">Do not start with the best portfolio. Start with the comparison and the risk owner.</span></p>
+    </div>
+  </div>
+  <div class="strategy-grid"><a class="strategy-card" href="../sixty-forty-variants/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">60/40 及其变体</span><span class="en">The 60/40 and its variants</span></b>
+  <span class="sc-s"><span class="zh">最常用的基准，也是检验其他配置是否真的更好的第一把尺。</span><span class="en">The default baseline, and the first test any alternative must beat.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a>
+<a class="strategy-card" href="../permanent-portfolio/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">永久组合</span><span class="en">The Permanent Portfolio</span></b>
+  <span class="sc-s"><span class="zh">用简单四等分检验分散化、风险贡献与通胀环境。</span><span class="en">A simple four-way split tests diversification, risk and inflation.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a></div>
+</section><section class="series-group" id="g02">
+  <div class="sg-head">
+    <span class="sg-num">02</span>
+    <div>
+      <h2><span class="zh">再分风险</span><span class="en">Allocate the risk</span></h2>
+      <p><span class="zh">资金权重只是表面。真正的配置问题是风险预算如何落到资产和因子上。</span><span class="en">Capital weights are cosmetic. The real allocation question is where the risk budget lands.</span></p>
+    </div>
+  </div>
+  <div class="strategy-grid"><a class="strategy-card" href="../all-weather/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">全天候组合</span><span class="en">All Weather</span></b>
+  <span class="sc-s"><span class="zh">按经济环境分配风险，但长债仍可能成为隐藏的风险中心。</span><span class="en">Risk is assigned across environments, but duration can remain the hidden concentration.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a>
+<a class="strategy-card" href="../risk-parity/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">风险平价</span><span class="en">Risk parity</span></b>
+  <span class="sc-s"><span class="zh">把资金权重改成风险权重，收益并不会自动提高。</span><span class="en">Equal risk does not imply equal return.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a>
+<a class="strategy-card" href="../one-over-n/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">1/N 与优化器</span><span class="en">1/N versus optimisers</span></b>
+  <span class="sc-s"><span class="zh">估计误差足以让复杂优化输给最简单的等权。</span><span class="en">Estimation error can make complex optimisation lose to a simple equal weight.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a></div>
+</section><section class="series-group" id="g03">
+  <div class="sg-head">
+    <span class="sg-num">03</span>
+    <div>
+      <h2><span class="zh">最后拼执行</span><span class="en">Execution decides</span></h2>
+      <p><span class="zh">再好的目标权重，也要经过再平衡、约束和负债口径才能变成真实组合。</span><span class="en">A target weight becomes a portfolio only after rebalancing, constraints and the correct objective.</span></p>
+    </div>
+  </div>
+  <div class="strategy-grid"><a class="strategy-card" href="../rebalancing/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">再平衡</span><span class="en">Rebalancing</span></b>
+  <span class="sc-s"><span class="zh">频率、漂移和成本共同决定规则是否值得执行。</span><span class="en">Frequency, drift and cost decide whether the rule is worth running.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a>
+<a class="strategy-card" href="../cost-of-constraints/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">约束的代价</span><span class="en">The cost of constraints</span></b>
+  <span class="sc-s"><span class="zh">机构约束既保护组合，也在同一风险预算下收费。</span><span class="en">Institutional constraints protect the portfolio and charge for it.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a>
+<a class="strategy-card" href="../liability-driven/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">负债驱动配置</span><span class="en">Liability-driven allocation</span></b>
+  <span class="sc-s"><span class="zh">换一个分母，资产端的排序会完全改变。</span><span class="en">Change the denominator and the ranking of assets changes.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a></div>
+</section><section class="series-group" id="g04">
+  <div class="sg-head">
+    <span class="sg-num">04</span>
+    <div>
+      <h2><span class="zh">形成闭环</span><span class="en">Close the loop</span></h2>
+      <p><span class="zh">最后必须把观点变成权重，把权重变成可归因的组合，并留下不可追溯修改的记录。</span><span class="en">Turn views into weights, weights into attributable results, and keep a record that cannot be rewritten.</span></p>
+    </div>
+  </div>
+  <div class="strategy-grid"><a class="strategy-card" href="../trend-following/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">趋势跟踪</span><span class="en">Trend following</span></b>
+  <span class="sc-s"><span class="zh">它更像危机保险：降低坏日子的损失，而不是稳定制造收益。</span><span class="en">More like crisis insurance than a return engine.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a>
+<a class="strategy-card" href="../l1-shadow-portfolio/">
+  <span class="sc-k"><span class="zh">研究</span><span class="en">Study</span></span>
+  <b><span class="zh">L1 多资产影子组合</span><span class="en">The L1 shadow portfolio</span></b>
+  <span class="sc-s"><span class="zh">把 SAA、TAA、成本、风险归因和版本治理放进同一条流程。</span><span class="en">SAA, TAA, costs, risk attribution and version control in one process.</span></span>
+  <span class="sc-a"><span class="zh">阅读笔记 →</span><span class="en">Read the note →</span></span>
+</a></div>
+</section>
+
+      <div class="judgement">
+        <p><span class="zh"><b>这个主题够不够？</b>足够支撑一个完整的资产配置专题。它不是缺少更多策略，而是需要一条从“选择基准”到“执行治理”的阅读路径。继续堆叠新策略的边际价值，已经低于把现有研究连接起来、统一口径，并用一个持续更新的组合案例证明研究流程。</span><span class="en"><b>Is the topic sufficient?</b> Yes. It already supports a complete asset-allocation series. The missing piece was not more strategies, but a reading path from benchmark choice to implementation and governance. Adding another strategy now has less value than connecting the existing work, aligning conventions, and proving the process through one continuously updated portfolio case.</span></p>
+      </div>
+
+      <div class="cta">
+        <b><span class="zh">从文章走向完整流程：打开 L1，并查看五分钟英文投资陈述</span><span class="en">Move from articles to a full process: open L1 and the five-minute investment presentation</span></b>
+        <a href="../l1-shadow-portfolio/"><span class="zh">L1 研究案例 →</span><span class="en">L1 case study →</span></a>
+        <a href="https://github.com/Aayloo/l1-multi-asset-shadow/blob/main/docs/5-minute-investment-case.md"><span class="zh">五分钟英文陈述 →</span><span class="en">Five-minute presentation →</span></a>
+      </div>
+      <p class="disclaimer"><span class="zh"><b>免责声明。</b>本专题整理个人公开研究，不构成投资建议。各篇样本期、资产池和成本假设并不完全相同，不能把不同文章中的收益率直接横向排名；比较时必须先对齐口径。L1 为纸面组合，不含真实资金或真实 PnL。</span><span class="en"><b>Disclaimer.</b> This map organises personal public research and is not investment advice. The studies differ in sample period, universe and cost assumptions, so returns should not be ranked without first aligning definitions. L1 is a paper portfolio with no real money or PnL.</span></p>
+    </div>
+    <aside class="toc">
+      <div class="ttl"><span class="zh">专题目录</span><span class="en">Series map</span></div>
+      <a href="#g01">01 <span class="zh">先选尺子</span><span class="en">Choose the yardstick</span></a>
+      <a href="#g02">02 <span class="zh">再分风险</span><span class="en">Allocate the risk</span></a>
+      <a href="#g03">03 <span class="zh">最后拼执行</span><span class="en">Execution decides</span></a>
+      <a href="#g04">04 <span class="zh">形成闭环</span><span class="en">Close the loop</span></a>
+      <a href="../"><span class="zh">全部笔记</span><span class="en">All notes</span></a>
+    </aside>
+  </div>
+</main>
+<footer class="wrap">
+  <span>© 2026 Aylon · Notes</span>
+  <a href="https://github.com/Aayloo">GitHub</a>
+  <a href="../"><span class="zh">笔记目录</span><span class="en">All notes</span></a>
+  <a href="https://aayloo.github.io/"><span class="zh">个人站</span><span class="en">Main site</span></a>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

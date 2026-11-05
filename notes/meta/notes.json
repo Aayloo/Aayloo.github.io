@@ -5,7 +5,7 @@
     "base_url": "https://aayloo.github.io/notes/",
     "personal_site": "https://aayloo.github.io/",
     "github": "https://github.com/Aayloo",
-    "updated": "2026-10-30",
+    "updated": "2026-11-05",
     "tagline_zh": "前沿技术的阅读笔记。事实、推断、观点分开写；每个数字都带出处。",
     "tagline_en": "Reading notes on frontier technology. Facts, inferences and opinions kept apart — every number carries a source."
   },
@@ -40,11 +40,18 @@
     }
   },
   "starter_band": {
-    "label_zh": "入门科普 · 先看这五篇",
-    "label_en": "Start here · five explainers",
-    "note_zh": "读不下去就从这几篇开始：配置怎么分钱、60/40 是不是最优、黄金到底管不管用、VIX 该不该贪婪。",
-    "note_en": "If the list looks long, start here: how a portfolio splits its money, whether the 60/40 is actually best, whether gold hedges, and whether high VIX means buy.",
+    "label_zh": "资产配置专题 · 从入门到闭环",
+    "label_en": "Asset-allocation map · from basics to an auditable process",
+    "note_zh": "先看专题地图，再按 60/40、永久组合、全天候、黄金和 VIX 入门；完整路径一直连到 L1 影子组合。",
+    "note_en": "Start with the map, then read the 60/40, Permanent Portfolio, All Weather, gold and VIX explainers; the path continues to the L1 shadow portfolio.",
     "items": [
+      {
+        "slug": "asset-allocation-map",
+        "kicker_zh": "专题入口",
+        "kicker_en": "Series map",
+        "blurb_zh": "先选尺子、再分风险、处理执行，最后形成可归因闭环。",
+        "blurb_en": "Choose the yardstick, allocate the risk, handle implementation and close the attribution loop."
+      },
       {
         "slug": "sixty-forty-variants",
         "kicker_zh": "配置基准",
@@ -84,6 +91,25 @@
   },
   "notes": [
     {
+      "slug": "asset-allocation-map",
+      "title_zh": "资产配置不是一道选择题：从 60/40 到全天候，再到 L1",
+      "title_en": "Asset allocation is not one answer: from 60/40 to All Weather and L1",
+      "tags": [
+        "starter",
+        "portfolio"
+      ],
+      "format": "guide",
+      "status": "published",
+      "date": "2026-11-05",
+      "updated": "2026-11-05",
+      "version": "v1.0",
+      "minutes": 8,
+      "summary_zh": "把现有资产配置研究整理成一条决策路径：先用 60/40 等基准定义比较尺子，再用永久组合、全天候、风险平价和 1/N 讨论风险分配，随后用再平衡、约束和负债口径处理执行，最后以趋势覆盖与 L1 影子组合形成可归因、可复核的闭环。专题已覆盖主要策略族，下一步不是继续堆文章，而是统一比较口径并保留持续前向记录。",
+      "summary_en": "A decision map through the existing allocation research: benchmark selection, risk allocation, implementation constraints and an auditable process. It connects the 60/40, Permanent Portfolio, All Weather, risk parity, 1/N, rebalancing, constraints, liability-driven allocation, trend following and the L1 shadow portfolio.",
+      "path": "asset-allocation-map/",
+      "featured": true
+    },
+    {
       "slug": "l1-shadow-portfolio",
       "title_zh": "从观点到组合：基准赢了，流程留下了什么？",
       "title_en": "From Views to Weights: the benchmark won. What survives is the process.",
@@ -95,13 +121,67 @@
       "format": "case-study",
       "status": "published",
       "date": "2026-10-30",
-      "updated": "2026-10-30",
-      "version": "v1.0",
+      "updated": "2026-11-05",
+      "version": "v1.1",
       "minutes": 14,
       "figures": 6,
-      "summary_zh": "一个公开多资产影子组合的完整研究案例：8 个 ETF、221 个月、月度再平衡和 10 bps 换手成本。L1 TAA 年化 5.20%，同期 60/40 为 8.43%——基准赢了；但冻结政策、风险贡献、收益归因和负结果留痕，构成一套可复核的投资流程。三只权益占资金 40%、贡献约 61% 的模型风险。",
-      "summary_en": "A public multi-asset shadow portfolio: eight ETFs, 221 months, monthly rebalancing and 10 bps turnover costs. L1 TAA earned 5.20% a year against 8.43% for a 60/40 — the benchmark won. The durable output is the auditable process: a frozen policy, risk contribution, return attribution and retained negative results. Equities hold 40% of capital but drive roughly 61% of model risk.",
+      "summary_zh": "一个公开多资产影子组合的完整研究案例：8 个 ETF、221 个月、月度再平衡和 10 bps 换手成本。L1 TAA 年化 5.20%，同期 60/40 为 8.43%——基准赢了；但冻结政策、风险贡献、收益归因和负结果留痕，构成一套可复核的投资流程。本次同步修复收益贡献占位符，并加入五分钟英文投资陈述入口。",
+      "summary_en": "A public multi-asset shadow portfolio: eight ETFs, 221 months, monthly rebalancing and 10 bps turnover costs. L1 TAA earned 5.20% a year against 8.43% for a 60/40 — the benchmark won. The durable output is the auditable process, now paired with a five-minute English presentation.",
       "path": "l1-shadow-portfolio/",
+      "featured": true
+    },
+    {
+      "slug": "rebalancing",
+      "title_zh": "再平衡实测：每年值多少个基点，容差带该设多宽",
+      "title_en": "Rebalancing, tested: how many basis points a year, and how wide a band",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-12",
+      "updated": "2026-10-12",
+      "version": "v1.0",
+      "minutes": 19,
+      "summary_zh": "「再平衡能提高长期收益」一半对一半错。用 1993-02 至 2025-09 共 392 个月的美国数据、8 条腿、4 个目标组合（2/4/8/8 条腿）与 8 种再平衡政策：分散化收益与 Booth–Fama 公式几乎完全吻合（60/40 理论 0.35% 对实测 0.33%，1/N 八腿 0.85% 对 0.88%），且随腿数上升；但同一份数据里不再平衡比月频再平衡的年化高 0.45–1.17 个百分点——60/40 三十年后漂到 91.9% 是股票。按夏普排，年度再平衡在四个组合里全部胜出。成本从 1 倍放大到 10 倍只再多损失 4–42 个基点；容差带从 1% 拉到 28% 换手单调下降，溢价却没有一致最优宽度。含 9 张图表、1 张可拖带宽的交互图与 4 张表。",
+      "summary_en": "Half of \"rebalancing improves long-run returns\" is right and half is wrong. On 392 monthly US observations from 1993-02 to 2025-09, across eight legs, four target portfolios (two, four, eight and eight legs) and eight policies: the diversification return matches the Booth–Fama formula almost exactly (0.35% predicted against 0.33% measured for a 60/40; 0.85% against 0.88% for 1/N) and rises with the number of legs. But over the same data buy-and-hold beats monthly rebalancing by 0.45 to 1.17 points a year — a 60/40 drifts to 91.9% equities. Ranked by Sharpe, annual rebalancing wins in all four portfolios. Scaling costs tenfold costs only another 4–42 basis points, and widening a tolerance band from 1% to 28% lowers turnover monotonically without producing a consistent optimum.",
+      "path": "rebalancing/",
+      "featured": true
+    },
+    {
+      "slug": "liability-driven",
+      "title_zh": "负债驱动的资产配置：换一个分母，排序就变了",
+      "title_en": "Liability-driven allocation: change the denominator and the ranking changes",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-09",
+      "updated": "2026-10-09",
+      "version": "v1.0",
+      "minutes": 20,
+      "summary_zh": "把一笔 20 年期定额年金（按当月 10 年期美国国债收益率折现、修正久期均值 9.00 年）当作负债，用 1993-02 至 2025-09 共 392 个月的美国数据检验七个组合。资产端夏普第一的 1/N 等权（0.71）在盈余端排第六；资产端垫底的久期匹配（0.26）盈余波动只有 2.15%、funding ratio 最大回撤只有 −2.4%。久期缺口与盈余波动是一条 U 形曲线，最低点在资产久期等于负债久期处（7.54% → 2.19%）。利率动 2 个百分点，缺口 −9 年的纯股组合 funding ratio 动 18%。可承受的风险随 funding ratio 系统性放宽：100% 时连 5% 的跌破容忍度都只能持有 0% 股票，115% 时可以持有 55%。含 9 张图表、1 张可拖股票权重与久期目标的交互图与 4 张表。",
+      "summary_en": "A 20-year level annuity (discounted at the 10-year US Treasury yield, average modified duration 9.00 years) becomes the liability for seven portfolios over 392 monthly US observations from February 1993 to September 2025. The best asset-only portfolio, 1/N at a 0.71 Sharpe, ranks sixth on surplus; the worst, duration matching at 0.26, delivers 2.15% surplus volatility and a −2.4% maximum funding-ratio drawdown against −58.9% for all-equities. The duration gap and surplus volatility trace a U whose minimum sits where asset duration equals liability duration (7.54% to 2.19%), and a two-point rate move shifts an all-equity portfolio's funding ratio by 18%. The tolerable risk budget widens systematically with the funding ratio: at 100% even a 5% shortfall tolerance permits zero equities, while 115% permits 55%.",
+      "path": "liability-driven/",
+      "featured": true
+    },
+    {
+      "slug": "one-over-n",
+      "title_zh": "1/N 打败最优化：八条腿、九个组合、三十三年",
+      "title_en": "1/N beats the optimiser: eight legs, nine portfolios, thirty-three years",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-08",
+      "updated": "2026-10-08",
+      "version": "v1.0",
+      "minutes": 19,
+      "summary_zh": "用 1990-02 至 2025-09 共 428 个月（样本外 392 个月）的美国数据，把 1/N 等权与八个组合优化器放在同一套规则下重跑。1/N 年化 5.88%、波动 6.4%、最大回撤 −25.1%、夏普 0.54；八个优化器里三个赢（风险平价 ERC 0.65、最大夏普·收缩 0.58、逆波动率 0.57）、一个打平、四个输。样本内预期夏普平均 1.74 的最大夏普组合，实际拿到 0.54——与什么都不算的等权完全相同，九个方法里预期与实现的相关性最好只有 0.04。收缩估计能把最小方差从 0.11 修到 0.38，修不到 1/N 之上；换估计窗口（12–120 个月）与换资产数（2–8 条腿）都不改变排序。优化器的价值是条件性的：2008 年最小方差只跌 0.7%（1/N 跌 24.6%），高通胀三年里八个优化器只有一个赚钱。含 11 张图表（其中 1 张可拖估计窗口）与 4 张表。",
+      "summary_en": "428 monthly US observations from February 1990 to September 2025 (392 out of sample) re-run 1/N against eight portfolio optimisers under one set of rules. 1/N earns 5.88% a year with 6.4% volatility, a −25.1% maximum drawdown and a 0.54 Sharpe; three optimisers beat it (risk-parity ERC 0.65, shrunk max-Sharpe 0.58, inverse volatility 0.57), one ties and four lose. The portfolio whose in-sample expected Sharpe averaged 1.74 delivered 0.54 — identical to equal weighting, which estimates nothing — and across nine methods the best promise-to-delivery correlation is 0.04. Shrinkage lifts minimum variance from 0.11 to 0.38 but not past 1/N, and neither the estimation window (12–120 months) nor the number of legs (2–8) changes the ordering. The optimiser's value is conditional: minimum variance lost 0.7% in 2008 against 1/N's 24.6%, and in three years of high inflation only one of the eight made money.",
+      "path": "one-over-n/",
       "featured": true
     },
     {
@@ -121,6 +201,24 @@
       "summary_zh": "用 1990-01 至 2025-09 共 428 个月的美国数据回测 60/40 及其变体。它年化 9.09%、波动 9.1%、最大回撤 −27.0%、夏普 0.70——而 60% 这个数字恰好落在最差的区间：40–50% 的夏普同为 0.72，最大回撤只有 −21.5%。它真正的失效场景是股债同跌：2022 年两条腿各跌 18.1%，全样本有 13.5% 的月份两条腿同时下跌，CPI 高于 5% 时相关性从 −0.04 翻到 +0.38。把 10% 挪给黄金是最便宜的修补（夏普 0.76、回撤 −22.7%，代价是终值少 4.2%）。含 10 张图表（其中 1 张可拖动股票权重）与 2 张附录表。",
       "summary_en": "428 monthly US observations from 1990-01 to 2025-09 test the 60/40 and its variants: 9.09% a year, 9.1% volatility, a −27.0% maximum drawdown and a 0.70 Sharpe. Sixty percent sits in the worst part of the curve — a 40/60 or 50/50 has the same 0.72 Sharpe with a −21.5% drawdown. What breaks it is stocks and bonds falling together: both legs lost 18.1% in 2022, 13.5% of all months saw both fall, and the correlation flips from −0.04 to +0.38 once CPI is above 5%. Shifting 10% into gold is the cheapest repair (Sharpe 0.76, drawdown −22.7%, at a 4.2% cost to terminal wealth).",
       "path": "sixty-forty-variants/",
+      "featured": true
+    },
+    {
+      "slug": "risk-parity",
+      "title_zh": "风险平价实测：风险被拍平了，收益没有跟上来",
+      "title_en": "Risk parity, tested: the risk gets flattened, the return does not follow",
+      "tags": [
+        "portfolio"
+      ],
+      "format": "study",
+      "status": "published",
+      "date": "2026-10-08",
+      "updated": "2026-10-08",
+      "version": "v1.0",
+      "minutes": 18,
+      "summary_zh": "不按资金分配、按风险分配——这条原则经得起检验吗？用 1993-02 至 2025-09 共 392 个月的美国数据，把股票、长债、黄金、商品四条腿做成等风险贡献组合（每年 1 月按最近 36 个月协方差重解权重）：32.7 年年化 7.40%、波动 7.2%、最大回撤 −22.5%、夏普 0.69。机制确实成立——60/40 里 60% 的钱拿走 93.5% 的风险，风险平价把它拍到 27.3 / 21.7 / 24.5 / 26.6；但收益没有跟上：它比 60/40 少 1.3 个百分点年化，甚至输给最笨的 25/25/25/25（夏普 0.73 对 0.69）。要补回这 1.3 个点就得上杠杆，而 2022 年杠杆版跌得比 60/40 更深：273 个滚动十年窗口里它只有 98 个（36%）跑赢。含 11 张图表（其中 1 张可拖杠杆与融资成本）与 2 张表。",
+      "summary_en": "The principle — allocate by risk rather than by money — is tested on 392 monthly US observations from 1993-02 to 2025-09: an equal-risk-contribution portfolio of stocks, long bonds, gold and commodities (weights re-solved every January on 36 months of covariance) earns 7.40% a year, with 7.2% volatility, a −22.5% maximum drawdown and a 0.69 Sharpe over 32.7 years. The mechanism holds — 60% of a 60/40's money carries 93.5% of its risk, and risk parity flattens that to 27.3 / 21.7 / 24.5 / 26.6 — but the return does not follow: it gives up 1.3 points a year to a 60/40 and even loses to a naive 25/25/25/25 (0.73 Sharpe against 0.69). Buying those points back requires leverage, and the levered version fell further than a 60/40 in 2022: across 273 rolling ten-year windows it beat the 60/40 in 98 of them, or 36%.",
+      "path": "risk-parity/",
       "featured": true
     },
     {

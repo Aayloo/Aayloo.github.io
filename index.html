@@ -943,7 +943,7 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         <div class="numband" id="numband">
           <div><b data-to="16">0</b><span><span class="zh">项技能 · 每一行都能点开看产出</span><span class="en">Skills · every line links to its output</span></span></div>
           <div><b data-to="6">0</b><span><span class="zh">个公开项目 · 全部可复现</span><span class="en">Public projects · all reproducible</span></span></div>
-          <div><b data-to="17">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
+          <div><b data-to="18">0</b><span><span class="zh">篇研究笔记 · 组合 / 信条 / 方法 / 策略</span><span class="en">Research notes · allocation, beliefs, method, strategies</span></span></div>
         </div>
 
         <div class="acts" id="acts">
@@ -1037,13 +1037,19 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
             <!-- notes -->
       <section id="notes">
         <div class="sh"><span class="no">05</span><h2><span class="shin"><span class="zh">笔记</span><span class="en">Notes</span></span></h2>
-          <span class="hint"><span class="zh">16 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">16 notes · newest first · tap a title to expand</span></span></div>
+          <span class="hint"><span class="zh">17 篇 · 按时间倒序，最新在前 · 点标题展开</span><span class="en">17 notes · newest first · tap a title to expand</span></span></div>
         <div class="nlist2">
 
 <!-- NOTES:STARTER:BAND -->
         <div class="nfeat rv">
-          <span class="nflab"><span class="zh">入门科普 · 先看这五篇</span><span class="en">Start here · five explainers</span><i><span class="zh">配置怎么分钱、60/40 是不是最优、黄金管不管用、VIX 该不该贪婪</span><span class="en">how a portfolio splits its money, whether the 60/40 is best, whether gold hedges, whether high VIX means buy</span></i></span>
+          <span class="nflab"><span class="zh">资产配置专题 · 从入门到闭环</span><span class="en">Asset-allocation map · from basics to an auditable process</span><i><span class="zh">先看专题地图，再读 60/40、永久组合、全天候、黄金和 VIX</span><span class="en">start with the map, then the 60/40, Permanent Portfolio, All Weather, gold and VIX</span></i></span>
           <div class="nfgrid">
+            <a class="nfcard" href="notes/asset-allocation-map/">
+              <span class="nfk"><span class="zh">专题入口</span><span class="en">Series map</span></span>
+              <b><span class="zh">资产配置不是一道选择题：从 60/40 到全天候，再到 L1</span><span class="en">Asset allocation is not one answer</span></b>
+              <span class="nfs"><span class="zh">先选尺子、再分风险、处理执行，最后形成可归因闭环。</span><span class="en">Choose the yardstick, allocate the risk, handle implementation and close the audit loop.</span></span>
+              <span class="nfm">2026-11-05</span>
+            </a>
             <a class="nfcard" href="notes/sixty-forty-variants/">
               <span class="nfk"><span class="zh">配置基准</span><span class="en">The baseline</span></span>
               <b><span class="zh">60/40 及其变体：最有名的配置规则经得起检验吗</span><span class="en">The 60/40, tested: does the most famous allocation rule hold up?</span></b>
@@ -1078,7 +1084,24 @@ body.langswap .zh,body.langswap .en{animation:langIn .38s cubic-bezier(.2,.7,.2,
         </div>
         <!-- /NOTES:STARTER:BAND -->
 
-          <details class="nitem rv is-feat">
+          <details class="nitem rv">
+            <summary>
+              <span class="ntag"><span class="zh">ALLOCATION · 专题入口</span><span class="en">ALLOCATION · Series map</span><span class="nd"> · 2026-11-05</span></span>
+              <h4><a href="notes/asset-allocation-map/"><span class="zh">资产配置不是一道选择题：从 60/40 到全天候，再到 L1</span><span class="en">Asset allocation is not one answer: from 60/40 to All Weather and L1</span></a></h4>
+              <p class="nsum"><span class="zh">把分散的资产配置文章整理成一条决策路径：先选基准，再分风险，处理执行，最后用 L1 形成可归因、可复核的闭环。</span>
+              <span class="en">A single decision path through the allocation series: choose a benchmark, allocate risk, handle implementation and close the loop with L1.</span></p>
+              <a class="go" href="notes/asset-allocation-map/"><span class="zh">进入专题地图（10 篇研究）→</span><span class="en">Open the series map (10 studies) →</span></a>
+              <span class="nchev"></span>
+            </summary>
+            <div class="nbody">
+              <p><span class="zh">专题分四层：60/40 与永久组合定义比较尺子；全天候、风险平价与 1/N 讨论风险分配；再平衡、约束和负债口径处理执行；趋势覆盖与 L1 影子组合把观点、权重、成本、归因和版本治理连成一条流程。</span>
+              <span class="en">Four layers connect the work: the 60/40 and Permanent Portfolio define the benchmark; All Weather, risk parity and 1/N examine risk allocation; rebalancing, constraints and liabilities address implementation; trend following and L1 connect views, weights, costs, attribution and governance.</span></p>
+              <p class="take"><span class="zh"><b>结论：</b>这个主题已经足够。下一步不是继续增加策略数量，而是统一比较口径、保留持续前向记录，并让每一篇文章都能落到一个明确的投资决策。</span>
+              <span class="en"><b>Conclusion:</b> the topic is already sufficient. The next step is not more strategies, but aligned comparisons, a continuing forward record, and a clear investment decision behind every article.</span></p>
+            </div>
+          </details>
+
+          <details class="nitem rv">
             <summary>
               <span class="ntag"><span class="zh">PORTFOLIO · 多资产研究案例</span><span class="en">PORTFOLIO · Multi-asset case study</span><span class="nd"> · 2026-10-30</span></span>
               <h4><a href="notes/l1-shadow-portfolio/"><span class="zh">从观点到组合：基准赢了，流程留下了什么？</span><span class="en">From Views to Weights: the benchmark won. What survives is the process.</span></a></h4>
